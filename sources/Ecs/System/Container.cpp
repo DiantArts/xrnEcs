@@ -1,0 +1,28 @@
+#include <pch.hpp>
+#include <Ecs/System/Container.hpp>
+
+
+
+// ------------------------------------------------------------------ Run
+
+void ::xrn::ecs::system::Container::run(
+    ::xrn::ecs::Time t,
+    ::xrn::ecs::entity::Container& entities,
+    ::xrn::ecs::component::Container& components
+)
+{
+    for (auto& system : m_systems) {
+        system->operator()(t, entities, components);
+    }
+}
+
+void ::xrn::ecs::system::Container::run(
+    ::xrn::ecs::Time t,
+    const ::xrn::ecs::entity::Container& entities,
+    const ::xrn::ecs::component::Container& components
+) const
+{
+    for (auto& system : m_systems) {
+        system->operator()(t, entities, components);
+    }
+}
