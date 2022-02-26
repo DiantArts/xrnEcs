@@ -18,7 +18,7 @@ auto ::xrn::ecs::Signature::get(
 }
 
 auto ::xrn::ecs::Signature::get(
-    ::xrn::ecs::Id id
+    ::xrn::Id id
 )
     -> bool
 {
@@ -38,7 +38,7 @@ auto ::xrn::ecs::Signature::operator[](
 }
 
 auto ::xrn::ecs::Signature::operator[](
-    ::xrn::ecs::Id id
+    ::xrn::Id id
 )
     -> bool
 {

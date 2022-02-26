@@ -1,5 +1,3 @@
-#pragma once
-
 #include <boost/functional/hash.hpp>
 
 
@@ -8,53 +6,53 @@
 // ------------------------------------------------------------------ *structors
 
 // default value is 0
-constexpr ::xrn::ecs::Id::Id() noexcept = default;
+constexpr ::xrn::util::Id::Id() noexcept = default;
 
-constexpr ::xrn::ecs::Id::Id(
+constexpr ::xrn::util::Id::Id(
     ::std::integral auto baseValue
 ) noexcept
     : m_value{ static_cast<Id::Type>(baseValue) }
 {}
 
-constexpr ::xrn::ecs::Id::~Id() noexcept = default;
+constexpr ::xrn::util::Id::~Id() noexcept = default;
 
 
 
 // ------------------------------------------------------------------ copy idiom
 
-constexpr ::xrn::ecs::Id::Id(
-    const ::xrn::ecs::Id& other
+constexpr ::xrn::util::Id::Id(
+    const ::xrn::util::Id& other
 ) noexcept = default;
 
-constexpr auto ::xrn::ecs::Id::operator=(
-    const ::xrn::ecs::Id& other
+constexpr auto ::xrn::util::Id::operator=(
+    const ::xrn::util::Id& other
 ) noexcept
-    -> ::xrn::ecs::Id& = default;
+    -> ::xrn::util::Id& = default;
 
 
 
 // ------------------------------------------------------------------ copy idiom
 
-constexpr ::xrn::ecs::Id::Id(
-    ::xrn::ecs::Id&& other
+constexpr ::xrn::util::Id::Id(
+    ::xrn::util::Id&& other
 ) noexcept = default;
 
-constexpr auto ::xrn::ecs::Id::operator=(
-    ::xrn::ecs::Id&& other
+constexpr auto ::xrn::util::Id::operator=(
+    ::xrn::util::Id&& other
 ) noexcept
-    -> ::xrn::ecs::Id& = default;
+    -> ::xrn::util::Id& = default;
 
 
 
 // ------------------------------------------------------------------ Get
 
-constexpr auto ::xrn::ecs::Id::get() const
-    -> ::xrn::ecs::Id::Type
+constexpr auto ::xrn::util::Id::get() const
+    -> ::xrn::util::Id::Type
 {
     return m_value;
 }
 
-constexpr ::xrn::ecs::Id::operator ::xrn::ecs::Id::Type() const
+constexpr ::xrn::util::Id::operator ::xrn::util::Id::Type() const
 {
     return m_value;
 }
@@ -63,10 +61,10 @@ constexpr ::xrn::ecs::Id::operator ::xrn::ecs::Id::Type() const
 
 // ------------------------------------------------------------------ Hasher
 
-struct xrn::ecs::Id::Hasher {
+struct xrn::util::Id::Hasher {
 
     auto operator () (
-        const ::xrn::ecs::Id& id
+        const ::xrn::util::Id& id
     ) const
         -> ::std::size_t
     {

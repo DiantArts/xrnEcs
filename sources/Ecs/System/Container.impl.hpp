@@ -1,5 +1,3 @@
-#pragma once
-
 template <
     auto func,
     ::xrn::ecs::component::ConceptType... BanishedComponentTypes

@@ -1,5 +1,6 @@
 #include <pch.hpp>
 #include <Ecs/Entity/Container.hpp>
+#include <Ecs/Entity/Reference.hpp>
 #include <Ecs/Entity/ConstReference.hpp>
 #include <Ecs/Entity/Container.hpp>
 
@@ -19,7 +20,7 @@
 // ------------------------------------------------------------------ Remove
 
 void ::xrn::ecs::entity::Container::remove(
-    ::xrn::ecs::Id entityId
+    ::xrn::Id entityId
 )
 {
     m_entities.erase(::std::ranges::find_if(m_entities,
@@ -53,7 +54,7 @@ void ::xrn::ecs::entity::Container::remove(
 // ------------------------------------------------------------------ Get
 
 [[ nodiscard ]] auto ::xrn::ecs::entity::Container::operator[](
-    ::xrn::ecs::Id entityId
+    ::xrn::Id entityId
 ) const
     -> ::xrn::ecs::Entity::ConstReference
 {
@@ -70,7 +71,7 @@ void ::xrn::ecs::entity::Container::remove(
 }
 
 [[ nodiscard ]] auto ::xrn::ecs::entity::Container::operator[](
-    ::xrn::ecs::Id entityId
+    ::xrn::Id entityId
 )
     -> ::xrn::ecs::Entity::Reference
 {
@@ -87,7 +88,7 @@ void ::xrn::ecs::entity::Container::remove(
 }
 
 [[ nodiscard ]] auto ::xrn::ecs::entity::Container::get(
-    ::xrn::ecs::Id entityId
+    ::xrn::Id entityId
 ) const
     -> ::xrn::ecs::Entity::ConstReference
 {
@@ -104,7 +105,7 @@ void ::xrn::ecs::entity::Container::remove(
 }
 
 [[ nodiscard ]] auto ::xrn::ecs::entity::Container::unsafeGet(
-    ::xrn::ecs::Id entityId
+    ::xrn::Id entityId
 )
     -> ::xrn::ecs::Entity::Reference
 {
@@ -116,7 +117,7 @@ void ::xrn::ecs::entity::Container::remove(
 }
 
 [[ nodiscard ]] auto ::xrn::ecs::entity::Container::unsafeGet(
-    ::xrn::ecs::Id entityId
+    ::xrn::Id entityId
 ) const
     -> ::xrn::ecs::Entity::ConstReference
 {
@@ -132,7 +133,7 @@ void ::xrn::ecs::entity::Container::remove(
 // ------------------------------------------------------------------ Contains
 
 [[ nodiscard ]] auto ::xrn::ecs::entity::Container::contains(
-    ::xrn::ecs::Id entityId
+    ::xrn::Id entityId
 ) const
     -> bool
 {

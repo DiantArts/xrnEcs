@@ -1,44 +1,42 @@
 #pragma once
 
-namespace xrn::ecs {
-
-
+namespace xrn::util {
 
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Representation of the time in the xrn Project
 /// \ingroup ecs
 ///
-/// \include Time.hpp <Ecs/Time.hpp>
+/// \include Time.hpp <Util/Time.hpp>
 ///
-/// This class is a part of the ::xrn::ecs Library designed to facilitate
-/// usage of ECS architectures
-///
-/// ::xrn::ecs::Time structure's purpuse is to represent and uniform
-/// time manipulations accross the xrn Project
+/// ::xrn::util::Time's purpuse is to represent and uniform time manipulations
+/// accross all xrn Projects.
 /// Its usage is straight forward as it just contains a Time value, gettable
-/// as seconds or milliseconds. By default, xrn projects manipulates
-/// milliseconds
-/// The class can be constructed by the factories createAsSeconds() and
-/// createAsMilliseconds()
-/// This class is mostly used by ::xrn::ecs::Clock
+/// as seconds, milliseconds or microseconds. It also is possible to perform
+/// calculations between time values. By default, xrn projects manipulate
+/// milliseconds, and if the same type as the template parameter of the calss
+/// is passed to one of the methods, it will be interpreted as such.
+/// The class can be constructed by the factories createAsSeconds(),
+/// createAsMilliseconds() and with a constructor with the type given as
+/// template parameter.
+/// This class is mostly used by ::xrn::util::Clock, but can be used manually.
 ///
 /// Usage example:
 /// \code
-/// auto t1{ ::xrn::ecs::Time::createAsSeconds(0.1f) };
+/// auto t1{ ::xrn::util::Time::createAsSeconds(0.1f) };
 /// auto t1{ t1.getAsMilliseconds() }; // 100
 ///
-/// ::xrn::ecs::Time t2{ 30 }:
+/// ::xrn::util::Time t2{ 30 }:
 /// Int64 micro = t2.asMicroseconds(); // 30000
 ///
 /// sf::Time t3 = sf::microseconds(-800000);
 /// float sec = t3.asSeconds(); // -0.8
 /// \endcode
 ///
-/// \see ::xrn::ecs::Clock
+/// \see ::xrn::util::Clock
 ///
 ///////////////////////////////////////////////////////////////////////////
 template <
-    typename T = float
+    typename T
 > class BasicTime {
 
 public:
@@ -51,13 +49,13 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Type internally contained by the class ::xrn::ecs::Time
+    /// \brief Type internally contained by the class ::xrn::util::Time
     ///
     ///////////////////////////////////////////////////////////////////////////
     using Type = T;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Constructs a ::xrn::ecs::Time from a value evaluated as seconds
+    /// \brief Constructs a ::xrn::util::Time from a value evaluated as seconds
     ///
     /// \param amount Value contructed from the amount of seconds
     ///
@@ -66,10 +64,10 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] static auto createAsSeconds(
         BasicTime<T>::Type amount
-    ) -> ::xrn::ecs::BasicTime<T>;
+    ) -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Constructs a ::xrn::ecs::Time from a value evaluated as
+    /// \brief Constructs a ::xrn::util::Time from a value evaluated as
     /// milliseconds
     ///
     /// \param amount Value contructed from the amount of milliseconds
@@ -79,10 +77,10 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] static auto createAsMilliseconds(
         BasicTime<T>::Type amount
-    ) -> ::xrn::ecs::BasicTime<T>;
+    ) -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Constructs a ::xrn::ecs::Time from a value evaluated as
+    /// \brief Constructs a ::xrn::util::Time from a value evaluated as
     /// microseconds
     ///
     /// \param amount Value contructed from the amount of microseconds
@@ -92,7 +90,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] static auto createAsMicroseconds(
         BasicTime<T>::Type amount
-    ) -> ::xrn::ecs::BasicTime<T>;
+    ) -> ::xrn::util::BasicTime<T>;
 
 
 
@@ -108,7 +106,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Constructor from a Time::Type
     ///
-    /// Constructs a ::xrn::ecs::Time containing a point in time
+    /// Constructs a ::xrn::util::Time containing a point in time
     ///
     /// \param amount Time in milliseconds
     ///
@@ -127,16 +125,16 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Compares with an ::xrn::ecs::Time values
+    /// \brief Compares with an ::xrn::util::Time values
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator<=>(
-        const ::xrn::ecs::BasicTime<T>& rhs
+        const ::xrn::util::BasicTime<T>& rhs
     ) const
         -> ::std::weak_ordering;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Compares with an internal representation of an ::xrn::ecs::Time
+    /// \brief Compares with an internal representation of an ::xrn::util::Time
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator<=>(
@@ -222,7 +220,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator=(
         const BasicTime<T>::Type& amount
-    ) -> ::xrn::ecs::BasicTime<T>&;
+    ) -> ::xrn::util::BasicTime<T>&;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Sets the internal point time value to a new one
@@ -233,7 +231,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     void set(
-        const ::xrn::ecs::BasicTime<T>& amount
+        const ::xrn::util::BasicTime<T>& amount
     );
 
     ///////////////////////////////////////////////////////////////////////////
@@ -258,7 +256,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Adds ::xrn::ecs::Time given as parameter
+    /// \brief Adds ::xrn::util::Time given as parameter
     ///
     /// \param rhs Time to add
     ///
@@ -266,8 +264,8 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator+=(
-        const ::xrn::ecs::BasicTime<T>& rhs
-    ) -> ::xrn::ecs::BasicTime<T>&;
+        const ::xrn::util::BasicTime<T>& rhs
+    ) -> ::xrn::util::BasicTime<T>&;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Adds time as milliseconds given as parameter
@@ -279,10 +277,10 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator+=(
         const BasicTime<T>::Type& rhs
-    ) -> ::xrn::ecs::BasicTime<T>&;
+    ) -> ::xrn::util::BasicTime<T>&;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Adds ::xrn::ecs::Time given as parameter
+    /// \brief Adds ::xrn::util::Time given as parameter
     ///
     /// Same as add, but does return a copy
     ///
@@ -294,9 +292,9 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator+(
-        const ::xrn::ecs::BasicTime<T>& rhs
+        const ::xrn::util::BasicTime<T>& rhs
     ) const
-        -> ::xrn::ecs::BasicTime<T>;
+        -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Adds time as milliseconds given as parameter
@@ -313,10 +311,10 @@ public:
     [[ nodiscard ]] auto operator+(
         const BasicTime<T>::Type& rhs
     ) const
-        -> ::xrn::ecs::BasicTime<T>;
+        -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Adds ::xrn::ecs::Time given as parameter
+    /// \brief Adds ::xrn::util::Time given as parameter
     ///
     /// Adds the amount given as parameter.
     ///
@@ -326,7 +324,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     void add(
-        const ::xrn::ecs::BasicTime<T>& amount
+        const ::xrn::util::BasicTime<T>& amount
     );
 
     ///////////////////////////////////////////////////////////////////////////
@@ -353,7 +351,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Substracts ::xrn::ecs::Time given as parameter
+    /// \brief Substracts ::xrn::util::Time given as parameter
     ///
     /// \param rhs Time to substract
     ///
@@ -361,8 +359,8 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator-=(
-        const ::xrn::ecs::BasicTime<T>& rhs
-    ) -> ::xrn::ecs::BasicTime<T>&;
+        const ::xrn::util::BasicTime<T>& rhs
+    ) -> ::xrn::util::BasicTime<T>&;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Substracts time as milliseconds given as parameter
@@ -374,10 +372,10 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator-=(
         const BasicTime<T>::Type& rhs
-    ) -> ::xrn::ecs::BasicTime<T>&;
+    ) -> ::xrn::util::BasicTime<T>&;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Substracts ::xrn::ecs::Time given as parameter
+    /// \brief Substracts ::xrn::util::Time given as parameter
     ///
     /// Same as substract, but does return a copy
     ///
@@ -389,9 +387,9 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator-(
-        const ::xrn::ecs::BasicTime<T>& rhs
+        const ::xrn::util::BasicTime<T>& rhs
     ) const
-        -> ::xrn::ecs::BasicTime<T>;
+        -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Substracts time as milliseconds given as parameter
@@ -408,10 +406,10 @@ public:
     [[ nodiscard ]] auto operator-(
         const BasicTime<T>::Type& rhs
     ) const
-        -> ::xrn::ecs::BasicTime<T>;
+        -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Substracts ::xrn::ecs::Time given as parameter
+    /// \brief Substracts ::xrn::util::Time given as parameter
     ///
     /// Substracts the amount given as parameter.
     ///
@@ -421,7 +419,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     void sub(
-        const ::xrn::ecs::BasicTime<T>& amount
+        const ::xrn::util::BasicTime<T>& amount
     );
 
     ///////////////////////////////////////////////////////////////////////////
@@ -448,7 +446,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Multiplicates ::xrn::ecs::Time given as parameter
+    /// \brief Multiplicates ::xrn::util::Time given as parameter
     ///
     /// \param rhs Time to multiply
     ///
@@ -456,8 +454,8 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator*=(
-        const ::xrn::ecs::BasicTime<T>& rhs
-    ) -> ::xrn::ecs::BasicTime<T>&;
+        const ::xrn::util::BasicTime<T>& rhs
+    ) -> ::xrn::util::BasicTime<T>&;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Multiplicates time as milliseconds given as parameter
@@ -469,10 +467,10 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator*=(
         const BasicTime<T>::Type& rhs
-    ) -> ::xrn::ecs::BasicTime<T>&;
+    ) -> ::xrn::util::BasicTime<T>&;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Multiplicates ::xrn::ecs::Time given as parameter
+    /// \brief Multiplicates ::xrn::util::Time given as parameter
     ///
     /// Same as multiply, but does return a copy
     ///
@@ -484,9 +482,9 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator*(
-        const ::xrn::ecs::BasicTime<T>& rhs
+        const ::xrn::util::BasicTime<T>& rhs
     ) const
-        -> ::xrn::ecs::BasicTime<T>;
+        -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Multiplicates time as milliseconds given as parameter
@@ -503,10 +501,10 @@ public:
     [[ nodiscard ]] auto operator*(
         const BasicTime<T>::Type& rhs
     ) const
-        -> ::xrn::ecs::BasicTime<T>;
+        -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Multiplicates ::xrn::ecs::Time given as parameter
+    /// \brief Multiplicates ::xrn::util::Time given as parameter
     ///
     /// Multiplicates the amount given as parameter.
     ///
@@ -516,7 +514,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     void mul(
-        const ::xrn::ecs::BasicTime<T>& amount
+        const ::xrn::util::BasicTime<T>& amount
     );
 
     ///////////////////////////////////////////////////////////////////////////
@@ -543,7 +541,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Divides ::xrn::ecs::Time given as parameter
+    /// \brief Divides ::xrn::util::Time given as parameter
     ///
     /// \param rhs Time to divide
     ///
@@ -551,8 +549,8 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator/=(
-        const ::xrn::ecs::BasicTime<T>& rhs
-    ) -> ::xrn::ecs::BasicTime<T>&;
+        const ::xrn::util::BasicTime<T>& rhs
+    ) -> ::xrn::util::BasicTime<T>&;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Divides time as milliseconds given as parameter
@@ -564,10 +562,10 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator/=(
         const BasicTime<T>::Type& rhs
-    ) -> ::xrn::ecs::BasicTime<T>&;
+    ) -> ::xrn::util::BasicTime<T>&;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Divides ::xrn::ecs::Time given as parameter
+    /// \brief Divides ::xrn::util::Time given as parameter
     ///
     /// Same as divide, but does return a copy
     ///
@@ -579,9 +577,9 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator/(
-        const ::xrn::ecs::BasicTime<T>& rhs
+        const ::xrn::util::BasicTime<T>& rhs
     ) const
-        -> ::xrn::ecs::BasicTime<T>;
+        -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Divides time as milliseconds given as parameter
@@ -598,10 +596,10 @@ public:
     [[ nodiscard ]] auto operator/(
         const BasicTime<T>::Type& rhs
     ) const
-        -> ::xrn::ecs::BasicTime<T>;
+        -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Divides ::xrn::ecs::Time given as parameter
+    /// \brief Divides ::xrn::util::Time given as parameter
     ///
     /// Divides the amount given as parameter.
     ///
@@ -611,7 +609,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     void div(
-        const ::xrn::ecs::BasicTime<T>& amount
+        const ::xrn::util::BasicTime<T>& amount
     );
 
     ///////////////////////////////////////////////////////////////////////////
@@ -638,7 +636,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Modulos ::xrn::ecs::Time given as parameter
+    /// \brief Modulos ::xrn::util::Time given as parameter
     ///
     /// \param rhs Time to modulo
     ///
@@ -646,8 +644,8 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator%=(
-        const ::xrn::ecs::BasicTime<T>& rhs
-    ) -> ::xrn::ecs::BasicTime<T>&;
+        const ::xrn::util::BasicTime<T>& rhs
+    ) -> ::xrn::util::BasicTime<T>&;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Modulos time as milliseconds given as parameter
@@ -659,10 +657,10 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator%=(
         const BasicTime<T>::Type& rhs
-    ) -> ::xrn::ecs::BasicTime<T>&;
+    ) -> ::xrn::util::BasicTime<T>&;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Modulos ::xrn::ecs::Time given as parameter
+    /// \brief Modulos ::xrn::util::Time given as parameter
     ///
     /// Same as modulo, but does return a copy
     ///
@@ -674,9 +672,9 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator%(
-        const ::xrn::ecs::BasicTime<T>& rhs
+        const ::xrn::util::BasicTime<T>& rhs
     ) const
-        -> ::xrn::ecs::BasicTime<T>;
+        -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Modulos time as milliseconds given as parameter
@@ -693,10 +691,10 @@ public:
     [[ nodiscard ]] auto operator%(
         const BasicTime<T>::Type& rhs
     ) const
-        -> ::xrn::ecs::BasicTime<T>;
+        -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Modulos ::xrn::ecs::Time given as parameter
+    /// \brief Modulos ::xrn::util::Time given as parameter
     ///
     /// Modulos the amount given as parameter.
     ///
@@ -706,7 +704,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     void mod(
-        const ::xrn::ecs::BasicTime<T>& amount
+        const ::xrn::util::BasicTime<T>& amount
     );
 
     ///////////////////////////////////////////////////////////////////////////
@@ -731,20 +729,19 @@ private:
 
 };
 
-
-
-} // namespace xrn::ecs
+} // namespace xrn::util
 
 
 
 ///////////////////////////////////////////////////////////////////////////
 // Header-implimentation
 ///////////////////////////////////////////////////////////////////////////
-#include <Ecs/Time.impl.hpp>
+#include <Util/Time.impl.hpp>
 
 
 
 ///////////////////////////////////////////////////////////////////////////
 // Template specialization
 ///////////////////////////////////////////////////////////////////////////
-namespace xrn::ecs { using Time = ::xrn::ecs::BasicTime<>; }
+namespace xrn::util { using Time = ::xrn::util::BasicTime<float>; }
+namespace xrn { using Time = ::xrn::util::Time; }

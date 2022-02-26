@@ -16,7 +16,7 @@ auto ::xrn::ecs::entity::Entity::getSignature() const
 // ------------------------------------------------------------------ Id
 
 auto ::xrn::ecs::entity::Entity::getId() const
-    -> ::xrn::ecs::Id
+    -> ::xrn::Id
 {
     return m_id;
 }

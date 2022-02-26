@@ -21,7 +21,7 @@ template <
     typename Type
 > concept isSendableData =
     !::detail::sameAs<Type, char*> &&
-    (::std::is_trivial<Type>::value || ::detail::sameAs<Type, ::xrn::ecs::Id>);
+    (::std::is_trivial<Type>::value || ::detail::sameAs<Type, ::xrn::Id>);
 
 template <
     typename Type

@@ -80,7 +80,7 @@ template <
     typename Type
 > concept TimeConceptType =
     ::std::is_same<
-        ::xrn::ecs::Time,
+        ::xrn::Time,
         ::std::remove_cvref_t<Type>
     >::value;
 

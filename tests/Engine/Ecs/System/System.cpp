@@ -99,14 +99,14 @@ namespace detail {
     {}
 
     static void function5(
-        ::xrn::ecs::Time deltaTime,
+        ::xrn::Time deltaTime,
         ::xrn::ecs::component::test::Movable& m
     ) {
         m.value++;
     }
 
     static void function6(
-        ::xrn::ecs::Time deltaTime,
+        ::xrn::Time deltaTime,
         ::xrn::ecs::Entity& e,
         ::xrn::ecs::component::test::Movable& m
     ) {
@@ -115,14 +115,14 @@ namespace detail {
 
     static void function7(
         ::xrn::ecs::Entity& e,
-        ::xrn::ecs::Time deltaTime,
+        ::xrn::Time deltaTime,
         ::xrn::ecs::component::test::Movable& m
     ) {
         m.value++;
     }
 
     static void function8(
-        ::xrn::ecs::Time deltaTime,
+        ::xrn::Time deltaTime,
         const ::xrn::ecs::Entity& e,
         ::xrn::ecs::component::test::Movable& m,
         ::xrn::ecs::component::test::Transformable& t
@@ -133,13 +133,13 @@ namespace detail {
 
     static void function9(
         const ::xrn::ecs::Entity& e,
-        const ::xrn::ecs::Time deltaTime,
+        const ::xrn::Time deltaTime,
         const ::xrn::ecs::component::test::Movable& m
     ) {}
 
     static void function10(
         const ::xrn::ecs::Entity& e,
-        const ::xrn::ecs::Time deltaTime,
+        const ::xrn::Time deltaTime,
         const::xrn::ecs::component::test::Movable& m
     ) {}
 
@@ -168,7 +168,7 @@ BOOST_AUTO_TEST_CASE(mulpiteComponentMulipleEntityMulipleSystem)
     >().getId() };
 
     ::xrn::ecs::System<detail::function1> system1;
-    ::xrn::ecs::Clock c;
+    ::xrn::Clock c;
     system1(c.getElapsed(), entities, components);
     BOOST_TEST(components.get<::xrn::ecs::component::test::Movable>(e1Id).value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::Transformable>(e2Id).value == 0);
@@ -222,7 +222,7 @@ BOOST_AUTO_TEST_CASE(lambdaMulpiteComponentMulipleEntityMulipleSystem)
     >().getId() };
 
     ::xrn::ecs::System<detail::lambda1> system1;
-    ::xrn::ecs::Clock c;
+    ::xrn::Clock c;
     system1(c.getElapsed(), entities, components);
     BOOST_TEST(components.get<::xrn::ecs::component::test::Movable>(e1Id).value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::Transformable>(e2Id).value == 0);
@@ -262,7 +262,7 @@ BOOST_AUTO_TEST_CASE(inlineLambdaMulpiteComponentMulipleEntityMulipleSystem)
     >().getId() };
 
     ::xrn::ecs::System<[](::xrn::ecs::component::test::Movable& m) { m.value++;}> system1;
-    ::xrn::ecs::Clock c;
+    ::xrn::Clock c;
     system1(c.getElapsed(), entities, components);
     BOOST_TEST(components.get<::xrn::ecs::component::test::Movable>(e1Id).value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::Transformable>(e2Id).value == 0);
@@ -310,7 +310,7 @@ BOOST_AUTO_TEST_CASE(systemTime)
     >().getId() };
 
     ::xrn::ecs::System<detail::function5> system1;
-    ::xrn::ecs::Clock c;
+    ::xrn::Clock c;
     system1(c.getElapsed(), entities, components);
     BOOST_TEST(components.get<::xrn::ecs::component::test::Movable>(e1Id).value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::Transformable>(e2Id).value == 0);
@@ -352,7 +352,7 @@ BOOST_AUTO_TEST_CASE(systemAdditionalArgs)
     // auto e1Id{ entities.emplace<::xrn::ecs::component::test::Movable>().getId() };
 
     // ::xrn::ecs::System<[](int a, const::xrn::ecs::component::test::Movable& m){}> system1{ 2 };
-    // ::xrn::ecs::Clock c;
+    // ::xrn::Clock c;
     // system1(c.getElapsed(), entities, components);
 }
 

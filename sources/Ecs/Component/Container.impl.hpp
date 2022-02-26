@@ -1,5 +1,3 @@
-#pragma once
-
 #include <Meta/ForEach.hpp>
 #include <Ecs/Component/Detail/Container.hpp>
 
@@ -10,14 +8,14 @@
 template <
     ::xrn::ecs::component::ConceptType RawComponentType
 > constexpr auto ::xrn::ecs::component::Container::getId() const
-    -> ::xrn::ecs::Id
+    -> ::xrn::Id
 {
     using ComponentType = ::std::remove_cvref_t<RawComponentType>;
     return ComponentType::getId();
 }
 
 constexpr auto ::xrn::ecs::component::Container::getMaxId()
-    -> ::xrn::ecs::Id
+    -> ::xrn::Id
 {
     return ::xrn::ecs::component::maxId;
 }
@@ -29,7 +27,7 @@ constexpr auto ::xrn::ecs::component::Container::getMaxId()
 template <
     ::xrn::ecs::component::ConceptType RawComponentType
 > auto ::xrn::ecs::component::Container::emplace(
-    ::xrn::ecs::Id entityId,
+    ::xrn::Id entityId,
     auto&&... args
 )
     -> RawComponentType&
@@ -51,7 +49,7 @@ template <
 template <
     ::xrn::ecs::component::ConceptType... ComponentTypes
 > void ::xrn::ecs::component::Container::emplaceMany(
-    ::xrn::ecs::Id entityId
+    ::xrn::Id entityId
 )
 {
     (this->emplace<ComponentTypes>(entityId), ...);
@@ -60,7 +58,7 @@ template <
 template <
     ::xrn::ecs::component::ConceptType RawComponentType
 > void ::xrn::ecs::component::Container::push(
-    ::xrn::ecs::Id entityId,
+    ::xrn::Id entityId,
     RawComponentType&& component
 )
 {
@@ -81,7 +79,7 @@ template <
 template <
     ::xrn::ecs::component::ConceptType... ComponentTypes
 > void ::xrn::ecs::component::Container::pushMany(
-    ::xrn::ecs::Id entityId,
+    ::xrn::Id entityId,
     ComponentTypes&&... components
 )
 {
@@ -96,7 +94,7 @@ template <
 template <
     ::xrn::ecs::component::ConceptType RawComponentType
 > void ::xrn::ecs::component::Container::remove(
-    ::xrn::ecs::Id entityId
+    ::xrn::Id entityId
 )
 {
     using ComponentType = ::std::remove_cvref_t<RawComponentType>;
@@ -114,7 +112,7 @@ template <
 template <
     ::xrn::ecs::component::ConceptType... ComponentTypes
 > void ::xrn::ecs::component::Container::removeMany(
-    ::xrn::ecs::Id entityId
+    ::xrn::Id entityId
 )
 {
     (this->remove<ComponentTypes>(entityId), ...);
@@ -127,7 +125,7 @@ template <
 template <
     ::xrn::ecs::component::ConceptType RawComponentType
 > auto ::xrn::ecs::component::Container::get(
-    ::xrn::ecs::Id entityId
+    ::xrn::Id entityId
 ) const
     -> const RawComponentType&
 {
@@ -148,7 +146,7 @@ template <
 template <
     ::xrn::ecs::component::ConceptType RawComponentType
 > auto ::xrn::ecs::component::Container::get(
-    ::xrn::ecs::Id entityId
+    ::xrn::Id entityId
 )
     -> RawComponentType&
 {
@@ -169,7 +167,7 @@ template <
 template <
     ::xrn::ecs::component::ConceptType RawComponentType
 > auto ::xrn::ecs::component::Container::getIndex(
-    ::xrn::ecs::Id entityId
+    ::xrn::Id entityId
 ) const
     -> ::std::size_t
 {
@@ -188,7 +186,7 @@ template <
 template <
     ::xrn::ecs::component::ConceptType RawComponentType
 > auto ::xrn::ecs::component::Container::exists(
-    ::xrn::ecs::Id entityId
+    ::xrn::Id entityId
 ) const
     -> bool
 {
@@ -234,8 +232,8 @@ template <
 
     return m_container.try_emplace(
         ComponentType::getId(),
-        ::std::make_pair<::std::vector<::xrn::ecs::Id>, void*>(
-            ::std::vector<::xrn::ecs::Id>{},
+        ::std::make_pair<::std::vector<::xrn::Id>, void*>(
+            ::std::vector<::xrn::Id>{},
             new ::std::vector<ComponentType>{}
         )
     ).first->second;

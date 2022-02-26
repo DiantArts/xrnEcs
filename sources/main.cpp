@@ -1,12 +1,12 @@
 #include <pch.hpp>
-#include <Ecs/Clock.hpp>
+#include <Util/Clock.hpp>
 
 
 
 int main(int argc, char **argv)
 {
     try {
-        ::xrn::ecs::Clock clock;
+        ::xrn::Clock clock;
         std::this_thread::sleep_for(2000ms);
         ::std::cout << clock.getElapsed() << ::std::endl;
         return EXIT_SUCCESS;

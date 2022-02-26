@@ -37,25 +37,25 @@ public:
     // ------------------------------------------------------------------ Run
 
     void operator()(
-        ::xrn::ecs::Time t,
+        ::xrn::Time t,
         ::xrn::ecs::entity::Container& entities,
         ::xrn::ecs::component::Container& components
     ) override;
 
     void operator()(
-        ::xrn::ecs::Time t,
+        ::xrn::Time t,
         ::xrn::ecs::component::Container& components,
         ::xrn::ecs::entity::Container& entities
     );
 
     void operator()(
-        ::xrn::ecs::Time t,
+        ::xrn::Time t,
         const ::xrn::ecs::entity::Container& entities,
         const ::xrn::ecs::component::Container& components
     ) const override;
 
     void operator()(
-        ::xrn::ecs::Time t,
+        ::xrn::Time t,
         const ::xrn::ecs::component::Container& components,
         const ::xrn::ecs::entity::Container& entities
     ) const;
@@ -91,25 +91,25 @@ public:
     // ------------------------------------------------------------------ Run
 
     void operator()(
-        ::xrn::ecs::Time t,
+        ::xrn::Time t,
         ::xrn::ecs::entity::Container& entities,
         ::xrn::ecs::component::Container& components
     ) override;
 
     void operator()(
-        ::xrn::ecs::Time t,
+        ::xrn::Time t,
         ::xrn::ecs::component::Container& components,
         ::xrn::ecs::entity::Container& entities
     );
 
     void operator()(
-        ::xrn::ecs::Time t,
+        ::xrn::Time t,
         const ::xrn::ecs::entity::Container& entities,
         const ::xrn::ecs::component::Container& components
     ) const override;
 
     void operator()(
-        ::xrn::ecs::Time t,
+        ::xrn::Time t,
         const ::xrn::ecs::component::Container& components,
         const ::xrn::ecs::entity::Container& entities
     ) const;

@@ -1,5 +1,3 @@
-#pragma once
-
 #include <Meta/ForEach.hpp>
 #include <Ecs/Detail/Signature.hpp>
 

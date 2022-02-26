@@ -99,7 +99,7 @@ BOOST_AUTO_TEST_SUITE(Container)
 
 BOOST_AUTO_TEST_CASE(mulpiteComponentMulipleEntityMulipleSystem)
 {
-    ::xrn::ecs::Clock c;
+    ::xrn::Clock c;
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::entity::Container entities{ components };
     auto e1Id{ entities.emplace<::xrn::ecs::component::test::Movable>().getId() };
@@ -140,7 +140,7 @@ BOOST_AUTO_TEST_CASE(mulpiteComponentMulipleEntityMulipleSystem)
 
 BOOST_AUTO_TEST_CASE(lambdaMulpiteComponentMulipleEntityMulipleSystem)
 {
-    ::xrn::ecs::Clock c;
+    ::xrn::Clock c;
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::entity::Container entities{ components };
     auto e1Id{ entities.emplace<::xrn::ecs::component::test::Movable>().getId() };
@@ -181,7 +181,7 @@ BOOST_AUTO_TEST_CASE(lambdaMulpiteComponentMulipleEntityMulipleSystem)
 
 BOOST_AUTO_TEST_CASE(inlineLambdaMulpiteComponentMulipleEntityMulipleSystem)
 {
-    ::xrn::ecs::Clock c;
+    ::xrn::Clock c;
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::entity::Container entities{ components };
     auto e1Id{ entities.emplace<::xrn::ecs::component::test::Movable>().getId() };

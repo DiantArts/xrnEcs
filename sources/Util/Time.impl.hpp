@@ -1,33 +1,31 @@
-#pragma once
-
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::createAsSeconds(
+> auto ::xrn::util::BasicTime<T>::createAsSeconds(
     BasicTime<T>::Type amount
-) -> ::xrn::ecs::BasicTime<T>
+) -> ::xrn::util::BasicTime<T>
 {
-    return ::xrn::ecs::BasicTime<T>{ amount * 1000 };
+    return ::xrn::util::BasicTime<T>{ amount * 1000 };
 }
 
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::createAsMilliseconds(
+> auto ::xrn::util::BasicTime<T>::createAsMilliseconds(
     BasicTime<T>::Type amount
-) -> ::xrn::ecs::BasicTime<T>
+) -> ::xrn::util::BasicTime<T>
 {
-    return ::xrn::ecs::BasicTime<T>{ amount };
+    return ::xrn::util::BasicTime<T>{ amount };
 }
 
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::createAsMicroseconds(
+> auto ::xrn::util::BasicTime<T>::createAsMicroseconds(
     BasicTime<T>::Type amount
-) -> ::xrn::ecs::BasicTime<T>
+) -> ::xrn::util::BasicTime<T>
 {
-    return ::xrn::ecs::BasicTime<T>{ amount / 1000 };
+    return ::xrn::util::BasicTime<T>{ amount / 1000 };
 }
 
 
@@ -42,7 +40,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> ::xrn::ecs::BasicTime<T>::BasicTime(
+> ::xrn::util::BasicTime<T>::BasicTime(
     auto amount
 ) noexcept
     : m_time{ static_cast<BasicTime<T>::Type>(amount) }
@@ -60,8 +58,8 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator<=>(
-    const ::xrn::ecs::BasicTime<T>& rhs
+> auto ::xrn::util::BasicTime<T>::operator<=>(
+    const ::xrn::util::BasicTime<T>& rhs
 ) const
     -> ::std::weak_ordering = default;
 
@@ -69,7 +67,7 @@ template <
 template <
     typename T
 >
- auto ::xrn::ecs::BasicTime<T>::operator<=>(
+ auto ::xrn::util::BasicTime<T>::operator<=>(
     const BasicTime<T>::Type& rhs
 ) const
     -> ::std::partial_ordering
@@ -89,7 +87,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> ::xrn::ecs::BasicTime<T>::operator BasicTime<T>::Type() noexcept
+> ::xrn::util::BasicTime<T>::operator BasicTime<T>::Type() noexcept
 {
     return m_time;
 }
@@ -97,7 +95,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::get() const
+> auto ::xrn::util::BasicTime<T>::get() const
     -> BasicTime<T>::Type
 {
     return m_time;
@@ -106,7 +104,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::getAsSeconds() const
+> auto ::xrn::util::BasicTime<T>::getAsSeconds() const
     -> BasicTime<T>::Type
 {
     return m_time / 1000;
@@ -115,7 +113,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::getAsMilliseconds() const
+> auto ::xrn::util::BasicTime<T>::getAsMilliseconds() const
     -> BasicTime<T>::Type
 {
     return m_time;
@@ -125,7 +123,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::getAsMicroseconds() const
+> auto ::xrn::util::BasicTime<T>::getAsMicroseconds() const
     -> BasicTime<T>::Type
 {
     return m_time * 1000;
@@ -143,9 +141,9 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator=(
+> auto ::xrn::util::BasicTime<T>::operator=(
     const BasicTime<T>::Type& amount
-) -> ::xrn::ecs::BasicTime<T>&
+) -> ::xrn::util::BasicTime<T>&
 {
     m_time = amount;
     return *this;
@@ -154,8 +152,8 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> void ::xrn::ecs::BasicTime<T>::set(
-    const ::xrn::ecs::BasicTime<T>& amount
+> void ::xrn::util::BasicTime<T>::set(
+    const ::xrn::util::BasicTime<T>& amount
 )
 {
     m_time = amount.m_time;
@@ -164,7 +162,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> void ::xrn::ecs::BasicTime<T>::set(
+> void ::xrn::util::BasicTime<T>::set(
     const BasicTime<T>::Type& amount
 )
 {
@@ -183,9 +181,9 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator+=(
-    const ::xrn::ecs::BasicTime<T>& rhs
-) -> ::xrn::ecs::BasicTime<T>&
+> auto ::xrn::util::BasicTime<T>::operator+=(
+    const ::xrn::util::BasicTime<T>& rhs
+) -> ::xrn::util::BasicTime<T>&
 {
     m_time += rhs.m_time;
     return *this;
@@ -194,9 +192,9 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator+=(
+> auto ::xrn::util::BasicTime<T>::operator+=(
     const BasicTime<T>::Type& rhs
-) -> ::xrn::ecs::BasicTime<T>&
+) -> ::xrn::util::BasicTime<T>&
 {
     m_time += rhs;
     return *this;
@@ -205,12 +203,12 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator+(
-    const ::xrn::ecs::BasicTime<T>& rhs
+> auto ::xrn::util::BasicTime<T>::operator+(
+    const ::xrn::util::BasicTime<T>& rhs
 ) const
-    -> ::xrn::ecs::BasicTime<T>
+    -> ::xrn::util::BasicTime<T>
 {
-    ::xrn::ecs::BasicTime<T> newTime{ *this };
+    ::xrn::util::BasicTime<T> newTime{ *this };
     newTime.add(rhs);
     return newTime;
 }
@@ -218,12 +216,12 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator+(
+> auto ::xrn::util::BasicTime<T>::operator+(
     const BasicTime<T>::Type& rhs
 ) const
-    -> ::xrn::ecs::BasicTime<T>
+    -> ::xrn::util::BasicTime<T>
 {
-    ::xrn::ecs::BasicTime<T> newTime{ *this };
+    ::xrn::util::BasicTime<T> newTime{ *this };
     newTime.add(rhs);
     return newTime;
 }
@@ -231,8 +229,8 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> void ::xrn::ecs::BasicTime<T>::add(
-    const ::xrn::ecs::BasicTime<T>& amount
+> void ::xrn::util::BasicTime<T>::add(
+    const ::xrn::util::BasicTime<T>& amount
 )
 {
     m_time += amount.m_time;
@@ -241,7 +239,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> void ::xrn::ecs::BasicTime<T>::add(
+> void ::xrn::util::BasicTime<T>::add(
     const BasicTime<T>::Type& amount
 )
 {
@@ -260,9 +258,9 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator-=(
-    const ::xrn::ecs::BasicTime<T>& rhs
-) -> ::xrn::ecs::BasicTime<T>&
+> auto ::xrn::util::BasicTime<T>::operator-=(
+    const ::xrn::util::BasicTime<T>& rhs
+) -> ::xrn::util::BasicTime<T>&
 {
     m_time -= rhs.m_time;
     return *this;
@@ -271,9 +269,9 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator-=(
+> auto ::xrn::util::BasicTime<T>::operator-=(
     const BasicTime<T>::Type& rhs
-) -> ::xrn::ecs::BasicTime<T>&
+) -> ::xrn::util::BasicTime<T>&
 {
     m_time -= rhs;
     return *this;
@@ -282,12 +280,12 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator-(
-    const ::xrn::ecs::BasicTime<T>& rhs
+> auto ::xrn::util::BasicTime<T>::operator-(
+    const ::xrn::util::BasicTime<T>& rhs
 ) const
-    -> ::xrn::ecs::BasicTime<T>
+    -> ::xrn::util::BasicTime<T>
 {
-    ::xrn::ecs::BasicTime<T> newTime{ *this };
+    ::xrn::util::BasicTime<T> newTime{ *this };
     newTime.sub(rhs);
     return newTime;
 }
@@ -295,12 +293,12 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator-(
+> auto ::xrn::util::BasicTime<T>::operator-(
     const BasicTime<T>::Type& rhs
 ) const
-    -> ::xrn::ecs::BasicTime<T>
+    -> ::xrn::util::BasicTime<T>
 {
-    ::xrn::ecs::BasicTime<T> newTime{ *this };
+    ::xrn::util::BasicTime<T> newTime{ *this };
     newTime.sub(rhs);
     return newTime;
 }
@@ -308,8 +306,8 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> void ::xrn::ecs::BasicTime<T>::sub(
-    const ::xrn::ecs::BasicTime<T>& amount
+> void ::xrn::util::BasicTime<T>::sub(
+    const ::xrn::util::BasicTime<T>& amount
 )
 {
     m_time -= amount.m_time;
@@ -318,7 +316,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> void ::xrn::ecs::BasicTime<T>::sub(
+> void ::xrn::util::BasicTime<T>::sub(
     const BasicTime<T>::Type& amount
 )
 {
@@ -337,9 +335,9 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator*=(
-    const ::xrn::ecs::BasicTime<T>& rhs
-) -> ::xrn::ecs::BasicTime<T>&
+> auto ::xrn::util::BasicTime<T>::operator*=(
+    const ::xrn::util::BasicTime<T>& rhs
+) -> ::xrn::util::BasicTime<T>&
 {
     m_time *= rhs.m_time;
     return *this;
@@ -348,9 +346,9 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator*=(
+> auto ::xrn::util::BasicTime<T>::operator*=(
     const BasicTime<T>::Type& rhs
-) -> ::xrn::ecs::BasicTime<T>&
+) -> ::xrn::util::BasicTime<T>&
 {
     m_time *= rhs;
     return *this;
@@ -359,12 +357,12 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator*(
-    const ::xrn::ecs::BasicTime<T>& rhs
+> auto ::xrn::util::BasicTime<T>::operator*(
+    const ::xrn::util::BasicTime<T>& rhs
 ) const
-    -> ::xrn::ecs::BasicTime<T>
+    -> ::xrn::util::BasicTime<T>
 {
-    ::xrn::ecs::BasicTime<T> newTime{ *this };
+    ::xrn::util::BasicTime<T> newTime{ *this };
     newTime.mul(rhs);
     return newTime;
 }
@@ -372,12 +370,12 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator*(
+> auto ::xrn::util::BasicTime<T>::operator*(
     const BasicTime<T>::Type& rhs
 ) const
-    -> ::xrn::ecs::BasicTime<T>
+    -> ::xrn::util::BasicTime<T>
 {
-    ::xrn::ecs::BasicTime<T> newTime{ *this };
+    ::xrn::util::BasicTime<T> newTime{ *this };
     newTime.mul(rhs);
     return newTime;
 }
@@ -385,8 +383,8 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> void ::xrn::ecs::BasicTime<T>::mul(
-    const ::xrn::ecs::BasicTime<T>& amount
+> void ::xrn::util::BasicTime<T>::mul(
+    const ::xrn::util::BasicTime<T>& amount
 )
 {
     m_time *= amount.m_time;
@@ -395,7 +393,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> void ::xrn::ecs::BasicTime<T>::mul(
+> void ::xrn::util::BasicTime<T>::mul(
     const BasicTime<T>::Type& amount
 )
 {
@@ -414,9 +412,9 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator/=(
-    const ::xrn::ecs::BasicTime<T>& rhs
-) -> ::xrn::ecs::BasicTime<T>&
+> auto ::xrn::util::BasicTime<T>::operator/=(
+    const ::xrn::util::BasicTime<T>& rhs
+) -> ::xrn::util::BasicTime<T>&
 {
     m_time /= rhs.m_time;
     return *this;
@@ -425,9 +423,9 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator/=(
+> auto ::xrn::util::BasicTime<T>::operator/=(
     const BasicTime<T>::Type& rhs
-) -> ::xrn::ecs::BasicTime<T>&
+) -> ::xrn::util::BasicTime<T>&
 {
     m_time /= rhs;
     return *this;
@@ -436,12 +434,12 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator/(
-    const ::xrn::ecs::BasicTime<T>& rhs
+> auto ::xrn::util::BasicTime<T>::operator/(
+    const ::xrn::util::BasicTime<T>& rhs
 ) const
-    -> ::xrn::ecs::BasicTime<T>
+    -> ::xrn::util::BasicTime<T>
 {
-    ::xrn::ecs::BasicTime<T> newTime{ *this };
+    ::xrn::util::BasicTime<T> newTime{ *this };
     newTime.div(rhs);
     return newTime;
 }
@@ -449,12 +447,12 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator/(
+> auto ::xrn::util::BasicTime<T>::operator/(
     const BasicTime<T>::Type& rhs
 ) const
-    -> ::xrn::ecs::BasicTime<T>
+    -> ::xrn::util::BasicTime<T>
 {
-    ::xrn::ecs::BasicTime<T> newTime{ *this };
+    ::xrn::util::BasicTime<T> newTime{ *this };
     newTime.div(rhs);
     return newTime;
 }
@@ -462,8 +460,8 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> void ::xrn::ecs::BasicTime<T>::div(
-    const ::xrn::ecs::BasicTime<T>& amount
+> void ::xrn::util::BasicTime<T>::div(
+    const ::xrn::util::BasicTime<T>& amount
 )
 {
     m_time /= amount.m_time;
@@ -472,7 +470,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> void ::xrn::ecs::BasicTime<T>::div(
+> void ::xrn::util::BasicTime<T>::div(
     const BasicTime<T>::Type& amount
 )
 {
@@ -491,9 +489,9 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator%=(
-    const ::xrn::ecs::BasicTime<T>& rhs
-) -> ::xrn::ecs::BasicTime<T>&
+> auto ::xrn::util::BasicTime<T>::operator%=(
+    const ::xrn::util::BasicTime<T>& rhs
+) -> ::xrn::util::BasicTime<T>&
 {
     auto newValue{
         static_cast<::std::uint_fast32_t>(m_time) % static_cast<::std::uint_fast32_t>(rhs.m_time)
@@ -505,9 +503,9 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator%=(
+> auto ::xrn::util::BasicTime<T>::operator%=(
     const BasicTime<T>::Type& rhs
-) -> ::xrn::ecs::BasicTime<T>&
+) -> ::xrn::util::BasicTime<T>&
 {
     auto newValue{
         static_cast<::std::uint_fast32_t>(m_time) % static_cast<::std::uint_fast32_t>(rhs)
@@ -519,12 +517,12 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator%(
-    const ::xrn::ecs::BasicTime<T>& rhs
+> auto ::xrn::util::BasicTime<T>::operator%(
+    const ::xrn::util::BasicTime<T>& rhs
 ) const
-    -> ::xrn::ecs::BasicTime<T>
+    -> ::xrn::util::BasicTime<T>
 {
-    ::xrn::ecs::BasicTime<T> newTime{ *this };
+    ::xrn::util::BasicTime<T> newTime{ *this };
     newTime.mod(rhs);
     return newTime;
 }
@@ -532,12 +530,12 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> auto ::xrn::ecs::BasicTime<T>::operator%(
+> auto ::xrn::util::BasicTime<T>::operator%(
     const BasicTime<T>::Type& rhs
 ) const
-    -> ::xrn::ecs::BasicTime<T>
+    -> ::xrn::util::BasicTime<T>
 {
-    ::xrn::ecs::BasicTime<T> newTime{ *this };
+    ::xrn::util::BasicTime<T> newTime{ *this };
     newTime.mod(rhs);
     return newTime;
 }
@@ -545,8 +543,8 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> void ::xrn::ecs::BasicTime<T>::mod(
-    const ::xrn::ecs::BasicTime<T>& amount
+> void ::xrn::util::BasicTime<T>::mod(
+    const ::xrn::util::BasicTime<T>& amount
 )
 {
     auto newValue{
@@ -558,7 +556,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> void ::xrn::ecs::BasicTime<T>::mod(
+> void ::xrn::util::BasicTime<T>::mod(
     const BasicTime<T>::Type& amount
 )
 {

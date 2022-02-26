@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Ecs/Id.hpp>
+#include <Util/Id.hpp>
 #include <Ecs/Component/Declaration.hpp>
 #include <Meta/IsBaseOfTemplate.hpp>
 
@@ -24,11 +24,7 @@ template <
 
 public:
 
-    // ------------------------------------------------------------------ *structors
-
-    explicit AComponent();
-
-    virtual ~AComponent() = 0;
+    virtual ~AComponent() = 0; // TODO: rule of 5
 
 };
 
@@ -41,7 +37,7 @@ template <
 
 
 
-static constexpr ::xrn::ecs::Id maxId { ::xrn::ecs::component::declaration::detail::numberOfIds };
+static constexpr ::xrn::Id maxId{ ::xrn::ecs::component::declaration::detail::numberOfIds };
 
 
 

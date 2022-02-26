@@ -2,6 +2,7 @@
 
 #include <Ecs/Entity.hpp>
 #include <Ecs/Component/Container.hpp>
+#include <Ecs/Entity/Reference.hpp>
 
 
 
@@ -49,7 +50,7 @@ public:
     // ------------------------------------------------------------------ Remove
 
     void remove(
-        ::xrn::ecs::Id entityId
+        ::xrn::Id entityId
     );
 
     void remove(
@@ -61,27 +62,27 @@ public:
     // ------------------------------------------------------------------ Get
 
     [[ nodiscard ]] auto operator[](
-        ::xrn::ecs::Id entityId
+        ::xrn::Id entityId
     ) const
         -> ::xrn::ecs::Entity::ConstReference;
 
     [[ nodiscard ]] auto operator[](
-        ::xrn::ecs::Id entityId
+        ::xrn::Id entityId
     )
         -> ::xrn::ecs::Entity::Reference;
 
     [[ nodiscard ]] auto get(
-        ::xrn::ecs::Id entityId
+        ::xrn::Id entityId
     ) const
         -> ::xrn::ecs::Entity::ConstReference;
 
     [[ nodiscard ]] auto unsafeGet(
-        ::xrn::ecs::Id entityId
+        ::xrn::Id entityId
     )
         -> ::xrn::ecs::Entity::Reference;
 
     [[ nodiscard ]] auto unsafeGet(
-        ::xrn::ecs::Id entityId
+        ::xrn::Id entityId
     ) const
         -> ::xrn::ecs::Entity::ConstReference;
 
@@ -90,7 +91,7 @@ public:
     // ------------------------------------------------------------------ Contains
 
     [[ nodiscard ]] auto contains(
-        ::xrn::ecs::Id entityId
+        ::xrn::Id entityId
     ) const
         -> bool;
 

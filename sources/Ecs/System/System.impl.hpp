@@ -1,5 +1,3 @@
-#pragma once
-
 #include <Ecs/AComponent.hpp>
 #include <Ecs/System/Detail/System.hpp>
 
@@ -22,7 +20,7 @@ template <
 template <
     auto func
 > void ::xrn::ecs::system::System<func>::operator()(
-    ::xrn::ecs::Time t,
+    ::xrn::Time t,
     ::xrn::ecs::entity::Container& entities,
     ::xrn::ecs::component::Container& components
 )
@@ -46,7 +44,7 @@ template <
 template <
     auto func
 > void ::xrn::ecs::system::System<func>::operator()(
-    ::xrn::ecs::Time t,
+    ::xrn::Time t,
     ::xrn::ecs::component::Container& components,
     ::xrn::ecs::entity::Container& entities
 )
@@ -59,7 +57,7 @@ template <
 template <
     auto func
 > void ::xrn::ecs::system::System<func>::operator()(
-    ::xrn::ecs::Time t,
+    ::xrn::Time t,
     const ::xrn::ecs::entity::Container& entities,
     const ::xrn::ecs::component::Container& components
 ) const
@@ -87,7 +85,7 @@ template <
 template <
     auto func
 > void ::xrn::ecs::system::System<func>::operator()(
-    ::xrn::ecs::Time t,
+    ::xrn::Time t,
     const ::xrn::ecs::component::Container& components,
     const ::xrn::ecs::entity::Container& entities
 ) const
@@ -143,7 +141,7 @@ template <
     auto func,
     ::xrn::ecs::component::ConceptType... BanishedComponentTypes
 > void ::xrn::ecs::system::System<func, BanishedComponentTypes...>::operator()(
-    ::xrn::ecs::Time t,
+    ::xrn::Time t,
     ::xrn::ecs::entity::Container& entities,
     ::xrn::ecs::component::Container& components
 )
@@ -174,7 +172,7 @@ template <
     auto func,
     ::xrn::ecs::component::ConceptType... BanishedComponentTypes
 > void ::xrn::ecs::system::System<func, BanishedComponentTypes...>::operator()(
-    ::xrn::ecs::Time t,
+    ::xrn::Time t,
     ::xrn::ecs::component::Container& components,
     ::xrn::ecs::entity::Container& entities
 )
@@ -188,7 +186,7 @@ template <
     auto func,
     ::xrn::ecs::component::ConceptType... BanishedComponentTypes
 > void ::xrn::ecs::system::System<func, BanishedComponentTypes...>::operator()(
-    ::xrn::ecs::Time t,
+    ::xrn::Time t,
     const ::xrn::ecs::entity::Container& entities,
     const ::xrn::ecs::component::Container& components
 ) const
@@ -223,7 +221,7 @@ template <
     auto func,
     ::xrn::ecs::component::ConceptType... BanishedComponentTypes
 > void ::xrn::ecs::system::System<func, BanishedComponentTypes...>::operator()(
-    ::xrn::ecs::Time t,
+    ::xrn::Time t,
     const ::xrn::ecs::component::Container& components,
     const ::xrn::ecs::entity::Container& entities
 ) const

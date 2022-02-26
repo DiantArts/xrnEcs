@@ -1,20 +1,18 @@
 #include <pch.hpp>
-#include <Ecs/Clock.hpp>
+#include <Util/Clock.hpp>
 
 
 // ------------------------------------------------------------------ *structors
 
-::xrn::ecs::Clock::Clock()
+::xrn::util::Clock::Clock()
     : m_lastCallTime{ ::std::chrono::high_resolution_clock::now() }
 {}
-
-::xrn::ecs::Clock::~Clock() = default;
 
 
 
 // ------------------------------------------------------------------ Get
 
-auto ::xrn::ecs::Clock::getElapsed()
+auto ::xrn::util::Clock::getElapsed()
     -> Clock::Type
 {
     return Clock::Type{ static_cast<Clock::Type::Type>(::std::chrono::duration<Clock::Type::Type>(
@@ -22,7 +20,7 @@ auto ::xrn::ecs::Clock::getElapsed()
     ).count() * 1000.0f) };
 }
 
-auto ::xrn::ecs::Clock::getElapsedRestart()
+auto ::xrn::util::Clock::getElapsedRestart()
     -> Clock::Type
 {
     auto saveLastCallTime{ ::std::chrono::high_resolution_clock::now() };
@@ -32,7 +30,7 @@ auto ::xrn::ecs::Clock::getElapsedRestart()
     ).count() * 1000.0f) };
 }
 
-void ::xrn::ecs::Clock::restart()
+void ::xrn::util::Clock::restart()
 {
     m_lastCallTime = ::std::chrono::high_resolution_clock::now();
 }

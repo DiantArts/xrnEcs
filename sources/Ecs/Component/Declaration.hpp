@@ -2,8 +2,6 @@
 
 #include <Ecs/Component/Detail/Declaration.hpp>
 
-
-
 START_COMPONENT_DECLARATIONS();
 
 
@@ -21,3 +19,5 @@ DECLARE_COMPONENT_IN_NAMESPACE(xrn::ecs::component, Drawable); //TODO: implement
 
 
 STOP_COMPONENT_DECLARATIONS();
+
+#include <Ecs/Component/Detail/UndefDeclarations.hpp>

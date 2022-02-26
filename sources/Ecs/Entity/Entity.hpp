@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include <Ecs/Id.hpp>
+#include <Util/Id.hpp>
 #include <Ecs/AComponent.hpp>
 #include <Ecs/Component/Container.hpp>
 #include <Ecs/Signature.hpp>
@@ -100,15 +100,15 @@ public:
     // ------------------------------------------------------------------ Id
 
     [[ nodiscard ]] auto getId() const
-        -> ::xrn::ecs::Id;
+        -> ::xrn::Id;
 
 
 
 
 private:
 
-    static inline ::xrn::ecs::Id m_IdGiver{};
-    ::xrn::ecs::Id m_id{ ++m_IdGiver };
+    static inline ::xrn::Id m_IdGiver{};
+    ::xrn::Id m_id{ ++m_IdGiver };
 
     ::xrn::ecs::Signature m_signature{};
 

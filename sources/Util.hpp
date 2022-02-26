@@ -4,16 +4,16 @@
 // Headers
 ///////////////////////////////////////////////////////////////////////////
 
-#include <Meta/ForEach.hpp>
-#include <Meta/UniqueTypes.hpp>
-#include <Meta/IsBaseOfTemplate.hpp>
+#include <Util/Clock.hpp>
+#include <Util/Time.hpp>
+#include <Util/Id.hpp>
 
 
 
 ///////////////////////////////////////////////////////////////////////////
-/// \defgroup meta Template metaprogramming module
+/// \defgroup util Util module
 ///
-/// The ::xrn::meta library is designed to facilitate the usage of template
-/// metaprgramming. It mainly acts on variadic template manipulations
+/// The ::xrn::util module is designed to facilitate the usage of various
+/// trivial functionnalities such as time manipulation and managment.
 ///
 ///////////////////////////////////////////////////////////////////////////

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace xrn::ecs {
+namespace xrn::util {
 
 
 
@@ -29,26 +29,26 @@ public:
     // ------------------------------------------------------------------ copy idiom
 
     constexpr Id(
-        const ::xrn::ecs::Id& other
+        const ::xrn::util::Id& other
     ) noexcept;
 
     constexpr auto operator=(
-        const ::xrn::ecs::Id& other
+        const ::xrn::util::Id& other
     ) noexcept
-        -> ::xrn::ecs::Id&;
+        -> ::xrn::util::Id&;
 
 
 
     // ------------------------------------------------------------------ copy idiom
 
     constexpr Id(
-        ::xrn::ecs::Id&& other
+        ::xrn::util::Id&& other
     ) noexcept;
 
     constexpr auto operator=(
-        ::xrn::ecs::Id&& other
+        ::xrn::util::Id&& other
     ) noexcept
-        -> ::xrn::ecs::Id&;
+        -> ::xrn::util::Id&;
 
 
 
@@ -67,18 +67,18 @@ public:
 
     auto operator=(
         Id::Type value
-    ) -> ::xrn::ecs::Id&;
+    ) -> ::xrn::util::Id&;
 
 
 
     // ------------------------------------------------------------------ Incrementation
 
     auto operator++()
-        -> xrn::ecs::Id&;
+        -> ::xrn::util::Id&;
 
     [[ nodiscard ]] auto operator++(
         int
-    ) -> xrn::ecs::Id;
+    ) -> ::xrn::util::Id;
 
     void increment();
 
@@ -87,7 +87,7 @@ public:
     // ------------------------------------------------------------------ Others
 
     [[ nodiscard ]] auto operator<=>(
-        const ::xrn::ecs::Id& other
+        const ::xrn::util::Id& other
     ) -> ::std::weak_ordering;
 
 
@@ -100,6 +100,14 @@ private:
 
 
 
-} // namespace xrn::ecs
+} // namespace xrn::util
 
-#include <Ecs/Id.impl.hpp>
+#include <Util/Id.impl.hpp>
+
+
+
+///////////////////////////////////////////////////////////////////////////
+// Template specialization
+///////////////////////////////////////////////////////////////////////////
+// namespace xrn::util { using Id = ::xrn::util::Id<::std::size_t>; }
+namespace xrn { using Id = ::xrn::util::Id; }

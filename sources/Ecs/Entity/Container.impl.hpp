@@ -1,7 +1,3 @@
-#pragma once
-
-
-
 // ------------------------------------------------------------------ Emplace
 
 template <
@@ -20,8 +16,7 @@ template <
     ::xrn::ecs::component::ConceptType... ComponentTypes
 > auto ::xrn::ecs::entity::Container::emplace(
     ComponentTypes&&... components
-)
-    -> ::xrn::ecs::Entity::Reference
+) -> ::xrn::ecs::Entity::Reference
 {
     auto& entity{ m_entities.emplace_back() };
     if constexpr (sizeof...(ComponentTypes) > 0) {

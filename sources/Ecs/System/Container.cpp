@@ -6,7 +6,7 @@
 // ------------------------------------------------------------------ Run
 
 void ::xrn::ecs::system::Container::run(
-    ::xrn::ecs::Time t,
+    ::xrn::Time t,
     ::xrn::ecs::entity::Container& entities,
     ::xrn::ecs::component::Container& components
 )
@@ -17,7 +17,7 @@ void ::xrn::ecs::system::Container::run(
 }
 
 void ::xrn::ecs::system::Container::run(
-    ::xrn::ecs::Time t,
+    ::xrn::Time t,
     const ::xrn::ecs::entity::Container& entities,
     const ::xrn::ecs::component::Container& components
 ) const

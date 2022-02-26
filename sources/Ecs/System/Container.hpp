@@ -1,9 +1,9 @@
 #pragma once
 
+#include <Util/Clock.hpp>
 #include <Ecs/System.hpp>
 #include <Ecs/Component/Container.hpp>
 #include <Ecs/Entity/Container.hpp>
-#include <Ecs/Clock.hpp>
 
 
 
@@ -18,13 +18,13 @@ public:
     // ------------------------------------------------------------------ Run
 
     void run(
-        ::xrn::ecs::Time t,
+        ::xrn::Time t,
         ::xrn::ecs::entity::Container& entities,
         ::xrn::ecs::component::Container& components
     );
 
     void run(
-        ::xrn::ecs::Time t,
+        ::xrn::Time t,
         const ::xrn::ecs::entity::Container& entities,
         const ::xrn::ecs::component::Container& components
     ) const;

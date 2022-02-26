@@ -19,7 +19,7 @@ public:
 
     static void use(
         ::xrn::ecs::component::Container& components,
-        ::xrn::ecs::Id entityId,
+        ::xrn::Id entityId,
         ComponentType&& componentsArgs,
         RestComponentTypes&&... restComponentsArgs
     )
@@ -43,7 +43,7 @@ public:
 
     static void use(
         ::xrn::ecs::component::Container& components,
-        ::xrn::ecs::Id entityId,
+        ::xrn::Id entityId,
         ComponentType&& componentsArgs
     )
     {

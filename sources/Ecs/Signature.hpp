@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Ecs/Time.hpp>
 #include <Ecs/AComponent.hpp>
+#include <Util/Time.hpp>
 
 namespace xrn::ecs {
 
@@ -92,14 +92,14 @@ public:
     auto get(::xrn::ecs::component::ConceptType auto& component)
         -> bool;
 
-    auto get(::xrn::ecs::Id id)
+    auto get(::xrn::Id id)
         -> bool;
 
 
     auto operator[](::xrn::ecs::component::ConceptType auto& component)
         -> bool;
 
-    auto operator[](::xrn::ecs::Id id)
+    auto operator[](::xrn::Id id)
         -> bool;
 
 
