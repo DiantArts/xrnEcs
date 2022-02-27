@@ -10,12 +10,12 @@
 namespace xrn::util {
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief 
-/// \ingroup ecs
+/// \brief Simplifies time measures
+/// \ingroup util
 ///
 /// \include Clock.hpp <Util/Clock.hpp>
 ///
-/// ::xrn::Clock's purpuse is to represent and uniform time manipulations
+/// It provide an high resolution clock thanks to the c++ standards
 ///
 /// Usage example:
 /// \code

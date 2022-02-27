@@ -4,7 +4,7 @@ namespace xrn::util {
 
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Representation of the time in the xrn Project
-/// \ingroup ecs
+/// \ingroup util
 ///
 /// \include Time.hpp <Util/Time.hpp>
 ///
@@ -22,14 +22,19 @@ namespace xrn::util {
 ///
 /// Usage example:
 /// \code
-/// auto t1{ ::xrn::util::Time::createAsSeconds(0.1f) };
-/// auto t1{ t1.getAsMilliseconds() }; // 100
+/// using ::xrn::util::TimeLiteral::operator""_ns;
 ///
-/// ::xrn::util::Time t2{ 30 }:
-/// Int64 micro = t2.asMicroseconds(); // 30000
-///
-/// sf::Time t3 = sf::microseconds(-800000);
-/// float sec = t3.asSeconds(); // -0.8
+/// auto t1{ ::xrn::Time::createAsSeconds(0.1) };
+/// auto t2{ t1.getAsMilliseconds() }; // 100ms
+/// ::xrn::Time t3{ 30u };
+/// auto t4{ t3.getAsMicroseconds() }; // 30000ms
+/// auto t5{ ::xrn::Time::createAsNanoseconds(-800000) }; // -0.8
+/// auto t6{ t5.getAsSeconds() }; // -0.0008ms
+/// auto t7{ t1 + ::xrn::Time::createAsSeconds(t6) }; // 99.2ms
+/// auto t8{ t1 + -800000_ns }; // 99.2ms
+/// auto t9{ t1 + t5 }; // 99.2ms
+/// auto t10{ t1 + 55 }; // 155ms
+/// auto t11{ 55 + t1 }; // 155ms
 /// \endcode
 ///
 /// \see ::xrn::util::Clock
@@ -59,10 +64,11 @@ public:
     ///
     /// \param amount Value contructed from the amount of seconds
     ///
-    /// \see createAsMilliseconds(), createAsMicroseconds()
+    /// \see createAsMilliseconds(), createAsMicroseconds(),
+    /// createAsNanoseconds()
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] static auto createAsSeconds(
+    [[ nodiscard ]] constexpr static auto createAsSeconds(
         BasicTime<T>::Type amount
     ) -> ::xrn::util::BasicTime<T>;
 
@@ -72,10 +78,10 @@ public:
     ///
     /// \param amount Value contructed from the amount of milliseconds
     ///
-    /// \see createAsSeconds(), createAsMicroseconds()
+    /// \see createAsSeconds(), createAsMicroseconds(), createAsNanoseconds()
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] static auto createAsMilliseconds(
+    [[ nodiscard ]] constexpr static auto createAsMilliseconds(
         BasicTime<T>::Type amount
     ) -> ::xrn::util::BasicTime<T>;
 
@@ -85,10 +91,23 @@ public:
     ///
     /// \param amount Value contructed from the amount of microseconds
     ///
-    /// \see createAsSeconds(), createAsMilliseconds()
+    /// \see createAsSeconds(), createAsMilliseconds(), createAsNanoseconds()
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] static auto createAsMicroseconds(
+    [[ nodiscard ]] constexpr static auto createAsMicroseconds(
+        BasicTime<T>::Type amount
+    ) -> ::xrn::util::BasicTime<T>;
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Constructs a ::xrn::util::Time from a value evaluated as
+    /// nanoseconds
+    ///
+    /// \param amount Value contructed from the amount of nanoseconds
+    ///
+    /// \see createAsSeconds(), createAsMilliseconds(), createAsNanoseconds()
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    [[ nodiscard ]] constexpr static auto createAsNanoseconds(
         BasicTime<T>::Type amount
     ) -> ::xrn::util::BasicTime<T>;
 
@@ -111,7 +130,7 @@ public:
     /// \param amount Time in milliseconds
     ///
     ///////////////////////////////////////////////////////////////////////////
-    explicit BasicTime(
+    explicit constexpr BasicTime(
         auto amount
     ) noexcept;
 
@@ -128,7 +147,7 @@ public:
     /// \brief Compares with an ::xrn::util::Time values
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator<=>(
+    [[ nodiscard ]] constexpr auto operator<=>(
         const ::xrn::util::BasicTime<T>& rhs
     ) const
         -> ::std::weak_ordering;
@@ -137,7 +156,7 @@ public:
     /// \brief Compares with an internal representation of an ::xrn::util::Time
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator<=>(
+    [[ nodiscard ]] constexpr auto operator<=>(
         const BasicTime<T>::Type& rhs
     ) const
         -> ::std::partial_ordering;
@@ -157,15 +176,17 @@ public:
     /// \see get(), getAsMilliseconds()
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] operator BasicTime<T>::Type() noexcept;
+    [[ nodiscard ]] constexpr operator BasicTime<T>::Type() noexcept;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Get the value as it's internally stored
     ///
     /// \return Time in milliseconds
     ///
+    /// \see getAsMilliseconds()
+    ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto get() const
+    [[ nodiscard ]] constexpr auto get() const
         -> BasicTime<T>::Type;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -173,10 +194,11 @@ public:
     ///
     /// \return Value as second as the internally stored type
     ///
-    /// \see get(), getAsMilliseconds(), getAsMicroseconds()
+    /// \see get(), getAsMilliseconds(), getAsMicroseconds(),
+    /// getAsNanoseconds()
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto getAsSeconds() const
+    [[ nodiscard ]] constexpr auto getAsSeconds() const
         -> BasicTime<T>::Type;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -184,10 +206,10 @@ public:
     ///
     /// \return Value as second as the internally stored type
     ///
-    /// \see get(), getAsSeconds(), getAsMicroseconds()
+    /// \see get(), getAsSeconds(), getAsMicroseconds(), getAsNanoseconds()
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto getAsMilliseconds() const
+    [[ nodiscard ]] constexpr auto getAsMilliseconds() const
         -> BasicTime<T>::Type;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -195,10 +217,21 @@ public:
     ///
     /// \return Value as second as the internally stored type
     ///
-    /// \see get(), getAsSeconds(), getAsMilliseconds()
+    /// \see get(), getAsSeconds(), getAsMilliseconds(), getAsNanoseconds()
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto getAsMicroseconds() const
+    [[ nodiscard ]] constexpr auto getAsMicroseconds() const
+        -> BasicTime<T>::Type;
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Get the value as milliseconds
+    ///
+    /// \return Value as second as the internally stored type
+    ///
+    /// \see get(), getAsSeconds(), getAsMilliseconds(), getAsMicroseconds()
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    [[ nodiscard ]] constexpr auto getAsNanoseconds() const
         -> BasicTime<T>::Type;
 
 
@@ -291,7 +324,7 @@ public:
     /// \see add()
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator+(
+    [[ nodiscard ]] constexpr auto operator+(
         const ::xrn::util::BasicTime<T>& rhs
     ) const
         -> ::xrn::util::BasicTime<T>;
@@ -308,7 +341,7 @@ public:
     /// \see add()
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator+(
+    [[ nodiscard ]] constexpr auto operator+(
         const BasicTime<T>::Type& rhs
     ) const
         -> ::xrn::util::BasicTime<T>;
@@ -386,7 +419,7 @@ public:
     /// \see sub()
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator-(
+    [[ nodiscard ]] constexpr auto operator-(
         const ::xrn::util::BasicTime<T>& rhs
     ) const
         -> ::xrn::util::BasicTime<T>;
@@ -403,7 +436,7 @@ public:
     /// \see sub()
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator-(
+    [[ nodiscard ]] constexpr auto operator-(
         const BasicTime<T>::Type& rhs
     ) const
         -> ::xrn::util::BasicTime<T>;
@@ -481,7 +514,7 @@ public:
     /// \see mul()
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator*(
+    [[ nodiscard ]] constexpr auto operator*(
         const ::xrn::util::BasicTime<T>& rhs
     ) const
         -> ::xrn::util::BasicTime<T>;
@@ -498,7 +531,7 @@ public:
     /// \see mul()
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator*(
+    [[ nodiscard ]] constexpr auto operator*(
         const BasicTime<T>::Type& rhs
     ) const
         -> ::xrn::util::BasicTime<T>;
@@ -576,7 +609,7 @@ public:
     /// \see div()
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator/(
+    [[ nodiscard ]] constexpr auto operator/(
         const ::xrn::util::BasicTime<T>& rhs
     ) const
         -> ::xrn::util::BasicTime<T>;
@@ -593,7 +626,7 @@ public:
     /// \see div()
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator/(
+    [[ nodiscard ]] constexpr auto operator/(
         const BasicTime<T>::Type& rhs
     ) const
         -> ::xrn::util::BasicTime<T>;
@@ -671,7 +704,7 @@ public:
     /// \see mod()
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator%(
+    [[ nodiscard ]] constexpr auto operator%(
         const ::xrn::util::BasicTime<T>& rhs
     ) const
         -> ::xrn::util::BasicTime<T>;
@@ -688,7 +721,7 @@ public:
     /// \see mod()
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator%(
+    [[ nodiscard ]] constexpr auto operator%(
         const BasicTime<T>::Type& rhs
     ) const
         -> ::xrn::util::BasicTime<T>;
@@ -734,14 +767,334 @@ private:
 
 
 ///////////////////////////////////////////////////////////////////////////
+// Template specialization
+///////////////////////////////////////////////////////////////////////////
+namespace xrn::util { using Time = ::xrn::util::BasicTime<double>; }
+namespace xrn { using Time = ::xrn::util::Time; }
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// External types operators
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Adds ::xrn::Time given as parameter
+///
+/// Same as add, but does return a copy
+///
+/// \param lhs Template value to add to \a rhs
+/// \param rhs Time having its value being added by \a lhs
+///
+/// \return New time added with \a rhs
+///
+/// \see add()
+///
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename T
+> [[ nodiscard ]] constexpr auto operator+(
+    auto lhs,
+    const ::xrn::util::BasicTime<T>& rhs
+) -> ::xrn::util::BasicTime<T>;
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Adds ::xrn::Time given as parameter
+///
+/// Same as add, but does return a copy
+///
+/// \param lhs Time having its value being added by \a rhs
+/// \param rhs Template value to add to \a lhs
+///
+/// \return New time added with \a rhs
+///
+/// \see add()
+///
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename T
+> [[ nodiscard ]] constexpr auto operator+(
+    const ::xrn::util::BasicTime<T>& lhs,
+    auto rhs
+) -> ::xrn::util::BasicTime<T>;
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Substracts ::xrn::Time given as parameter
+///
+/// Same as substract, but does return a copy
+///
+/// \param lhs Template value to add to \a rhs
+/// \param rhs Time having its value being added by \a lhs
+///
+/// \return New time added with \a rhs
+///
+/// \see sub()
+///
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename T
+> [[ nodiscard ]] constexpr auto operator-(
+    auto lhs,
+    const ::xrn::util::BasicTime<T>& rhs
+) -> ::xrn::util::BasicTime<T>;
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Substracts ::xrn::Time given as parameter
+///
+/// Same as substract, but does return a copy
+///
+/// \param rhs Time having its value being added by \a rhs
+/// \param lhs Template value to add to \a lhs
+///
+/// \return New time added with \a rhs
+///
+/// \see sub()
+///
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename T
+> [[ nodiscard ]] constexpr auto operator-(
+    const ::xrn::util::BasicTime<T>& lhs,
+    auto rhs
+) -> ::xrn::util::BasicTime<T>;
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Multiplicates ::xrn::Time given as parameter
+///
+/// Same as multiply, but does return a copy
+///
+/// \param lhs Template value to add to \a rhs
+/// \param rhs Time having its value being added by \a lhs
+///
+/// \return New time added with \a rhs
+///
+/// \see mul()
+///
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename T
+> [[ nodiscard ]] constexpr auto operator*(
+    auto lhs,
+    const ::xrn::util::BasicTime<T>& rhs
+) -> ::xrn::util::BasicTime<T>;
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Multiplicates ::xrn::Time given as parameter
+///
+/// Same as multiply, but does return a copy
+///
+/// \param rhs Time having its value being added by \a rhs
+/// \param lhs Template value to add to \a lhs
+///
+/// \return New time added with \a rhs
+///
+/// \see mul()
+///
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename T
+> [[ nodiscard ]] constexpr auto operator*(
+    const ::xrn::util::BasicTime<T>& lhs,
+    auto rhs
+) -> ::xrn::util::BasicTime<T>;
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Divides ::xrn::Time given as parameter
+///
+/// Same as divide, but does return a copy
+///
+/// \param lhs Template value to add to \a rhs
+/// \param rhs Time having its value being added by \a lhs
+///
+/// \return New time added with \a rhs
+///
+/// \see div()
+///
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename T
+> [[ nodiscard ]] constexpr auto operator/(
+    auto lhs,
+    const ::xrn::util::BasicTime<T>& rhs
+) -> ::xrn::util::BasicTime<T>;
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Divides ::xrn::Time given as parameter
+///
+/// Same as divide, but does return a copy
+///
+/// \param rhs Time having its value being added by \a rhs
+/// \param lhs Template value to add to \a lhs
+///
+/// \return New time added with \a rhs
+///
+/// \see div()
+///
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename T
+> [[ nodiscard ]] constexpr auto operator/(
+    const ::xrn::util::BasicTime<T>& lhs,
+    auto rhs
+) -> ::xrn::util::BasicTime<T>;
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Modulos time as milliseconds given as parameter
+///
+/// Same as modulo, but does return a copy
+///
+/// \param lhs Template value to add to \a rhs
+/// \param rhs Time having its value being added by \a lhs
+///
+/// \return New time added with \a rhs
+///
+/// \see mod()
+///
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename T
+> [[ nodiscard ]] constexpr auto operator%(
+    auto lhs,
+    const ::xrn::util::BasicTime<T>& rhs
+) -> ::xrn::util::BasicTime<T>;
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Modulos time as milliseconds given as parameter
+///
+/// Same as modulo, but does return a copy
+///
+/// \param rhs Time having its value being added by \a rhs
+/// \param lhs Template value to add to \a lhs
+///
+/// \return New time added with \a rhs
+///
+/// \see mod()
+///
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename T
+> [[ nodiscard ]] constexpr auto operator%(
+    const ::xrn::util::BasicTime<T>& lhs,
+    auto rhs
+) -> ::xrn::util::BasicTime<T>;
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Litteral definitions
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+namespace xrn::util::TimeLiteral {
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Alias for the ::xrn::Time::createAsSeconds()
+///
+/// \param amount Value contructed from the amount of seconds
+///
+/// \see ::xrn::Time::createAsSeconds()
+///
+///////////////////////////////////////////////////////////////////////////
+[[ nodiscard ]] constexpr auto operator""_s(
+    long double amount
+) -> ::xrn::Time;
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Alias for the ::xrn::Time::createAsSeconds()
+///
+/// \param amount Value contructed from the amount of seconds
+///
+/// \see ::xrn::Time::createAsSeconds()
+///
+///////////////////////////////////////////////////////////////////////////
+[[ nodiscard ]] constexpr auto operator""_s(
+    long long unsigned amount
+) -> ::xrn::Time;
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Alias for the ::xrn::Time::createAsMilliseconds()
+///
+/// \param amount Value contructed from the amount of milliseconds
+///
+/// \see ::xrn::Time::createAsMilliseconds()
+///
+///////////////////////////////////////////////////////////////////////////
+[[ nodiscard ]] constexpr auto operator""_ms(
+    long double amount
+) -> ::xrn::Time;
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Alias for the ::xrn::Time::createAsMilliseconds()
+///
+/// \param amount Value contructed from the amount of milliseconds
+///
+/// \see ::xrn::Time::createAsMilliseconds()
+///
+///////////////////////////////////////////////////////////////////////////
+[[ nodiscard ]] constexpr auto operator""_ms(
+    long long unsigned amount
+) -> ::xrn::Time;
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Alias for the ::xrn::Time::createAsMicroseconds()
+///
+/// \param amount Value contructed from the amount of microseconds
+///
+/// \see ::xrn::Time::createAsMicroseconds()
+///
+///////////////////////////////////////////////////////////////////////////
+[[ nodiscard ]] constexpr auto operator""_us(
+    long double amount
+) -> ::xrn::Time;
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Alias for the ::xrn::Time::createAsMicroseconds()
+///
+/// \param amount Value contructed from the amount of microseconds
+///
+/// \see ::xrn::Time::createAsMicroseconds()
+///
+///////////////////////////////////////////////////////////////////////////
+[[ nodiscard ]] constexpr auto operator""_us(
+    long long unsigned amount
+) -> ::xrn::Time;
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Alias for the ::xrn::Time::createAsNanoseconds()
+///
+/// \param amount Value contructed from the amount of nanoseconds
+///
+/// \see ::xrn::Time::createAsNanoseconds()
+///
+///////////////////////////////////////////////////////////////////////////
+[[ nodiscard ]] constexpr auto operator""_ns(
+    long double amount
+) -> ::xrn::Time;
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Alias for the ::xrn::Time::createAsNanoseconds()
+///
+/// \param amount Value contructed from the amount of nanoseconds
+///
+/// \see ::xrn::Time::createAsNanoseconds()
+///
+///////////////////////////////////////////////////////////////////////////
+[[ nodiscard ]] constexpr auto operator""_ns(
+    long long unsigned amount
+) -> ::xrn::Time;
+
+
+
+} // namespace xrn::util::literal
+
+
+
+///////////////////////////////////////////////////////////////////////////
 // Header-implimentation
 ///////////////////////////////////////////////////////////////////////////
 #include <Util/Time.impl.hpp>
-
-
-
-///////////////////////////////////////////////////////////////////////////
-// Template specialization
-///////////////////////////////////////////////////////////////////////////
-namespace xrn::util { using Time = ::xrn::util::BasicTime<float>; }
-namespace xrn { using Time = ::xrn::util::Time; }
