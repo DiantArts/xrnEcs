@@ -3,10 +3,13 @@
 
 
 
-int main(int argc, char **argv)
+auto main(
+    int argc,
+    char **argv
+) -> int
 {
     try {
-        using ::xrn::util::TimeLiteral::operator""_ns;
+        using ::xrn::util::literal::operator""_ns;
 
         auto t1{ ::xrn::Time::createAsSeconds(0.1) };
         auto t2{ t1.getAsMilliseconds() }; // 100ms

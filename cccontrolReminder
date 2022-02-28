@@ -1,0 +1,25 @@
+<C-o> ::std::
+<C-A-o> ::xrn::
+<C-e> this->
+<C-u> ::std::vector
+<C-A-u> ::std::span
+<C-u> ::std::make_unique<>()
+<C-A-u> ::std::make_shared<>()
+<C-l> const
+<C-r> constexpr
+<C-c> static
+<C-g> [[ nodiscard ]]
+<C-f> noexcept
+<C-n> if ()
+<C-t> for (const auto& elem : )
+<C-h> while ()
+<C-d> switch ()
+<C-b> namespace
+<C-m> ::std::cout << "" << ::std::endl
+p :cnext
+P :cprevious
+y :cc
+Y :copen
+f :copen .build/errorFile
+F :cclose
+g :AsyncRun make hide_color=true

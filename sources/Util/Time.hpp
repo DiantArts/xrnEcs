@@ -22,7 +22,7 @@ namespace xrn::util {
 ///
 /// Usage example:
 /// \code
-/// using ::xrn::util::TimeLiteral::operator""_ns;
+/// using ::xrn::util::literal::operator""_ns;
 ///
 /// auto t1{ ::xrn::Time::createAsSeconds(0.1) };
 /// auto t2{ t1.getAsMilliseconds() }; // 100ms
@@ -54,7 +54,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Type internally contained by the class ::xrn::util::Time
+    /// \brief Type internally contained by the class
     ///
     ///////////////////////////////////////////////////////////////////////////
     using Type = T;
@@ -64,13 +64,15 @@ public:
     ///
     /// \param amount Value contructed from the amount of seconds
     ///
+    /// \return ::xrn::util::Time just created
+    ///
     /// \see createAsMilliseconds(), createAsMicroseconds(),
     /// createAsNanoseconds()
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr static auto createAsSeconds(
         BasicTime<T>::Type amount
-    ) -> ::xrn::util::BasicTime<T>;
+    ) noexcept -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Constructs a ::xrn::util::Time from a value evaluated as
@@ -78,12 +80,14 @@ public:
     ///
     /// \param amount Value contructed from the amount of milliseconds
     ///
+    /// \return ::xrn::util::Time just created
+    ///
     /// \see createAsSeconds(), createAsMicroseconds(), createAsNanoseconds()
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr static auto createAsMilliseconds(
         BasicTime<T>::Type amount
-    ) -> ::xrn::util::BasicTime<T>;
+    ) noexcept -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Constructs a ::xrn::util::Time from a value evaluated as
@@ -91,12 +95,14 @@ public:
     ///
     /// \param amount Value contructed from the amount of microseconds
     ///
+    /// \return ::xrn::util::Time just created
+    ///
     /// \see createAsSeconds(), createAsMilliseconds(), createAsNanoseconds()
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr static auto createAsMicroseconds(
         BasicTime<T>::Type amount
-    ) -> ::xrn::util::BasicTime<T>;
+    ) noexcept -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Constructs a ::xrn::util::Time from a value evaluated as
@@ -104,12 +110,14 @@ public:
     ///
     /// \param amount Value contructed from the amount of nanoseconds
     ///
+    /// \return ::xrn::util::Time just created
+    ///
     /// \see createAsSeconds(), createAsMilliseconds(), createAsNanoseconds()
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr static auto createAsNanoseconds(
         BasicTime<T>::Type amount
-    ) -> ::xrn::util::BasicTime<T>;
+    ) noexcept -> ::xrn::util::BasicTime<T>;
 
 
 
@@ -123,9 +131,9 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Constructor from a Time::Type
+    /// \brief Constructor
     ///
-    /// Constructs a ::xrn::util::Time containing a point in time
+    /// Constructs a ::xrn::util::Time containing a point in time.
     ///
     /// \param amount Time in milliseconds
     ///
@@ -161,6 +169,15 @@ public:
     ) const
         -> ::std::partial_ordering;
 
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Compares with any type if comparable with the internal type
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    [[ nodiscard ]] constexpr auto operator<=>(
+        const auto& rhs
+    ) const
+        -> ::std::partial_ordering;
+
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -172,6 +189,8 @@ public:
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Convertion to the type internally stored
+    ///
+    /// \return Time in milliseconds
     ///
     /// \see get(), getAsMilliseconds()
     ///
@@ -248,6 +267,8 @@ public:
     ///
     /// \param amount New time in milliseconds
     ///
+    /// \return *this reassigned
+    ///
     /// \see set()
     ///
     ///////////////////////////////////////////////////////////////////////////
@@ -315,7 +336,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Adds ::xrn::util::Time given as parameter
     ///
-    /// Same as add, but does return a copy
+    /// Same as add, but does return a copy.
     ///
     /// \param rhs Time to add
     ///
@@ -332,7 +353,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Adds time as milliseconds given as parameter
     ///
-    /// Same as add, but does return a copy
+    /// Same as add, but does return a copy.
     ///
     /// \param rhs Time to add in milliseconds
     ///
@@ -410,7 +431,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Substracts ::xrn::util::Time given as parameter
     ///
-    /// Same as substract, but does return a copy
+    /// Same as substract, but does return a copy.
     ///
     /// \param rhs Time to substract
     ///
@@ -427,7 +448,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Substracts time as milliseconds given as parameter
     ///
-    /// Same as substract, but does return a copy
+    /// Same as substract, but does return a copy.
     ///
     /// \param rhs Time to substract in milliseconds
     ///
@@ -505,7 +526,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Multiplicates ::xrn::util::Time given as parameter
     ///
-    /// Same as multiply, but does return a copy
+    /// Same as multiply, but does return a copy.
     ///
     /// \param rhs Time to multiply
     ///
@@ -522,7 +543,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Multiplicates time as milliseconds given as parameter
     ///
-    /// Same as multiply, but does return a copy
+    /// Same as multiply, but does return a copy.
     ///
     /// \param rhs Time to multiply in milliseconds
     ///
@@ -600,7 +621,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Divides ::xrn::util::Time given as parameter
     ///
-    /// Same as divide, but does return a copy
+    /// Same as divide, but does return a copy.
     ///
     /// \param rhs Time to divide
     ///
@@ -617,7 +638,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Divides time as milliseconds given as parameter
     ///
-    /// Same as divide, but does return a copy
+    /// Same as divide, but does return a copy.
     ///
     /// \param rhs Time to divide in milliseconds
     ///
@@ -695,7 +716,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Modulos ::xrn::util::Time given as parameter
     ///
-    /// Same as modulo, but does return a copy
+    /// Same as modulo, but does return a copy.
     ///
     /// \param rhs Time to modulo
     ///
@@ -712,7 +733,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Modulos time as milliseconds given as parameter
     ///
-    /// Same as modulo, but does return a copy
+    /// Same as modulo, but does return a copy.
     ///
     /// \param rhs Time to modulo in milliseconds
     ///
@@ -784,7 +805,7 @@ namespace xrn { using Time = ::xrn::util::Time; }
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Adds ::xrn::Time given as parameter
 ///
-/// Same as add, but does return a copy
+/// Same as add, but does return a copy.
 ///
 /// \param lhs Template value to add to \a rhs
 /// \param rhs Time having its value being added by \a lhs
@@ -804,7 +825,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Adds ::xrn::Time given as parameter
 ///
-/// Same as add, but does return a copy
+/// Same as add, but does return a copy.
 ///
 /// \param lhs Time having its value being added by \a rhs
 /// \param rhs Template value to add to \a lhs
@@ -824,7 +845,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Substracts ::xrn::Time given as parameter
 ///
-/// Same as substract, but does return a copy
+/// Same as substract, but does return a copy.
 ///
 /// \param lhs Template value to add to \a rhs
 /// \param rhs Time having its value being added by \a lhs
@@ -844,7 +865,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Substracts ::xrn::Time given as parameter
 ///
-/// Same as substract, but does return a copy
+/// Same as substract, but does return a copy.
 ///
 /// \param rhs Time having its value being added by \a rhs
 /// \param lhs Template value to add to \a lhs
@@ -864,7 +885,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Multiplicates ::xrn::Time given as parameter
 ///
-/// Same as multiply, but does return a copy
+/// Same as multiply, but does return a copy.
 ///
 /// \param lhs Template value to add to \a rhs
 /// \param rhs Time having its value being added by \a lhs
@@ -884,7 +905,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Multiplicates ::xrn::Time given as parameter
 ///
-/// Same as multiply, but does return a copy
+/// Same as multiply, but does return a copy.
 ///
 /// \param rhs Time having its value being added by \a rhs
 /// \param lhs Template value to add to \a lhs
@@ -904,7 +925,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Divides ::xrn::Time given as parameter
 ///
-/// Same as divide, but does return a copy
+/// Same as divide, but does return a copy.
 ///
 /// \param lhs Template value to add to \a rhs
 /// \param rhs Time having its value being added by \a lhs
@@ -924,7 +945,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Divides ::xrn::Time given as parameter
 ///
-/// Same as divide, but does return a copy
+/// Same as divide, but does return a copy.
 ///
 /// \param rhs Time having its value being added by \a rhs
 /// \param lhs Template value to add to \a lhs
@@ -944,7 +965,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Modulos time as milliseconds given as parameter
 ///
-/// Same as modulo, but does return a copy
+/// Same as modulo, but does return a copy.
 ///
 /// \param lhs Template value to add to \a rhs
 /// \param rhs Time having its value being added by \a lhs
@@ -964,7 +985,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Modulos time as milliseconds given as parameter
 ///
-/// Same as modulo, but does return a copy
+/// Same as modulo, but does return a copy.
 ///
 /// \param rhs Time having its value being added by \a rhs
 /// \param lhs Template value to add to \a lhs
@@ -990,7 +1011,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace xrn::util::TimeLiteral {
+namespace xrn::util::literal {
 
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Alias for the ::xrn::Time::createAsSeconds()
@@ -1087,8 +1108,6 @@ namespace xrn::util::TimeLiteral {
 [[ nodiscard ]] constexpr auto operator""_ns(
     long long unsigned amount
 ) -> ::xrn::Time;
-
-
 
 } // namespace xrn::util::literal
 

@@ -2,8 +2,6 @@
 
 namespace xrn::meta {
 
-
-
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Execute actions for each type
 /// \ingroup meta
@@ -111,8 +109,6 @@ template <
     > static constexpr auto hasType()
         -> bool;
 };
-
-
 
 } // namespace xrn::meta
 
