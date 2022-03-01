@@ -1,5 +1,4 @@
 #include <pch.hpp>
-#include <Ecs/Time.hpp>
 #include <Ecs/System/Detail/Meta/Function.hpp>
 
 // ------------------------------------------------------------------ Class test

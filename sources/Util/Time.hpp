@@ -26,7 +26,7 @@ namespace xrn::util {
 ///
 /// auto t1{ ::xrn::Time::createAsSeconds(0.1) };
 /// auto t2{ t1.getAsMilliseconds() }; // 100ms
-/// ::xrn::Time t3{ 30u };
+/// ::xrn::Time t3{ 30 };
 /// auto t4{ t3.getAsMicroseconds() }; // 30000ms
 /// auto t5{ ::xrn::Time::createAsNanoseconds(-800000) }; // -0.8
 /// auto t6{ t5.getAsSeconds() }; // -0.0008ms
@@ -71,7 +71,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr static auto createAsSeconds(
-        BasicTime<T>::Type amount
+        const auto& amount
     ) noexcept -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -86,7 +86,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr static auto createAsMilliseconds(
-        BasicTime<T>::Type amount
+        const auto& amount
     ) noexcept -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -101,7 +101,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr static auto createAsMicroseconds(
-        BasicTime<T>::Type amount
+        const auto& amount
     ) noexcept -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -116,7 +116,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr static auto createAsNanoseconds(
-        BasicTime<T>::Type amount
+        const auto& amount
     ) noexcept -> ::xrn::util::BasicTime<T>;
 
 
@@ -158,15 +158,6 @@ public:
     [[ nodiscard ]] constexpr auto operator<=>(
         const ::xrn::util::BasicTime<T>& rhs
     ) const
-        -> ::std::weak_ordering;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Compares with an internal representation of an ::xrn::util::Time
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] constexpr auto operator<=>(
-        const BasicTime<T>::Type& rhs
-    ) const
         -> ::std::partial_ordering;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -177,6 +168,24 @@ public:
         const auto& rhs
     ) const
         -> ::std::partial_ordering;
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Compares with an ::xrn::util::Time values
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    [[ nodiscard ]] constexpr auto operator==(
+        const ::xrn::util::BasicTime<T>& rhs
+    ) const
+        -> bool;
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Compares with any type if comparable with the internal type
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    [[ nodiscard ]] constexpr auto operator==(
+        const auto& rhs
+    ) const
+        -> bool;
 
 
 
@@ -273,7 +282,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator=(
-        const BasicTime<T>::Type& amount
+        const auto& amount
     ) -> ::xrn::util::BasicTime<T>&;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -297,7 +306,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     void set(
-        const BasicTime<T>::Type& amount
+        const auto& amount
     );
 
 
@@ -317,7 +326,7 @@ public:
     /// \return New time added with \a rhs
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator+=(
+    auto operator+=(
         const ::xrn::util::BasicTime<T>& rhs
     ) -> ::xrn::util::BasicTime<T>&;
 
@@ -329,8 +338,8 @@ public:
     /// \return New time added with \a rhs
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator+=(
-        const BasicTime<T>::Type& rhs
+    auto operator+=(
+        const auto& rhs
     ) -> ::xrn::util::BasicTime<T>&;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -363,7 +372,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto operator+(
-        const BasicTime<T>::Type& rhs
+        const auto& rhs
     ) const
         -> ::xrn::util::BasicTime<T>;
 
@@ -392,7 +401,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     void add(
-        const BasicTime<T>::Type& amount
+        const auto& amount
     );
 
 
@@ -412,7 +421,7 @@ public:
     /// \return New time added with \a rhs
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator-=(
+    auto operator-=(
         const ::xrn::util::BasicTime<T>& rhs
     ) -> ::xrn::util::BasicTime<T>&;
 
@@ -424,8 +433,8 @@ public:
     /// \return New time added with \a rhs
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator-=(
-        const BasicTime<T>::Type& rhs
+    auto operator-=(
+        const auto& rhs
     ) -> ::xrn::util::BasicTime<T>&;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -458,7 +467,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto operator-(
-        const BasicTime<T>::Type& rhs
+        const auto& rhs
     ) const
         -> ::xrn::util::BasicTime<T>;
 
@@ -476,6 +485,7 @@ public:
         const ::xrn::util::BasicTime<T>& amount
     );
 
+
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Substracts time as milliseconds given as parameter
     ///
@@ -487,7 +497,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     void sub(
-        const BasicTime<T>::Type& amount
+        const auto& amount
     );
 
 
@@ -500,18 +510,6 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Multiplicates ::xrn::util::Time given as parameter
-    ///
-    /// \param rhs Time to multiply
-    ///
-    /// \return New time added with \a rhs
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator*=(
-        const ::xrn::util::BasicTime<T>& rhs
-    ) -> ::xrn::util::BasicTime<T>&;
-
-    ///////////////////////////////////////////////////////////////////////////
     /// \brief Multiplicates time as milliseconds given as parameter
     ///
     /// \param rhs Time to multiply in milliseconds
@@ -519,26 +517,9 @@ public:
     /// \return New time added with \a rhs
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator*=(
-        const BasicTime<T>::Type& rhs
+    auto operator*=(
+        const auto& rhs
     ) -> ::xrn::util::BasicTime<T>&;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Multiplicates ::xrn::util::Time given as parameter
-    ///
-    /// Same as multiply, but does return a copy.
-    ///
-    /// \param rhs Time to multiply
-    ///
-    /// \return New time added with \a rhs
-    ///
-    /// \see mul()
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] constexpr auto operator*(
-        const ::xrn::util::BasicTime<T>& rhs
-    ) const
-        -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Multiplicates time as milliseconds given as parameter
@@ -553,23 +534,9 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto operator*(
-        const BasicTime<T>::Type& rhs
+        const auto& rhs
     ) const
         -> ::xrn::util::BasicTime<T>;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Multiplicates ::xrn::util::Time given as parameter
-    ///
-    /// Multiplicates the amount given as parameter.
-    ///
-    /// \param rhs Time to multiply
-    ///
-    /// \return New time added with \a rhs
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    void mul(
-        const ::xrn::util::BasicTime<T>& amount
-    );
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Multiplicates time as milliseconds given as parameter
@@ -582,7 +549,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     void mul(
-        const BasicTime<T>::Type& amount
+        const auto& amount
     );
 
 
@@ -595,18 +562,6 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Divides ::xrn::util::Time given as parameter
-    ///
-    /// \param rhs Time to divide
-    ///
-    /// \return New time added with \a rhs
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator/=(
-        const ::xrn::util::BasicTime<T>& rhs
-    ) -> ::xrn::util::BasicTime<T>&;
-
-    ///////////////////////////////////////////////////////////////////////////
     /// \brief Divides time as milliseconds given as parameter
     ///
     /// \param rhs Time to divide in milliseconds
@@ -614,26 +569,9 @@ public:
     /// \return New time added with \a rhs
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator/=(
-        const BasicTime<T>::Type& rhs
+    auto operator/=(
+        const auto& rhs
     ) -> ::xrn::util::BasicTime<T>&;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Divides ::xrn::util::Time given as parameter
-    ///
-    /// Same as divide, but does return a copy.
-    ///
-    /// \param rhs Time to divide
-    ///
-    /// \return New time added with \a rhs
-    ///
-    /// \see div()
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] constexpr auto operator/(
-        const ::xrn::util::BasicTime<T>& rhs
-    ) const
-        -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Divides time as milliseconds given as parameter
@@ -648,23 +586,9 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto operator/(
-        const BasicTime<T>::Type& rhs
+        const auto& rhs
     ) const
         -> ::xrn::util::BasicTime<T>;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Divides ::xrn::util::Time given as parameter
-    ///
-    /// Divides the amount given as parameter.
-    ///
-    /// \param rhs Time to divide
-    ///
-    /// \return New time added with \a rhs
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    void div(
-        const ::xrn::util::BasicTime<T>& amount
-    );
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Divides time as milliseconds given as parameter
@@ -677,7 +601,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     void div(
-        const BasicTime<T>::Type& amount
+        const auto& amount
     );
 
 
@@ -690,18 +614,6 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Modulos ::xrn::util::Time given as parameter
-    ///
-    /// \param rhs Time to modulo
-    ///
-    /// \return New time added with \a rhs
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator%=(
-        const ::xrn::util::BasicTime<T>& rhs
-    ) -> ::xrn::util::BasicTime<T>&;
-
-    ///////////////////////////////////////////////////////////////////////////
     /// \brief Modulos time as milliseconds given as parameter
     ///
     /// \param rhs Time to modulo in milliseconds
@@ -709,26 +621,9 @@ public:
     /// \return New time added with \a rhs
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] auto operator%=(
-        const BasicTime<T>::Type& rhs
+    auto operator%=(
+        const auto& rhs
     ) -> ::xrn::util::BasicTime<T>&;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Modulos ::xrn::util::Time given as parameter
-    ///
-    /// Same as modulo, but does return a copy.
-    ///
-    /// \param rhs Time to modulo
-    ///
-    /// \return New time added with \a rhs
-    ///
-    /// \see mod()
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] constexpr auto operator%(
-        const ::xrn::util::BasicTime<T>& rhs
-    ) const
-        -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Modulos time as milliseconds given as parameter
@@ -743,23 +638,9 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto operator%(
-        const BasicTime<T>::Type& rhs
+        const auto& rhs
     ) const
         -> ::xrn::util::BasicTime<T>;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Modulos ::xrn::util::Time given as parameter
-    ///
-    /// Modulos the amount given as parameter.
-    ///
-    /// \param rhs Time to modulo
-    ///
-    /// \return New time added with \a rhs
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    void mod(
-        const ::xrn::util::BasicTime<T>& amount
-    );
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Modulos time as milliseconds given as parameter
@@ -772,7 +653,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     void mod(
-        const BasicTime<T>::Type& amount
+        const auto& amount
     );
 
 
@@ -823,26 +704,6 @@ template <
 ) -> ::xrn::util::BasicTime<T>;
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Adds ::xrn::Time given as parameter
-///
-/// Same as add, but does return a copy.
-///
-/// \param lhs Time having its value being added by \a rhs
-/// \param rhs Template value to add to \a lhs
-///
-/// \return New time added with \a rhs
-///
-/// \see add()
-///
-///////////////////////////////////////////////////////////////////////////
-template <
-    typename T
-> [[ nodiscard ]] constexpr auto operator+(
-    const ::xrn::util::BasicTime<T>& lhs,
-    auto rhs
-) -> ::xrn::util::BasicTime<T>;
-
-///////////////////////////////////////////////////////////////////////////
 /// \brief Substracts ::xrn::Time given as parameter
 ///
 /// Same as substract, but does return a copy.
@@ -860,146 +721,6 @@ template <
 > [[ nodiscard ]] constexpr auto operator-(
     auto lhs,
     const ::xrn::util::BasicTime<T>& rhs
-) -> ::xrn::util::BasicTime<T>;
-
-///////////////////////////////////////////////////////////////////////////
-/// \brief Substracts ::xrn::Time given as parameter
-///
-/// Same as substract, but does return a copy.
-///
-/// \param rhs Time having its value being added by \a rhs
-/// \param lhs Template value to add to \a lhs
-///
-/// \return New time added with \a rhs
-///
-/// \see sub()
-///
-///////////////////////////////////////////////////////////////////////////
-template <
-    typename T
-> [[ nodiscard ]] constexpr auto operator-(
-    const ::xrn::util::BasicTime<T>& lhs,
-    auto rhs
-) -> ::xrn::util::BasicTime<T>;
-
-///////////////////////////////////////////////////////////////////////////
-/// \brief Multiplicates ::xrn::Time given as parameter
-///
-/// Same as multiply, but does return a copy.
-///
-/// \param lhs Template value to add to \a rhs
-/// \param rhs Time having its value being added by \a lhs
-///
-/// \return New time added with \a rhs
-///
-/// \see mul()
-///
-///////////////////////////////////////////////////////////////////////////
-template <
-    typename T
-> [[ nodiscard ]] constexpr auto operator*(
-    auto lhs,
-    const ::xrn::util::BasicTime<T>& rhs
-) -> ::xrn::util::BasicTime<T>;
-
-///////////////////////////////////////////////////////////////////////////
-/// \brief Multiplicates ::xrn::Time given as parameter
-///
-/// Same as multiply, but does return a copy.
-///
-/// \param rhs Time having its value being added by \a rhs
-/// \param lhs Template value to add to \a lhs
-///
-/// \return New time added with \a rhs
-///
-/// \see mul()
-///
-///////////////////////////////////////////////////////////////////////////
-template <
-    typename T
-> [[ nodiscard ]] constexpr auto operator*(
-    const ::xrn::util::BasicTime<T>& lhs,
-    auto rhs
-) -> ::xrn::util::BasicTime<T>;
-
-///////////////////////////////////////////////////////////////////////////
-/// \brief Divides ::xrn::Time given as parameter
-///
-/// Same as divide, but does return a copy.
-///
-/// \param lhs Template value to add to \a rhs
-/// \param rhs Time having its value being added by \a lhs
-///
-/// \return New time added with \a rhs
-///
-/// \see div()
-///
-///////////////////////////////////////////////////////////////////////////
-template <
-    typename T
-> [[ nodiscard ]] constexpr auto operator/(
-    auto lhs,
-    const ::xrn::util::BasicTime<T>& rhs
-) -> ::xrn::util::BasicTime<T>;
-
-///////////////////////////////////////////////////////////////////////////
-/// \brief Divides ::xrn::Time given as parameter
-///
-/// Same as divide, but does return a copy.
-///
-/// \param rhs Time having its value being added by \a rhs
-/// \param lhs Template value to add to \a lhs
-///
-/// \return New time added with \a rhs
-///
-/// \see div()
-///
-///////////////////////////////////////////////////////////////////////////
-template <
-    typename T
-> [[ nodiscard ]] constexpr auto operator/(
-    const ::xrn::util::BasicTime<T>& lhs,
-    auto rhs
-) -> ::xrn::util::BasicTime<T>;
-
-///////////////////////////////////////////////////////////////////////////
-/// \brief Modulos time as milliseconds given as parameter
-///
-/// Same as modulo, but does return a copy.
-///
-/// \param lhs Template value to add to \a rhs
-/// \param rhs Time having its value being added by \a lhs
-///
-/// \return New time added with \a rhs
-///
-/// \see mod()
-///
-///////////////////////////////////////////////////////////////////////////
-template <
-    typename T
-> [[ nodiscard ]] constexpr auto operator%(
-    auto lhs,
-    const ::xrn::util::BasicTime<T>& rhs
-) -> ::xrn::util::BasicTime<T>;
-
-///////////////////////////////////////////////////////////////////////////
-/// \brief Modulos time as milliseconds given as parameter
-///
-/// Same as modulo, but does return a copy.
-///
-/// \param rhs Time having its value being added by \a rhs
-/// \param lhs Template value to add to \a lhs
-///
-/// \return New time added with \a rhs
-///
-/// \see mod()
-///
-///////////////////////////////////////////////////////////////////////////
-template <
-    typename T
-> [[ nodiscard ]] constexpr auto operator%(
-    const ::xrn::util::BasicTime<T>& lhs,
-    auto rhs
 ) -> ::xrn::util::BasicTime<T>;
 
 

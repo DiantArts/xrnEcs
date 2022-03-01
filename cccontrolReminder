@@ -10,12 +10,13 @@
 <C-c> static
 <C-g> [[ nodiscard ]]
 <C-f> noexcept
-<C-n> if ()
-<C-t> for (const auto& elem : )
-<C-h> while ()
-<C-d> switch ()
-<C-b> namespace
-<C-m> ::std::cout << "" << ::std::endl
+<C-n> if () {<CR>}<Esc><Up>A
+<C-t> for (const auto& elem : ) {<CR>}<Esc><Up>A
+<C-h> while () {<CR>}<Esc><Up>A
+<C-d> switch () {<CR>// case : break;<CR>default: break;<CR>}<Esc><Up><Up><Up>A
+<C-b> <Esc>:call AppendNamespace()<CR>
+<C-x> ::std::cout << << ::std::endl;
+<C-A-x> ::std::cout << "" << ::std::endl;
 p :cnext
 P :cprevious
 y :cc

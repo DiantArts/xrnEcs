@@ -100,7 +100,7 @@ else ifeq (tests,$(findstring tests,$(MAKECMDGOALS)))
 MODE_EXT		:=	_tests
 MODE_FLAGS		:=	-g3 -O0 -DTEST=1
 ifeq "$(USE_COVERAGE)" "true"
-COVERAGE_FLAG	:=	-fprofile-arcs -ftest-coverage -fPIC --coverage
+COVERAGE_FLAG	:=	-fprofile-arcs -ftest-coverage -fPIC --coverage -fno-inline -fno-inline-small-functions -fno-default-inline
 endif
 MOD_BUILDDIR	:=	$(addsuffix /tests,$(BUILDDIR))
 NAME			:=	$(TNAME)
