@@ -1,0 +1,75 @@
+\hypertarget{ConstReference_8hpp_source}{}\doxysection{Const\+Reference.\+hpp}
+\label{ConstReference_8hpp_source}\index{sources/Ecs/Entity/ConstReference.hpp@{sources/Ecs/Entity/ConstReference.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <Ecs/Entity.hpp>}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{keyword}{namespace }xrn::ecs::component \{ \textcolor{keyword}{class }Container; \}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{class }\mbox{\hyperlink{classxrn_1_1ecs_1_1Entity_1_1ConstReference}{xrn::ecs::Entity::ConstReference}} \{}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{public}:}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15     \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ *structors}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17     \textcolor{keyword}{explicit} \mbox{\hyperlink{classxrn_1_1ecs_1_1Entity_1_1ConstReference}{ConstReference}}(}
+\DoxyCodeLine{18         const ::xrn::ecs::Entity\& entity}
+\DoxyCodeLine{19     );}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     \mbox{\hyperlink{classxrn_1_1ecs_1_1Entity_1_1ConstReference}{\string~ConstReference}}();}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25     \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ HasComponent}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27     \textcolor{keyword}{template} <}
+\DoxyCodeLine{28         ::xrn::ecs::component::ConceptType ComponentType}
+\DoxyCodeLine{29     > [[ nodiscard ]] \textcolor{keyword}{auto} hasComponent() \textcolor{keyword}{const}}
+\DoxyCodeLine{30         -\/> bool;}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32     \textcolor{keyword}{template} <}
+\DoxyCodeLine{33         ::xrn::ecs::component::ConceptType... ComponentTypes}
+\DoxyCodeLine{34     > [[ nodiscard ]] \textcolor{keyword}{auto} hasComponents() \textcolor{keyword}{const}}
+\DoxyCodeLine{35         -\/> bool;}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Signature}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     [[ nodiscard ]] \textcolor{keyword}{auto} getSignature() \textcolor{keyword}{const}}
+\DoxyCodeLine{42         -\/> const ::xrn::ecs::Signature\&;}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Id}}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     [[ nodiscard ]] \textcolor{keyword}{auto} getId() \textcolor{keyword}{const}}
+\DoxyCodeLine{49         -\/> \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{::xrn::Id}};}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Conversion}}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     [[ nodiscard ]] \textcolor{keyword}{auto} get() \textcolor{keyword}{const}}
+\DoxyCodeLine{56         -\/> const ::xrn::ecs::Entity\&;}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58     [[ nodiscard ]] \textcolor{keyword}{operator} const ::xrn::ecs::Entity\&() \textcolor{keyword}{const};}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63 \textcolor{keyword}{private}:}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     const ::xrn::ecs::Entity\& m\_entity;}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67 \};}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69 \textcolor{preprocessor}{\#include <Ecs/Entity/ConstReference.impl.hpp>}}
+
+\end{DoxyCode}

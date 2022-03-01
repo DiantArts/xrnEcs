@@ -3,7 +3,7 @@
 
 
 
-// ------------------------------------------------------------------ *structors
+// ------------------------------------------------------------------ Constructors
 
 ::xrn::ecs::Entity::ConstReference::ConstReference(
     const ::xrn::ecs::Entity& entity

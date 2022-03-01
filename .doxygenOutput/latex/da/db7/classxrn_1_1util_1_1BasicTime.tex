@@ -1,0 +1,863 @@
+\hypertarget{classxrn_1_1util_1_1BasicTime}{}\doxysection{xrn\+::util\+::Basic\+Time\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classxrn_1_1util_1_1BasicTime}\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+
+
+Representation of the time in the xrn Project.  
+
+
+
+
+{\ttfamily \#include $<$Time.\+hpp$>$}
+
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_afd6c7f9b9f71e5110318afdc3b67c70c}\label{classxrn_1_1util_1_1BasicTime_afd6c7f9b9f71e5110318afdc3b67c70c}} 
+using {\bfseries Type} = T
+\begin{DoxyCompactList}\small\item\em Type internally contained by the class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+constexpr \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a6035573b01fd39f038e339a98efd41e1}{Basic\+Time}} (auto amount) noexcept
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_adc2a7774f254663e5e68b28ece1f3138}\label{classxrn_1_1util_1_1BasicTime_adc2a7774f254663e5e68b28ece1f3138}} 
+constexpr auto {\bfseries operator$<$=$>$} (const \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&rhs) const -\/$>$ \+::std\+::partial\+\_\+ordering
+\begin{DoxyCompactList}\small\item\em Compares with an \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} values. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_add0c56909b87dfbcb25eddf32dd62322}\label{classxrn_1_1util_1_1BasicTime_add0c56909b87dfbcb25eddf32dd62322}} 
+constexpr auto {\bfseries operator$<$=$>$} (const auto \&rhs) const -\/$>$ \+::std\+::partial\+\_\+ordering
+\begin{DoxyCompactList}\small\item\em Compares with any type if comparable with the internal type. \end{DoxyCompactList}\item 
+constexpr \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a567e2bce528a2c0c10c5eb049b56ce56}{operator Basic\+Time$<$ T $>$\+::\+Type}} () noexcept
+\begin{DoxyCompactList}\small\item\em Convertion to the type internally stored. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_ae793f509d61074be2eec6786c4f5b434}{get}} () const -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{Basic\+Time}}$<$ T $>$\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_afd6c7f9b9f71e5110318afdc3b67c70c}{\+::\+Type}}
+\begin{DoxyCompactList}\small\item\em Get the value as it\textquotesingle{}s internally stored. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a2da968e0bb913697c9b81f7565a06d8d}{get\+As\+Seconds}} () const -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{Basic\+Time}}$<$ T $>$\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_afd6c7f9b9f71e5110318afdc3b67c70c}{\+::\+Type}}
+\begin{DoxyCompactList}\small\item\em Get the value as seconds. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_ab71a6e95d953177908343078d77cf97e}{get\+As\+Milliseconds}} () const -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{Basic\+Time}}$<$ T $>$\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_afd6c7f9b9f71e5110318afdc3b67c70c}{\+::\+Type}}
+\begin{DoxyCompactList}\small\item\em Get the value as milliseconds. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a9371da7edfc85545726fcdf41b793f9a}{get\+As\+Microseconds}} () const -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{Basic\+Time}}$<$ T $>$\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_afd6c7f9b9f71e5110318afdc3b67c70c}{\+::\+Type}}
+\begin{DoxyCompactList}\small\item\em Get the value as milliseconds. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_ab2ef758a54ad4457aaa126220a1117f3}{get\+As\+Nanoseconds}} () const -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{Basic\+Time}}$<$ T $>$\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_afd6c7f9b9f71e5110318afdc3b67c70c}{\+::\+Type}}
+\begin{DoxyCompactList}\small\item\em Get the value as milliseconds. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a18c51c8347417216d69e4fc22600cc7c}{operator=}} (const auto \&amount) -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&
+\begin{DoxyCompactList}\small\item\em Sets the internal point time value to a new one. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a4f9ceabbea39607101d9ad14a3691821}{set}} (const \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&amount)
+\begin{DoxyCompactList}\small\item\em Sets the internal point time value to a new one. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_abe187c7d698277d570546a8f05c98d30}{set}} (const auto \&amount)
+\begin{DoxyCompactList}\small\item\em Sets the internal point time value to a new one. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a3ed47049c5734945b09cb2fe92e95e06}{operator+=}} (const \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&rhs) -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&
+\begin{DoxyCompactList}\small\item\em Adds \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} given as parameter. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_af08ecc90cb0bc468d6eb133f7a19d43f}{operator+=}} (const auto \&rhs) -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&
+\begin{DoxyCompactList}\small\item\em Adds time as milliseconds given as parameter. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a24279e2b636093f0736d336e6e708284}{operator+}} (const \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&rhs) const -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$
+\begin{DoxyCompactList}\small\item\em Adds \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} given as parameter. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a3fa2716096416cf646210a6c104b073a}{operator+}} (const auto \&rhs) const -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$
+\begin{DoxyCompactList}\small\item\em Adds time as milliseconds given as parameter. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a06e2bd9df2d92b334b15832e979683ef}{add}} (const \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&amount)
+\begin{DoxyCompactList}\small\item\em Adds \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} given as parameter. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_aeea1e77732fbbb430bb40753ddc980c3}{add}} (const auto \&amount)
+\begin{DoxyCompactList}\small\item\em Adds time as milliseconds given as parameter. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_ab77aa70dd819a5607dbd424e3f50116d}{operator-\/=}} (const \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&rhs) -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&
+\begin{DoxyCompactList}\small\item\em Substracts \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} given as parameter. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_aad0f2b741737db6d74e22641343e3254}{operator-\/=}} (const auto \&rhs) -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&
+\begin{DoxyCompactList}\small\item\em Substracts time as milliseconds given as parameter. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a38a1aeb8c9f8053bf04c0907f598e99c}{operator-\/}} (const \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&rhs) const -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$
+\begin{DoxyCompactList}\small\item\em Substracts \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} given as parameter. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_ab95237beebeb46d794930562d0343f72}{operator-\/}} (const auto \&rhs) const -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$
+\begin{DoxyCompactList}\small\item\em Substracts time as milliseconds given as parameter. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a958ac800ec4b44b54239796c283f2153}{sub}} (const \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&amount)
+\begin{DoxyCompactList}\small\item\em Substracts \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} given as parameter. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_ab94e115cb1d62e82209b88ad46d08db2}{sub}} (const auto \&amount)
+\begin{DoxyCompactList}\small\item\em Substracts time as milliseconds given as parameter. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a0ba103a121273236d77b9c00178664e9}{operator$\ast$=}} (const auto \&rhs) -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&
+\begin{DoxyCompactList}\small\item\em Multiplicates time as milliseconds given as parameter. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_afd8080e46197a8cebbbcc18fdc356203}{operator$\ast$}} (const auto \&rhs) const -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$
+\begin{DoxyCompactList}\small\item\em Multiplicates time as milliseconds given as parameter. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_acf8c3b01b0450c1a32e196a63528f64f}{mul}} (const auto \&amount)
+\begin{DoxyCompactList}\small\item\em Multiplicates time as milliseconds given as parameter. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a2c898da350c0513175188b6d753bc71a}{operator/=}} (const auto \&rhs) -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&
+\begin{DoxyCompactList}\small\item\em Divides time as milliseconds given as parameter. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a264d001235c553016c3637d73d915210}{operator/}} (const auto \&rhs) const -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$
+\begin{DoxyCompactList}\small\item\em Divides time as milliseconds given as parameter. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_acb50cd8c23de4b5cd79ba45a35d7e596}{div}} (const auto \&amount)
+\begin{DoxyCompactList}\small\item\em Divides time as milliseconds given as parameter. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a03677078371a2f34b30ea9469422fea7}{operator\%=}} (const auto \&rhs) -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&
+\begin{DoxyCompactList}\small\item\em Modulos time as milliseconds given as parameter. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a3d946de0bd9891668a9617557ef3fbfa}{operator\%}} (const auto \&rhs) const -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$
+\begin{DoxyCompactList}\small\item\em Modulos time as milliseconds given as parameter. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a73e06b88895174b790e9769867aada83}{mod}} (const auto \&amount)
+\begin{DoxyCompactList}\small\item\em Modulos time as milliseconds given as parameter. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a8ab8aa9e65d6b9a3a6e8b24570518115}{create\+As\+Seconds}} (const auto \&amount) noexcept -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$
+\begin{DoxyCompactList}\small\item\em Constructs a \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} from a value evaluated as seconds. \end{DoxyCompactList}\item 
+static constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a53762e5ee20f7a744c767a490ccff1ed}{create\+As\+Milliseconds}} (const auto \&amount) noexcept -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$
+\begin{DoxyCompactList}\small\item\em Constructs a \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} from a value evaluated as milliseconds. \end{DoxyCompactList}\item 
+static constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a955ca084416767fd6ebe42f4b6238ad3}{create\+As\+Microseconds}} (const auto \&amount) noexcept -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$
+\begin{DoxyCompactList}\small\item\em Constructs a \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} from a value evaluated as microseconds. \end{DoxyCompactList}\item 
+static constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a330d672e5a49dd3031de70110c5ca672}{create\+As\+Nanoseconds}} (const auto \&amount) noexcept -\/$>$ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$
+\begin{DoxyCompactList}\small\item\em Constructs a \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} from a value evaluated as nanoseconds. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class xrn\+::util\+::\+Basic\+Time$<$ T $>$}
+Representation of the time in the xrn Project. 
+
+
+\begin{DoxyCodeInclude}{0}
+
+\end{DoxyCodeInclude}
+ \texorpdfstring{$<$}{<}\mbox{\hyperlink{Time_8hpp_source}{Util/\+Time.\+hpp}}\texorpdfstring{$>$}{>}
+
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}\textquotesingle{}s purpuse is to represent and uniform time manipulations accross all xrn Projects. Its usage is straight forward as it just contains a \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{Basic\+Time}} value, gettable as seconds, milliseconds or microseconds. It also is possible to perform calculations between time values. By default, xrn projects manipulate milliseconds, and if the same type as the template parameter of the calss is passed to one of the methods, it will be interpreted as such. The class can be constructed by the factories \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a8ab8aa9e65d6b9a3a6e8b24570518115}{create\+As\+Seconds()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a53762e5ee20f7a744c767a490ccff1ed}{create\+As\+Milliseconds()}} and with a constructor with the type given as template parameter. This class is mostly used by \mbox{\hyperlink{classxrn_1_1util_1_1BasicClock}{xrn\+::util\+::\+Basic\+Clock}}, but can be used manually. This class is aliased with \+::xrn\+::util\+::\+Time and \+::xrn\+::\+Time.
+
+Usage example\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{using ::xrn::util::literal::operator\textcolor{stringliteral}{"{}"{}}\_ns;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{auto} t1\{ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a8ab8aa9e65d6b9a3a6e8b24570518115}{::xrn::Time::createAsSeconds}}(0.1) \};}
+\DoxyCodeLine{\textcolor{keyword}{auto} t2\{ t1.getAsMilliseconds() \}; \textcolor{comment}{// 100ms}}
+\DoxyCodeLine{\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{::xrn::Time}} t3\{ 30 \};}
+\DoxyCodeLine{\textcolor{keyword}{auto} t4\{ t3.\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a9371da7edfc85545726fcdf41b793f9a}{getAsMicroseconds}}() \}; \textcolor{comment}{// 30000ms}}
+\DoxyCodeLine{\textcolor{keyword}{auto} t5\{ \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a330d672e5a49dd3031de70110c5ca672}{::xrn::Time::createAsNanoseconds}}(-\/800000) \}; \textcolor{comment}{// -\/0.8}}
+\DoxyCodeLine{\textcolor{keyword}{auto} t6\{ t5.getAsSeconds() \}; \textcolor{comment}{// -\/0.0008ms}}
+\DoxyCodeLine{\textcolor{keyword}{auto} t7\{ t1 + \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a8ab8aa9e65d6b9a3a6e8b24570518115}{::xrn::Time::createAsSeconds}}(t6) \}; \textcolor{comment}{// 99.2ms}}
+\DoxyCodeLine{\textcolor{keyword}{auto} t8\{ t1 + -\/800000\_ns \}; \textcolor{comment}{// 99.2ms}}
+\DoxyCodeLine{\textcolor{keyword}{auto} t9\{ t1 + t5 \}; \textcolor{comment}{// 99.2ms}}
+\DoxyCodeLine{\textcolor{keyword}{auto} t10\{ t1 + 55 \}; \textcolor{comment}{// 155ms}}
+\DoxyCodeLine{\textcolor{keyword}{auto} t11\{ 55 + t1 \}; \textcolor{comment}{// 155ms}}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicClock}{xrn\+::util\+::\+Basic\+Clock}} 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a6035573b01fd39f038e339a98efd41e1}\label{classxrn_1_1util_1_1BasicTime_a6035573b01fd39f038e339a98efd41e1}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!BasicTime@{BasicTime}}
+\index{BasicTime@{BasicTime}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{BasicTime()}{BasicTime()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+constexpr \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::\+Basic\+Time (\begin{DoxyParamCaption}\item[{auto}]{amount }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Constructor. 
+
+Constructs a \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} containing a point in time.
+
+
+\begin{DoxyParams}{Parameters}
+{\em amount} & Time in milliseconds \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a06e2bd9df2d92b334b15832e979683ef}\label{classxrn_1_1util_1_1BasicTime_a06e2bd9df2d92b334b15832e979683ef}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!add@{add}}
+\index{add@{add}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{add()}{add()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::add (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&}]{amount }\end{DoxyParamCaption})}
+
+
+
+Adds \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} given as parameter. 
+
+Adds the amount given as parameter.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Time to add\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New time added with {\itshape rhs} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_aeea1e77732fbbb430bb40753ddc980c3}\label{classxrn_1_1util_1_1BasicTime_aeea1e77732fbbb430bb40753ddc980c3}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!add@{add}}
+\index{add@{add}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{add()}{add()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::add (\begin{DoxyParamCaption}\item[{const auto \&}]{amount }\end{DoxyParamCaption})}
+
+
+
+Adds time as milliseconds given as parameter. 
+
+Adds the amount given as parameter.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Time to add in milliseconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New time added with {\itshape rhs} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a955ca084416767fd6ebe42f4b6238ad3}\label{classxrn_1_1util_1_1BasicTime_a955ca084416767fd6ebe42f4b6238ad3}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!createAsMicroseconds@{createAsMicroseconds}}
+\index{createAsMicroseconds@{createAsMicroseconds}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{createAsMicroseconds()}{createAsMicroseconds()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+static constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::create\+As\+Microseconds (\begin{DoxyParamCaption}\item[{const auto \&}]{amount }\end{DoxyParamCaption}) -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Constructs a \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} from a value evaluated as microseconds. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em amount} & Value contructed from the amount of microseconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} just created
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a8ab8aa9e65d6b9a3a6e8b24570518115}{create\+As\+Seconds()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a53762e5ee20f7a744c767a490ccff1ed}{create\+As\+Milliseconds()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a330d672e5a49dd3031de70110c5ca672}{create\+As\+Nanoseconds()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a53762e5ee20f7a744c767a490ccff1ed}\label{classxrn_1_1util_1_1BasicTime_a53762e5ee20f7a744c767a490ccff1ed}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!createAsMilliseconds@{createAsMilliseconds}}
+\index{createAsMilliseconds@{createAsMilliseconds}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{createAsMilliseconds()}{createAsMilliseconds()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+static constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::create\+As\+Milliseconds (\begin{DoxyParamCaption}\item[{const auto \&}]{amount }\end{DoxyParamCaption}) -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Constructs a \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} from a value evaluated as milliseconds. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em amount} & Value contructed from the amount of milliseconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} just created
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a8ab8aa9e65d6b9a3a6e8b24570518115}{create\+As\+Seconds()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a955ca084416767fd6ebe42f4b6238ad3}{create\+As\+Microseconds()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a330d672e5a49dd3031de70110c5ca672}{create\+As\+Nanoseconds()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a330d672e5a49dd3031de70110c5ca672}\label{classxrn_1_1util_1_1BasicTime_a330d672e5a49dd3031de70110c5ca672}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!createAsNanoseconds@{createAsNanoseconds}}
+\index{createAsNanoseconds@{createAsNanoseconds}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{createAsNanoseconds()}{createAsNanoseconds()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+static constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::create\+As\+Nanoseconds (\begin{DoxyParamCaption}\item[{const auto \&}]{amount }\end{DoxyParamCaption}) -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Constructs a \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} from a value evaluated as nanoseconds. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em amount} & Value contructed from the amount of nanoseconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} just created
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a8ab8aa9e65d6b9a3a6e8b24570518115}{create\+As\+Seconds()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a53762e5ee20f7a744c767a490ccff1ed}{create\+As\+Milliseconds()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a330d672e5a49dd3031de70110c5ca672}{create\+As\+Nanoseconds()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a8ab8aa9e65d6b9a3a6e8b24570518115}\label{classxrn_1_1util_1_1BasicTime_a8ab8aa9e65d6b9a3a6e8b24570518115}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!createAsSeconds@{createAsSeconds}}
+\index{createAsSeconds@{createAsSeconds}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{createAsSeconds()}{createAsSeconds()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+static constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::create\+As\+Seconds (\begin{DoxyParamCaption}\item[{const auto \&}]{amount }\end{DoxyParamCaption}) -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Constructs a \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} from a value evaluated as seconds. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em amount} & Value contructed from the amount of seconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} just created
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a53762e5ee20f7a744c767a490ccff1ed}{create\+As\+Milliseconds()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a955ca084416767fd6ebe42f4b6238ad3}{create\+As\+Microseconds()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a330d672e5a49dd3031de70110c5ca672}{create\+As\+Nanoseconds()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_acb50cd8c23de4b5cd79ba45a35d7e596}\label{classxrn_1_1util_1_1BasicTime_acb50cd8c23de4b5cd79ba45a35d7e596}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!div@{div}}
+\index{div@{div}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{div()}{div()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::div (\begin{DoxyParamCaption}\item[{const auto \&}]{amount }\end{DoxyParamCaption})}
+
+
+
+Divides time as milliseconds given as parameter. 
+
+Divides the amount given as parameter.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Time to divide in milliseconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New time added with {\itshape rhs} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_ae793f509d61074be2eec6786c4f5b434}\label{classxrn_1_1util_1_1BasicTime_ae793f509d61074be2eec6786c4f5b434}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!get@{get}}
+\index{get@{get}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::get (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{Basic\+Time}}$<$ T $>$\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_afd6c7f9b9f71e5110318afdc3b67c70c}{\+::\+Type}}\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+Get the value as it\textquotesingle{}s internally stored. 
+
+\begin{DoxyReturn}{Returns}
+Time in milliseconds
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_ab71a6e95d953177908343078d77cf97e}{get\+As\+Milliseconds()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a9371da7edfc85545726fcdf41b793f9a}\label{classxrn_1_1util_1_1BasicTime_a9371da7edfc85545726fcdf41b793f9a}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!getAsMicroseconds@{getAsMicroseconds}}
+\index{getAsMicroseconds@{getAsMicroseconds}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getAsMicroseconds()}{getAsMicroseconds()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::get\+As\+Microseconds (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{Basic\+Time}}$<$ T $>$\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_afd6c7f9b9f71e5110318afdc3b67c70c}{\+::\+Type}}\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+Get the value as milliseconds. 
+
+\begin{DoxyReturn}{Returns}
+Value as second as the internally stored type
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_ae793f509d61074be2eec6786c4f5b434}{get()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a2da968e0bb913697c9b81f7565a06d8d}{get\+As\+Seconds()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_ab71a6e95d953177908343078d77cf97e}{get\+As\+Milliseconds()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_ab2ef758a54ad4457aaa126220a1117f3}{get\+As\+Nanoseconds()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_ab71a6e95d953177908343078d77cf97e}\label{classxrn_1_1util_1_1BasicTime_ab71a6e95d953177908343078d77cf97e}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!getAsMilliseconds@{getAsMilliseconds}}
+\index{getAsMilliseconds@{getAsMilliseconds}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getAsMilliseconds()}{getAsMilliseconds()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::get\+As\+Milliseconds (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{Basic\+Time}}$<$ T $>$\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_afd6c7f9b9f71e5110318afdc3b67c70c}{\+::\+Type}}\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+Get the value as milliseconds. 
+
+\begin{DoxyReturn}{Returns}
+Value as second as the internally stored type
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_ae793f509d61074be2eec6786c4f5b434}{get()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a2da968e0bb913697c9b81f7565a06d8d}{get\+As\+Seconds()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a9371da7edfc85545726fcdf41b793f9a}{get\+As\+Microseconds()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_ab2ef758a54ad4457aaa126220a1117f3}{get\+As\+Nanoseconds()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_ab2ef758a54ad4457aaa126220a1117f3}\label{classxrn_1_1util_1_1BasicTime_ab2ef758a54ad4457aaa126220a1117f3}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!getAsNanoseconds@{getAsNanoseconds}}
+\index{getAsNanoseconds@{getAsNanoseconds}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getAsNanoseconds()}{getAsNanoseconds()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::get\+As\+Nanoseconds (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{Basic\+Time}}$<$ T $>$\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_afd6c7f9b9f71e5110318afdc3b67c70c}{\+::\+Type}}\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+Get the value as milliseconds. 
+
+\begin{DoxyReturn}{Returns}
+Value as second as the internally stored type
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_ae793f509d61074be2eec6786c4f5b434}{get()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a2da968e0bb913697c9b81f7565a06d8d}{get\+As\+Seconds()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_ab71a6e95d953177908343078d77cf97e}{get\+As\+Milliseconds()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a9371da7edfc85545726fcdf41b793f9a}{get\+As\+Microseconds()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a2da968e0bb913697c9b81f7565a06d8d}\label{classxrn_1_1util_1_1BasicTime_a2da968e0bb913697c9b81f7565a06d8d}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!getAsSeconds@{getAsSeconds}}
+\index{getAsSeconds@{getAsSeconds}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getAsSeconds()}{getAsSeconds()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::get\+As\+Seconds (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{Basic\+Time}}$<$ T $>$\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_afd6c7f9b9f71e5110318afdc3b67c70c}{\+::\+Type}}\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+Get the value as seconds. 
+
+\begin{DoxyReturn}{Returns}
+Value as second as the internally stored type
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_ae793f509d61074be2eec6786c4f5b434}{get()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_ab71a6e95d953177908343078d77cf97e}{get\+As\+Milliseconds()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a9371da7edfc85545726fcdf41b793f9a}{get\+As\+Microseconds()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_ab2ef758a54ad4457aaa126220a1117f3}{get\+As\+Nanoseconds()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a73e06b88895174b790e9769867aada83}\label{classxrn_1_1util_1_1BasicTime_a73e06b88895174b790e9769867aada83}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!mod@{mod}}
+\index{mod@{mod}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{mod()}{mod()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::mod (\begin{DoxyParamCaption}\item[{const auto \&}]{amount }\end{DoxyParamCaption})}
+
+
+
+Modulos time as milliseconds given as parameter. 
+
+Modulos the amount given as parameter.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Time to modulo in milliseconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New time added with {\itshape rhs} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_acf8c3b01b0450c1a32e196a63528f64f}\label{classxrn_1_1util_1_1BasicTime_acf8c3b01b0450c1a32e196a63528f64f}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!mul@{mul}}
+\index{mul@{mul}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{mul()}{mul()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::mul (\begin{DoxyParamCaption}\item[{const auto \&}]{amount }\end{DoxyParamCaption})}
+
+
+
+Multiplicates time as milliseconds given as parameter. 
+
+Multiplicates the amount given as parameter.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Time to multiply in milliseconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New time added with {\itshape rhs} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a567e2bce528a2c0c10c5eb049b56ce56}\label{classxrn_1_1util_1_1BasicTime_a567e2bce528a2c0c10c5eb049b56ce56}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!operator BasicTime$<$ T $>$::Type@{operator BasicTime$<$ T $>$::Type}}
+\index{operator BasicTime$<$ T $>$::Type@{operator BasicTime$<$ T $>$::Type}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator BasicTime$<$ T $>$::Type()}{operator BasicTime< T >::Type()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+constexpr \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::operator \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{Basic\+Time}}$<$ T $>$\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_afd6c7f9b9f71e5110318afdc3b67c70c}{\+::\+Type}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Convertion to the type internally stored. 
+
+\begin{DoxyReturn}{Returns}
+Time in milliseconds
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_ae793f509d61074be2eec6786c4f5b434}{get()}}, \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_ab71a6e95d953177908343078d77cf97e}{get\+As\+Milliseconds()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a3d946de0bd9891668a9617557ef3fbfa}\label{classxrn_1_1util_1_1BasicTime_a3d946de0bd9891668a9617557ef3fbfa}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!operator\%@{operator\%}}
+\index{operator\%@{operator\%}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator\%()}{operator\%()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::operator\% (\begin{DoxyParamCaption}\item[{const auto \&}]{rhs }\end{DoxyParamCaption}) const -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+Modulos time as milliseconds given as parameter. 
+
+Same as modulo, but does return a copy.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Time to modulo in milliseconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New time added with {\itshape rhs} 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a73e06b88895174b790e9769867aada83}{mod()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a03677078371a2f34b30ea9469422fea7}\label{classxrn_1_1util_1_1BasicTime_a03677078371a2f34b30ea9469422fea7}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!operator\%=@{operator\%=}}
+\index{operator\%=@{operator\%=}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator\%=()}{operator\%=()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::operator\%= (\begin{DoxyParamCaption}\item[{const auto \&}]{rhs }\end{DoxyParamCaption}) -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&}
+
+
+
+Modulos time as milliseconds given as parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Time to modulo in milliseconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New time added with {\itshape rhs} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_afd8080e46197a8cebbbcc18fdc356203}\label{classxrn_1_1util_1_1BasicTime_afd8080e46197a8cebbbcc18fdc356203}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$()}{operator*()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::operator$\ast$ (\begin{DoxyParamCaption}\item[{const auto \&}]{rhs }\end{DoxyParamCaption}) const -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+Multiplicates time as milliseconds given as parameter. 
+
+Same as multiply, but does return a copy.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Time to multiply in milliseconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New time added with {\itshape rhs} 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_acf8c3b01b0450c1a32e196a63528f64f}{mul()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a0ba103a121273236d77b9c00178664e9}\label{classxrn_1_1util_1_1BasicTime_a0ba103a121273236d77b9c00178664e9}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!operator$\ast$=@{operator$\ast$=}}
+\index{operator$\ast$=@{operator$\ast$=}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$=()}{operator*=()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::operator$\ast$= (\begin{DoxyParamCaption}\item[{const auto \&}]{rhs }\end{DoxyParamCaption}) -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&}
+
+
+
+Multiplicates time as milliseconds given as parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Time to multiply in milliseconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New time added with {\itshape rhs} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a24279e2b636093f0736d336e6e708284}\label{classxrn_1_1util_1_1BasicTime_a24279e2b636093f0736d336e6e708284}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!operator+@{operator+}}
+\index{operator+@{operator+}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::operator+ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&}]{rhs }\end{DoxyParamCaption}) const -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+Adds \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} given as parameter. 
+
+Same as add, but does return a copy.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Time to add\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New time added with {\itshape rhs} 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a06e2bd9df2d92b334b15832e979683ef}{add()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a3fa2716096416cf646210a6c104b073a}\label{classxrn_1_1util_1_1BasicTime_a3fa2716096416cf646210a6c104b073a}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!operator+@{operator+}}
+\index{operator+@{operator+}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::operator+ (\begin{DoxyParamCaption}\item[{const auto \&}]{rhs }\end{DoxyParamCaption}) const -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+Adds time as milliseconds given as parameter. 
+
+Same as add, but does return a copy.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Time to add in milliseconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New time added with {\itshape rhs} 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a06e2bd9df2d92b334b15832e979683ef}{add()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a3ed47049c5734945b09cb2fe92e95e06}\label{classxrn_1_1util_1_1BasicTime_a3ed47049c5734945b09cb2fe92e95e06}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator+=()}{operator+=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::operator+= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&}]{rhs }\end{DoxyParamCaption}) -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&}
+
+
+
+Adds \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} given as parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Time to add\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New time added with {\itshape rhs} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_af08ecc90cb0bc468d6eb133f7a19d43f}\label{classxrn_1_1util_1_1BasicTime_af08ecc90cb0bc468d6eb133f7a19d43f}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator+=()}{operator+=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::operator+= (\begin{DoxyParamCaption}\item[{const auto \&}]{rhs }\end{DoxyParamCaption}) -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&}
+
+
+
+Adds time as milliseconds given as parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Time to add in milliseconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New time added with {\itshape rhs} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a38a1aeb8c9f8053bf04c0907f598e99c}\label{classxrn_1_1util_1_1BasicTime_a38a1aeb8c9f8053bf04c0907f598e99c}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::operator-\/ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&}]{rhs }\end{DoxyParamCaption}) const -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+Substracts \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} given as parameter. 
+
+Same as substract, but does return a copy.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Time to substract\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New time added with {\itshape rhs} 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a958ac800ec4b44b54239796c283f2153}{sub()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_ab95237beebeb46d794930562d0343f72}\label{classxrn_1_1util_1_1BasicTime_ab95237beebeb46d794930562d0343f72}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::operator-\/ (\begin{DoxyParamCaption}\item[{const auto \&}]{rhs }\end{DoxyParamCaption}) const -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+Substracts time as milliseconds given as parameter. 
+
+Same as substract, but does return a copy.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Time to substract in milliseconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New time added with {\itshape rhs} 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a958ac800ec4b44b54239796c283f2153}{sub()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_ab77aa70dd819a5607dbd424e3f50116d}\label{classxrn_1_1util_1_1BasicTime_ab77aa70dd819a5607dbd424e3f50116d}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!operator-\/=@{operator-\/=}}
+\index{operator-\/=@{operator-\/=}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator-\/=()}{operator-=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::operator-\/= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&}]{rhs }\end{DoxyParamCaption}) -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&}
+
+
+
+Substracts \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} given as parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Time to substract\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New time added with {\itshape rhs} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_aad0f2b741737db6d74e22641343e3254}\label{classxrn_1_1util_1_1BasicTime_aad0f2b741737db6d74e22641343e3254}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!operator-\/=@{operator-\/=}}
+\index{operator-\/=@{operator-\/=}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator-\/=()}{operator-=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::operator-\/= (\begin{DoxyParamCaption}\item[{const auto \&}]{rhs }\end{DoxyParamCaption}) -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&}
+
+
+
+Substracts time as milliseconds given as parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Time to substract in milliseconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New time added with {\itshape rhs} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a264d001235c553016c3637d73d915210}\label{classxrn_1_1util_1_1BasicTime_a264d001235c553016c3637d73d915210}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!operator/@{operator/}}
+\index{operator/@{operator/}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator/()}{operator/()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+constexpr auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::operator/ (\begin{DoxyParamCaption}\item[{const auto \&}]{rhs }\end{DoxyParamCaption}) const -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+Divides time as milliseconds given as parameter. 
+
+Same as divide, but does return a copy.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Time to divide in milliseconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New time added with {\itshape rhs} 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_acb50cd8c23de4b5cd79ba45a35d7e596}{div()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a2c898da350c0513175188b6d753bc71a}\label{classxrn_1_1util_1_1BasicTime_a2c898da350c0513175188b6d753bc71a}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!operator/=@{operator/=}}
+\index{operator/=@{operator/=}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator/=()}{operator/=()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::operator/= (\begin{DoxyParamCaption}\item[{const auto \&}]{rhs }\end{DoxyParamCaption}) -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&}
+
+
+
+Divides time as milliseconds given as parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Time to divide in milliseconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New time added with {\itshape rhs} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a18c51c8347417216d69e4fc22600cc7c}\label{classxrn_1_1util_1_1BasicTime_a18c51c8347417216d69e4fc22600cc7c}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+auto \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::operator= (\begin{DoxyParamCaption}\item[{const auto \&}]{amount }\end{DoxyParamCaption}) -\/$>$  \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&}
+
+
+
+Sets the internal point time value to a new one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em amount} & New time in milliseconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+$\ast$this reassigned
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a4f9ceabbea39607101d9ad14a3691821}{set()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a4f9ceabbea39607101d9ad14a3691821}\label{classxrn_1_1util_1_1BasicTime_a4f9ceabbea39607101d9ad14a3691821}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!set@{set}}
+\index{set@{set}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{set()}{set()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::set (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&}]{amount }\end{DoxyParamCaption})}
+
+
+
+Sets the internal point time value to a new one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em amount} & New time in milliseconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a18c51c8347417216d69e4fc22600cc7c}{operator=()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_abe187c7d698277d570546a8f05c98d30}\label{classxrn_1_1util_1_1BasicTime_abe187c7d698277d570546a8f05c98d30}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!set@{set}}
+\index{set@{set}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{set()}{set()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::set (\begin{DoxyParamCaption}\item[{const auto \&}]{amount }\end{DoxyParamCaption})}
+
+
+
+Sets the internal point time value to a new one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em amount} & New time in milliseconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classxrn_1_1util_1_1BasicTime_a18c51c8347417216d69e4fc22600cc7c}{operator=()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_a958ac800ec4b44b54239796c283f2153}\label{classxrn_1_1util_1_1BasicTime_a958ac800ec4b44b54239796c283f2153}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!sub@{sub}}
+\index{sub@{sub}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{sub()}{sub()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::sub (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{\+::xrn\+::util\+::\+Basic\+Time}}$<$ T $>$ \&}]{amount }\end{DoxyParamCaption})}
+
+
+
+Substracts \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}} given as parameter. 
+
+Substracts the amount given as parameter.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Time to substract\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New time added with {\itshape rhs} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classxrn_1_1util_1_1BasicTime_ab94e115cb1d62e82209b88ad46d08db2}\label{classxrn_1_1util_1_1BasicTime_ab94e115cb1d62e82209b88ad46d08db2}} 
+\index{xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}!sub@{sub}}
+\index{sub@{sub}!xrn::util::BasicTime$<$ T $>$@{xrn::util::BasicTime$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{sub()}{sub()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classxrn_1_1util_1_1BasicTime}{xrn\+::util\+::\+Basic\+Time}}$<$ T $>$\+::sub (\begin{DoxyParamCaption}\item[{const auto \&}]{amount }\end{DoxyParamCaption})}
+
+
+
+Substracts time as milliseconds given as parameter. 
+
+Substracts the amount given as parameter.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Time to substract in milliseconds\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New time added with {\itshape rhs} 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+sources/\+Util/Time.\+hpp\end{DoxyCompactItemize}

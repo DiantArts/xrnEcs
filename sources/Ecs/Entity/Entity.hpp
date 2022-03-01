@@ -107,7 +107,7 @@ public:
 
 private:
 
-    static inline ::xrn::Id m_IdGiver{};
+    static inline ::xrn::Id m_IdGiver{ 0 };
     ::xrn::Id m_id{ ++m_IdGiver };
 
     ::xrn::ecs::Signature m_signature{};

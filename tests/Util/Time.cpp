@@ -62,18 +62,22 @@ BOOST_AUTO_TEST_CASE(Compares)
     BOOST_TEST((t1 == t2));
     BOOST_TEST((t1 == t3));
     BOOST_TEST((t1 == t4));
+    BOOST_TEST((t4 == t1));
     BOOST_TEST((t1 >= t5));
     BOOST_TEST((t1 > t5));
     BOOST_TEST((t5 <= t1));
     BOOST_TEST((t5 < t1));
     BOOST_TEST((t5 != t1));
+    BOOST_TEST((t1 != t5));
 
     BOOST_TEST((t1 == t6));
+    BOOST_TEST((t6 == t1));
     BOOST_TEST((t6 >= t5));
     BOOST_TEST((t6 > t5));
     BOOST_TEST((t5 <= t6));
     BOOST_TEST((t5 < t6));
     BOOST_TEST((t5 != t6));
+    BOOST_TEST((t6 != t5));
 }
 
 BOOST_AUTO_TEST_CASE(GettersSetters)

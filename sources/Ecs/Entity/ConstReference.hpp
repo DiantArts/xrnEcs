@@ -12,7 +12,7 @@ class xrn::ecs::Entity::ConstReference {
 
 public:
 
-    // ------------------------------------------------------------------ *structors
+    // ------------------------------------------------------------------ Constructors
 
     explicit ConstReference(
         const ::xrn::ecs::Entity& entity

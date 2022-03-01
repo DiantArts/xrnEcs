@@ -5,7 +5,7 @@
 #include <Ecs/Entity/Container.hpp>
 
 
-// ------------------------------------------------------------------ *structors
+// ------------------------------------------------------------------ Constructors
 
 ::xrn::ecs::entity::Container::Container(
     ::xrn::ecs::component::Container& components

@@ -1,0 +1,19 @@
+\hypertarget{System_8hpp_source}{}\doxysection{System.\+hpp}
+\label{System_8hpp_source}\index{sources/Ecs/System.hpp@{sources/Ecs/System.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <Ecs/System/System.hpp>}}
+\DoxyCodeLine{4 \textcolor{keyword}{namespace }xrn::ecs \{}
+\DoxyCodeLine{5     \textcolor{keyword}{template} <}
+\DoxyCodeLine{6         \textcolor{keyword}{auto} function,}
+\DoxyCodeLine{7         ::xrn::ecs::component::ConceptType... BanishedComponentTypes}
+\DoxyCodeLine{8     > \textcolor{keyword}{using} System = \mbox{\hyperlink{classxrn_1_1ecs_1_1system_1_1System}{::xrn::ecs::system::System}}<function, BanishedComponentTypes...>;}
+\DoxyCodeLine{9 \}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <Ecs/System/Container.hpp>}}
+
+\end{DoxyCode}
