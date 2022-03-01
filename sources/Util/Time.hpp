@@ -8,9 +8,9 @@ namespace xrn::util {
 ///
 /// \include Time.hpp <Util/Time.hpp>
 ///
-/// ::xrn::util::Time's purpuse is to represent and uniform time manipulations
+/// ::xrn::util::BasicTime's purpuse is to represent and uniform time manipulations
 /// accross all xrn Projects.
-/// Its usage is straight forward as it just contains a Time value, gettable
+/// Its usage is straight forward as it just contains a BasicTime value, gettable
 /// as seconds, milliseconds or microseconds. It also is possible to perform
 /// calculations between time values. By default, xrn projects manipulate
 /// milliseconds, and if the same type as the template parameter of the calss
@@ -18,7 +18,8 @@ namespace xrn::util {
 /// The class can be constructed by the factories createAsSeconds(),
 /// createAsMilliseconds() and with a constructor with the type given as
 /// template parameter.
-/// This class is mostly used by ::xrn::util::Clock, but can be used manually.
+/// This class is mostly used by ::xrn::util::BasicClock, but can be used manually.
+/// This class is aliased with ::xrn::util::Time and ::xrn::Time.
 ///
 /// Usage example:
 /// \code
@@ -37,7 +38,7 @@ namespace xrn::util {
 /// auto t11{ 55 + t1 }; // 155ms
 /// \endcode
 ///
-/// \see ::xrn::util::Clock
+/// \see ::xrn::util::BasicClock
 ///
 ///////////////////////////////////////////////////////////////////////////
 template <
@@ -60,11 +61,11 @@ public:
     using Type = T;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Constructs a ::xrn::util::Time from a value evaluated as seconds
+    /// \brief Constructs a ::xrn::util::BasicTime from a value evaluated as seconds
     ///
     /// \param amount Value contructed from the amount of seconds
     ///
-    /// \return ::xrn::util::Time just created
+    /// \return ::xrn::util::BasicTime just created
     ///
     /// \see createAsMilliseconds(), createAsMicroseconds(),
     /// createAsNanoseconds()
@@ -75,12 +76,12 @@ public:
     ) noexcept -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Constructs a ::xrn::util::Time from a value evaluated as
+    /// \brief Constructs a ::xrn::util::BasicTime from a value evaluated as
     /// milliseconds
     ///
     /// \param amount Value contructed from the amount of milliseconds
     ///
-    /// \return ::xrn::util::Time just created
+    /// \return ::xrn::util::BasicTime just created
     ///
     /// \see createAsSeconds(), createAsMicroseconds(), createAsNanoseconds()
     ///
@@ -90,12 +91,12 @@ public:
     ) noexcept -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Constructs a ::xrn::util::Time from a value evaluated as
+    /// \brief Constructs a ::xrn::util::BasicTime from a value evaluated as
     /// microseconds
     ///
     /// \param amount Value contructed from the amount of microseconds
     ///
-    /// \return ::xrn::util::Time just created
+    /// \return ::xrn::util::BasicTime just created
     ///
     /// \see createAsSeconds(), createAsMilliseconds(), createAsNanoseconds()
     ///
@@ -105,12 +106,12 @@ public:
     ) noexcept -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Constructs a ::xrn::util::Time from a value evaluated as
+    /// \brief Constructs a ::xrn::util::BasicTime from a value evaluated as
     /// nanoseconds
     ///
     /// \param amount Value contructed from the amount of nanoseconds
     ///
-    /// \return ::xrn::util::Time just created
+    /// \return ::xrn::util::BasicTime just created
     ///
     /// \see createAsSeconds(), createAsMilliseconds(), createAsNanoseconds()
     ///
@@ -125,7 +126,7 @@ public:
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
-    // *structors
+    // Constructors
     //
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -133,7 +134,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Constructor
     ///
-    /// Constructs a ::xrn::util::Time containing a point in time.
+    /// Constructs a ::xrn::util::BasicTime containing a point in time.
     ///
     /// \param amount Time in milliseconds
     ///
@@ -152,7 +153,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Compares with an ::xrn::util::Time values
+    /// \brief Compares with an ::xrn::util::BasicTime values
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto operator<=>(
@@ -168,24 +169,6 @@ public:
         const auto& rhs
     ) const
         -> ::std::partial_ordering;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Compares with an ::xrn::util::Time values
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] constexpr auto operator==(
-        const ::xrn::util::BasicTime<T>& rhs
-    ) const
-        -> bool;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Compares with any type if comparable with the internal type
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] constexpr auto operator==(
-        const auto& rhs
-    ) const
-        -> bool;
 
 
 
@@ -204,7 +187,7 @@ public:
     /// \see get(), getAsMilliseconds()
     ///
     ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] constexpr operator BasicTime<T>::Type() noexcept;
+    [[ nodiscard ]] constexpr operator BasicTime<T>::Type() const noexcept;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Get the value as it's internally stored
@@ -319,7 +302,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Adds ::xrn::util::Time given as parameter
+    /// \brief Adds ::xrn::util::BasicTime given as parameter
     ///
     /// \param rhs Time to add
     ///
@@ -343,7 +326,7 @@ public:
     ) -> ::xrn::util::BasicTime<T>&;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Adds ::xrn::util::Time given as parameter
+    /// \brief Adds ::xrn::util::BasicTime given as parameter
     ///
     /// Same as add, but does return a copy.
     ///
@@ -377,7 +360,7 @@ public:
         -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Adds ::xrn::util::Time given as parameter
+    /// \brief Adds ::xrn::util::BasicTime given as parameter
     ///
     /// Adds the amount given as parameter.
     ///
@@ -414,7 +397,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Substracts ::xrn::util::Time given as parameter
+    /// \brief Substracts ::xrn::util::BasicTime given as parameter
     ///
     /// \param rhs Time to substract
     ///
@@ -438,7 +421,7 @@ public:
     ) -> ::xrn::util::BasicTime<T>&;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Substracts ::xrn::util::Time given as parameter
+    /// \brief Substracts ::xrn::util::BasicTime given as parameter
     ///
     /// Same as substract, but does return a copy.
     ///
@@ -472,7 +455,7 @@ public:
         -> ::xrn::util::BasicTime<T>;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Substracts ::xrn::util::Time given as parameter
+    /// \brief Substracts ::xrn::util::BasicTime given as parameter
     ///
     /// Substracts the amount given as parameter.
     ///
@@ -699,7 +682,7 @@ namespace xrn { using Time = ::xrn::util::Time; }
 template <
     typename T
 > [[ nodiscard ]] constexpr auto operator+(
-    auto lhs,
+    const auto& lhs,
     const ::xrn::util::BasicTime<T>& rhs
 ) -> ::xrn::util::BasicTime<T>;
 
@@ -719,7 +702,7 @@ template <
 template <
     typename T
 > [[ nodiscard ]] constexpr auto operator-(
-    auto lhs,
+    const auto& lhs,
     const ::xrn::util::BasicTime<T>& rhs
 ) -> ::xrn::util::BasicTime<T>;
 

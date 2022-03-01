@@ -1,0 +1,114 @@
+\hypertarget{Id_8hpp_source}{}\doxysection{Id.\+hpp}
+\label{Id_8hpp_source}\index{sources/Util/Id.hpp@{sources/Util/Id.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{keyword}{namespace }xrn::util \{}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{21 \textcolor{keyword}{template} <}
+\DoxyCodeLine{22     \textcolor{keyword}{typename} T}
+\DoxyCodeLine{23 > \textcolor{keyword}{class }\mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{BasicForwardId}} \{}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{keyword}{public}:}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{29     \textcolor{comment}{// static elements}}
+\DoxyCodeLine{30     \textcolor{comment}{//}}
+\DoxyCodeLine{33 \textcolor{comment}{}}
+\DoxyCodeLine{38     \textcolor{keyword}{using} \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId_a5b39e24b25d949aa330de6d6f99f84eb}{Type}} = T;}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{44     \textcolor{keyword}{struct }Hasher;}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46 \textcolor{keyword}{public}:}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{50     \textcolor{comment}{// *structors}}
+\DoxyCodeLine{51     \textcolor{comment}{//}}
+\DoxyCodeLine{54 \textcolor{comment}{}}
+\DoxyCodeLine{63     \textcolor{keyword}{explicit} \textcolor{keyword}{constexpr} \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId_a9e2219611e405a16e6ba8becaaabf60b}{BasicForwardId}}() noexcept;}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     constexpr \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{BasicForwardId}}(}
+\DoxyCodeLine{66         ::std::integral auto baseValue}
+\DoxyCodeLine{67     ) noexcept;}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70 }
+\DoxyCodeLine{73     \textcolor{comment}{// Rule of 5}}
+\DoxyCodeLine{74     \textcolor{comment}{//}}
+\DoxyCodeLine{77 \textcolor{comment}{}}
+\DoxyCodeLine{78     constexpr \string~\mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{BasicForwardId}}() noexcept;}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80     constexpr \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{BasicForwardId}}(}
+\DoxyCodeLine{81         const ::xrn::util::\mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{BasicForwardId}}<T>\& other}
+\DoxyCodeLine{82     ) noexcept;}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84     constexpr auto operator=(}
+\DoxyCodeLine{85         const ::xrn::util::\mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{BasicForwardId}}<T>\& other}
+\DoxyCodeLine{86     ) noexcept}
+\DoxyCodeLine{87         -\/> ::xrn::util::\mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{BasicForwardId}}<T>\&;}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89     constexpr \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{BasicForwardId}}(}
+\DoxyCodeLine{90         ::xrn::util::\mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{BasicForwardId}}<T>\&\& other}
+\DoxyCodeLine{91     ) noexcept;}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93     constexpr auto operator=(}
+\DoxyCodeLine{94         ::xrn::util::\mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{BasicForwardId}}<T>\&\& other}
+\DoxyCodeLine{95     ) noexcept}
+\DoxyCodeLine{96         -\/> ::xrn::util::\mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{BasicForwardId}}<T>\&;}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99 }
+\DoxyCodeLine{102     \textcolor{comment}{// Getters}}
+\DoxyCodeLine{103     \textcolor{comment}{//}}
+\DoxyCodeLine{106 \textcolor{comment}{}}
+\DoxyCodeLine{107     [[ nodiscard ]] constexpr auto get() const}
+\DoxyCodeLine{108         -\/> \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{BasicForwardId}}::\mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId_a5b39e24b25d949aa330de6d6f99f84eb}{Type}};}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110     [[ nodiscard ]] constexpr auto getAsString() const}
+\DoxyCodeLine{111         -\/> ::std::\textcolor{keywordtype}{string};}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113     [[ nodiscard ]] constexpr operator \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{BasicForwardId}}::\mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId_a5b39e24b25d949aa330de6d6f99f84eb}{Type}}() const;}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115     [[ nodiscard ]] operator ::std::\textcolor{keywordtype}{string}() const;}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117 }
+\DoxyCodeLine{120     \textcolor{comment}{// Operations}}
+\DoxyCodeLine{121     \textcolor{comment}{//}}
+\DoxyCodeLine{124 \textcolor{comment}{}}
+\DoxyCodeLine{125     constexpr auto operator=(}
+\DoxyCodeLine{126         \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{BasicForwardId}}::\mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId_a5b39e24b25d949aa330de6d6f99f84eb}{Type}} value}
+\DoxyCodeLine{127     ) -\/> ::xrn::util::\mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{BasicForwardId}}<T>\&;}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129     constexpr auto operator++()}
+\DoxyCodeLine{130         -\/> ::xrn::util::\mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{BasicForwardId}}<T>\&;}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132     [[ nodiscard ]] constexpr auto operator++(}
+\DoxyCodeLine{133         \textcolor{keywordtype}{int}}
+\DoxyCodeLine{134     ) -\/> ::xrn::util::\mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{BasicForwardId}}<T>;}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136     constexpr \textcolor{keywordtype}{void} increment();}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138     [[ nodiscard ]] constexpr auto operator<=>(}
+\DoxyCodeLine{139         const ::xrn::util::\mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{BasicForwardId}}<T>\& other}
+\DoxyCodeLine{140     ) -\/> ::std::strong\_ordering;}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144 private:}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146     \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{BasicForwardId}}::\mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId_a5b39e24b25d949aa330de6d6f99f84eb}{Type}} m\_value\{ 0 \};}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148 \};}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151 }
+\DoxyCodeLine{152 \} \textcolor{comment}{// namespace xrn::util}}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154 \textcolor{preprocessor}{\#include <Util/Id.impl.hpp>}}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157 }
+\DoxyCodeLine{159 \textcolor{comment}{// Template specialization}}
+\DoxyCodeLine{161 \textcolor{comment}{}\textcolor{keyword}{namespace }xrn::util \{ \textcolor{keyword}{using} Id = \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{::xrn::util::BasicForwardId<::std::size\_t>}}; \}}
+\DoxyCodeLine{162 \textcolor{keyword}{namespace }xrn \{ \textcolor{keyword}{using} Id = \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{::xrn::util::Id}}; \}}
+
+\end{DoxyCode}

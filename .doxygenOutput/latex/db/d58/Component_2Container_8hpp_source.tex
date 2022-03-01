@@ -1,0 +1,164 @@
+\hypertarget{Component_2Container_8hpp_source}{}\doxysection{Container.\+hpp}
+\label{Component_2Container_8hpp_source}\index{sources/Ecs/Component/Container.hpp@{sources/Ecs/Component/Container.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <Util/Id.hpp>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <Ecs/AComponent.hpp>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <Meta/UniqueTypes.hpp>}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{keyword}{namespace }xrn::ecs::component \{}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{class }\mbox{\hyperlink{classxrn_1_1ecs_1_1component_1_1Container}{Container}} \{}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15 \textcolor{keyword}{public}:}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17     \textcolor{keyword}{template} <}
+\DoxyCodeLine{18         ::xrn::ecs::component::ConceptType ComponentType}
+\DoxyCodeLine{19     > \textcolor{keyword}{using} SubContainerType = ::std::vector<std::remove\_cvref\_t<ComponentType>>;}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     \textcolor{comment}{// map[ComponentId].first == vector<EntityId>}}
+\DoxyCodeLine{22     \textcolor{comment}{// map[ComponentId].second  == vector<ComponentType>}}
+\DoxyCodeLine{23     \textcolor{keyword}{using} SubPairContainerType = ::std::pair<::std::vector<::xrn::Id>, \textcolor{keywordtype}{void}*>;}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25     \textcolor{keyword}{using} Type = ::std::unordered\_map<}
+\DoxyCodeLine{26         \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{::xrn::Id}}, Container::SubPairContainerType, ::xrn::Id::Hasher}
+\DoxyCodeLine{27     >;}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{public}:}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33     \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Id}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \textcolor{keyword}{template} <}
+\DoxyCodeLine{36         ::xrn::ecs::component::ConceptType ComponentType}
+\DoxyCodeLine{37     > [[ nodiscard ]] \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} getId() \textcolor{keyword}{const}}
+\DoxyCodeLine{38         -\/> \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{::xrn::Id}};}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     [[ nodiscard ]] \textcolor{keyword}{static} \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} getMaxId()}
+\DoxyCodeLine{41         -\/> \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{::xrn::Id}};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Emplace/Remove}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{keyword}{template} <}
+\DoxyCodeLine{48         ::xrn::ecs::component::ConceptType ComponentType}
+\DoxyCodeLine{49     > \textcolor{keyword}{auto} emplace(}
+\DoxyCodeLine{50         \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{::xrn::Id}} entityId,}
+\DoxyCodeLine{51         \textcolor{keyword}{auto}\&\&... args}
+\DoxyCodeLine{52     )}
+\DoxyCodeLine{53         -\/> ComponentType\&;}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \textcolor{keyword}{template} <}
+\DoxyCodeLine{56         ::xrn::ecs::component::ConceptType... ComponentTypes}
+\DoxyCodeLine{57     > \textcolor{keywordtype}{void} emplaceMany(}
+\DoxyCodeLine{58         \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{::xrn::Id}} entityId}
+\DoxyCodeLine{59     );}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     \textcolor{keyword}{template} <}
+\DoxyCodeLine{62         ::xrn::ecs::component::ConceptType ComponentType}
+\DoxyCodeLine{63     > \textcolor{keywordtype}{void} push(}
+\DoxyCodeLine{64         \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{::xrn::Id}} entityId,}
+\DoxyCodeLine{65         ComponentType\&\& component}
+\DoxyCodeLine{66     );}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68     \textcolor{keyword}{template} <}
+\DoxyCodeLine{69         ::xrn::ecs::component::ConceptType... ComponentTypes}
+\DoxyCodeLine{70     > \textcolor{keywordtype}{void} pushMany(}
+\DoxyCodeLine{71         \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{::xrn::Id}} entityId,}
+\DoxyCodeLine{72         ComponentTypes\&\&... components}
+\DoxyCodeLine{73     );}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75     \textcolor{keyword}{template} <}
+\DoxyCodeLine{76         ::xrn::ecs::component::ConceptType ComponentType}
+\DoxyCodeLine{77     > \textcolor{keywordtype}{void} remove(}
+\DoxyCodeLine{78         \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{::xrn::Id}} entityId}
+\DoxyCodeLine{79     );}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81     \textcolor{keyword}{template} <}
+\DoxyCodeLine{82         ::xrn::ecs::component::ConceptType... ComponentTypes}
+\DoxyCodeLine{83     > \textcolor{keywordtype}{void} removeMany(}
+\DoxyCodeLine{84         \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{::xrn::Id}} entityId}
+\DoxyCodeLine{85     );}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89     \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Get}}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     \textcolor{keyword}{template} <}
+\DoxyCodeLine{92         ::xrn::ecs::component::ConceptType ComponentType}
+\DoxyCodeLine{93     > [[ nodiscard ]] \textcolor{keyword}{auto} get(}
+\DoxyCodeLine{94         \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{::xrn::Id}} entityId}
+\DoxyCodeLine{95     ) \textcolor{keyword}{const}}
+\DoxyCodeLine{96         -\/> \textcolor{keyword}{const} ComponentType\&;}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98     \textcolor{keyword}{template} <}
+\DoxyCodeLine{99         ::xrn::ecs::component::ConceptType ComponentType}
+\DoxyCodeLine{100     > [[ nodiscard ]] \textcolor{keyword}{auto} get(}
+\DoxyCodeLine{101         \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{::xrn::Id}} entityId}
+\DoxyCodeLine{102     )}
+\DoxyCodeLine{103         -\/> ComponentType\&;}
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105     \textcolor{keyword}{template} <}
+\DoxyCodeLine{106         ::xrn::ecs::component::ConceptType ComponentType}
+\DoxyCodeLine{107     > [[ nodiscard ]] \textcolor{keyword}{auto} getIndex(}
+\DoxyCodeLine{108         \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{::xrn::Id}} entityId}
+\DoxyCodeLine{109     ) \textcolor{keyword}{const}}
+\DoxyCodeLine{110         -\/> ::std::size\_t;}
+\DoxyCodeLine{111 }
+\DoxyCodeLine{112     \textcolor{keyword}{template} <}
+\DoxyCodeLine{113         ::xrn::ecs::component::ConceptType ComponentType}
+\DoxyCodeLine{114     > [[ nodiscard ]] \textcolor{keyword}{auto} exists(}
+\DoxyCodeLine{115         \mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{::xrn::Id}} entityId}
+\DoxyCodeLine{116     ) \textcolor{keyword}{const}}
+\DoxyCodeLine{117         -\/> bool;}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121     \textcolor{keyword}{template} <}
+\DoxyCodeLine{122         ::xrn::ecs::component::ConceptType ComponentType}
+\DoxyCodeLine{123     > [[ nodiscard ]] \textcolor{keyword}{auto} getVector() \textcolor{keyword}{const}}
+\DoxyCodeLine{124         -\/> const ::std::vector<ComponentType>\&;}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126     \textcolor{keyword}{template} <}
+\DoxyCodeLine{127         ::xrn::ecs::component::ConceptType ComponentType}
+\DoxyCodeLine{128     > [[ nodiscard ]] \textcolor{keyword}{auto} vectorExists() \textcolor{keyword}{const}}
+\DoxyCodeLine{129         -\/> bool;}
+\DoxyCodeLine{130 }
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133     \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ SubContainers}}
+\DoxyCodeLine{134     \textcolor{comment}{// Those functions are unsafe and should be use with caution}}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136     \textcolor{keyword}{template} <}
+\DoxyCodeLine{137         ::xrn::ecs::component::ConceptType ComponentType}
+\DoxyCodeLine{138     > [[ nodiscard ]] \textcolor{keyword}{auto} getUnsafePairSubContainer()}
+\DoxyCodeLine{139         -\/> SubPairContainerType\&;}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141     \textcolor{keyword}{template} <}
+\DoxyCodeLine{142         ::xrn::ecs::component::ConceptType ComponentType}
+\DoxyCodeLine{143     > [[ nodiscard ]] \textcolor{keyword}{auto} getUnsafePairSubContainer() \textcolor{keyword}{const}}
+\DoxyCodeLine{144         -\/> \textcolor{keyword}{const} SubPairContainerType\&;}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148 \textcolor{keyword}{private}:}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150     Container::Type m\_container\{\};}
+\DoxyCodeLine{151 }
+\DoxyCodeLine{152 \};}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156 \} \textcolor{comment}{// namespace xrn::ecs::component::}}
+\DoxyCodeLine{157 }
+\DoxyCodeLine{158 \textcolor{preprocessor}{\#include <Ecs/Component/Container.impl.hpp>}}
+
+\end{DoxyCode}

@@ -101,12 +101,10 @@ MODE_EXT		:=	_tests
 MODE_FLAGS		:=	-g3 -O0 -DTEST=1
 ifeq "$(USE_COVERAGE)" "true"
 COVERAGE_FLAG	:=	-fprofile-arcs -ftest-coverage -fPIC --coverage -fno-inline -fno-inline-small-functions -fno-default-inline
+LIBBIN			+=	gcov
 endif
 MOD_BUILDDIR	:=	$(addsuffix /tests,$(BUILDDIR))
 NAME			:=	$(TNAME)
-ifeq "$(USE_COVERAGE)" "true"
-LIBBIN			+=	gcov
-endif
 
 
 
@@ -408,6 +406,7 @@ clean :
 	rm -rf $(OBJDIR) $(DEPDIR)
 	rm -f $(BUILDDIR)/$(ERROR_FILE)
 	rm -f vgcore.*
+	rm -f .build/**.gcda .build/**.gcno
 	$(PRINTF) "$(DARKGRAY)[Clean]$(NORMAL) done\n"
 
 fclean : clean

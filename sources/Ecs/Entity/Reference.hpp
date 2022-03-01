@@ -12,7 +12,7 @@ class xrn::ecs::Entity::Reference {
 
 public:
 
-    // ------------------------------------------------------------------ *structors
+    // ------------------------------------------------------------------ Constructors
 
     explicit Reference(
         ::xrn::ecs::component::Container& components,

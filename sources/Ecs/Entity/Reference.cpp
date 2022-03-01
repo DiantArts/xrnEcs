@@ -3,7 +3,7 @@
 
 
 
-// ------------------------------------------------------------------ *structors
+// ------------------------------------------------------------------ Constructors
 
 ::xrn::ecs::Entity::Reference::Reference(
     ::xrn::ecs::component::Container& components,

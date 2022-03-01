@@ -3,7 +3,7 @@
 
 
 
-// ------------------------------------------------------------------ *structors
+// ------------------------------------------------------------------ Constructors
 
 constexpr ::xrn::ecs::Signature::Signature(
     const ::cbitset::Cbitset<::xrn::ecs::component::maxId>& bitset

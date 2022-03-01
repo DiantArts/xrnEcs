@@ -41,7 +41,7 @@ template <
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
-// *structors
+// Constructors
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -86,28 +86,6 @@ template <
     return m_time <=> rhs;
 }
 
-///////////////////////////////////////////////////////////////////////////
-template <
-    typename T
-> constexpr auto ::xrn::util::BasicTime<T>::operator==(
-    const ::xrn::util::BasicTime<T>& rhs
-) const
-    -> bool
-{
-    return m_time == rhs.m_time;
-}
-
-///////////////////////////////////////////////////////////////////////////
-template <
-    typename T
-> constexpr auto ::xrn::util::BasicTime<T>::operator==(
-    const auto& rhs
-) const
-    -> bool
-{
-    return m_time == rhs;
-}
-
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -120,7 +98,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename T
-> constexpr ::xrn::util::BasicTime<T>::operator BasicTime<T>::Type() noexcept
+> constexpr ::xrn::util::BasicTime<T>::operator BasicTime<T>::Type() const noexcept
 {
     return m_time;
 }
@@ -512,7 +490,7 @@ template <
 template <
     typename T
 > [[ nodiscard ]] constexpr auto operator+(
-    const auto lhs,
+    const auto& lhs,
     const ::xrn::util::BasicTime<T>& rhs
 ) -> ::xrn::util::BasicTime<T>
 {
@@ -523,7 +501,7 @@ template <
 template <
     typename T
 > [[ nodiscard ]] constexpr auto operator-(
-    const auto lhs,
+    const auto& lhs,
     const ::xrn::util::BasicTime<T>& rhs
 ) -> ::xrn::util::BasicTime<T>
 {

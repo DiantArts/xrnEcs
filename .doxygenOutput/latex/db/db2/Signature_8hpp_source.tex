@@ -1,0 +1,177 @@
+\hypertarget{Signature_8hpp_source}{}\doxysection{Signature.\+hpp}
+\label{Signature_8hpp_source}\index{sources/Ecs/Signature.hpp@{sources/Ecs/Signature.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <Ecs/AComponent.hpp>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <Util/Time.hpp>}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{keyword}{namespace }xrn::ecs \{}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keyword}{class }\mbox{\hyperlink{classxrn_1_1ecs_1_1Signature}{Signature}} \{}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{keyword}{public}:}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14     \textcolor{keyword}{template} <}
+\DoxyCodeLine{15         \textcolor{keyword}{typename}... Types}
+\DoxyCodeLine{16     > [[ nodiscard ]] \textcolor{keyword}{static} \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} generate() \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{17         -\/> \mbox{\hyperlink{classxrn_1_1ecs_1_1Signature}{::xrn::ecs::Signature}};}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{keyword}{public}:}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ *structors}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     \textcolor{keyword}{explicit} \mbox{\hyperlink{classxrn_1_1ecs_1_1Signature}{Signature}}() \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25     \textcolor{keyword}{explicit} \textcolor{keyword}{constexpr} \mbox{\hyperlink{classxrn_1_1ecs_1_1Signature}{Signature}}(}
+\DoxyCodeLine{26         const ::cbitset::Cbitset<::xrn::ecs::component::maxId>\& bitset}
+\DoxyCodeLine{27     ) \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29     \textcolor{keyword}{constexpr} \mbox{\hyperlink{classxrn_1_1ecs_1_1Signature}{\string~Signature}}() \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33     \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ copy idiom}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \textcolor{keyword}{constexpr} \mbox{\hyperlink{classxrn_1_1ecs_1_1Signature}{Signature}}(}
+\DoxyCodeLine{36         const ::xrn::ecs::Signature\& other}
+\DoxyCodeLine{37     ) \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} operator=(}
+\DoxyCodeLine{40         const ::xrn::ecs::Signature\& other}
+\DoxyCodeLine{41     ) \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{42         -\/> \mbox{\hyperlink{classxrn_1_1ecs_1_1Signature}{::xrn::ecs::Signature}}\&;}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ copy idiom}}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     \textcolor{keyword}{constexpr} \mbox{\hyperlink{classxrn_1_1ecs_1_1Signature}{Signature}}(}
+\DoxyCodeLine{49         \mbox{\hyperlink{classxrn_1_1ecs_1_1Signature}{::xrn::ecs::Signature}}\&\& other}
+\DoxyCodeLine{50     ) \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} operator=(}
+\DoxyCodeLine{53         \mbox{\hyperlink{classxrn_1_1ecs_1_1Signature}{::xrn::ecs::Signature}}\&\& other}
+\DoxyCodeLine{54     ) \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{55         -\/> \mbox{\hyperlink{classxrn_1_1ecs_1_1Signature}{::xrn::ecs::Signature}}\&;}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Comparisons}}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     [[ nodiscard ]] \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} operator==(}
+\DoxyCodeLine{62         const ::xrn::ecs::Signature\& that}
+\DoxyCodeLine{63     ) \textcolor{keyword}{const}}
+\DoxyCodeLine{64         -\/> bool;}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     [[ nodiscard ]] \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} operator!=(}
+\DoxyCodeLine{67         const ::xrn::ecs::Signature\& that}
+\DoxyCodeLine{68     ) \textcolor{keyword}{const}}
+\DoxyCodeLine{69         -\/> bool;}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73     \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ BitManipulation}}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75     \textcolor{keyword}{template} <}
+\DoxyCodeLine{76         ::xrn::ecs::component::ConceptType... ComponentTypes}
+\DoxyCodeLine{77     > \textcolor{keywordtype}{void} set();}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79     \textcolor{keyword}{template} <}
+\DoxyCodeLine{80         ::xrn::ecs::component::ConceptType... ComponentTypes}
+\DoxyCodeLine{81     > \textcolor{keywordtype}{void} reset();}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85     \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Get}}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87     \textcolor{keyword}{template} <}
+\DoxyCodeLine{88         ::xrn::ecs::component::ConceptType ComponentType}
+\DoxyCodeLine{89     > \textcolor{keyword}{auto} get()}
+\DoxyCodeLine{90         -\/> bool;}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92     \textcolor{keyword}{auto} get(::xrn::ecs::component::ConceptType \textcolor{keyword}{auto}\& component)}
+\DoxyCodeLine{93         -\/> bool;}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95     \textcolor{keyword}{auto} get(\mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{::xrn::Id}} \textcolor{keywordtype}{id})}
+\DoxyCodeLine{96         -\/> bool;}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99     \textcolor{keyword}{auto} operator[](::xrn::ecs::component::ConceptType \textcolor{keyword}{auto}\& component)}
+\DoxyCodeLine{100         -\/> bool;}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102     \textcolor{keyword}{auto} operator[](\mbox{\hyperlink{classxrn_1_1util_1_1BasicForwardId}{::xrn::Id}} \textcolor{keywordtype}{id})}
+\DoxyCodeLine{103         -\/> bool;}
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107     \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Contains}}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109     [[ nodiscard ]] \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} contains(}
+\DoxyCodeLine{110         const ::xrn::ecs::Signature\& that}
+\DoxyCodeLine{111     ) \textcolor{keyword}{const}}
+\DoxyCodeLine{112         -\/> bool;}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114     \textcolor{keyword}{template} <}
+\DoxyCodeLine{115         ::xrn::ecs::component::ConceptType... ComponentTypes}
+\DoxyCodeLine{116     > [[ nodiscard ]] \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} contains() \textcolor{keyword}{const}}
+\DoxyCodeLine{117         -\/> bool;}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119     [[ nodiscard ]] \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} contains(}
+\DoxyCodeLine{120         const ::xrn::ecs::component::ConceptType \textcolor{keyword}{auto}\&... component}
+\DoxyCodeLine{121     ) \textcolor{keyword}{const}}
+\DoxyCodeLine{122         -\/> bool;}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126     \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ ContainsOne}}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128     [[ nodiscard ]] \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} containsAtLeastOne(}
+\DoxyCodeLine{129         const ::xrn::ecs::Signature\& that}
+\DoxyCodeLine{130     ) \textcolor{keyword}{const}}
+\DoxyCodeLine{131         -\/> bool;}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133     \textcolor{keyword}{template} <}
+\DoxyCodeLine{134         ::xrn::ecs::component::ConceptType... ComponentTypes}
+\DoxyCodeLine{135     > [[ nodiscard ]] \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} containsAtLeastOne() \textcolor{keyword}{const}}
+\DoxyCodeLine{136         -\/> bool;}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138     [[ nodiscard ]] \textcolor{keyword}{constexpr} \textcolor{keyword}{auto} containsAtLeastOne(}
+\DoxyCodeLine{139         const ::xrn::ecs::component::ConceptType \textcolor{keyword}{auto}\&... component}
+\DoxyCodeLine{140     ) \textcolor{keyword}{const}}
+\DoxyCodeLine{141         -\/> bool;}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145     \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Others}}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147     \textcolor{keyword}{friend} \textcolor{keyword}{auto} operator<<(}
+\DoxyCodeLine{148         ::std::ostream\& os,}
+\DoxyCodeLine{149         const ::xrn::ecs::Signature\& signature}
+\DoxyCodeLine{150     )}
+\DoxyCodeLine{151         -\/> ::std::ostream\&}
+\DoxyCodeLine{152     \{}
+\DoxyCodeLine{153         \textcolor{keywordflow}{for} (::std::size\_t i\{ 0 \}; i < ::xrn::ecs::component::maxId; i++) \{}
+\DoxyCodeLine{154             os << signature.m\_bitset[i];}
+\DoxyCodeLine{155         \}}
+\DoxyCodeLine{156         \textcolor{keywordflow}{return} os;}
+\DoxyCodeLine{157     \}}
+\DoxyCodeLine{158 }
+\DoxyCodeLine{159 }
+\DoxyCodeLine{160 }
+\DoxyCodeLine{161 \textcolor{keyword}{private}:}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163     ::cbitset::Cbitset<::xrn::ecs::component::maxId> m\_bitset\{\};}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165 \};}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167 }
+\DoxyCodeLine{168 }
+\DoxyCodeLine{169 \} \textcolor{comment}{// namespace xrn::ecs}}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171 \textcolor{preprocessor}{\#include <Ecs/Signature.impl.hpp>}}
+
+\end{DoxyCode}
