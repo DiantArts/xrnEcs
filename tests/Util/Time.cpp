@@ -4,9 +4,10 @@
 template class ::xrn::util::BasicTime<double>;
 
 #include <boost/test/unit_test.hpp>
+BOOST_AUTO_TEST_SUITE(test)
 BOOST_AUTO_TEST_SUITE(xrn)
 BOOST_AUTO_TEST_SUITE(util)
-BOOST_AUTO_TEST_SUITE(TimeTests)
+BOOST_AUTO_TEST_SUITE(Time)
 
 BOOST_AUTO_TEST_CASE(Basic)
 {
@@ -174,6 +175,7 @@ BOOST_AUTO_TEST_CASE(Mod)
     BOOST_TEST((t1 == 0));
 }
 
+BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()
