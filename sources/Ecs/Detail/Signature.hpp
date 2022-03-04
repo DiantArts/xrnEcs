@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Meta/ForEach.hpp>
+#include <Ecs/Detail/Constraint.hpp>
 
 namespace xrn::ecs::entity { class Entity; }
 
@@ -17,7 +18,7 @@ template <
 
 
 template <
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > struct Generator <
     ComponentTypes...
 > {
@@ -29,7 +30,7 @@ template <
         for (::std::size_t i{ 0 }; i < ::xrn::ecs::component::maxId; i++) {
             ::xrn::meta::ForEach<ComponentTypes...>::template run<
                 []<
-                    ::xrn::ecs::component::ConceptType RawComponentType
+                    ::xrn::ecs::detail::constraint::isComponent RawComponentType
                 >(
                     ::cbitset::Cbitset<::xrn::ecs::component::maxId>& signature,
                     int i
@@ -51,16 +52,8 @@ template <
 
 
 template <
-    typename Type
-> concept EntityConceptType =
-    ::std::is_same<
-        ::xrn::ecs::entity::Entity,
-        ::std::remove_cvref_t<Type>
-    >::value;
-
-template <
-    ::xrn::ecs::detail::signature::EntityConceptType EntityType,
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isEntity EntityType,
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > struct Generator <
     EntityType,
     ComponentTypes...
@@ -77,16 +70,8 @@ template <
 
 
 template <
-    typename Type
-> concept TimeConceptType =
-    ::std::is_same<
-        ::xrn::Time,
-        ::std::remove_cvref_t<Type>
-    >::value;
-
-template <
-    ::xrn::ecs::detail::signature::TimeConceptType TimeType,
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isTime TimeType,
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > struct Generator <
     TimeType,
     ComponentTypes...
@@ -103,9 +88,9 @@ template <
 };
 
 template <
-    ::xrn::ecs::detail::signature::TimeConceptType TimeType,
-    ::xrn::ecs::detail::signature::EntityConceptType EntityType,
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isTime TimeType,
+    ::xrn::ecs::detail::constraint::isEntity EntityType,
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > struct Generator <
     TimeType,
     EntityType,
@@ -123,9 +108,9 @@ template <
 };
 
 template <
-    ::xrn::ecs::detail::signature::EntityConceptType EntityType,
-    ::xrn::ecs::detail::signature::TimeConceptType TimeType,
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isEntity EntityType,
+    ::xrn::ecs::detail::constraint::isTime TimeType,
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > struct Generator <
     EntityType,
     TimeType,

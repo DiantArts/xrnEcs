@@ -1,3 +1,6 @@
+///////////////////////////////////////////////////////////////////////////
+// Headers
+///////////////////////////////////////////////////////////////////////////
 #include <pch.hpp>
 #include <Ecs/Entity/Container.hpp>
 #include <Ecs/Entity/Reference.hpp>
@@ -5,21 +8,26 @@
 #include <Ecs/Entity/Container.hpp>
 
 
-// ------------------------------------------------------------------ Constructors
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Constructors
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
-::xrn::ecs::entity::Container::Container(
+///////////////////////////////////////////////////////////////////////////
+::xrn::ecs::Entity::Container::Container(
     ::xrn::ecs::component::Container& components
 )
     : m_components{ components }
 {}
 
-::xrn::ecs::entity::Container::~Container() = default;
-
 
 
 // ------------------------------------------------------------------ Remove
 
-void ::xrn::ecs::entity::Container::remove(
+///////////////////////////////////////////////////////////////////////////
+void ::xrn::ecs::Entity::Container::remove(
     ::xrn::Id entityId
 )
 {
@@ -34,7 +42,8 @@ void ::xrn::ecs::entity::Container::remove(
     ));
 }
 
-void ::xrn::ecs::entity::Container::remove(
+///////////////////////////////////////////////////////////////////////////
+void ::xrn::ecs::Entity::Container::remove(
     ::xrn::ecs::Entity::Reference&& reference
 )
 {
@@ -53,7 +62,8 @@ void ::xrn::ecs::entity::Container::remove(
 
 // ------------------------------------------------------------------ Get
 
-[[ nodiscard ]] auto ::xrn::ecs::entity::Container::operator[](
+///////////////////////////////////////////////////////////////////////////
+auto ::xrn::ecs::Entity::Container::operator[](
     ::xrn::Id entityId
 ) const
     -> ::xrn::ecs::Entity::ConstReference
@@ -70,7 +80,8 @@ void ::xrn::ecs::entity::Container::remove(
     return ::xrn::ecs::Entity::ConstReference{ *it };
 }
 
-[[ nodiscard ]] auto ::xrn::ecs::entity::Container::operator[](
+///////////////////////////////////////////////////////////////////////////
+auto ::xrn::ecs::Entity::Container::operator[](
     ::xrn::Id entityId
 )
     -> ::xrn::ecs::Entity::Reference
@@ -87,7 +98,8 @@ void ::xrn::ecs::entity::Container::remove(
     return ::xrn::ecs::Entity::Reference{m_components, *it };
 }
 
-[[ nodiscard ]] auto ::xrn::ecs::entity::Container::get(
+///////////////////////////////////////////////////////////////////////////
+auto ::xrn::ecs::Entity::Container::get(
     ::xrn::Id entityId
 ) const
     -> ::xrn::ecs::Entity::ConstReference
@@ -104,7 +116,8 @@ void ::xrn::ecs::entity::Container::remove(
     return ::xrn::ecs::Entity::ConstReference{ *it };
 }
 
-[[ nodiscard ]] auto ::xrn::ecs::entity::Container::unsafeGet(
+///////////////////////////////////////////////////////////////////////////
+auto ::xrn::ecs::Entity::Container::unsafeGet(
     ::xrn::Id entityId
 )
     -> ::xrn::ecs::Entity::Reference
@@ -116,7 +129,8 @@ void ::xrn::ecs::entity::Container::remove(
     ) };
 }
 
-[[ nodiscard ]] auto ::xrn::ecs::entity::Container::unsafeGet(
+///////////////////////////////////////////////////////////////////////////
+auto ::xrn::ecs::Entity::Container::unsafeGet(
     ::xrn::Id entityId
 ) const
     -> ::xrn::ecs::Entity::ConstReference
@@ -132,7 +146,8 @@ void ::xrn::ecs::entity::Container::remove(
 
 // ------------------------------------------------------------------ Contains
 
-[[ nodiscard ]] auto ::xrn::ecs::entity::Container::contains(
+///////////////////////////////////////////////////////////////////////////
+auto ::xrn::ecs::Entity::Container::contains(
     ::xrn::Id entityId
 ) const
     -> bool
@@ -148,37 +163,43 @@ void ::xrn::ecs::entity::Container::remove(
 
 // ------------------------------------------------------------------ Iterator
 
-[[ nodiscard ]] auto ::xrn::ecs::entity::Container::begin()
+///////////////////////////////////////////////////////////////////////////
+auto ::xrn::ecs::Entity::Container::begin()
     -> Container::Type::iterator
 {
     return m_entities.begin();
 }
 
-[[ nodiscard ]] auto ::xrn::ecs::entity::Container::begin() const
+///////////////////////////////////////////////////////////////////////////
+auto ::xrn::ecs::Entity::Container::begin() const
     -> Container::Type::const_iterator
 {
     return m_entities.begin();
 }
 
-[[ nodiscard ]] auto ::xrn::ecs::entity::Container::cbegin() const
+///////////////////////////////////////////////////////////////////////////
+auto ::xrn::ecs::Entity::Container::cbegin() const
     -> Container::Type::const_iterator
 {
     return m_entities.cbegin();
 }
 
-[[ nodiscard ]] auto ::xrn::ecs::entity::Container::end()
+///////////////////////////////////////////////////////////////////////////
+auto ::xrn::ecs::Entity::Container::end()
     -> Container::Type::iterator
 {
     return m_entities.end();
 }
 
-[[ nodiscard ]] auto ::xrn::ecs::entity::Container::end() const
+///////////////////////////////////////////////////////////////////////////
+auto ::xrn::ecs::Entity::Container::end() const
     -> Container::Type::const_iterator
 {
     return m_entities.end();
 }
 
-[[ nodiscard ]] auto ::xrn::ecs::entity::Container::cend() const
+///////////////////////////////////////////////////////////////////////////
+auto ::xrn::ecs::Entity::Container::cend() const
     -> Container::Type::const_iterator
 {
     return m_entities.cend();

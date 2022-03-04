@@ -6,7 +6,7 @@
 // ------------------------------------------------------------------ Id
 
 template <
-    ::xrn::ecs::component::ConceptType RawComponentType
+    ::xrn::ecs::detail::constraint::isComponent RawComponentType
 > constexpr auto ::xrn::ecs::component::Container::getId() const
     -> ::xrn::Id
 {
@@ -25,7 +25,7 @@ constexpr auto ::xrn::ecs::component::Container::getMaxId()
 // ------------------------------------------------------------------ Emplace/Remove
 
 template <
-    ::xrn::ecs::component::ConceptType RawComponentType
+    ::xrn::ecs::detail::constraint::isComponent RawComponentType
 > auto ::xrn::ecs::component::Container::emplace(
     ::xrn::Id entityId,
     auto&&... args
@@ -47,7 +47,7 @@ template <
 }
 
 template <
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > void ::xrn::ecs::component::Container::emplaceMany(
     ::xrn::Id entityId
 )
@@ -56,7 +56,7 @@ template <
 }
 
 template <
-    ::xrn::ecs::component::ConceptType RawComponentType
+    ::xrn::ecs::detail::constraint::isComponent RawComponentType
 > void ::xrn::ecs::component::Container::push(
     ::xrn::Id entityId,
     RawComponentType&& component
@@ -77,7 +77,7 @@ template <
 }
 
 template <
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > void ::xrn::ecs::component::Container::pushMany(
     ::xrn::Id entityId,
     ComponentTypes&&... components
@@ -92,7 +92,7 @@ template <
 
 
 template <
-    ::xrn::ecs::component::ConceptType RawComponentType
+    ::xrn::ecs::detail::constraint::isComponent RawComponentType
 > void ::xrn::ecs::component::Container::remove(
     ::xrn::Id entityId
 )
@@ -110,7 +110,7 @@ template <
 }
 
 template <
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > void ::xrn::ecs::component::Container::removeMany(
     ::xrn::Id entityId
 )
@@ -123,7 +123,7 @@ template <
 // ------------------------------------------------------------------ Get
 
 template <
-    ::xrn::ecs::component::ConceptType RawComponentType
+    ::xrn::ecs::detail::constraint::isComponent RawComponentType
 > auto ::xrn::ecs::component::Container::get(
     ::xrn::Id entityId
 ) const
@@ -144,7 +144,7 @@ template <
 }
 
 template <
-    ::xrn::ecs::component::ConceptType RawComponentType
+    ::xrn::ecs::detail::constraint::isComponent RawComponentType
 > auto ::xrn::ecs::component::Container::get(
     ::xrn::Id entityId
 )
@@ -165,7 +165,7 @@ template <
 }
 
 template <
-    ::xrn::ecs::component::ConceptType RawComponentType
+    ::xrn::ecs::detail::constraint::isComponent RawComponentType
 > auto ::xrn::ecs::component::Container::getIndex(
     ::xrn::Id entityId
 ) const
@@ -184,7 +184,7 @@ template <
 }
 
 template <
-    ::xrn::ecs::component::ConceptType RawComponentType
+    ::xrn::ecs::detail::constraint::isComponent RawComponentType
 > auto ::xrn::ecs::component::Container::exists(
     ::xrn::Id entityId
 ) const
@@ -201,7 +201,7 @@ template <
 
 
 template <
-    ::xrn::ecs::component::ConceptType RawComponentType
+    ::xrn::ecs::detail::constraint::isComponent RawComponentType
 > auto ::xrn::ecs::component::Container::getVector() const
     -> const ::std::vector<RawComponentType>&
 {
@@ -211,7 +211,7 @@ template <
 }
 
 template <
-    ::xrn::ecs::component::ConceptType RawComponentType
+    ::xrn::ecs::detail::constraint::isComponent RawComponentType
 > auto ::xrn::ecs::component::Container::vectorExists() const
     -> bool
 {
@@ -224,7 +224,7 @@ template <
 // ------------------------------------------------------------------ Private
 
 template <
-    ::xrn::ecs::component::ConceptType RawComponentType
+    ::xrn::ecs::detail::constraint::isComponent RawComponentType
 > auto ::xrn::ecs::component::Container::getUnsafePairSubContainer()
     -> SubPairContainerType&
 {
@@ -240,7 +240,7 @@ template <
 }
 
 template <
-    ::xrn::ecs::component::ConceptType RawComponentType
+    ::xrn::ecs::detail::constraint::isComponent RawComponentType
 > auto ::xrn::ecs::component::Container::getUnsafePairSubContainer() const
     -> const SubPairContainerType&
 {

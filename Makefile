@@ -13,7 +13,8 @@ ARGV			:=
 NAME			:=	xrnEcs
 TNAME			:=	unit
 
-ERROR_FILE		:=	errorFile
+ERROR_FILE		:=	errorFile.txt
+TMP_ERROR_FILE	:=	errorFile.tmp
 
 BINDIR			:=	binaries
 SRCDIR			:=	sources
@@ -49,7 +50,7 @@ CPPM_WFLAGS		:=
 
 ## flags
 ifdef hide_color
-COMMON_FLAGS	:=	-fmax-errors=10 -fdiagnostics-color=never
+COMMON_FLAGS	:=	-fdiagnostics-color=never
 else
 COMMON_FLAGS	:=	-fmax-errors=10 -fdiagnostics-color=always
 endif
@@ -287,10 +288,10 @@ test_linkage : $(TEST_NAME)$(MODE_EXT)
 
 $(NAME)$(MODE_EXT): compilation | libraries externs $(BINDIR)
 ifdef ERRORFILE
-	$(CXX) $(OUTPUT_OPTION) $(CPP_OBJ) $(CPPM_OBJ) $(LDFLAGS) $(LDLIBS) 2>&1 | tee -a $(BUILDDIR)/$(ERROR_FILE)
-	sed -i 's/\x1b\[[0-9;]*[a-zA-Z]//g' $(BUILDDIR)/$(ERROR_FILE)
+	$(CXX) $(OUTPUT_OPTION) $(CPP_OBJ) $(CPPM_OBJ) $(LDFLAGS) $(LDLIBS) 2>&1> $(BUILDDIR)/$(TMP_ERROR_FILE) \
+		|| (cat $(BUILDDIR)/$(TMP_ERROR_FILE); (sed 's/\x1b\[[0-9;]*[a-zA-Z]//g' $(BUILDDIR)/$(TMP_ERROR_FILE)) >> $(BUILDDIR)/$(ERROR_FILE); false)
 else
-	$(CXX) $(OUTPUT_OPTION) $(CPP_OBJ) $(CPPM_OBJ) $(LDFLAGS) $(LDLIBS) 2>&1
+	$(CXX) $(OUTPUT_OPTION) $(CPP_OBJ) $(CPPM_OBJ) $(LDFLAGS) $(LDLIBS)
 endif
 
 $(TEST_NAME)$(MODE_EXT): compilation | libraries externs $(BINDIR)
@@ -361,8 +362,8 @@ $(OBJDIR)/%$(OBJEXT): %$(CPP_SRCEXT) | $(CPPM_OBJ) precompilation
 	mkdir -p $(@D) $(patsubst $(OBJDIR)%,./$(DEPDIR)%,$(@D))
 ifdef ERRORFILE
 	$(CXX) -c $(OUTPUT_OPTION) $(CPPFLAGS) $(CXXFLAGS) $(COVERAGE_FLAG) $< \
-		-MT $@ -MMD -MP -MF $(patsubst $(OBJDIR)%$(OBJEXT),$(DEPDIR)/%$(DEPEXT),$(patsubst ./%,%,$@)) 2>&1 | tee -a $(BUILDDIR)/$(ERROR_FILE)
-	sed -i 's/\x1b\[[0-9;]*[a-zA-Z]//g' $(BUILDDIR)/$(ERROR_FILE)
+		-MT $@ -MMD -MP -MF $(patsubst $(OBJDIR)%$(OBJEXT),$(DEPDIR)/%$(DEPEXT),$(patsubst ./%,%,$@)) 2> $(BUILDDIR)/$(TMP_ERROR_FILE) \
+		|| (cat $(BUILDDIR)/$(TMP_ERROR_FILE); (sed 's/\x1b\[[0-9;]*[a-zA-Z]//g' $(BUILDDIR)/$(TMP_ERROR_FILE)) >> $(BUILDDIR)/$(ERROR_FILE); false)
 else
 	$(CXX) -c $(OUTPUT_OPTION) $(CPPFLAGS) $(CXXFLAGS) $(COVERAGE_FLAG) $< \
 		-MT $@ -MMD -MP -MF $(patsubst $(OBJDIR)%$(OBJEXT),$(DEPDIR)/%$(DEPEXT),$(patsubst ./%,%,$@))

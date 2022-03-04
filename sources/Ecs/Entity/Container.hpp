@@ -1,19 +1,54 @@
 #pragma once
 
+///////////////////////////////////////////////////////////////////////////
+// Headers
+///////////////////////////////////////////////////////////////////////////
 #include <Ecs/Entity.hpp>
 #include <Ecs/Component/Container.hpp>
 #include <Ecs/Entity/Reference.hpp>
 
 
 
-namespace xrn::ecs::entity {
-
-
-
-class Container {
+///////////////////////////////////////////////////////////////////////////
+/// \brief Representation of an entity in the xrn ecs Project
+/// \ingroup ecs
+///
+/// \include Entity.hpp <Ecs/Entity/Entity.hpp>
+///
+/// ::xrn::ecs::Entity represents a general-purpose object. It allows to add
+/// and remove ::xrn::ecs::Component (as well as check if it possesses one).
+/// It possesses an Id and a Signature that the user can get.
+/// This class is aliased with ::xrn::Entity.
+///
+/// Usage example:
+/// \code
+/// ::xrn::ecs::component::Container components;
+/// ::xrn::ecs::Entity entity1;
+/// entity1.addComponent<::xrn::ecs::component::test::Movable>(components);
+/// auto entity2{ ::xrn::ecs::Entity::generate<::xrn::ecs::component::test::Transformable>(components) };
+/// entity1.hasComponent<::xrn::ecs::component::test::Movable>(); // true
+/// entity1.hasComponent<::xrn::ecs::component::test::Transformable>(); // false
+/// \endcode
+///
+/// \see ::xrn::ecs::component::Container, ::xrn::ecs::Component,
+///      ::xrn::ecs::Signature, ::xrn::util::Id
+///
+///////////////////////////////////////////////////////////////////////////
+class xrn::ecs::Entity::Container {
 
 public:
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // static elements
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Type internally contained by the class
+    ///
+    ///////////////////////////////////////////////////////////////////////////
     using Type = ::std::vector<::xrn::ecs::Entity>;
 
 
@@ -21,25 +56,36 @@ public:
 
 public:
 
-    // ------------------------------------------------------------------ Constructors
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // Constructors
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Constructor
+    ///
+    /// Constructs an ::xrn::ecs::Entity::Container.
+    ///
+    /// \param amount Time in milliseconds
+    ///
+    ///////////////////////////////////////////////////////////////////////////
     explicit Container(
         ::xrn::ecs::component::Container& componentContainer
     );
-
-    ~Container();
 
 
 
     // ------------------------------------------------------------------ Emplace
 
     template <
-        ::xrn::ecs::component::ConceptType... ComponentTypes
+        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
     > auto emplace()
         -> ::xrn::ecs::Entity::Reference;
 
     template <
-        ::xrn::ecs::component::ConceptType... ComponentTypes
+        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
     > auto emplace(
         ComponentTypes&&... componentsArgs
     )
@@ -127,9 +173,5 @@ private:
     ::xrn::ecs::component::Container& m_components;
 
 };
-
-
-
-} // namespace xrn::ecs::entity
 
 #include <Ecs/Entity/Container.impl.hpp>

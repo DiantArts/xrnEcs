@@ -1,7 +1,7 @@
 // ------------------------------------------------------------------ HasComponent
 
 template <
-    ::xrn::ecs::component::ConceptType ComponentType
+    ::xrn::ecs::detail::constraint::isComponent ComponentType
 > auto ::xrn::ecs::Entity::ConstReference::hasComponent() const
     -> bool
 {
@@ -9,7 +9,7 @@ template <
 }
 
 template <
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > auto ::xrn::ecs::Entity::ConstReference::hasComponents() const
     -> bool
 {

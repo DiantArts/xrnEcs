@@ -73,11 +73,11 @@ public:
     // ------------------------------------------------------------------ BitManipulation
 
     template <
-        ::xrn::ecs::component::ConceptType... ComponentTypes
+        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
     > void set();
 
     template <
-        ::xrn::ecs::component::ConceptType... ComponentTypes
+        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
     > void reset();
 
 
@@ -85,18 +85,18 @@ public:
     // ------------------------------------------------------------------ Get
 
     template <
-        ::xrn::ecs::component::ConceptType ComponentType
+        ::xrn::ecs::detail::constraint::isComponent ComponentType
     > auto get()
         -> bool;
 
-    auto get(::xrn::ecs::component::ConceptType auto& component)
+    auto get(::xrn::ecs::detail::constraint::isComponent auto& component)
         -> bool;
 
     auto get(::xrn::Id id)
         -> bool;
 
 
-    auto operator[](::xrn::ecs::component::ConceptType auto& component)
+    auto operator[](::xrn::ecs::detail::constraint::isComponent auto& component)
         -> bool;
 
     auto operator[](::xrn::Id id)
@@ -112,12 +112,12 @@ public:
         -> bool;
 
     template <
-        ::xrn::ecs::component::ConceptType... ComponentTypes
+        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
     > [[ nodiscard ]] constexpr auto contains() const
         -> bool;
 
     [[ nodiscard ]] constexpr auto contains(
-        const ::xrn::ecs::component::ConceptType auto&... component
+        const ::xrn::ecs::detail::constraint::isComponent auto&... component
     ) const
         -> bool;
 
@@ -131,12 +131,12 @@ public:
         -> bool;
 
     template <
-        ::xrn::ecs::component::ConceptType... ComponentTypes
+        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
     > [[ nodiscard ]] constexpr auto containsAtLeastOne() const
         -> bool;
 
     [[ nodiscard ]] constexpr auto containsAtLeastOne(
-        const ::xrn::ecs::component::ConceptType auto&... component
+        const ::xrn::ecs::detail::constraint::isComponent auto&... component
     ) const
         -> bool;
 

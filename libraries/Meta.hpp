@@ -7,6 +7,7 @@
 #include <Meta/ForEach.hpp>
 #include <Meta/UniqueTypes.hpp>
 #include <Meta/IsBaseOfTemplate.hpp>
+#include <Meta/Constraint.hpp>
 
 
 

@@ -19,13 +19,13 @@ public:
 
     void run(
         ::xrn::Time t,
-        ::xrn::ecs::entity::Container& entities,
+        ::xrn::ecs::Entity::Container& entities,
         ::xrn::ecs::component::Container& components
     );
 
     void run(
         ::xrn::Time t,
-        const ::xrn::ecs::entity::Container& entities,
+        const ::xrn::ecs::Entity::Container& entities,
         const ::xrn::ecs::component::Container& components
     ) const;
 
@@ -35,7 +35,7 @@ public:
 
     template <
         auto func,
-        ::xrn::ecs::component::ConceptType... BanishedComponentTypes
+        ::xrn::ecs::detail::constraint::isComponent... BanishedComponentTypes
     > void emplace();
 
 

@@ -21,7 +21,7 @@ template <
     auto func
 > void ::xrn::ecs::system::System<func>::operator()(
     ::xrn::Time t,
-    ::xrn::ecs::entity::Container& entities,
+    ::xrn::ecs::Entity::Container& entities,
     ::xrn::ecs::component::Container& components
 )
 {
@@ -46,7 +46,7 @@ template <
 > void ::xrn::ecs::system::System<func>::operator()(
     ::xrn::Time t,
     ::xrn::ecs::component::Container& components,
-    ::xrn::ecs::entity::Container& entities
+    ::xrn::ecs::Entity::Container& entities
 )
 {
     this->operator()(t, entities, components);
@@ -58,7 +58,7 @@ template <
     auto func
 > void ::xrn::ecs::system::System<func>::operator()(
     ::xrn::Time t,
-    const ::xrn::ecs::entity::Container& entities,
+    const ::xrn::ecs::Entity::Container& entities,
     const ::xrn::ecs::component::Container& components
 ) const
 {
@@ -87,7 +87,7 @@ template <
 > void ::xrn::ecs::system::System<func>::operator()(
     ::xrn::Time t,
     const ::xrn::ecs::component::Container& components,
-    const ::xrn::ecs::entity::Container& entities
+    const ::xrn::ecs::Entity::Container& entities
 ) const
 {
     this->operator()(t, entities, components);
@@ -113,7 +113,7 @@ template <
 
 template <
     auto func,
-    ::xrn::ecs::component::ConceptType... BanishedComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... BanishedComponentTypes
 > ::xrn::ecs::system::System<func, BanishedComponentTypes...>::System()
 {
     static_assert(
@@ -130,7 +130,7 @@ template <
 
 template <
     auto func,
-    ::xrn::ecs::component::ConceptType... BanishedComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... BanishedComponentTypes
 > ::xrn::ecs::system::System<func, BanishedComponentTypes...>::~System() = default;
 
 
@@ -139,10 +139,10 @@ template <
 
 template <
     auto func,
-    ::xrn::ecs::component::ConceptType... BanishedComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... BanishedComponentTypes
 > void ::xrn::ecs::system::System<func, BanishedComponentTypes...>::operator()(
     ::xrn::Time t,
-    ::xrn::ecs::entity::Container& entities,
+    ::xrn::ecs::Entity::Container& entities,
     ::xrn::ecs::component::Container& components
 )
 {
@@ -170,11 +170,11 @@ template <
 
 template <
     auto func,
-    ::xrn::ecs::component::ConceptType... BanishedComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... BanishedComponentTypes
 > void ::xrn::ecs::system::System<func, BanishedComponentTypes...>::operator()(
     ::xrn::Time t,
     ::xrn::ecs::component::Container& components,
-    ::xrn::ecs::entity::Container& entities
+    ::xrn::ecs::Entity::Container& entities
 )
 {
     this->operator()(t, entities, components);
@@ -184,10 +184,10 @@ template <
 
 template <
     auto func,
-    ::xrn::ecs::component::ConceptType... BanishedComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... BanishedComponentTypes
 > void ::xrn::ecs::system::System<func, BanishedComponentTypes...>::operator()(
     ::xrn::Time t,
-    const ::xrn::ecs::entity::Container& entities,
+    const ::xrn::ecs::Entity::Container& entities,
     const ::xrn::ecs::component::Container& components
 ) const
 {
@@ -219,11 +219,11 @@ template <
 
 template <
     auto func,
-    ::xrn::ecs::component::ConceptType... BanishedComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... BanishedComponentTypes
 > void ::xrn::ecs::system::System<func, BanishedComponentTypes...>::operator()(
     ::xrn::Time t,
     const ::xrn::ecs::component::Container& components,
-    const ::xrn::ecs::entity::Container& entities
+    const ::xrn::ecs::Entity::Container& entities
 ) const
 {
     this->operator()(t, entities, components);
@@ -235,7 +235,7 @@ template <
 
 template <
     auto func,
-    ::xrn::ecs::component::ConceptType... BanishedComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... BanishedComponentTypes
 > constexpr auto ::xrn::ecs::system::System<func, BanishedComponentTypes...>::getSignature()
     -> const ::xrn::ecs::Signature&
 {
@@ -244,7 +244,7 @@ template <
 
 template <
     auto func,
-    ::xrn::ecs::component::ConceptType... BanishedComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... BanishedComponentTypes
 > constexpr auto ::xrn::ecs::system::System<func, BanishedComponentTypes...>::getBanishedSignature()
     -> const ::xrn::ecs::Signature&
 {

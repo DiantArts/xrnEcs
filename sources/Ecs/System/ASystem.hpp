@@ -24,13 +24,13 @@ public:
 
     virtual void operator()(
         ::xrn::Time t,
-        ::xrn::ecs::entity::Container& entities,
+        ::xrn::ecs::Entity::Container& entities,
         ::xrn::ecs::component::Container& components
     ) = 0;
 
     virtual void operator()(
         ::xrn::Time t,
-        const ::xrn::ecs::entity::Container& entities,
+        const ::xrn::ecs::Entity::Container& entities,
         const ::xrn::ecs::component::Container& components
     ) const = 0;
 

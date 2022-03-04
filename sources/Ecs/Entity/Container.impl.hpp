@@ -1,8 +1,9 @@
 // ------------------------------------------------------------------ Emplace
 
+///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::component::ConceptType... ComponentTypes
-> auto ::xrn::ecs::entity::Container::emplace()
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
+> auto ::xrn::ecs::Entity::Container::emplace()
     -> ::xrn::ecs::Entity::Reference
 {
     auto& entity{ m_entities.emplace_back() };
@@ -12,9 +13,10 @@ template <
     return ::xrn::ecs::Entity::Reference{ m_components, entity };
 }
 
+///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::component::ConceptType... ComponentTypes
-> auto ::xrn::ecs::entity::Container::emplace(
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
+> auto ::xrn::ecs::Entity::Container::emplace(
     ComponentTypes&&... components
 ) -> ::xrn::ecs::Entity::Reference
 {

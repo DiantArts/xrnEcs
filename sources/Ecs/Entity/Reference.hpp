@@ -31,12 +31,13 @@ public:
     // ------------------------------------------------------------------ AddComponent
 
     template <
-        ::xrn::ecs::component::ConceptType ComponentType
-    > auto addComponent() const
-        -> ComponentType&;
+        ::xrn::ecs::detail::constraint::isComponent ComponentType
+    > void addComponent(
+        auto&&... args
+    ) const;
 
     template <
-        ::xrn::ecs::component::ConceptType... ComponentTypes
+        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
     > void addComponents();
 
 
@@ -45,12 +46,12 @@ public:
     // ------------------------------------------------------------------ HasComponent
 
     template <
-        ::xrn::ecs::component::ConceptType ComponentType
+        ::xrn::ecs::detail::constraint::isComponent ComponentType
     > [[ nodiscard ]] auto hasComponent() const
         -> bool;
 
     template <
-        ::xrn::ecs::component::ConceptType... ComponentTypes
+        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
     > [[ nodiscard ]] auto hasComponents() const
         -> bool;
 
@@ -59,11 +60,11 @@ public:
     // ------------------------------------------------------------------ RemoveComponent
 
     template <
-        ::xrn::ecs::component::ConceptType ComponentType
+        ::xrn::ecs::detail::constraint::isComponent ComponentType
     > void removeComponent();
 
     template <
-        ::xrn::ecs::component::ConceptType... ComponentTypes
+        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
     > void removeComponents();
 
 

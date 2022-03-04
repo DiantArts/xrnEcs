@@ -1,15 +1,16 @@
 // ------------------------------------------------------------------ AddComponent
 
 template <
-    ::xrn::ecs::component::ConceptType ComponentType
-> auto ::xrn::ecs::Entity::Reference::addComponent() const
-    -> ComponentType&
+    ::xrn::ecs::detail::constraint::isComponent ComponentType
+> void ::xrn::ecs::Entity::Reference::addComponent(
+    auto&&... args
+) const
 {
-    return m_entity.addComponent<ComponentType>(m_components);
+    return m_entity.addComponent<ComponentType>(m_components, ::std::forward<decltype(args)>(args)...);
 }
 
 template <
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > void ::xrn::ecs::Entity::Reference::addComponents()
 {
     m_entity.addComponents<ComponentTypes...>(m_components);
@@ -21,7 +22,7 @@ template <
 // ------------------------------------------------------------------ HasComponent
 
 template <
-    ::xrn::ecs::component::ConceptType ComponentType
+    ::xrn::ecs::detail::constraint::isComponent ComponentType
 > auto ::xrn::ecs::Entity::Reference::hasComponent() const
     -> bool
 {
@@ -29,7 +30,7 @@ template <
 }
 
 template <
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > auto ::xrn::ecs::Entity::Reference::hasComponents() const
     -> bool
 {
@@ -41,14 +42,14 @@ template <
 // ------------------------------------------------------------------ RemoveComponent
 
 template <
-    ::xrn::ecs::component::ConceptType ComponentType
+    ::xrn::ecs::detail::constraint::isComponent ComponentType
 > void ::xrn::ecs::Entity::Reference::removeComponent()
 {
     m_entity.removeComponent<ComponentType>(m_components);
 }
 
 template <
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > void ::xrn::ecs::Entity::Reference::removeComponents()
 {
     m_entity.removeComponents<ComponentTypes...>(m_components);

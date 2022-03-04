@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------
 
 auto ::xrn::ecs::Signature::get(
-    ::xrn::ecs::component::ConceptType auto& component
+    ::xrn::ecs::detail::constraint::isComponent auto& component
 )
     -> bool
 {
@@ -30,7 +30,7 @@ auto ::xrn::ecs::Signature::get(
 // ------------------------------------------------------------------ Get
 
 auto ::xrn::ecs::Signature::operator[](
-    ::xrn::ecs::component::ConceptType auto& component
+    ::xrn::ecs::detail::constraint::isComponent auto& component
 )
     -> bool
 {

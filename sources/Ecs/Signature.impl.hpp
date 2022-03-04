@@ -56,12 +56,12 @@ template <
 // ------------------------------------------------------------------ BitManipulation
 
 template <
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > void ::xrn::ecs::Signature::set()
 {
     ::xrn::meta::ForEach<ComponentTypes...>::template run<
         []<
-            ::xrn::ecs::component::ConceptType RawComponentType
+            ::xrn::ecs::detail::constraint::isComponent RawComponentType
         >(
             ::cbitset::Cbitset<::xrn::ecs::component::maxId>& signature
         ){
@@ -72,12 +72,12 @@ template <
 }
 
 template <
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > void ::xrn::ecs::Signature::reset()
 {
     ::xrn::meta::ForEach<ComponentTypes...>::template run<
         []<
-            ::xrn::ecs::component::ConceptType RawComponentType
+            ::xrn::ecs::detail::constraint::isComponent RawComponentType
         >(
             ::cbitset::Cbitset<::xrn::ecs::component::maxId>& signature
         ){
@@ -92,7 +92,7 @@ template <
 // ------------------------------------------------------------------ Get
 
 template <
-    ::xrn::ecs::component::ConceptType ComponentType
+    ::xrn::ecs::detail::constraint::isComponent ComponentType
 > auto ::xrn::ecs::Signature::get()
     -> bool
 {
@@ -113,13 +113,13 @@ template <
 }
 
 template <
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > [[ nodiscard ]] constexpr auto ::xrn::ecs::Signature::contains() const
     -> bool
 {
     return ::xrn::meta::ForEach<ComponentTypes...>::template compareAnd<
         []<
-            ::xrn::ecs::component::ConceptType RawComponentType
+            ::xrn::ecs::detail::constraint::isComponent RawComponentType
         >(
             const ::cbitset::Cbitset<::xrn::ecs::component::maxId>& bitset
         ){
@@ -130,7 +130,7 @@ template <
 }
 
 [[ nodiscard ]] constexpr auto ::xrn::ecs::Signature::contains(
-    const ::xrn::ecs::component::ConceptType auto&... component
+    const ::xrn::ecs::detail::constraint::isComponent auto&... component
 ) const
     -> bool
 {
@@ -155,13 +155,13 @@ template <
 }
 
 template <
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > [[ nodiscard ]] constexpr auto ::xrn::ecs::Signature::containsAtLeastOne() const
     -> bool
 {
     return ::xrn::meta::ForEach<ComponentTypes...>::template exist<
         []<
-            ::xrn::ecs::component::ConceptType RawComponentType
+            ::xrn::ecs::detail::constraint::isComponent RawComponentType
         >(
             const ::cbitset::Cbitset<::xrn::ecs::component::maxId>& bitset
         ){
@@ -172,7 +172,7 @@ template <
 }
 
 [[ nodiscard ]] constexpr auto ::xrn::ecs::Signature::containsAtLeastOne(
-    const ::xrn::ecs::component::ConceptType auto&... component
+    const ::xrn::ecs::detail::constraint::isComponent auto&... component
 ) const
     -> bool
 {

@@ -36,13 +36,13 @@ auto ::xrn::ecs::Entity::ConstReference::getId() const
 
 // ------------------------------------------------------------------ Conversion
 
-[[ nodiscard ]] auto ::xrn::ecs::Entity::ConstReference::get() const
+auto ::xrn::ecs::Entity::ConstReference::get() const
     -> const ::xrn::ecs::Entity&
 {
     return m_entity;
 }
 
-[[ nodiscard ]] ::xrn::ecs::Entity::ConstReference::operator
+::xrn::ecs::Entity::ConstReference::operator
     const ::xrn::ecs::Entity&() const
 {
     return m_entity;

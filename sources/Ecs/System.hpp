@@ -4,7 +4,7 @@
 namespace xrn::ecs {
     template <
         auto function,
-        ::xrn::ecs::component::ConceptType... BanishedComponentTypes
+        ::xrn::ecs::detail::constraint::isComponent... BanishedComponentTypes
     > using System = ::xrn::ecs::system::System<function, BanishedComponentTypes...>;
 }
 

@@ -30,13 +30,6 @@ public:
 
 
 
-template <
-    typename Type
-> concept ConceptType =
-    ::xrn::meta::IsBaseOfTemplate<::xrn::ecs::component::AComponent, ::std::remove_cvref_t<Type>>::value;
-
-
-
 static constexpr ::xrn::Id maxId{ ::xrn::ecs::component::declaration::detail::numberOfIds };
 
 
