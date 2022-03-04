@@ -58,15 +58,12 @@ BOOST_AUTO_TEST_CASE(addNhas)
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::Entity entity;
     ::xrn::ecs::Entity::Reference ref{ components, entity };
-
-    const auto& component{ ref.addComponent<::xrn::ecs::component::test::Movable>() };
+    ref.addComponent<::xrn::ecs::component::test::Movable>();
 
     BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::Movable>());
     BOOST_TEST(ref.hasComponent<::xrn::ecs::component::test::Movable>());
     BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::Transformable>());
     BOOST_TEST(!ref.hasComponent<::xrn::ecs::component::test::Transformable>());
-    BOOST_TEST(&component == &components.get<::xrn::ecs::component::test::Movable>(entity.getId()));
-    BOOST_TEST(&component == &components.get<::xrn::ecs::component::test::Movable>(ref.getId()));
 }
 
 BOOST_AUTO_TEST_CASE(removeNhas)

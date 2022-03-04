@@ -56,22 +56,20 @@ BOOST_AUTO_TEST_CASE(addNhas1)
 {
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::Entity entity;
-    const auto& component{ entity.addComponent<::xrn::ecs::component::test::Movable>(components) };
 
+    entity.addComponent<::xrn::ecs::component::test::Movable>(components);
     BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::Movable>());
     BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::Transformable>());
-    BOOST_TEST(&component == &components.get<::xrn::ecs::component::test::Movable>(entity.getId()));
 }
 
 BOOST_AUTO_TEST_CASE(addNhas2)
 {
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::Entity entity;
-    const auto& component{ entity.addComponent<::xrn::ecs::component::test::Transformable>(components) };
+    entity.addComponent<::xrn::ecs::component::test::Transformable>(components);
 
     BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::Movable>());
     BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::Transformable>());
-    BOOST_TEST(&component == &components.get<::xrn::ecs::component::test::Transformable>(entity.getId()));
 }
 
 BOOST_AUTO_TEST_CASE(removeNhas)
@@ -92,14 +90,11 @@ BOOST_AUTO_TEST_CASE(addNhasMulti1)
 {
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::Entity entity;
-    const auto& comp1{ entity.addComponent<::xrn::ecs::component::test::Movable>(components) };
-    const auto& comp2{ entity.addComponent<::xrn::ecs::component::test::Transformable>(components) };
+    entity.addComponent<::xrn::ecs::component::test::Movable>(components);
+    entity.addComponent<::xrn::ecs::component::test::Transformable>(components);
 
     BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::Movable>());
     BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::Transformable>());
-
-    BOOST_TEST(&comp1 == &components.get<::xrn::ecs::component::test::Movable>(entity.getId()));
-    BOOST_TEST(&comp2 == &components.get<::xrn::ecs::component::test::Transformable>(entity.getId()));
 }
 
 BOOST_AUTO_TEST_CASE(addNhasMulti2)

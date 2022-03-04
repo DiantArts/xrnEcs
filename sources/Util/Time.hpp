@@ -8,17 +8,18 @@ namespace xrn::util {
 ///
 /// \include Time.hpp <Util/Time.hpp>
 ///
-/// ::xrn::util::BasicTime's purpuse is to represent and uniform time manipulations
-/// accross all xrn Projects.
-/// Its usage is straight forward as it just contains a BasicTime value, gettable
-/// as seconds, milliseconds or microseconds. It also is possible to perform
-/// calculations between time values. By default, xrn projects manipulate
-/// milliseconds, and if the same type as the template parameter of the calss
-/// is passed to one of the methods, it will be interpreted as such.
+/// ::xrn::util::BasicTime's purpuse is to represent and uniform time
+/// manipulations accross all xrn Projects.
+/// Its usage is straight forward as it just contains a BasicTime value,
+/// gettable as seconds, milliseconds or microseconds. It also is possible to
+/// perform calculations between time values. By default, xrn projects
+/// manipulate milliseconds, and if the same type as the template parameter of
+/// the calss is passed to one of the methods, it will be interpreted as such.
 /// The class can be constructed by the factories createAsSeconds(),
 /// createAsMilliseconds() and with a constructor with the type given as
 /// template parameter.
-/// This class is mostly used by ::xrn::util::BasicClock, but can be used manually.
+/// This class is mostly used by ::xrn::util::BasicClock, but can be used
+/// manually.
 /// This class is aliased with ::xrn::util::Time and ::xrn::Time.
 ///
 /// Usage example:
@@ -61,7 +62,7 @@ public:
     using Type = T;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Constructs a ::xrn::util::BasicTime from a value evaluated as seconds
+    /// \brief Constructs an ::xrn::util::BasicTime from a value evaluated as seconds
     ///
     /// \param amount Value contructed from the amount of seconds
     ///

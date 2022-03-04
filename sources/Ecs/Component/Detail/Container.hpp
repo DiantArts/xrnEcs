@@ -5,14 +5,14 @@ namespace xrn::ecs::component::detail {
 
 
 template <
-    ::xrn::ecs::component::ConceptType... RestComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... RestComponentTypes
 > class PushMany;
 
 
 
 template <
-    ::xrn::ecs::component::ConceptType ComponentType,
-    ::xrn::ecs::component::ConceptType... RestComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent ComponentType,
+    ::xrn::ecs::detail::constraint::isComponent... RestComponentTypes
 > class PushMany<ComponentType, RestComponentTypes...>{
 
 public:
@@ -36,7 +36,7 @@ public:
 
 
 template <
-    ::xrn::ecs::component::ConceptType ComponentType
+    ::xrn::ecs::detail::constraint::isComponent ComponentType
 > class PushMany<ComponentType>{
 
 public:

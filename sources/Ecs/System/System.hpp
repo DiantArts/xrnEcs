@@ -38,26 +38,26 @@ public:
 
     void operator()(
         ::xrn::Time t,
-        ::xrn::ecs::entity::Container& entities,
+        ::xrn::ecs::Entity::Container& entities,
         ::xrn::ecs::component::Container& components
     ) override;
 
     void operator()(
         ::xrn::Time t,
         ::xrn::ecs::component::Container& components,
-        ::xrn::ecs::entity::Container& entities
+        ::xrn::ecs::Entity::Container& entities
     );
 
     void operator()(
         ::xrn::Time t,
-        const ::xrn::ecs::entity::Container& entities,
+        const ::xrn::ecs::Entity::Container& entities,
         const ::xrn::ecs::component::Container& components
     ) const override;
 
     void operator()(
         ::xrn::Time t,
         const ::xrn::ecs::component::Container& components,
-        const ::xrn::ecs::entity::Container& entities
+        const ::xrn::ecs::Entity::Container& entities
     ) const;
 
 
@@ -73,7 +73,7 @@ public:
 
 template <
     auto function,
-    ::xrn::ecs::component::ConceptType... BanishedComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... BanishedComponentTypes
 > class System<function, BanishedComponentTypes...>
     : public ::xrn::ecs::system::ASystem
 {
@@ -92,26 +92,26 @@ public:
 
     void operator()(
         ::xrn::Time t,
-        ::xrn::ecs::entity::Container& entities,
+        ::xrn::ecs::Entity::Container& entities,
         ::xrn::ecs::component::Container& components
     ) override;
 
     void operator()(
         ::xrn::Time t,
         ::xrn::ecs::component::Container& components,
-        ::xrn::ecs::entity::Container& entities
+        ::xrn::ecs::Entity::Container& entities
     );
 
     void operator()(
         ::xrn::Time t,
-        const ::xrn::ecs::entity::Container& entities,
+        const ::xrn::ecs::Entity::Container& entities,
         const ::xrn::ecs::component::Container& components
     ) const override;
 
     void operator()(
         ::xrn::Time t,
         const ::xrn::ecs::component::Container& components,
-        const ::xrn::ecs::entity::Container& entities
+        const ::xrn::ecs::Entity::Container& entities
     ) const;
 
 

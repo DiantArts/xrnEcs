@@ -1,7 +1,6 @@
 #pragma once
 
-#include <Ecs/Entity.hpp>
-
+#include <Ecs/Entity/Entity.hpp>
 
 
 namespace xrn::ecs::component { class Container; }
@@ -25,12 +24,12 @@ public:
     // ------------------------------------------------------------------ HasComponent
 
     template <
-        ::xrn::ecs::component::ConceptType ComponentType
+        ::xrn::ecs::detail::constraint::isComponent ComponentType
     > [[ nodiscard ]] auto hasComponent() const
         -> bool;
 
     template <
-        ::xrn::ecs::component::ConceptType... ComponentTypes
+        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
     > [[ nodiscard ]] auto hasComponents() const
         -> bool;
 

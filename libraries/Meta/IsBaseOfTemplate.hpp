@@ -25,7 +25,7 @@ namespace xrn::meta {
 ///////////////////////////////////////////////////////////////////////////
 template <
     template <typename...> class Base,
-    typename Derived
+    typename DerivedType
 > struct IsBaseOfTemplate {
 
 private:
@@ -56,7 +56,8 @@ private:
     // would it return, if not type is void
     //
     ///////////////////////////////////////////////////////////////////////////
-    using type = ::std::experimental::detected_or_t<void, is_callable_t, Derived>;
+    using Derived = ::std::remove_cvref_t<DerivedType>;
+    using Type = ::std::experimental::detected_or_t<void, is_callable_t, Derived>;
 
 public:
 

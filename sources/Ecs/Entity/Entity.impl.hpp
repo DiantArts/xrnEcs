@@ -1,81 +1,89 @@
-// ------------------------------------------------------------------ Genetate
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// static elements
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > [[ nodiscard ]] constexpr auto ::xrn::ecs::entity::Entity::generate(
     ::xrn::ecs::component::Container& components
 )
     -> ::xrn::ecs::entity::Entity
 {
     ::xrn::ecs::entity::Entity entity;
-
-    ::xrn::meta::ForEach<ComponentTypes...>::template run<
-        []<
-            ::xrn::ecs::component::ConceptType ComponentType
-        >(
-            ::xrn::ecs::entity::Entity& entity,
-            ::xrn::ecs::component::Container& components
-        ){
-            entity.addComponent<ComponentType>(components);
-        }
-    >(entity, components);
-
+    entity.addComponents<ComponentTypes...>(components);
     return entity;
 }
 
 
 
-// ------------------------------------------------------------------ AddComponent
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Add components
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::component::ConceptType RawComponentType
-> auto ::xrn::ecs::entity::Entity::addComponent(
-    ::xrn::ecs::component::Container& components
+    ::xrn::ecs::detail::constraint::isComponent ComponentType
+> void ::xrn::ecs::entity::Entity::addComponent(
+    ::xrn::ecs::component::Container& components,
+    auto&&... args
 )
-    -> RawComponentType&
 {
-    using ComponentType =::std::remove_reference_t<RawComponentType>;
+    components.emplace<ComponentType>(m_id, ::std::forward<decltype(args)>(args)...);
     m_signature.set<ComponentType>();
-    return components.emplace<ComponentType>(m_id);
 }
 
+///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > void ::xrn::ecs::entity::Entity::addComponents(
     ::xrn::ecs::component::Container& components
 )
 {
-    m_signature.set<ComponentTypes...>();
     components.emplaceMany<ComponentTypes...>(m_id);
+    m_signature.set<ComponentTypes...>();
 }
 
+///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > void ::xrn::ecs::entity::Entity::addComponents(
     ::xrn::ecs::component::Container& componentsContainer,
     ComponentTypes&&... components
 )
 {
-    m_signature.set<ComponentTypes...>();
     componentsContainer.pushMany<ComponentTypes...>(m_id, ::std::forward<ComponentTypes>(components)...);
+    m_signature.set<ComponentTypes...>();
 }
 
 
 
 
-// ------------------------------------------------------------------ HasComponent
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Has components
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::component::ConceptType RawComponentType
+    ::xrn::ecs::detail::constraint::isComponent ComponentType
 > [[ nodiscard ]] auto ::xrn::ecs::entity::Entity::hasComponent() const
     -> bool
 {
-    using ComponentType =::std::remove_reference_t<RawComponentType>;
     return m_signature.contains<ComponentType>();
 }
 
+///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > [[ nodiscard ]] auto ::xrn::ecs::entity::Entity::hasComponents() const
     -> bool
 {
@@ -84,25 +92,31 @@ template <
 
 
 
-// ------------------------------------------------------------------ RemoveComponent
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Remove components
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::component::ConceptType RawComponentType
+    ::xrn::ecs::detail::constraint::isComponent ComponentType
 > void ::xrn::ecs::entity::Entity::removeComponent(
     ::xrn::ecs::component::Container& components
 )
 {
-    using ComponentType =::std::remove_reference_t<RawComponentType>;
-    m_signature.reset<ComponentType>();
     components.remove<ComponentType>(m_id);
+    m_signature.reset<ComponentType>();
 }
 
+///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > void ::xrn::ecs::entity::Entity::removeComponents(
     ::xrn::ecs::component::Container& components
 )
 {
-    m_signature.reset<ComponentTypes...>();
     components.removeMany<ComponentTypes...>(m_id);
+    m_signature.reset<ComponentTypes...>();
 }

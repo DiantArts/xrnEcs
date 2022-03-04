@@ -11,7 +11,7 @@ template <
 
 template <
     auto func,
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > requires
     ::xrn::meta::UniqueTypes<ComponentTypes...>::value
 struct TupleHelper<
@@ -43,7 +43,7 @@ struct TupleHelper<
 
 template <
     auto func,
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > requires
     ::xrn::meta::UniqueTypes<ComponentTypes...>::value
 struct TupleHelper<
@@ -73,7 +73,7 @@ struct TupleHelper<
 
 template <
     auto func,
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > requires
     ::xrn::meta::UniqueTypes<ComponentTypes...>::value
 struct TupleHelper<
@@ -106,7 +106,7 @@ struct TupleHelper<
 
 template <
     auto func,
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > requires
     ::xrn::meta::UniqueTypes<ComponentTypes...>::value
 struct TupleHelper<
@@ -136,7 +136,7 @@ struct TupleHelper<
 
 template <
     auto func,
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > requires
     ::xrn::meta::UniqueTypes<ComponentTypes...>::value
 struct TupleHelper<
@@ -166,7 +166,7 @@ struct TupleHelper<
 
 template <
     auto func,
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > requires
     ::xrn::meta::UniqueTypes<ComponentTypes...>::value
 struct TupleHelper<
@@ -198,7 +198,7 @@ struct TupleHelper<
 
 template <
     auto func,
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > requires
     ::xrn::meta::UniqueTypes<ComponentTypes...>::value
 struct TupleHelper<
@@ -228,7 +228,7 @@ struct TupleHelper<
 
 template <
     auto func,
-    ::xrn::ecs::component::ConceptType... ComponentTypes
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > requires
     ::xrn::meta::UniqueTypes<ComponentTypes...>::value
 struct TupleHelper<

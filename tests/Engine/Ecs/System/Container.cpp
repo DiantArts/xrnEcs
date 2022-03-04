@@ -101,7 +101,7 @@ BOOST_AUTO_TEST_CASE(mulpiteComponentMulipleEntityMulipleSystem)
 {
     ::xrn::Clock c;
     ::xrn::ecs::component::Container components;
-    ::xrn::ecs::entity::Container entities{ components };
+    ::xrn::ecs::Entity::Container entities{ components };
     auto e1Id{ entities.emplace<::xrn::ecs::component::test::Movable>().getId() };
     auto e2Id{ entities.emplace<::xrn::ecs::component::test::Transformable>().getId() };
     auto e3Id{ entities.emplace<
@@ -142,7 +142,7 @@ BOOST_AUTO_TEST_CASE(lambdaMulpiteComponentMulipleEntityMulipleSystem)
 {
     ::xrn::Clock c;
     ::xrn::ecs::component::Container components;
-    ::xrn::ecs::entity::Container entities{ components };
+    ::xrn::ecs::Entity::Container entities{ components };
     auto e1Id{ entities.emplace<::xrn::ecs::component::test::Movable>().getId() };
     auto e2Id{ entities.emplace<::xrn::ecs::component::test::Transformable>().getId() };
     auto e3Id{ entities.emplace<
@@ -183,7 +183,7 @@ BOOST_AUTO_TEST_CASE(inlineLambdaMulpiteComponentMulipleEntityMulipleSystem)
 {
     ::xrn::Clock c;
     ::xrn::ecs::component::Container components;
-    ::xrn::ecs::entity::Container entities{ components };
+    ::xrn::ecs::Entity::Container entities{ components };
     auto e1Id{ entities.emplace<::xrn::ecs::component::test::Movable>().getId() };
     auto e2Id{ entities.emplace<::xrn::ecs::component::test::Transformable>().getId() };
     auto e3Id{ entities.emplace<

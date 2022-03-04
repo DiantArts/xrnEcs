@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_SUITE(Container)
 BOOST_AUTO_TEST_CASE(get)
 {
     ::xrn::ecs::component::Container components;
-    ::xrn::ecs::entity::Container entities{ components };
+    ::xrn::ecs::Entity::Container entities{ components };
     auto entity1{ entities.emplace<::xrn::ecs::component::test::Movable>() };
     auto entity2{ entities.get(entity1.getId()) };
     auto entity3{ entities[entity1.getId()] };
@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_SUITE(emplace)
 BOOST_AUTO_TEST_CASE(singleComponent)
 {
     ::xrn::ecs::component::Container components;
-    ::xrn::ecs::entity::Container entities{ components };
+    ::xrn::ecs::Entity::Container entities{ components };
     auto entity{ entities.emplace<::xrn::ecs::component::test::Movable>() };
 
     BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::Movable>());
@@ -76,7 +76,7 @@ BOOST_AUTO_TEST_CASE(singleComponent)
 BOOST_AUTO_TEST_CASE(multipleComponent)
 {
     ::xrn::ecs::component::Container components;
-    ::xrn::ecs::entity::Container entities{ components };
+    ::xrn::ecs::Entity::Container entities{ components };
     auto entity{ entities.emplace<
         ::xrn::ecs::component::test::Movable,
         ::xrn::ecs::component::test::Transformable
@@ -98,7 +98,7 @@ BOOST_AUTO_TEST_SUITE(remove)
 BOOST_AUTO_TEST_CASE(remove)
 {
     ::xrn::ecs::component::Container components;
-    ::xrn::ecs::entity::Container entities{ components };
+    ::xrn::ecs::Entity::Container entities{ components };
     auto entityId{ entities.emplace<::xrn::ecs::component::test::Movable>().getId() };
     BOOST_TEST(entities.contains(entityId));
     entities.remove(entityId);
