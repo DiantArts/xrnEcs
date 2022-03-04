@@ -10,28 +10,21 @@
 
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Representation of an entity in the xrn ecs Project
-/// \ingroup ecs
+/// \brief Contains all the entities
+/// \ingroup ecs-entity
 ///
-/// \include Entity.hpp <Ecs/Entity/Entity.hpp>
+/// \include Container.hpp <Ecs/Entity/Container.hpp>
 ///
-/// ::xrn::ecs::Entity represents a general-purpose object. It allows to add
-/// and remove ::xrn::ecs::Component (as well as check if it possesses one).
-/// It possesses an Id and a Signature that the user can get.
-/// This class is aliased with ::xrn::Entity.
+/// Contains all ::xrn::ecs::Entity needed for the ECS architecture. All the
+/// entity components are placed in the ::xrn::ecs::component::Container passed
+/// as constructor argument. This container is kept as reference.
 ///
 /// Usage example:
 /// \code
-/// ::xrn::ecs::component::Container components;
-/// ::xrn::ecs::Entity entity1;
-/// entity1.addComponent<::xrn::ecs::component::test::Movable>(components);
-/// auto entity2{ ::xrn::ecs::Entity::generate<::xrn::ecs::component::test::Transformable>(components) };
-/// entity1.hasComponent<::xrn::ecs::component::test::Movable>(); // true
-/// entity1.hasComponent<::xrn::ecs::component::test::Transformable>(); // false
+/// TODO code exabple
 /// \endcode
 ///
-/// \see ::xrn::ecs::component::Container, ::xrn::ecs::Component,
-///      ::xrn::ecs::Signature, ::xrn::util::Id
+/// \see ::xrn::ecs::Entity
 ///
 ///////////////////////////////////////////////////////////////////////////
 class xrn::ecs::Entity::Container {
@@ -70,6 +63,8 @@ public:
     ///
     /// \param amount Time in milliseconds
     ///
+    /// \see ::xrn::ecs::component::AComponent
+    ///
     ///////////////////////////////////////////////////////////////////////////
     explicit Container(
         ::xrn::ecs::component::Container& componentContainer
@@ -77,65 +72,229 @@ public:
 
 
 
-    // ------------------------------------------------------------------ Emplace
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // Emplace
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Emplaces an entity
+    ///
+    /// Creates an entity from the component given as template parameter.
+    ///
+    /// \warning This reference may be invalidated when an entity is created
+    ///
+    /// \tparam ComponentTypes Type of components to emplace inside the
+    /// ::xrn::ecs::Entity when creating it
+    ///
+    /// \param amount Time in milliseconds
+    ///
+    /// \returns An ::xrn::ecs::Entity::Reference to the entity emplaced
+    ///
+    /// \see ::xrn::ecs::component::AComponent
+    ///
+    ///////////////////////////////////////////////////////////////////////////
     template <
         ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
     > auto emplace()
         -> ::xrn::ecs::Entity::Reference;
 
-    template <
-        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-    > auto emplace(
-        ComponentTypes&&... componentsArgs
-    )
-        -> ::xrn::ecs::Entity::Reference;
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Emplaces an entity
+    ///
+    /// Creates an entity from the component given as template parameter.
+    ///
+    /// \warning This reference may be invalidated when an entity is created
+    ///
+    /// \param components Components to emplace inside the entity created
+    ///
+    /// \returns An ::xrn::ecs::Entity::Reference to the entity emplaced
+    ///
+    /// \see ::xrn::ecs::component::AComponent
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    auto emplace(
+        ::xrn::ecs::detail::constraint::isComponent auto&&... components
+    ) -> ::xrn::ecs::Entity::Reference;
 
 
 
-    // ------------------------------------------------------------------ Remove
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // Remove
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Removes an ::xrn::ecs::Entity from the container
+    ///
+    /// Remove the entity that matches the ::xrn::Id given as parameter.
+    ///
+    /// \param entityId Id to find and delete
+    ///
+    /// \see ::xrn::Id
+    ///
+    ///////////////////////////////////////////////////////////////////////////
     void remove(
         ::xrn::Id entityId
     );
 
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Removes an ::xrn::ecs::Entity from the container
+    ///
+    /// Remove the entity referenced by the ::xrn::ecs::Entity::Reference.
+    ///
+    /// \param entityReference Entity to find and delete
+    ///
+    /// \see ::xrn::ecs::Entity::Reference
+    ///
+    ///////////////////////////////////////////////////////////////////////////
     void remove(
-        ::xrn::ecs::Entity::Reference&& reference
+        const ::xrn::ecs::Entity::Reference& entityReference
+    );
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Removes an ::xrn::ecs::Entity from the container
+    ///
+    /// Remove the entity referenced by the ::xrn::ecs::Entity::ConstReference.
+    ///
+    /// \param entityReference Entity to find and delete
+    ///
+    /// \see ::xrn::ecs::Entity::ConstReference
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    void remove(
+        const ::xrn::ecs::Entity::ConstReference& entityReference
     );
 
 
 
-    // ------------------------------------------------------------------ Get
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // Get
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets a ::xrn::ecs::Entity::ConstReference to an entity contained
+    /// it the container
+    ///
+    /// \param entityId Entity to find and return
+    ///
+    /// \throw ::std::runtime_error if the entity is not contained
+    ///
+    /// \see ::xrn::Id, ::xrn::ecs::Entity::ConstReference
+    ///
+    ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator[](
         ::xrn::Id entityId
     ) const
         -> ::xrn::ecs::Entity::ConstReference;
 
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets a mutable ::xrn::ecs::Entity::Reference to an entity
+    /// contained it the container
+    ///
+    /// \param entityId Entity to find and return
+    ///
+    /// \throw ::std::runtime_error if the entity is not contained
+    ///
+    /// \see ::xrn::Id, ::xrn::ecs::Entity::Reference
+    ///
+    ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator[](
         ::xrn::Id entityId
     )
         -> ::xrn::ecs::Entity::Reference;
 
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets a ::xrn::ecs::Entity::ConstReference to an entity contained
+    /// it the container
+    ///
+    /// \param entityId Entity to find and return
+    ///
+    /// \throw ::std::runtime_error if the entity is not contained
+    ///
+    /// \see ::xrn::Id, ::xrn::ecs::Entity::ConstReference
+    ///
+    ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto get(
         ::xrn::Id entityId
     ) const
         -> ::xrn::ecs::Entity::ConstReference;
 
-    [[ nodiscard ]] auto unsafeGet(
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets a mutable ::xrn::ecs::Entity::Reference to an entity
+    /// contained it the container
+    ///
+    /// \param entityId Entity to find and return
+    ///
+    /// \throw ::std::runtime_error if the entity is not contained
+    ///
+    /// \see ::xrn::Id, ::xrn::ecs::Entity::Reference
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    [[ nodiscard ]] auto get(
         ::xrn::Id entityId
-    )
-        -> ::xrn::ecs::Entity::Reference;
+    ) -> ::xrn::ecs::Entity::Reference;
 
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets a ::xrn::ecs::Entity::ConstReference to an entity contained
+    /// it the container
+    ///
+    /// \warning Using this method when the entity is not contained leads to
+    /// undefined behavior
+    ///
+    /// \param entityId Entity to find and return
+    ///
+    /// \see ::xrn::Id, ::xrn::ecs::Entity::ConstReference
+    ///
+    ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto unsafeGet(
         ::xrn::Id entityId
     ) const
         -> ::xrn::ecs::Entity::ConstReference;
 
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets a mutable ::xrn::ecs::Entity::Reference to an entity
+    /// contained it the container
+    ///
+    /// \warning Using this method when the entity is not contained leads to
+    /// undefined behavior
+    ///
+    /// \param entityId Entity to find and return
+    ///
+    /// \see ::xrn::Id, ::xrn::ecs::Entity::Reference
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    [[ nodiscard ]] auto unsafeGet(
+        ::xrn::Id entityId
+    ) -> ::xrn::ecs::Entity::Reference;
 
 
-    // ------------------------------------------------------------------ Contains
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // Contains
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Checks whether the entityId given as parameter is contained by
+    /// the container
+    ///
+    /// \param entityId Entity to find
+    ///
+    /// \return True if the entity is contained. False otherwise
+    ///
+    /// \see ::xrn::Id, ::xrn::ecs::Entity::Reference
+    ///
+    ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto contains(
         ::xrn::Id entityId
     ) const
@@ -143,26 +302,54 @@ public:
 
 
 
-    // ------------------------------------------------------------------ Iterator
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // Iterators support
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets an iterator to the begining of the vector of entities
+    ///
+    ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto begin()
         -> Container::Type::iterator;
 
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets an iterator to the begining of the vector of entities
+    ///
+    ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto begin() const
         -> Container::Type::const_iterator;
 
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets an iterator to the begining of the vector of entities
+    ///
+    ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto cbegin() const
         -> Container::Type::const_iterator;
 
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets an iterator to the end of the vector of entities
+    ///
+    ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto end()
         -> Container::Type::iterator;
 
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets an iterator to the end of the vector of entities
+    ///
+    ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto end() const
         -> Container::Type::const_iterator;
 
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets an iterator to the end of the vector of entities
+    ///
+    ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto cend() const
         -> Container::Type::const_iterator;
-
 
 
 
@@ -174,4 +361,7 @@ private:
 
 };
 
+///////////////////////////////////////////////////////////////////////////
+// Header-implimentation
+///////////////////////////////////////////////////////////////////////////
 #include <Ecs/Entity/Container.impl.hpp>

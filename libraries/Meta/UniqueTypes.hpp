@@ -2,8 +2,6 @@
 
 namespace xrn::meta {
 
-
-
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Checks if a all the types present in the list are unique
 /// \ingroup meta
@@ -26,7 +24,13 @@ template <
     typename... Types
 > struct UniqueTypes;
 
-
+///////////////////////////////////////////////////////////////////////////
+/// \brief Same as ::xrn::meta::UniqueTypes<Type...>::value
+///
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename... Types
+> inline constexpr bool uniqueTypes_v = ::xrn::meta::UniqueTypes<Types...>::value;
 
 } // namespace xrn::meta
 
