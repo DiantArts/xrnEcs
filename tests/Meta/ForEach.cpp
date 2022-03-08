@@ -15,9 +15,9 @@ BOOST_AUTO_TEST_SUITE(ForEach)
 BOOST_AUTO_TEST_CASE(run)
 {
     int value{ 0 };
-    ::xrn::meta::ForEach<int, float>::run<[]<typename>(int& value){ value++; }>(value);
+    ::xrn::meta::ForEach<int, float>::run<[]<typename>(int& value){ ++value; }>(value);
     BOOST_TEST(value == 2);
-    ::xrn::meta::ForEach<int, float, int>::run<[]<typename>(int& value){ value++; }>(value);
+    ::xrn::meta::ForEach<int, float, int>::run<[]<typename>(int& value){ ++value; }>(value);
     BOOST_TEST(value == 5);
 }
 

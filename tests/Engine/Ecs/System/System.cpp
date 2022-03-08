@@ -42,14 +42,14 @@ namespace detail {
         ::xrn::ecs::Entity& e,
         ::xrn::ecs::component::test::Movable& m
     ) {
-        m.value++;
+        ++m.value;
     }
     static auto lambda1{
         [](
             ::xrn::ecs::Entity& e,
             ::xrn::ecs::component::test::Movable& m
         ) {
-            m.value++;
+            ++m.value;
         }
     };
 
@@ -58,7 +58,7 @@ namespace detail {
         ::xrn::ecs::component::test::Transformable& t
     )
     {
-        t.value++;
+        ++t.value;
         return 0;
     }
     static auto lambda2{
@@ -68,7 +68,7 @@ namespace detail {
         )
             -> int
         {
-            t.value++;
+            ++t.value;
             return 0;
         }
     };
@@ -78,16 +78,16 @@ namespace detail {
         ::xrn::ecs::component::test::Transformable& t
     )
     {
-        m.value++;
-        t.value++;
+        ++m.value;
+        ++t.value;
     }
     static auto lambda3{
         [](
             ::xrn::ecs::component::test::Movable& m,
             ::xrn::ecs::component::test::Transformable& t
         ) {
-            m.value++;
-            t.value++;
+            ++m.value;
+            ++t.value;
         }
     };
 
@@ -102,7 +102,7 @@ namespace detail {
         ::xrn::Time deltaTime,
         ::xrn::ecs::component::test::Movable& m
     ) {
-        m.value++;
+        ++m.value;
     }
 
     static void function6(
@@ -110,7 +110,7 @@ namespace detail {
         ::xrn::ecs::Entity& e,
         ::xrn::ecs::component::test::Movable& m
     ) {
-        m.value++;
+        ++m.value;
     }
 
     static void function7(
@@ -118,7 +118,7 @@ namespace detail {
         ::xrn::Time deltaTime,
         ::xrn::ecs::component::test::Movable& m
     ) {
-        m.value++;
+        ++m.value;
     }
 
     static void function8(
@@ -127,8 +127,8 @@ namespace detail {
         ::xrn::ecs::component::test::Movable& m,
         ::xrn::ecs::component::test::Transformable& t
     ) {
-        m.value++;
-        t.value++;
+        ++m.value;
+        ++t.value;
     }
 
     static void function9(
@@ -261,7 +261,7 @@ BOOST_AUTO_TEST_CASE(inlineLambdaMulpiteComponentMulipleEntityMulipleSystem)
         ::xrn::ecs::component::test::Transformable
     >().getId() };
 
-    ::xrn::ecs::System<[](::xrn::ecs::component::test::Movable& m) { m.value++;}> system1;
+    ::xrn::ecs::System<[](::xrn::ecs::component::test::Movable& m) { ++m.value;}> system1;
     ::xrn::Clock c;
     system1(c.restart(), entities, components);
     BOOST_TEST(components.get<::xrn::ecs::component::test::Movable>(e1Id).value == 1);
@@ -276,7 +276,7 @@ BOOST_AUTO_TEST_CASE(inlineLambdaMulpiteComponentMulipleEntityMulipleSystem)
     BOOST_TEST(components.get<::xrn::ecs::component::test::Transformable>(e3Id).value == 0);
 
     ::xrn::ecs::System<[](::xrn::ecs::component::test::Transformable& t) -> int
-        { t.value++; return 0; }> system2;
+        { ++t.value; return 0; }> system2;
     system2(c.restart(), entities, components);
     BOOST_TEST(components.get<::xrn::ecs::component::test::Movable>(e1Id).value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::Transformable>(e2Id).value == 1);
@@ -287,8 +287,8 @@ BOOST_AUTO_TEST_CASE(inlineLambdaMulpiteComponentMulipleEntityMulipleSystem)
             ::xrn::ecs::component::test::Movable& m,
             ::xrn::ecs::component::test::Transformable& t
         ) {
-            m.value++;
-            t.value++;
+            ++m.value;
+            ++t.value;
         }
     > system3;
     system3(c.restart(), entities, components);

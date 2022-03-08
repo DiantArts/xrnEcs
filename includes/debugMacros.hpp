@@ -28,7 +28,7 @@ inline::std::string str;
     if (isDebugClogMutexLocked == 1) { \
        ::std::clog << " - "; \
     } \
-    isDebugClogMutexLocked++; \
+    ++isDebugClogMutexLocked; \
     auto msg = message; \
     isDebugClogMutexLocked = (!isDebugClogMutexLocked) ? 0 : isDebugClogMutexLocked - 1; \
     if (!isDebugClogMutexLocked) { \
@@ -43,7 +43,7 @@ inline::std::string str;
        ::std::clog << "\n"; \
         isDebugClogMutexLocked--; \
     } \
-    isDebugClogMutexLocked++; \
+    ++isDebugClogMutexLocked; \
    ::std::clog << "[" << __FILE__ << ":" << __LINE__ << "] - " << message << "\n"; \
     isDebugClogMutexLocked--; \
 }
@@ -54,7 +54,7 @@ inline::std::string str;
        ::std::clog << "\n"; \
         isDebugClogMutexLocked--; \
     } \
-    isDebugClogMutexLocked++; \
+    ++isDebugClogMutexLocked; \
    ::std::clog << '[' << __FILE__ << ':' << __LINE__ << "] (" << __FUNCTION__ << ")" \
               <<::std::endl; \
     isDebugClogMutexLocked--; \
@@ -66,7 +66,7 @@ inline::std::string str;
        ::std::clog << "\n"; \
         isDebugClogMutexLocked--; \
     } \
-    isDebugClogMutexLocked++; \
+    ++isDebugClogMutexLocked; \
    ::std::clog << '[' << __FILE__ << ':' << __LINE__ << "] (" << __PRETTY_FUNCTION__ \
               << ")" <<::std::endl; \
     isDebugClogMutexLocked--; \

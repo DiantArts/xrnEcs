@@ -3,8 +3,8 @@
 ///////////////////////////////////////////////////////////////////////////
 // Headers
 ///////////////////////////////////////////////////////////////////////////
-#include <Ecs/Entity.hpp>
 #include <Ecs/Component/Container.hpp>
+#include <Ecs/Entity/Entity.hpp>
 #include <Ecs/Entity/Reference.hpp>
 
 
@@ -21,7 +21,16 @@
 ///
 /// Usage example:
 /// \code
-/// TODO code exabple
+/// ::xrn::ecs::component::Container components;
+/// ::xrn::ecs::Entity::Container entities{ components };
+/// auto entity1{ entities.emplace<::xrn::ecs::component::test::Movable>() };
+/// auto entity2{ entities.get(entity1.getId()) }; // same as entity1
+/// auto entity3{ entities[entity1.getId()] }; // same as entity1
+///
+/// entities.contains(entity1.getId()); // true
+/// &entities.unsafeGet(entity1.getId()).get() == &entity1.get(); // true
+/// &entity1.get() == &entity2.get(); // true
+/// &entity1.get() == &entity3.get(); // true
 /// \endcode
 ///
 /// \see ::xrn::ecs::Entity
@@ -357,6 +366,9 @@ private:
 
     Container::Type m_entities{};
 
+    ///////////////////////////////////////////////////////////////////////////
+    // Container where components will be emplaced
+    ///////////////////////////////////////////////////////////////////////////
     ::xrn::ecs::component::Container& m_components;
 
 };

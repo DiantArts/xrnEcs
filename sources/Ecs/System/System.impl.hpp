@@ -120,7 +120,7 @@ template <
         !::xrn::ecs::system::System<
             func,
             BanishedComponentTypes...
-        >::getSignature().containsAtLeastOne(::xrn::ecs::system::System<
+        >::getSignature().containsAny(::xrn::ecs::system::System<
             func,
             BanishedComponentTypes...
         >::getBanishedSignature()),
@@ -151,7 +151,7 @@ template <
         return signature.contains(
                 ::xrn::ecs::system::System<func, BanishedComponentTypes...>::getSignature()
             ) &&
-            !signature.containsAtLeastOne(
+            !signature.containsAny(
                 ::xrn::ecs::system::System<func, BanishedComponentTypes...>::getBanishedSignature()
             );
     } };
@@ -196,7 +196,7 @@ template <
         return signature.contains(
                 ::xrn::ecs::system::System<func, BanishedComponentTypes...>::getSignature()
             ) &&
-            !signature.containsAtLeastOne(
+            !signature.containsAny(
                 ::xrn::ecs::system::System<func, BanishedComponentTypes...>::getBanishedSignature()
             );
     } };

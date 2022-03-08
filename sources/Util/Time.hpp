@@ -62,14 +62,15 @@ public:
     using Type = T;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Constructs an ::xrn::util::BasicTime from a value evaluated as seconds
+    /// \brief Constructs a ::xrn::util::BasicTime from a value evaluated as
+    ///        seconds
     ///
     /// \param amount Value contructed from the amount of seconds
     ///
     /// \return ::xrn::util::BasicTime just created
     ///
     /// \see createAsMilliseconds(), createAsMicroseconds(),
-    /// createAsNanoseconds()
+    ///      createAsNanoseconds()
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr static auto createAsSeconds(
@@ -78,7 +79,7 @@ public:
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Constructs a ::xrn::util::BasicTime from a value evaluated as
-    /// milliseconds
+    ///        milliseconds
     ///
     /// \param amount Value contructed from the amount of milliseconds
     ///
@@ -93,7 +94,7 @@ public:
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Constructs a ::xrn::util::BasicTime from a value evaluated as
-    /// microseconds
+    ///        microseconds
     ///
     /// \param amount Value contructed from the amount of microseconds
     ///
@@ -108,7 +109,7 @@ public:
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Constructs a ::xrn::util::BasicTime from a value evaluated as
-    /// nanoseconds
+    ///        nanoseconds
     ///
     /// \param amount Value contructed from the amount of nanoseconds
     ///
@@ -154,7 +155,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Compares with an ::xrn::util::BasicTime values
+    /// \brief Compares with a ::xrn::util::BasicTime values
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto operator<=>(

@@ -5,10 +5,8 @@
 #include <Meta/IsBaseOfTemplate.hpp>
 
 
-
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
-
 
 
 namespace xrn::ecs::component {
@@ -35,8 +33,6 @@ static constexpr ::xrn::Id maxId{ ::xrn::ecs::component::declaration::detail::nu
 
 
 } // namespace xrn::ecs::component
-
-
 
 
 #pragma GCC diagnostic pop

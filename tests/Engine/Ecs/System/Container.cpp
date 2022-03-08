@@ -40,13 +40,13 @@ namespace detail {
     static void function1(
         ::xrn::ecs::component::test::Movable& m
     ) {
-        m.value++;
+        ++m.value;
     }
     static auto lambda1{
         [](
             ::xrn::ecs::component::test::Movable& m
         ) {
-            m.value++;
+            ++m.value;
         }
     };
 
@@ -54,7 +54,7 @@ namespace detail {
         ::xrn::ecs::component::test::Transformable& t
     )
     {
-        t.value++;
+        ++t.value;
         return 0;
     }
     static auto lambda2{
@@ -63,7 +63,7 @@ namespace detail {
         )
             -> int
         {
-            t.value++;
+            ++t.value;
             return 0;
         }
     };
@@ -73,16 +73,16 @@ namespace detail {
         ::xrn::ecs::component::test::Transformable& t
     )
     {
-        m.value++;
-        t.value++;
+        ++m.value;
+        ++t.value;
     }
     static auto lambda3{
         [](
             ::xrn::ecs::component::test::Movable& m,
             ::xrn::ecs::component::test::Transformable& t
         ) {
-            m.value++;
-            t.value++;
+            ++m.value;
+            ++t.value;
         }
     };
 
@@ -192,7 +192,7 @@ BOOST_AUTO_TEST_CASE(inlineLambdaMulpiteComponentMulipleEntityMulipleSystem)
     >().getId() };
     ::xrn::ecs::system::Container systems;
 
-    systems.emplace<[](::xrn::ecs::component::test::Movable& m) { m.value++;}>();
+    systems.emplace<[](::xrn::ecs::component::test::Movable& m) { ++m.value;}>();
     systems.run(c.getElapsed(), entities, components);
     BOOST_TEST(components.get<::xrn::ecs::component::test::Movable>(e1Id).value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::Transformable>(e2Id).value == 0);
@@ -206,7 +206,7 @@ BOOST_AUTO_TEST_CASE(inlineLambdaMulpiteComponentMulipleEntityMulipleSystem)
     BOOST_TEST(components.get<::xrn::ecs::component::test::Transformable>(e3Id).value == 0);
 
     systems.emplace<[](::xrn::ecs::component::test::Transformable& t) -> int
-        { t.value++; return 0; }>();
+        { ++t.value; return 0; }>();
     systems.run(c.getElapsed(), entities, components);
     BOOST_TEST(components.get<::xrn::ecs::component::test::Movable>(e1Id).value == 3);
     BOOST_TEST(components.get<::xrn::ecs::component::test::Transformable>(e2Id).value == 1);
@@ -217,8 +217,8 @@ BOOST_AUTO_TEST_CASE(inlineLambdaMulpiteComponentMulipleEntityMulipleSystem)
             ::xrn::ecs::component::test::Movable& m,
             ::xrn::ecs::component::test::Transformable& t
         ) {
-            m.value++;
-            t.value++;
+            ++m.value;
+            ++t.value;
         }>();
     systems.run(c.getElapsed(), entities, components);
     BOOST_TEST(components.get<::xrn::ecs::component::test::Movable>(e1Id).value == 4);

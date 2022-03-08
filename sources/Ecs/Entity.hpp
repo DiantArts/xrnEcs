@@ -4,6 +4,9 @@
 // Headers
 ///////////////////////////////////////////////////////////////////////////
 #include <Ecs/Entity/Entity.hpp>
+#include <Ecs/Entity/Container.hpp>
+#include <Ecs/Entity/Reference.hpp>
+#include <Ecs/Entity/ConstReference.hpp>
 
 
 

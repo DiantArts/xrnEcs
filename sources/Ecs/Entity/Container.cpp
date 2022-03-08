@@ -1,7 +1,11 @@
 ///////////////////////////////////////////////////////////////////////////
-// Headers
+// Precompilled headers
 ///////////////////////////////////////////////////////////////////////////
 #include <pch.hpp>
+
+///////////////////////////////////////////////////////////////////////////
+// Headers
+///////////////////////////////////////////////////////////////////////////
 #include <Ecs/Entity/Container.hpp>
 #include <Ecs/Entity/Reference.hpp>
 #include <Ecs/Entity/ConstReference.hpp>
@@ -103,7 +107,7 @@ auto ::xrn::ecs::Entity::Container::operator[](
         throw ::std::runtime_error("Entity '"s + static_cast<::std::string>(entityId) +
                 "' inst't present in the EntityContainer");
     }
-    return ::xrn::ecs::Entity::Reference{m_components, *it };
+    return ::xrn::ecs::Entity::Reference{ m_components, *it };
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -136,7 +140,7 @@ auto ::xrn::ecs::Entity::Container::get(
         throw ::std::runtime_error("Entity '"s + static_cast<::std::string>(entityId) +
                 "' inst't present in the EntityContainer");
     }
-    return ::xrn::ecs::Entity::Reference{m_components, *it };
+    return ::xrn::ecs::Entity::Reference{ m_components, *it };
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -177,10 +181,9 @@ auto ::xrn::ecs::Entity::Container::contains(
 ) const
     -> bool
 {
-    return ::std::ranges::find_if(m_entities,
-        [entityId](const auto& entity){
-            return entity.getId() == entityId;
-        }
+    return ::std::ranges::find_if(
+        m_entities,
+        [entityId](const auto& entity){ return entity.getId() == entityId; }
     ) != m_entities.end();
 }
 

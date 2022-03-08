@@ -1,5 +1,5 @@
 #include <pch.hpp>
-#include <Ecs/Entity/Reference.hpp>
+#include <Ecs/Entity/ConstReference.hpp>
 #include <Ecs/AComponent.hpp>
 #include <Ecs/Component/Container.hpp>
 
@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_SUITE(Engine)
 BOOST_AUTO_TEST_SUITE(Core)
 BOOST_AUTO_TEST_SUITE(Ecs)
 BOOST_AUTO_TEST_SUITE(Entity)
-BOOST_AUTO_TEST_SUITE(Referenre)
+BOOST_AUTO_TEST_SUITE(ConstReferenre)
 
 
 
@@ -57,8 +57,8 @@ BOOST_AUTO_TEST_CASE(addNhas)
 {
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::Entity entity;
-    ::xrn::ecs::Entity::Reference ref{ components, entity };
-    ref.addComponent<::xrn::ecs::component::test::Movable>();
+    ::xrn::ecs::Entity::ConstReference ref{ entity };
+    entity.addComponent<::xrn::ecs::component::test::Movable>(components);
 
     BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::Movable>());
     BOOST_TEST(ref.hasComponent<::xrn::ecs::component::test::Movable>());
@@ -66,32 +66,19 @@ BOOST_AUTO_TEST_CASE(addNhas)
     BOOST_TEST(!ref.hasComponent<::xrn::ecs::component::test::Transformable>());
 }
 
-BOOST_AUTO_TEST_CASE(addNhas2)
-{
-    ::xrn::ecs::component::Container components;
-    ::xrn::ecs::Entity entity;
-    ::xrn::ecs::Entity::Reference ref{ entity, components };
-    ref.addComponents(::xrn::ecs::component::test::Transformable{});
-
-    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::Movable>());
-    BOOST_TEST(!ref.hasComponent<::xrn::ecs::component::test::Movable>());
-    BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::Transformable>());
-    BOOST_TEST(ref.hasComponent<::xrn::ecs::component::test::Transformable>());
-}
-
 BOOST_AUTO_TEST_CASE(removeNhas)
 {
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::Entity entity;
-    ::xrn::ecs::Entity::Reference ref{ components, entity };
+    ::xrn::ecs::Entity::ConstReference ref{ entity };
 
-    ref.addComponent<::xrn::ecs::component::test::Movable>();
+    entity.addComponent<::xrn::ecs::component::test::Movable>(components);
     BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::Movable>());
     BOOST_TEST(ref.hasComponent<::xrn::ecs::component::test::Movable>());
     BOOST_TEST(components.exists<::xrn::ecs::component::test::Movable>(entity.getId()));
     BOOST_TEST(components.exists<::xrn::ecs::component::test::Movable>(ref.getId()));
 
-    ref.removeComponent<::xrn::ecs::component::test::Movable>();
+    entity.removeComponent<::xrn::ecs::component::test::Movable>(components);
     BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::Movable>());
     BOOST_TEST(!ref.hasComponent<::xrn::ecs::component::test::Movable>());
     BOOST_TEST(!components.exists<::xrn::ecs::component::test::Movable>(entity.getId()));
@@ -110,9 +97,9 @@ BOOST_AUTO_TEST_CASE(single)
 {
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::Entity entity;
-    ::xrn::ecs::Entity::Reference ref{ components, entity };
+    ::xrn::ecs::Entity::ConstReference ref{ entity };
 
-    ref.addComponent<::xrn::ecs::component::test::Movable>();
+    entity.addComponent<::xrn::ecs::component::test::Movable>(components);
     auto signature{ ::xrn::ecs::Signature::generate<::xrn::ecs::component::test::Movable>() };
 
     BOOST_TEST((entity.getSignature() == signature));
@@ -133,30 +120,16 @@ BOOST_AUTO_TEST_CASE(incrementation)
 {
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::Entity entity;
-    ::xrn::ecs::Entity::Reference ref{components, entity};
+    ::xrn::ecs::Entity::ConstReference ref{ entity };
 
     BOOST_TEST(entity.getId() == ref.getId());
+    BOOST_TEST(&entity == &ref.get());
+    BOOST_TEST(&entity == &static_cast<const ::xrn::ecs::Entity&>(ref));
 }
 
 
 
 BOOST_AUTO_TEST_SUITE_END()
-
-BOOST_AUTO_TEST_CASE(others)
-{
-    ::xrn::ecs::component::Container components;
-    ::xrn::ecs::Entity entity;
-    ::xrn::ecs::Entity::Reference ref{ components, entity };
-    const ::xrn::ecs::Entity::Reference constMutableRef{ components, entity };
-    ::xrn::ecs::Entity::ConstReference constRef{ ref };
-    const ::xrn::ecs::Entity& entityRef{ ref };
-
-    BOOST_TEST(&entity == &static_cast<const ::xrn::ecs::Entity&>(ref));
-    BOOST_TEST(entity.getId() == constMutableRef.getId());
-    BOOST_TEST(&constRef.get() == &ref.get());
-    BOOST_TEST(&constRef.get() == &entity);
-    // BOOST_TEST(&constRef.get() == &entityRef); // TODO
-}
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

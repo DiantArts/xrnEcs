@@ -92,6 +92,7 @@ BOOST_AUTO_TEST_CASE(true3)
         ::xrn::ecs::component::test::Transformable
     >() };
     BOOST_TEST(signature1.contains(signature2));
+    BOOST_TEST(signature2.contains(signature1));
 }
 
 BOOST_AUTO_TEST_CASE(true4)
@@ -103,6 +104,7 @@ BOOST_AUTO_TEST_CASE(true4)
         ::xrn::ecs::component::test::Movable
     >() };
     BOOST_TEST(signature1.contains(signature2));
+    BOOST_TEST(signature2.contains(signature1));
 }
 
 BOOST_AUTO_TEST_CASE(false1)
@@ -114,6 +116,7 @@ BOOST_AUTO_TEST_CASE(false1)
         ::xrn::ecs::component::test::Transformable
     >() };
     BOOST_TEST(!signature1.contains(signature2));
+    BOOST_TEST(!signature2.contains(signature1));
 }
 
 BOOST_AUTO_TEST_CASE(false2)
@@ -145,6 +148,7 @@ BOOST_AUTO_TEST_CASE(true1)
     BOOST_TEST(signature.contains<::xrn::ecs::component::test::Movable>());
     ::xrn::ecs::component::test::Movable movable;
     BOOST_TEST(signature.contains(movable));
+    BOOST_TEST(signature[movable.getId()]);
 }
 
 BOOST_AUTO_TEST_CASE(true2)
@@ -156,6 +160,7 @@ BOOST_AUTO_TEST_CASE(true2)
     BOOST_TEST(signature.contains<::xrn::ecs::component::test::Transformable>());
     ::xrn::ecs::component::test::Transformable transformable;
     BOOST_TEST(signature.contains(transformable));
+    BOOST_TEST(signature[transformable.getId()]);
 }
 
 BOOST_AUTO_TEST_CASE(true3)
@@ -171,6 +176,7 @@ BOOST_AUTO_TEST_CASE(true3)
     ::xrn::ecs::component::test::Movable movable;
     ::xrn::ecs::component::test::Transformable transformable;
     BOOST_TEST(signature.contains(movable, transformable));
+    BOOST_TEST(signature.contains(transformable, movable));
 }
 
 BOOST_AUTO_TEST_CASE(true4)
@@ -181,6 +187,8 @@ BOOST_AUTO_TEST_CASE(true4)
     BOOST_TEST(signature.contains<::xrn::ecs::component::test::Movable>());
     ::xrn::ecs::component::test::Movable movable;
     BOOST_TEST(signature.contains(movable));
+    BOOST_TEST(signature.contains(movable.getId()));
+    BOOST_TEST(signature[movable.getId()]);
 }
 
 BOOST_AUTO_TEST_CASE(false1)
@@ -191,6 +199,8 @@ BOOST_AUTO_TEST_CASE(false1)
     BOOST_TEST(!signature.contains<::xrn::ecs::component::test::Transformable>());
     ::xrn::ecs::component::test::Transformable transformable;
     BOOST_TEST(!signature.contains(transformable));
+    BOOST_TEST(!signature.contains(transformable.getId()));
+    BOOST_TEST(!signature[transformable.getId()]);
 }
 
 BOOST_AUTO_TEST_CASE(CmpRamComponents)
@@ -206,6 +216,88 @@ BOOST_AUTO_TEST_CASE(CmpRamComponents)
     ::xrn::ecs::component::test::Transformable t{};
     BOOST_TEST(!signature1.contains(m, t));
     BOOST_TEST(signature2.contains(m, t));
+    BOOST_TEST(!signature1.contains(t, m));
+    BOOST_TEST(signature2.contains(t, m));
+    BOOST_TEST(!signature1.contains(m.getId(), t.getId()));
+    BOOST_TEST(signature2.contains(m.getId(), t.getId()));
+    BOOST_TEST(!signature1.contains(t.getId(), m.getId()));
+    BOOST_TEST(signature2.contains(t.getId(), m.getId()));
+}
+
+BOOST_AUTO_TEST_CASE(ContainsAny)
+{
+    constexpr auto signature1{ ::xrn::ecs::Signature::generate<
+        ::xrn::ecs::component::test::Movable
+    >() };
+    constexpr auto signature2{ ::xrn::ecs::Signature::generate<
+        ::xrn::ecs::component::test::Movable,
+        ::xrn::ecs::component::test::Transformable
+    >() };
+    constexpr auto signature3{ ::xrn::ecs::Signature::generate<
+        ::xrn::ecs::component::test::Transformable
+    >() };
+    ::xrn::ecs::component::test::Movable m{};
+    ::xrn::ecs::component::test::Transformable t{};
+    BOOST_TEST(signature1.containsAny(m, t));
+    BOOST_TEST(signature2.containsAny(m, t));
+    BOOST_TEST(signature1.containsAny(m.getId(), t.getId()));
+    BOOST_TEST(signature2.containsAny(m.getId(), t.getId()));
+    BOOST_TEST((signature1.containsAny<
+        ::xrn::ecs::component::test::Movable, ::xrn::ecs::component::test::Transformable
+    >()));
+    BOOST_TEST((signature2.containsAny<
+        ::xrn::ecs::component::test::Movable, ::xrn::ecs::component::test::Transformable
+    >()));
+    BOOST_TEST(signature1.containsAny(signature2));
+    BOOST_TEST(signature2.containsAny(signature1));
+
+    BOOST_TEST(!signature1.containsAny(t));
+    BOOST_TEST(!signature1.containsAny(t.getId()));
+    BOOST_TEST(!signature1[t.getId()]);
+    BOOST_TEST((!signature1.containsAny<::xrn::ecs::component::test::Transformable>()));
+    BOOST_TEST(!signature1.containsAny(signature3));
+}
+
+BOOST_AUTO_TEST_CASE(ContainsNone)
+{
+    constexpr auto signature1{ ::xrn::ecs::Signature::generate<
+        ::xrn::ecs::component::test::Movable
+    >() };
+    constexpr auto signature2{ ::xrn::ecs::Signature::generate<
+        ::xrn::ecs::component::test::Movable,
+        ::xrn::ecs::component::test::Transformable
+    >() };
+    constexpr auto signature3{ ::xrn::ecs::Signature::generate<
+        ::xrn::ecs::component::test::Transformable
+    >() };
+    ::xrn::ecs::component::test::Movable m{};
+    ::xrn::ecs::component::test::Transformable t{};
+
+    BOOST_TEST(signature1.containsNone(t));
+    BOOST_TEST(signature3.containsNone(m));
+    BOOST_TEST(signature1.containsNone(t.getId()));
+    BOOST_TEST(signature3.containsNone(m.getId()));
+    BOOST_TEST((signature1.containsNone<::xrn::ecs::component::test::Transformable>()));
+    BOOST_TEST((signature3.containsNone<::xrn::ecs::component::test::Movable>()));
+    BOOST_TEST(signature1.containsNone(signature3));
+    BOOST_TEST(signature3.containsNone(signature1));
+
+    BOOST_TEST(!signature1.containsNone(m, t));
+    BOOST_TEST(!signature2.containsNone(m, t));
+    BOOST_TEST(!signature1.containsNone(m.getId(), t.getId()));
+    BOOST_TEST(!signature2.containsNone(m.getId(), t.getId()));
+    BOOST_TEST(!(signature1.containsNone<
+        ::xrn::ecs::component::test::Movable, ::xrn::ecs::component::test::Transformable
+    >()));
+    BOOST_TEST((!signature2.containsNone<
+        ::xrn::ecs::component::test::Movable, ::xrn::ecs::component::test::Transformable
+    >()));
+    BOOST_TEST(!signature1.containsNone(signature2));
+    BOOST_TEST(!signature2.containsNone(signature1));
+    BOOST_TEST(signature1.containsNone(t));
+    BOOST_TEST(signature1.containsNone(t.getId()));
+    BOOST_TEST((signature1.containsNone<::xrn::ecs::component::test::Transformable>()));
+    BOOST_TEST(signature1.containsNone(signature3));
 }
 
 
@@ -224,7 +316,8 @@ BOOST_AUTO_TEST_CASE(true1Arg)
     constexpr auto signature2{ ::xrn::ecs::Signature::generate<
         ::xrn::ecs::component::test::Movable
     >() };
-    BOOST_TEST(signature1 == signature2);
+    BOOST_TEST((signature1 == signature2));
+    BOOST_TEST((signature2 == signature1));
 }
 
 BOOST_AUTO_TEST_CASE(true2Arg)
@@ -237,7 +330,8 @@ BOOST_AUTO_TEST_CASE(true2Arg)
         ::xrn::ecs::component::test::Movable,
         ::xrn::ecs::component::test::Transformable
     >() };
-    BOOST_TEST(signature1 == signature2);
+    BOOST_TEST((signature1 == signature2));
+    BOOST_TEST((signature2 == signature1));
 }
 
 BOOST_AUTO_TEST_CASE(false1Arg)
@@ -248,7 +342,8 @@ BOOST_AUTO_TEST_CASE(false1Arg)
     constexpr auto signature2{ ::xrn::ecs::Signature::generate<
         ::xrn::ecs::component::test::Transformable
     >() };
-    BOOST_TEST(signature1 != signature2);
+    BOOST_TEST((signature1 != signature2));
+    BOOST_TEST((signature2 != signature1));
 }
 
 BOOST_AUTO_TEST_CASE(false2Arg1)
@@ -260,7 +355,8 @@ BOOST_AUTO_TEST_CASE(false2Arg1)
         ::xrn::ecs::component::test::Movable,
         ::xrn::ecs::component::test::Transformable
     >() };
-    BOOST_TEST(signature1 != signature2);
+    BOOST_TEST((signature1 != signature2));
+    BOOST_TEST((signature2 != signature1));
 }
 
 BOOST_AUTO_TEST_CASE(false2Arg2)
@@ -272,7 +368,8 @@ BOOST_AUTO_TEST_CASE(false2Arg2)
     constexpr auto signature2{ ::xrn::ecs::Signature::generate<
         ::xrn::ecs::component::test::Movable
     >() };
-    BOOST_TEST(signature1 != signature2);
+    BOOST_TEST((signature1 != signature2));
+    BOOST_TEST((signature2 != signature1));
 }
 
 BOOST_AUTO_TEST_CASE(false2Arg3)
@@ -284,7 +381,8 @@ BOOST_AUTO_TEST_CASE(false2Arg3)
         ::xrn::ecs::component::test::Movable,
         ::xrn::ecs::component::test::Transformable
     >() };
-    BOOST_TEST(signature1 != signature2);
+    BOOST_TEST((signature1 != signature2));
+    BOOST_TEST((signature2 != signature1));
 }
 
 BOOST_AUTO_TEST_CASE(false2Arg4)
@@ -296,7 +394,8 @@ BOOST_AUTO_TEST_CASE(false2Arg4)
     constexpr auto signature2{ ::xrn::ecs::Signature::generate<
         ::xrn::ecs::component::test::Transformable
     >() };
-    BOOST_TEST(signature1 != signature2);
+    BOOST_TEST((signature1 != signature2));
+    BOOST_TEST((signature2 != signature1));
 }
 
 BOOST_AUTO_TEST_CASE(trueConstexprNonConstexpr)
@@ -307,7 +406,8 @@ BOOST_AUTO_TEST_CASE(trueConstexprNonConstexpr)
     auto signature2{ ::xrn::ecs::Signature::generate<
         ::xrn::ecs::component::test::Movable
     >() };
-    BOOST_TEST(signature1 == signature2);
+    BOOST_TEST((signature1 == signature2));
+    BOOST_TEST((signature2 == signature1));
 }
 
 BOOST_AUTO_TEST_CASE(falseConstexprNonConstexpr)
@@ -319,7 +419,8 @@ BOOST_AUTO_TEST_CASE(falseConstexprNonConstexpr)
     auto signature2{ ::xrn::ecs::Signature::generate<
         ::xrn::ecs::component::test::Transformable
     >() };
-    BOOST_TEST(signature1 != signature2);
+    BOOST_TEST((signature1 != signature2));
+    BOOST_TEST((signature2 != signature1));
 }
 
 
@@ -340,7 +441,8 @@ BOOST_AUTO_TEST_CASE(set1Arg)
         ::xrn::ecs::component::test::Transformable
     >() };
     signature1.set<::xrn::ecs::component::test::Transformable>();
-    BOOST_TEST(signature1 == signature2);
+    BOOST_TEST((signature1 == signature2));
+    BOOST_TEST((signature2 == signature1));
 }
 
 BOOST_AUTO_TEST_CASE(set2Arg)
@@ -354,7 +456,8 @@ BOOST_AUTO_TEST_CASE(set2Arg)
         ::xrn::ecs::component::test::Movable,
         ::xrn::ecs::component::test::Transformable
     >();
-    BOOST_TEST(signature1 == signature2);
+    BOOST_TEST((signature1 == signature2));
+    BOOST_TEST((signature2 == signature1));
 }
 
 BOOST_AUTO_TEST_CASE(reset1Arg)
@@ -367,7 +470,8 @@ BOOST_AUTO_TEST_CASE(reset1Arg)
         ::xrn::ecs::component::test::Transformable
     >() };
     signature2.reset<::xrn::ecs::component::test::Transformable>();
-    BOOST_TEST(signature1 == signature2);
+    BOOST_TEST((signature1 == signature2));
+    BOOST_TEST((signature2 == signature1));
 }
 
 BOOST_AUTO_TEST_CASE(reset2Arg)
@@ -381,7 +485,30 @@ BOOST_AUTO_TEST_CASE(reset2Arg)
         ::xrn::ecs::component::test::Movable,
         ::xrn::ecs::component::test::Transformable
     >();
-    BOOST_TEST(signature1 == signature2);
+    BOOST_TEST((signature1 == signature2));
+    BOOST_TEST((signature2 == signature1));
+}
+
+BOOST_AUTO_TEST_CASE(ostream)
+{
+    auto signature1{ ::xrn::ecs::Signature::generate<::xrn::ecs::component::test::Movable>() };
+    auto signature2{ ::xrn::ecs::Signature::generate<
+        ::xrn::ecs::component::test::Movable,
+        ::xrn::ecs::component::test::Transformable
+    >() };
+    ::std::ostringstream os;
+    os << signature1 << signature2; // assumes the output is correct
+}
+
+BOOST_AUTO_TEST_CASE(other)
+{
+    auto signature1{ ::xrn::ecs::Signature::generate<::xrn::ecs::component::test::Movable>() };
+    auto signature2{ ::xrn::ecs::Signature::generate<::xrn::ecs::component::test::Movable>() };
+    auto signature3{ ::xrn::ecs::Signature::generate<::xrn::ecs::component::test::Transformable>() };
+    BOOST_TEST(!signature1.containsNone(signature2));
+    BOOST_TEST(signature1.containsNone(signature3));
+    BOOST_TEST(!signature2.containsNone(signature1));
+    BOOST_TEST(signature3.containsNone(signature1));
 }
 
 
