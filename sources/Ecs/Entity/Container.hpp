@@ -9,6 +9,8 @@
 
 
 
+namespace xrn::ecs::entity {
+
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Contains all the entities
 /// \ingroup ecs-entity
@@ -22,7 +24,7 @@
 /// Usage example:
 /// \code
 /// ::xrn::ecs::component::Container components;
-/// ::xrn::ecs::Entity::Container entities{ components };
+/// ::xrn::ecs::entity::Container entities{ components };
 /// auto entity1{ entities.emplace<::xrn::ecs::component::test::Movable>() };
 /// auto entity2{ entities.get(entity1.getId()) }; // same as entity1
 /// auto entity3{ entities[entity1.getId()] }; // same as entity1
@@ -36,7 +38,7 @@
 /// \see ::xrn::ecs::Entity
 ///
 ///////////////////////////////////////////////////////////////////////////
-class xrn::ecs::Entity::Container {
+class Container {
 
 public:
 
@@ -68,7 +70,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Constructor
     ///
-    /// Constructs an ::xrn::ecs::Entity::Container.
+    /// Constructs an ::xrn::ecs::entity::Container.
     ///
     /// \param amount Time in milliseconds
     ///
@@ -372,6 +374,8 @@ private:
     ::xrn::ecs::component::Container& m_components;
 
 };
+
+} // namespace xrn::ecs::entity
 
 ///////////////////////////////////////////////////////////////////////////
 // Header-implimentation

@@ -1,5 +1,3 @@
-#include <Ecs/AComponent.hpp>
-#include <Ecs/System/Detail/System.hpp>
 
 
 
@@ -9,10 +7,6 @@ template <
     auto func
 > ::xrn::ecs::system::System<func>::System() = default;
 
-template <
-    auto func
-> ::xrn::ecs::system::System<func>::~System() = default;
-
 
 
 // ------------------------------------------------------------------ Run
@@ -21,7 +15,7 @@ template <
     auto func
 > void ::xrn::ecs::system::System<func>::operator()(
     ::xrn::Time t,
-    ::xrn::ecs::Entity::Container& entities,
+    ::xrn::ecs::entity::Container& entities,
     ::xrn::ecs::component::Container& components
 )
 {
@@ -46,7 +40,7 @@ template <
 > void ::xrn::ecs::system::System<func>::operator()(
     ::xrn::Time t,
     ::xrn::ecs::component::Container& components,
-    ::xrn::ecs::Entity::Container& entities
+    ::xrn::ecs::entity::Container& entities
 )
 {
     this->operator()(t, entities, components);
@@ -58,7 +52,7 @@ template <
     auto func
 > void ::xrn::ecs::system::System<func>::operator()(
     ::xrn::Time t,
-    const ::xrn::ecs::Entity::Container& entities,
+    const ::xrn::ecs::entity::Container& entities,
     const ::xrn::ecs::component::Container& components
 ) const
 {
@@ -87,7 +81,7 @@ template <
 > void ::xrn::ecs::system::System<func>::operator()(
     ::xrn::Time t,
     const ::xrn::ecs::component::Container& components,
-    const ::xrn::ecs::Entity::Container& entities
+    const ::xrn::ecs::entity::Container& entities
 ) const
 {
     this->operator()(t, entities, components);
@@ -128,11 +122,6 @@ template <
     );
 };
 
-template <
-    auto func,
-    ::xrn::ecs::detail::constraint::isComponent... BanishedComponentTypes
-> ::xrn::ecs::system::System<func, BanishedComponentTypes...>::~System() = default;
-
 
 
 // ------------------------------------------------------------------ Run
@@ -142,7 +131,7 @@ template <
     ::xrn::ecs::detail::constraint::isComponent... BanishedComponentTypes
 > void ::xrn::ecs::system::System<func, BanishedComponentTypes...>::operator()(
     ::xrn::Time t,
-    ::xrn::ecs::Entity::Container& entities,
+    ::xrn::ecs::entity::Container& entities,
     ::xrn::ecs::component::Container& components
 )
 {
@@ -174,7 +163,7 @@ template <
 > void ::xrn::ecs::system::System<func, BanishedComponentTypes...>::operator()(
     ::xrn::Time t,
     ::xrn::ecs::component::Container& components,
-    ::xrn::ecs::Entity::Container& entities
+    ::xrn::ecs::entity::Container& entities
 )
 {
     this->operator()(t, entities, components);
@@ -187,7 +176,7 @@ template <
     ::xrn::ecs::detail::constraint::isComponent... BanishedComponentTypes
 > void ::xrn::ecs::system::System<func, BanishedComponentTypes...>::operator()(
     ::xrn::Time t,
-    const ::xrn::ecs::Entity::Container& entities,
+    const ::xrn::ecs::entity::Container& entities,
     const ::xrn::ecs::component::Container& components
 ) const
 {
@@ -223,7 +212,7 @@ template <
 > void ::xrn::ecs::system::System<func, BanishedComponentTypes...>::operator()(
     ::xrn::Time t,
     const ::xrn::ecs::component::Container& components,
-    const ::xrn::ecs::Entity::Container& entities
+    const ::xrn::ecs::entity::Container& entities
 ) const
 {
     this->operator()(t, entities, components);

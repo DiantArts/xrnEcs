@@ -32,8 +32,8 @@ try {
     const ::xrn::ecs::Entity& entityRef3{ ref };
     ::std::cout << ::std::boolalpha << "const ref entity: " << &entityRef3 << ::std::endl;
 
-    // ::std::cout << ::std::boolalpha << "ref comparison: " << (&entity == &entityRef3) << ::std::endl;
-    // ::std::cout << ::std::boolalpha << "get comparison: " << (&entity == &ref.get()) << ::std::endl;
+    ::std::cout << ::std::boolalpha << "ref comparison: " << (&entity == &entityRef3) << ::std::endl;
+    ::std::cout << ::std::boolalpha << "get comparison: " << (&entity == &ref.get()) << ::std::endl;
     return EXIT_SUCCESS;
 } catch (const ::std::exception& e) {
    ::std::cerr << "ERROR: " << e.what() <<::std::endl;
