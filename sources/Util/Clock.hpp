@@ -18,7 +18,6 @@ namespace xrn::util {
 /// ::xrn::util::Clock provide an high resolution clock allowing precise
 /// elapsed time measures.
 ///
-///
 /// Usage example:
 /// \code
 /// ::xrn::Clock clock;

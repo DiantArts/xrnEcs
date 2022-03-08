@@ -1,46 +1,23 @@
+///////////////////////////////////////////////////////////////////////////
+// Precompilled headers
+///////////////////////////////////////////////////////////////////////////
 #include <pch.hpp>
+
+///////////////////////////////////////////////////////////////////////////
+// Headers
+///////////////////////////////////////////////////////////////////////////
 #include <Ecs/Signature.hpp>
 
-// ------------------------------------------------------------------
-
-::xrn::ecs::Signature::Signature() noexcept = default;
 
 
-
-// ------------------------------------------------------------------
-
-auto ::xrn::ecs::Signature::get(
-    ::xrn::ecs::detail::constraint::isComponent auto& component
-)
-    -> bool
+///////////////////////////////////////////////////////////////////////////
+auto operator<<(
+    ::std::ostream& os,
+    const ::xrn::ecs::Signature& signature
+) -> ::std::ostream&
 {
-    return m_bitset[component.getId()];
-}
-
-auto ::xrn::ecs::Signature::get(
-    ::xrn::Id id
-)
-    -> bool
-{
-    return m_bitset[id];
-}
-
-
-
-// ------------------------------------------------------------------ Get
-
-auto ::xrn::ecs::Signature::operator[](
-    ::xrn::ecs::detail::constraint::isComponent auto& component
-)
-    -> bool
-{
-    return m_bitset[component.getId()];
-}
-
-auto ::xrn::ecs::Signature::operator[](
-    ::xrn::Id id
-)
-    -> bool
-{
-    return m_bitset[id];
+    for (auto i{ 0uz }; i < ::xrn::ecs::component::maxId; ++i) {
+        os << signature[i];
+    }
+    return os;
 }

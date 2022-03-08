@@ -38,7 +38,7 @@ template <
     ::xrn::meta::constraint::sameAs<::xrn::ecs::entity::Entity, Type>;
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Checks whether the Type given as template parameter is an
+/// \brief Checks whether the Type given as template parameter is a
 ///        ::xrn::util::Time
 ///
 /// The comparison ignores cv-qualifiers and references (compares the type
@@ -46,7 +46,7 @@ template <
 ///
 /// \tparam Type to check
 ///
-/// \return True if the Type given as template parameter is an
+/// \return True if the Type given as template parameter is a
 ///         ::xrn::util::Time. False otherwise
 ///
 /// \see ::xrn::util::Time
@@ -56,6 +56,27 @@ template <
     typename Type
 > concept isTime =
     ::xrn::meta::constraint::sameAs<::xrn::Time, Type>;
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Checks whether the Type given as template parameter is an
+///        ::xrn::util::Id
+///
+/// The comparison ignores cv-qualifiers and references (compares the type
+/// referenced).
+/// A ::xrn::util::Id::Type is concidered as an ::xrn::util::Id.
+///
+/// \tparam Type to check
+///
+/// \return True if the Type given as template parameter is an
+///         ::xrn::util::Id. False otherwise
+///
+/// \see ::xrn::util::Id
+///
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename Type
+> concept isId =
+    ::xrn::meta::constraint::sameAs<::xrn::Id, Type> || ::xrn::meta::constraint::sameAs<::xrn::Id::Type, Type>;
 
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Checks whether the Type given as template parameter inherits

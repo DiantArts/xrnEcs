@@ -31,8 +31,10 @@ namespace xrn::ecs::entity {
 /// ::xrn::ecs::component::Container components;
 /// ::xrn::ecs::Entity entity1;
 /// entity1.addComponent<::xrn::ecs::component::test::Movable>(components);
-/// auto entity2{ ::xrn::ecs::Entity::generate<::xrn::ecs::component::test::Transformable>(components) };
 /// entity1.hasComponent<::xrn::ecs::component::test::Movable>(); // true
+/// entity1.hasComponent<::xrn::ecs::component::test::Transformable>(); // false
+/// entity1.removeComponent<::xrn::ecs::component::test::Movable>(components);
+/// entity1.hasComponent<::xrn::ecs::component::test::Movable>(); // false
 /// entity1.hasComponent<::xrn::ecs::component::test::Transformable>(); // false
 /// \endcode
 ///
@@ -43,6 +45,41 @@ namespace xrn::ecs::entity {
 class Entity {
 
 public:
+
+    // Entity()
+    // {
+        // ::std::cout << "create" << ::std::endl;
+    // }
+
+    // Entity(const Entity& other)
+        // : m_id{ other.m_id }
+        // , m_signature{ other.m_signature }
+    // {
+        // ::std::cout << "copy constructor" << ::std::endl;
+    // }
+
+    // Entity& operator=(const Entity& other)
+    // {
+        // m_id = other.m_id;
+        // m_signature = other.m_signature;
+        // ::std::cout << "copy assign" << ::std::endl;
+        // return *this;
+    // }
+
+    // Entity(Entity&& other)
+        // : m_id{ ::std::move(other.m_id) }
+        // , m_signature{ ::std::move(other.m_signature) }
+    // {
+        // ::std::cout << "move constructor" << ::std::endl;
+    // }
+
+    // Entity& operator=(Entity&& other)
+    // {
+        // m_id = ::std::move(other.m_id);
+        // m_signature = ::std::move(other.m_signature);
+        // ::std::cout << "move assign" << ::std::endl;
+        // return *this;
+    // }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -146,11 +183,9 @@ public:
     /// \see ::xrn::ecs::component::Container, ::xrn::ecs::Component
     ///
     ///////////////////////////////////////////////////////////////////////////
-    template <
-        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-    > void addComponents(
+    void addComponents(
         ::xrn::ecs::component::Container& componentsContainer,
-        ComponentTypes&&... components
+        ::xrn::ecs::detail::constraint::isComponent auto&&... components
     );
 
 
@@ -168,8 +203,6 @@ public:
     ///
     /// \tparam ComponentTypes Type of component to search
     ///
-    /// \param components Component container containing the entity components
-    ///
     /// \Return True if the component is contained by the entity
     ///
     /// \see ::xrn::ecs::Component
@@ -184,8 +217,6 @@ public:
     /// \brief Checks if the entity has all the components
     ///
     /// \tparam ComponentTypes Type of components to search
-    ///
-    /// \param components Component container containing the entity components
     ///
     /// \Return True if the components are all contained by the entity
     ///

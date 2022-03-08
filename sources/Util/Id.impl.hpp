@@ -18,7 +18,7 @@ template <
     ) const
         -> ::std::size_t
     {
-        ::std::size_t seed = 0;
+        auto seed = 0uz;
         ::boost::hash_combine(seed, id.get());
         return seed;
     }
