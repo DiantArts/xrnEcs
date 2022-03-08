@@ -1,6 +1,6 @@
 #include <pch.hpp>
 #include <Ecs/Entity/Container.hpp>
-#include <Ecs/AComponent.hpp>
+#include <Ecs/Component.hpp>
 #include <Ecs/Component/Container.hpp>
 #include <Ecs/Entity/ConstReference.hpp>
 
@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_SUITE(Container)
 BOOST_AUTO_TEST_CASE(get)
 {
     ::xrn::ecs::component::Container components;
-    ::xrn::ecs::Entity::Container entities{ components };
+    ::xrn::ecs::entity::Container entities{ components };
     const auto& constEntities{ entities };
     auto entity1{ entities.emplace<::xrn::ecs::component::test::Movable>() };
     auto entity2{ entities.get(entity1.getId()) };
@@ -69,7 +69,7 @@ BOOST_AUTO_TEST_SUITE(emplace)
 BOOST_AUTO_TEST_CASE(singleComponent)
 {
     ::xrn::ecs::component::Container components;
-    ::xrn::ecs::Entity::Container entities{ components };
+    ::xrn::ecs::entity::Container entities{ components };
     auto entity{ entities.emplace<::xrn::ecs::component::test::Movable>() };
 
     BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::Movable>());
@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE(singleComponent)
 BOOST_AUTO_TEST_CASE(multipleComponent)
 {
     ::xrn::ecs::component::Container components;
-    ::xrn::ecs::Entity::Container entities{ components };
+    ::xrn::ecs::entity::Container entities{ components };
     auto entity{ entities.emplace<
         ::xrn::ecs::component::test::Movable,
         ::xrn::ecs::component::test::Transformable
@@ -101,7 +101,7 @@ BOOST_AUTO_TEST_SUITE(remove)
 BOOST_AUTO_TEST_CASE(remove)
 {
     ::xrn::ecs::component::Container components;
-    ::xrn::ecs::Entity::Container entities{ components };
+    ::xrn::ecs::entity::Container entities{ components };
     auto entityId{ entities.emplace<::xrn::ecs::component::test::Movable>().getId() };
     auto entityId2{ entities.emplace<::xrn::ecs::component::test::Movable>().getId() };
     auto entityId3{ entities.emplace<::xrn::ecs::component::test::Movable>().getId() };
@@ -128,7 +128,7 @@ BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_CASE(other)
 {
     ::xrn::ecs::component::Container components;
-    ::xrn::ecs::Entity::Container entities{ components };
+    ::xrn::ecs::entity::Container entities{ components };
     const auto& constEntities{ entities };
     BOOST_CHECK_THROW(entities[::xrn::Id{ 1 }], ::std::exception);
     BOOST_CHECK_THROW(constEntities[::xrn::Id{ 1 }], ::std::exception);

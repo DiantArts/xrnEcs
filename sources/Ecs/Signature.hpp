@@ -25,6 +25,16 @@ namespace xrn::ecs {
 ///
 /// Usage example:
 /// \code
+/// constexpr auto constexprSignature{ ::xrn::ecs::Signature::generate<
+///     ::xrn::ecs::component::test::Movable,
+///     ::xrn::ecs::component::test::Transformable
+/// >() };
+/// auto runtimeSignature{ ::xrn::ecs::Signature::generate<::xrn::ecs::component::test::Movable>() };
+///
+/// constexprSignature != runtimeSignature; // true
+/// constexprSignature.containsNone(runtimeSignature); // false
+/// constexprSignature.containsAll(runtimeSignature); // true
+/// runtimeSignature.containsAll(constexprSignature); // false
 /// \endcode
 ///
 /// \see ::xrn::ecs::component::AComponent, ::xrn::ecs::Entity

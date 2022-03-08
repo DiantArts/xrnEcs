@@ -1,6 +1,6 @@
 #include <pch.hpp>
 #include <Ecs/Entity/Reference.hpp>
-#include <Ecs/AComponent.hpp>
+#include <Ecs/Component.hpp>
 #include <Ecs/Component/Container.hpp>
 
 
@@ -149,13 +149,13 @@ BOOST_AUTO_TEST_CASE(others)
     ::xrn::ecs::Entity::Reference ref{ components, entity };
     const ::xrn::ecs::Entity::Reference constMutableRef{ components, entity };
     ::xrn::ecs::Entity::ConstReference constRef{ ref };
-    const ::xrn::ecs::Entity& entityRef{ ref };
+    const ::xrn::ecs::Entity& entityRef = ref; // operator=() avoids copy for some reasons lmao
 
     BOOST_TEST(&entity == &static_cast<const ::xrn::ecs::Entity&>(ref));
     BOOST_TEST(entity.getId() == constMutableRef.getId());
     BOOST_TEST(&constRef.get() == &ref.get());
     BOOST_TEST(&constRef.get() == &entity);
-    // BOOST_TEST(&constRef.get() == &entityRef); // TODO
+    BOOST_TEST(&constRef.get() == &entityRef); // TODO
 }
 
 BOOST_AUTO_TEST_SUITE_END()

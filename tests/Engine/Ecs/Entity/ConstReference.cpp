@@ -1,6 +1,6 @@
 #include <pch.hpp>
 #include <Ecs/Entity/ConstReference.hpp>
-#include <Ecs/AComponent.hpp>
+#include <Ecs/Component.hpp>
 #include <Ecs/Component/Container.hpp>
 
 

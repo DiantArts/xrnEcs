@@ -1,6 +1,6 @@
 #include <pch.hpp>
 #include <Ecs/Signature.hpp>
-#include <Ecs/AComponent.hpp>
+#include <Ecs/Component.hpp>
 
 
 

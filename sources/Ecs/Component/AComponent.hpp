@@ -38,5 +38,12 @@ static constexpr ::xrn::Id maxId{ ::xrn::ecs::component::declaration::detail::nu
 #pragma GCC diagnostic pop
 
 
+namespace xrn::ecs {
+    template <
+        typename ComponentTypes
+    > using AComponent = ::xrn::ecs::component::AComponent<ComponentTypes>;
+}
+
+
 
 #include <Ecs/Component/AComponent.impl.hpp>

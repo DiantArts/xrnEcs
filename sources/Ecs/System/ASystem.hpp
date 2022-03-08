@@ -1,8 +1,9 @@
 #pragma once
 
-#include <Ecs/Component/Container.hpp>
-#include <Ecs/Entity/Container.hpp>
 #include <Util/Time.hpp>
+
+namespace xrn::ecs::entity{ class Container; }
+namespace xrn::ecs::component{ class Container; }
 
 
 
@@ -16,7 +17,7 @@ public:
 
     // ------------------------------------------------------------------ Constructors
 
-    virtual ~ASystem() noexcept = 0; // RULE OF 5!
+    virtual ~ASystem() noexcept = 0; // TODO: RULE OF 5!
 
 
 
@@ -24,13 +25,13 @@ public:
 
     virtual void operator()(
         ::xrn::Time t,
-        ::xrn::ecs::Entity::Container& entities,
+        ::xrn::ecs::entity::Container& entities,
         ::xrn::ecs::component::Container& components
     ) = 0;
 
     virtual void operator()(
         ::xrn::Time t,
-        const ::xrn::ecs::Entity::Container& entities,
+        const ::xrn::ecs::entity::Container& entities,
         const ::xrn::ecs::component::Container& components
     ) const = 0;
 

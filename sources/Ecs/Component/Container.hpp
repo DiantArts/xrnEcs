@@ -1,9 +1,9 @@
 #pragma once
 
 #include <Util/Id.hpp>
-#include <Ecs/Detail/Constraint.hpp>
-#include <Ecs/AComponent.hpp>
 #include <Meta/UniqueTypes.hpp>
+#include <Ecs/Detail/Constraint.hpp>
+#include <Ecs/Component/AComponent.hpp>
 
 
 
