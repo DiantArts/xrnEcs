@@ -2,6 +2,10 @@
 #include <Ecs/Component/Detail/Container.hpp>
 
 
+constexpr ::xrn::ecs::component::Container::~Container()
+{
+    this->clear();
+}
 
 // ------------------------------------------------------------------ Id
 
@@ -14,7 +18,7 @@ template <
     return ComponentType::getId();
 }
 
-constexpr auto ::xrn::ecs::component::Container::getMaxId()
+consteval auto ::xrn::ecs::component::Container::getMaxId()
     -> ::xrn::Id
 {
     return ::xrn::ecs::component::maxId;
