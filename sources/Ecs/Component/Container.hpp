@@ -31,6 +31,8 @@ public:
 
 public:
 
+    constexpr ~Container();
+
     // ------------------------------------------------------------------ Id
 
     template <
@@ -38,7 +40,7 @@ public:
     > [[ nodiscard ]] constexpr auto getId() const
         -> ::xrn::Id;
 
-    [[ nodiscard ]] static constexpr auto getMaxId()
+    [[ nodiscard ]] static consteval auto getMaxId()
         -> ::xrn::Id;
 
 
@@ -83,6 +85,9 @@ public:
     > void removeMany(
         ::xrn::Id entityId
     );
+
+    void clear();
+
 
 
 

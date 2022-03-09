@@ -444,7 +444,7 @@ tests : all
 
 auto_tests : tests
 	$(PRINTF) "$(YELLOW)[Binary]$(NORMAL) auto_tests $(ARGV)\n"
-	./$(NAME)$(MODE_EXT)
+	valgrind --leak-check=full ./$(NAME)$(MODE_EXT)
 ifeq "$(USE_COVERAGE)" "true"
 	gcovr --exclude='tests' --exclude='externs' -j8 -d
 endif

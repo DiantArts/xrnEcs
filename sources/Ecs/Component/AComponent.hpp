@@ -1,7 +1,10 @@
 #pragma once
 
+///////////////////////////////////////////////////////////////////////////
+// Headers
+///////////////////////////////////////////////////////////////////////////
 #include <Util/Id.hpp>
-#include <Ecs/Component/Declaration.hpp>
+#include <Ecs/Component/Detail/Declaration.hpp>
 #include <Meta/IsBaseOfTemplate.hpp>
 
 
@@ -25,10 +28,6 @@ public:
     virtual ~AComponent() = 0; // TODO: rule of 5
 
 };
-
-
-
-static constexpr ::xrn::Id maxId{ ::xrn::ecs::component::declaration::detail::numberOfIds };
 
 
 
