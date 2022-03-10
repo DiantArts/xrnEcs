@@ -10,6 +10,9 @@
 #include <Ecs/System/ASystem.hpp>
 #include <Ecs/System/Detail/System.hpp>
 
+// namespace ::xrn::ecs::component { class Container; }
+// namespace ::xrn::ecs::entity { class Container; }
+// namespace ::xrn::ecs::entity { class Entity; }
 
 
 namespace xrn::ecs::system {

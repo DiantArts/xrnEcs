@@ -20,6 +20,7 @@ BINDIR			:=	binaries
 SRCDIR			:=	sources
 INCDIR			:=	includes
 TSTDIR			:=	tests
+BSMDIR			:=	$(TSTDIR)/benchmarks
 LIBDIR			:=	libraries
 EXTERNDIR		:=	externs
 EXTERNBINDIR	:=	$(BINDIR)/$(EXTERNDIR)
@@ -94,7 +95,6 @@ MODE_EXT		:=	_gdb
 MODE_FLAGS		:=	-g3 -Og -pipe
 MOD_BUILDDIR	:=	$(addsuffix /gdb,$(BUILDDIR))
 
-
 # ============================================================================= Mode test
 else ifeq (tests,$(findstring tests,$(MAKECMDGOALS)))
 
@@ -105,6 +105,14 @@ COVERAGE_FLAG	:=	-fprofile-arcs -ftest-coverage -fPIC --coverage -fno-inline -fn
 LIBBIN			+=	gcov
 endif
 MOD_BUILDDIR	:=	$(addsuffix /tests,$(BUILDDIR))
+NAME			:=	$(TNAME)
+
+# ============================================================================= Mode test
+else ifeq (benchmarks,$(findstring benchmarks,$(MAKECMDGOALS)))
+
+MODE_EXT		:=	_benchmarks
+MODE_FLAGS		:=	-Ofast -pipe -DTEST=1
+MOD_BUILDDIR	:=	$(addsuffix /benchmarks,$(BUILDDIR))
 NAME			:=	$(TNAME)
 
 # ============================================================================= Mode release
@@ -134,9 +142,13 @@ C_SRC			!=	find $(SRCDIR) -type f -name \*$(C_SRCEXT) ! -path $(MAIN)
 CPP_SRC			!=	find $(SRCDIR) -type f -name \*$(CPP_SRCEXT) ! -path $(MAIN)
 # CPPM_SRC		!=	find $(SRCDIR) -type f -name \*$(CPPM_SRCEXT) ! -path $(MAIN)
 
-TST_C_SRC			!=	find $(TSTDIR) -type f -name \*$(C_SRCEXT)
-TST_CPP_SRC		!=	find $(TSTDIR) -type f -name \*$(CPP_SRCEXT)
-# TEST_CPPM_SRC		!=	find $(TSTDIR) -type f -name \*$(CPPM_SRCEXT)
+TST_C_SRC		!=	find $(TSTDIR) -type f -name \*$(C_SRCEXT) ! -path $(BSMDIR)/\*
+TST_CPP_SRC		!=	find $(TSTDIR) -type f -name \*$(CPP_SRCEXT) ! -path $(BSMDIR)/\*
+# TST_CPPM_SRC		!=	find $(TSTDIR) -type f -name \*$(CPPM_SRCEXT) ! -path $(BSMDIR)/*
+
+BSM_C_SRC			!=	find $(BSMDIR) -type f -name \*$(C_SRCEXT)
+BSM_CPP_SRC		!=	find $(BSMDIR) -type f -name \*$(CPP_SRCEXT)
+# BSM_CPPM_SRC		!=	find $(BSMDIR) -type f -name \*$(CPPM_SRCEXT)
 
 FOUNDLIBS		!=	find $(LIBDIR) -maxdepth 1 -type d ! -path $(LIBDIR)
 FOUNDEXTERN		!=	find $(EXTERNDIR) -maxdepth 1 -type d ! -path $(EXTERNDIR) ! -path $(EXTERNDIR)/HdrOnly
@@ -149,6 +161,10 @@ ifeq (tests,$(findstring tests,$(MAKECMDGOALS)))
 C_OBJ			:=	$(patsubst %$(C_SRCEXT),$(OBJDIR)/%$(OBJEXT),$(C_SRC) $(TST_C_SRC))
 CPP_OBJ			:=	$(patsubst %$(CPP_SRCEXT),$(OBJDIR)/%$(OBJEXT),$(CPP_SRC) $(TST_CPP_SRC))
 CPPM_OBJ		+=	$(patsubst %$(CPPM_SRCEXT),$(OBJDIR)/%$(OBJEXT),$(CPPM_SRC) $(TST_CPPM_SRC))
+else ifeq (benchmark,$(findstring benchmark,$(MAKECMDGOALS)))
+C_OBJ			:=	$(patsubst %$(C_SRCEXT),$(OBJDIR)/%$(OBJEXT),$(C_SRC) $(BSM_C_SRC))
+CPP_OBJ			:=	$(patsubst %$(CPP_SRCEXT),$(OBJDIR)/%$(OBJEXT),$(CPP_SRC) $(BSM_CPP_SRC))
+CPPM_OBJ		+=	$(patsubst %$(CPPM_SRCEXT),$(OBJDIR)/%$(OBJEXT),$(CPPM_SRC) $(BSM_CPPM_SRC))
 else
 C_OBJ			:=	$(patsubst %$(C_SRCEXT),$(OBJDIR)/%$(OBJEXT),$(C_SRC))
 CPP_OBJ			:=	$(patsubst %$(CPP_SRCEXT),$(OBJDIR)/%$(OBJEXT),$(CPP_SRC) $(MAIN))
@@ -277,9 +293,6 @@ compilation : $(C_OBJ) $(CPP_OBJ)
 	$(PRINTF) "$(LCYAN)[Compilation]$(NORMAL) done\n"
 
 linkage : $(NAME)$(MODE_EXT)
-	$(PRINTF) "$(LCYAN)[Linkage]$(NORMAL) done\n"
-
-test_linkage : $(TEST_NAME)$(MODE_EXT)
 	$(PRINTF) "$(LCYAN)[Linkage]$(NORMAL) done\n"
 
 ## ============================================================================
@@ -433,21 +446,27 @@ debug : all
 	./$(NAME)$(MODE_EXT) $(ARGV)
 
 auto_valgrind : all
-	$(PRINTF) "$(YELLOW)[Binary]$(NORMAL) auto_valgrind $(ARGV)\n"
+	$(PRINTF) "$(YELLOW)[Binary]$(NORMAL) valgrind $(ARGV)\n"
 	valgrind ./$(NAME)$(MODE_EXT) $(ARGV)
 
 auto_gdb : all
-	$(PRINTF) "$(YELLOW)[Binary]$(NORMAL) auto_gdb $(ARGV)\n"
+	$(PRINTF) "$(YELLOW)[Binary]$(NORMAL) gdb $(ARGV)\n"
 	gdb --args $(NAME)$(MODE_EXT) $(ARGV)
 
 tests : all
 
 auto_tests : tests
-	$(PRINTF) "$(YELLOW)[Binary]$(NORMAL) auto_tests $(ARGV)\n"
-	valgrind --leak-check=full ./$(NAME)$(MODE_EXT)
+	$(PRINTF) "$(YELLOW)[Binary]$(NORMAL) tests $(ARGV)\n"
+	valgrind ./$(NAME)$(MODE_EXT)
 ifeq "$(USE_COVERAGE)" "true"
 	gcovr --exclude='tests' --exclude='externs' -j8 -d
 endif
+
+benchmarks : all
+
+auto_benchmarks : tests
+	$(PRINTF) "$(YELLOW)[Binary]$(NORMAL) benchmarks $(ARGV)\n"
+	./$(NAME)$(MODE_EXT)
 
 ## phony
 

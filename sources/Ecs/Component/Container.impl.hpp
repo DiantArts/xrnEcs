@@ -2,10 +2,10 @@
 #include <Ecs/Component/Detail/Container.hpp>
 
 
-constexpr ::xrn::ecs::component::Container::~Container()
-{
-    this->clear();
-}
+// ::xrn::ecs::component::Container::~Container()
+// {
+    // this->clear();
+// }
 
 // ------------------------------------------------------------------ Id
 
@@ -121,6 +121,9 @@ template <
 {
     (this->remove<ComponentTypes>(entityId), ...);
 }
+
+// void ::xrn::ecs::component::Container::clear()
+// {}
 
 
 

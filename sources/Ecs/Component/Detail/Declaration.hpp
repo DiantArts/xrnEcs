@@ -8,58 +8,44 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Declares a component
-///
-/// Registers the type given as macro parameter as part of the components
-/// of the program.
-/// It is however unlikely that this macro will be used as it only allows
-/// to create a component in the base namespace. TO create a component in
-/// a specific namespace, please use DECLARE_COMPONENT_IN_NAMESPACE()
-///
-/// \warning Using this macro outside of the files included bellow next to
-/// the base file "Ecs/Component/Declaration.hpp" leads to undefined
-/// behaviors.
-///
-/// \see DECLARE_COMPONENT_IN_NAMESPACE()
-///
+// Stores informations about ids. Allow Id to Type conversion
 ///////////////////////////////////////////////////////////////////////////
-#define DECLARE_COMPONENT(className) \
-    class className; \
-    template <> \
-    class xrn::ecs::component::declaration::detail::WithId<className> { \
-    public: \
-        [[ nodiscard ]] static inline constexpr ::std::size_t getId() { return m_id; } \
-    private: \
-        static inline constexpr auto m_id{ \
-            __COUNTER__ - ::xrn::ecs::component::declaration::detail::baseIdCounter \
-        }; \
-    }
+namespace xrn::ecs::component {
+    template <::xrn::Id::Type id> struct IdInfo;
+    template <typename T> struct IsComponent : public ::std::false_type {};
+} // namespace xrn::ecs::component
+
 
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Declares a component in a namespace
 ///
-/// Same as DECLARE_COMPONENT() but in a namespace given as first parameter
-/// of macro. This macro Registers the type given as macro parameter as
-/// part of the components of the program.
+/// Registers the type given as macro parameter as part of the components
+/// of the program.
 ///
 /// \warning Using this macro outside of the files included bellow next to
 /// the base file "Ecs/Component/Declaration.hpp" leads to undefined
 /// behaviors.
 ///
-/// \see DECLARE_COMPONENT_IN_NAMESPACE()
-///
 ///////////////////////////////////////////////////////////////////////////
-#define DECLARE_COMPONENT_IN_NAMESPACE(namespaceName, className) \
+#define DECLARE_COMPONENT(namespaceName, className) \
     namespace namespaceName { class className; } \
     template <> \
     class xrn::ecs::component::declaration::detail::WithId<namespaceName::className> { \
     public: \
-        [[ nodiscard ]] static inline constexpr ::std::size_t getId() { return m_id; } \
+        [[ nodiscard ]] static inline consteval ::std::size_t getId() { return m_id; } \
     private: \
         static inline constexpr const auto m_id{ \
             __COUNTER__ - ::xrn::ecs::component::declaration::detail::baseIdCounter \
         }; \
-    }
+    }; \
+    template < \
+    > struct xrn::ecs::component::IdInfo< \
+        xrn::ecs::component::declaration::detail::WithId<namespaceName::className>::getId() \
+    > { \
+        using Type = namespaceName::className; \
+    }; \
+    template < \
+    > struct xrn::ecs::component::IsComponent<namespaceName::className> : public ::std::true_type {}
 
 
 
@@ -77,6 +63,25 @@ namespace xrn::ecs::component::declaration::detail {
     template <typename> class WithId;
     static inline constexpr const ::std::size_t baseIdCounter{ __COUNTER__ + 1 };
 } // namespace xrn::ecs::component::declaration::detail
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Test components (details hidden)
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////
+/// Declares the components used for unit testing. Can be concidered as
+/// implemetation details.
+///////////////////////////////////////////////////////////////////////////
+#ifdef TEST
+DECLARE_COMPONENT(xrn::ecs::component::test, Movable);
+DECLARE_COMPONENT(xrn::ecs::component::test, Transformable);
+DECLARE_COMPONENT(xrn::ecs::component::test, Transformable2d);
+#endif // TEST
 
 
 
@@ -102,25 +107,6 @@ namespace xrn::ecs::component::declaration::detail {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
-// Test components (details hidden)
-//
-///////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////////////////////////////
-/// Declares the components used for unit testing. Can be concidered as
-/// implemetation details.
-///////////////////////////////////////////////////////////////////////////
-#ifdef TEST
-DECLARE_COMPONENT_IN_NAMESPACE(xrn::ecs::component::test, Movable);
-DECLARE_COMPONENT_IN_NAMESPACE(xrn::ecs::component::test, Transformable);
-DECLARE_COMPONENT_IN_NAMESPACE(xrn::ecs::component::test, Transformable2d);
-#endif // TEST
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////
 // Start the component declaration
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -139,8 +125,14 @@ namespace xrn::ecs::component {
     static inline constexpr const ::xrn::Id maxId{ ::xrn::ecs::component::declaration::detail::numberOfIds };
 } // namespace xrn::ecs::component
 
+namespace xrn::ecs {
+    template <typename T> using IsComponent = xrn::ecs::component::IsComponent<T>;
+    template <typename T> inline constexpr bool IsComponent_v = xrn::ecs::IsComponent<T>::value;
+    template <typename T> inline constexpr bool isComponent = xrn::ecs::IsComponent<T>::value;
+} // namespace xrn::ecs
+
 ///////////////////////////////////////////////////////////////////////////
 /// Macros undefinition
 ///////////////////////////////////////////////////////////////////////////
 #undef DECLARE_COMPONENT
-#undef DECLARE_COMPONENT_IN_NAMESPACE
+#undef DECLARE_COMPONENT
