@@ -6,6 +6,7 @@
 #include <Meta/Constraint.hpp>
 #include <Meta/IsBaseOfTemplate.hpp>
 #include <Util/Time.hpp>
+#include <Ecs/Component/Detail/Declaration.hpp>
 
 ///////////////////////////////////////////////////////////////////////////
 // Forward declerations
@@ -76,7 +77,8 @@ template <
 template <
     typename Type
 > concept isId =
-    ::xrn::meta::constraint::sameAs<::xrn::Id, Type> || ::xrn::meta::constraint::sameAs<::xrn::Id::Type, Type>;
+    ::xrn::meta::constraint::sameAs<::xrn::Id, Type> ||
+    ::xrn::meta::constraint::sameAs<::xrn::Id::Type, Type>;
 
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Checks whether the Type given as template parameter inherits
@@ -93,9 +95,41 @@ template <
 /// \see ::xrn::ecs::component::AComponent
 ///
 ///////////////////////////////////////////////////////////////////////////
+
+// template <
+    // typename ComponentType,
+    // ::xrn::Id::Type componentIndex = 0
+// > consteval auto find()
+    // -> bool
+// {
+    // if constexpr (componentIndex < xrn::ecs::component::maxId) {
+        // if (::xrn::meta::constraint::sameAs<
+            // typename ::xrn::ecs::component::IdInfo<componentIndex>::Type,
+            // ComponentType
+        // >) {
+            // return true;
+        // }
+        // return find<func, componentIndex + 1>(
+            // signature,
+            // ::std::forward<decltype(args)>(args)...
+        // );
+    // }
+    // return false
+    // return ::xrn::meta::constraint::sameAs<
+        // typename ::xrn::ecs::component::IdInfo<componentIndex>::Type,
+        // ComponentType
+    // > || find<componentType;
+// }
+
 template <
     typename Type
 > concept isComponent =
-    ::xrn::meta::IsBaseOfTemplate<::xrn::ecs::component::AComponent, Type>::value;
+    ::xrn::ecs::IsComponent<Type>::value;
+    // ::xrn::meta::IsBaseOfTemplate<::xrn::ecs::component::AComponent, Type>::value;
+    // ::xrn::ecs::IsComponent<Type>::value ||
+    // ::xrn::meta::constraint::sameAs<::xrn::ecs::component::AComponent, Type>;
+    // true;
+    // ::xrn::ecs::component::ForEach::find<Type>();
+    // ::xrn::meta::constraint::sameAs<xrn::ecs::component::IdInfo<Type::getId()>::Type, Type>;
 
 } // namespace xrn::ecs::detail::constraint

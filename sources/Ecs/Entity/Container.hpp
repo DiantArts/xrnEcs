@@ -219,8 +219,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator[](
         ::xrn::Id entityId
-    )
-        -> ::xrn::ecs::Entity::Reference;
+    ) -> ::xrn::ecs::Entity::Reference;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Gets a ::xrn::ecs::Entity::ConstReference to an entity contained

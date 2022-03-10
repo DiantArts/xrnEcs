@@ -7,33 +7,62 @@
 // Headers
 ///////////////////////////////////////////////////////////////////////////
 #include <Ecs/Entity.hpp>
+#include <Ecs/Detail/Constraint.hpp>
+#include <Ecs/Component/Detail/Type.hpp>
+#include <Ecs/Component/ForEach.hpp>
 
 
 
-namespace xrn::ecs::component {
-    class Drawable
-        : public ::xrn::ecs::AComponent<::xrn::ecs::component::Drawable>
-    {};
-    class Transformable
-        : public ::xrn::ecs::AComponent<::xrn::ecs::component::Transformable>
-    {};
-} // namespace xrn::ecs::component
+// namespace xrn::ecs::component {
+    // class Drawable
+        // : public ::xrn::ecs::AComponent<::xrn::ecs::component::Drawable>
+    // {};
+    // class Transformable
+        // : public ::xrn::ecs::AComponent<::xrn::ecs::component::Transformable>
+    // {};
+    // class Controllable
+        // : public ::xrn::ecs::AComponent<::xrn::ecs::component::Controllable>
+    // {};
+    // class Killable
+        // : public ::xrn::ecs::AComponent<::xrn::ecs::component::Killable>
+    // {};
+// } // namespace xrn::ecs::component
 
 
 
+template <
+    auto func,
+    ::std::size_t index = 0
+> void constexpr forEachComponent(
+    const ::xrn::Id id
+)
+{
+    if constexpr (index < xrn::ecs::component::maxId) {
+        func.template operator()<typename xrn::ecs::component::IdInfo<index>::Type>();
+        forEachComponent<func, index + 1>(id);
+    }
+}
+
+
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 auto main()
     -> int
 try {
-    ::xrn::ecs::component::Container components;
-    ::xrn::ecs::Entity entity{};
-    ::std::cout << ::std::boolalpha << "base entity: " << &entity << ::std::endl;
-    ::xrn::ecs::Entity::Reference ref{ components, entity };
-    ::std::cout << ::std::boolalpha << "ref get entity: " << &ref.get() << ::std::endl;
-    const ::xrn::ecs::Entity& entityRef3{ ref };
-    ::std::cout << ::std::boolalpha << "const ref entity: " << &entityRef3 << ::std::endl;
+    ::std::cout << ::xrn::ecs::isComponent<::xrn::ecs::component::Drawable> << ::std::endl;
+    // auto signature{ ::xrn::ecs::Signature::generate<
+        // ::xrn::ecs::component::Drawable, ::xrn::ecs::component::Controllable
+    // >() };
+    // ::xrn::ecs::component::ForEach::template run<[]<
+            // ::xrn::ecs::detail::constraint::isComponent T
+        // >(int i){
+        // ::std::cout << "hello: " << i << " + " << T::getId() << ::std::endl;
+    // }>(signature, 5);
 
-    ::std::cout << ::std::boolalpha << "ref comparison: " << (&entity == &entityRef3) << ::std::endl;
-    ::std::cout << ::std::boolalpha << "get comparison: " << (&entity == &ref.get()) << ::std::endl;
+    // ::xrn::Id value{ 1 };
+    // forEachComponent<[]<typename T>(){
+        // ::std::cout << "hello: " << T::getId() << ::std::endl;
+    // }>(value);
     return EXIT_SUCCESS;
 } catch (const ::std::exception& e) {
    ::std::cerr << "ERROR: " << e.what() <<::std::endl;

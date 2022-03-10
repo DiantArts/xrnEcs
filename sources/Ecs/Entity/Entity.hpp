@@ -45,41 +45,6 @@ class Entity {
 
 public:
 
-    // Entity()
-    // {
-        // ::std::cout << "create" << ::std::endl;
-    // }
-
-    // Entity(const Entity& other)
-        // : m_id{ other.m_id }
-        // , m_signature{ other.m_signature }
-    // {
-        // ::std::cout << "copy constructor" << ::std::endl;
-    // }
-
-    // Entity& operator=(const Entity& other)
-    // {
-        // m_id = other.m_id;
-        // m_signature = other.m_signature;
-        // ::std::cout << "copy assign" << ::std::endl;
-        // return *this;
-    // }
-
-    // Entity(Entity&& other)
-        // : m_id{ ::std::move(other.m_id) }
-        // , m_signature{ ::std::move(other.m_signature) }
-    // {
-        // ::std::cout << "move constructor" << ::std::endl;
-    // }
-
-    // Entity& operator=(Entity&& other)
-    // {
-        // m_id = ::std::move(other.m_id);
-        // m_signature = ::std::move(other.m_signature);
-        // ::std::cout << "move assign" << ::std::endl;
-        // return *this;
-    // }
-
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // static elements
@@ -242,7 +207,7 @@ public:
     ///
     /// \param components Component container containing the entity components
     ///
-    /// \see ::xrn::ecs::Component
+    /// \see ::xrn::ecs::Component, ::xrn::ecs::component::Container
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -258,12 +223,24 @@ public:
     ///
     /// \param components Component container containing the entity components
     ///
-    /// \see ::xrn::ecs::Component
+    /// \see ::xrn::ecs::Component, ::xrn::ecs::component::Container
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
         ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
     > void removeComponents(
+        ::xrn::ecs::component::Container& container
+    );
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Remove all components from the entity
+    ///
+    /// \param components Component container containing the entity components
+    ///
+    /// \see ::xrn::ecs::Component, ::xrn::ecs::component::Container
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    void clearComponents(
         ::xrn::ecs::component::Container& container
     );
 

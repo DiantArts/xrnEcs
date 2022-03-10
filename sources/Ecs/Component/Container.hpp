@@ -31,7 +31,7 @@ public:
 
 public:
 
-    constexpr ~Container();
+    // ~Container();
 
     // ------------------------------------------------------------------ Id
 
@@ -86,7 +86,7 @@ public:
         ::xrn::Id entityId
     );
 
-    void clear();
+    // void clear();
 
 
 
