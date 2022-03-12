@@ -4,15 +4,11 @@
 // Headers
 ///////////////////////////////////////////////////////////////////////////
 #include <Ecs/Signature.hpp>
-#include <Ecs/Component.hpp>
-#include <Ecs/Entity.hpp>
 #include <Ecs/System/Detail/Meta/Function.hpp>
 #include <Ecs/System/ASystem.hpp>
-#include <Ecs/System/Detail/System.hpp>
 
-// namespace ::xrn::ecs::component { class Container; }
-// namespace ::xrn::ecs::entity { class Container; }
-// namespace ::xrn::ecs::entity { class Entity; }
+namespace xrn::ecs::component { class Container; }
+namespace xrn::ecs::entity { class Container; }
 
 
 namespace xrn::ecs::system {
@@ -174,10 +170,3 @@ namespace xrn::ecs {
         ::xrn::ecs::detail::constraint::isComponent... BanishedComponentTypes
     > using System = ::xrn::ecs::system::System<function, BanishedComponentTypes...>;
 }
-
-
-
-///////////////////////////////////////////////////////////////////////////
-// Header-implimentation
-///////////////////////////////////////////////////////////////////////////
-#include <Ecs/System/System.impl.hpp>

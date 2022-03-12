@@ -96,40 +96,10 @@ template <
 ///
 ///////////////////////////////////////////////////////////////////////////
 
-// template <
-    // typename ComponentType,
-    // ::xrn::Id::Type componentIndex = 0
-// > consteval auto find()
-    // -> bool
-// {
-    // if constexpr (componentIndex < xrn::ecs::component::maxId) {
-        // if (::xrn::meta::constraint::sameAs<
-            // typename ::xrn::ecs::component::IdInfo<componentIndex>::Type,
-            // ComponentType
-        // >) {
-            // return true;
-        // }
-        // return find<func, componentIndex + 1>(
-            // signature,
-            // ::std::forward<decltype(args)>(args)...
-        // );
-    // }
-    // return false
-    // return ::xrn::meta::constraint::sameAs<
-        // typename ::xrn::ecs::component::IdInfo<componentIndex>::Type,
-        // ComponentType
-    // > || find<componentType;
-// }
-
 template <
     typename Type
 > concept isComponent =
-    ::xrn::ecs::IsComponent<Type>::value;
+    ::xrn::ecs::IsComponent_v<::std::remove_cvref_t<::std::remove_pointer_t<Type>>>;
     // ::xrn::meta::IsBaseOfTemplate<::xrn::ecs::component::AComponent, Type>::value;
-    // ::xrn::ecs::IsComponent<Type>::value ||
-    // ::xrn::meta::constraint::sameAs<::xrn::ecs::component::AComponent, Type>;
-    // true;
-    // ::xrn::ecs::component::ForEach::find<Type>();
-    // ::xrn::meta::constraint::sameAs<xrn::ecs::component::IdInfo<Type::getId()>::Type, Type>;
 
 } // namespace xrn::ecs::detail::constraint

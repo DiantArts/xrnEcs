@@ -457,7 +457,9 @@ tests : all
 
 auto_tests : tests
 	$(PRINTF) "$(YELLOW)[Binary]$(NORMAL) tests $(ARGV)\n"
-	valgrind ./$(NAME)$(MODE_EXT)
+	rm -f .build/**.gcda .build/**.gcno
+	./$(NAME)$(MODE_EXT)
+	# valgrind ./$(NAME)$(MODE_EXT)
 ifeq "$(USE_COVERAGE)" "true"
 	gcovr --exclude='tests' --exclude='externs' -j8 -d
 endif

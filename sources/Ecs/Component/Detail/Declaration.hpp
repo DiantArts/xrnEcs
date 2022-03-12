@@ -128,7 +128,6 @@ namespace xrn::ecs::component {
 namespace xrn::ecs {
     template <typename T> using IsComponent = xrn::ecs::component::IsComponent<T>;
     template <typename T> inline constexpr bool IsComponent_v = xrn::ecs::IsComponent<T>::value;
-    template <typename T> inline constexpr bool isComponent = xrn::ecs::IsComponent<T>::value;
 } // namespace xrn::ecs
 
 ///////////////////////////////////////////////////////////////////////////

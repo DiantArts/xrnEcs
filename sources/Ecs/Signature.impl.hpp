@@ -1,3 +1,5 @@
+#pragma once
+
 ///////////////////////////////////////////////////////////////////////////
 // Headers
 ///////////////////////////////////////////////////////////////////////////
@@ -68,11 +70,29 @@ template <
 }
 
 ///////////////////////////////////////////////////////////////////////////
+constexpr void ::xrn::ecs::Signature::add(
+    ::xrn::ecs::detail::constraint::isId auto... componentIds
+)
+{
+    for (auto componentId : { componentIds... }) {
+        m_bitset.set(componentId);
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////
 template <
     ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > constexpr void ::xrn::ecs::Signature::set()
 {
     this->add<ComponentTypes...>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+constexpr void ::xrn::ecs::Signature::set(
+    ::xrn::ecs::detail::constraint::isId auto... componentIds
+)
+{
+    this->add(componentIds...);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -91,11 +111,29 @@ template <
 }
 
 ///////////////////////////////////////////////////////////////////////////
+constexpr void ::xrn::ecs::Signature::remove(
+    ::xrn::ecs::detail::constraint::isId auto... componentIds
+)
+{
+    for (auto componentId : { componentIds... }) {
+        m_bitset.reset(componentId);
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////
 template <
     ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > constexpr void ::xrn::ecs::Signature::reset()
 {
     this->remove<ComponentTypes...>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+constexpr void ::xrn::ecs::Signature::reset(
+    ::xrn::ecs::detail::constraint::isId auto... componentIds
+)
+{
+    this->remove(componentIds...);
 }
 
 
@@ -190,7 +228,7 @@ constexpr auto ::xrn::ecs::Signature::contains(
 
 ///////////////////////////////////////////////////////////////////////////
 constexpr auto ::xrn::ecs::Signature::contains(
-    const ::xrn::ecs::detail::constraint::isId auto&... componentIds
+    ::xrn::ecs::detail::constraint::isId auto... componentIds
 ) const
     -> bool
 {
@@ -226,7 +264,7 @@ constexpr auto ::xrn::ecs::Signature::containsAll(
 
 ///////////////////////////////////////////////////////////////////////////
 constexpr auto ::xrn::ecs::Signature::containsAll(
-    const ::xrn::ecs::detail::constraint::isId auto&... componentIds
+    ::xrn::ecs::detail::constraint::isId auto... componentIds
 ) const
     -> bool
 {
@@ -267,7 +305,7 @@ constexpr auto ::xrn::ecs::Signature::containsAny(
 
 ///////////////////////////////////////////////////////////////////////////
 constexpr auto ::xrn::ecs::Signature::containsAny(
-    const ::xrn::ecs::detail::constraint::isId auto&... componentIds
+    ::xrn::ecs::detail::constraint::isId auto... componentIds
 ) const
     -> bool
 {
@@ -303,7 +341,7 @@ constexpr auto ::xrn::ecs::Signature::containsNone(
 
 ///////////////////////////////////////////////////////////////////////////
 constexpr auto ::xrn::ecs::Signature::containsNone(
-    const ::xrn::ecs::detail::constraint::isId auto&... componentIds
+    ::xrn::ecs::detail::constraint::isId auto... componentIds
 ) const
     -> bool
 {

@@ -6,8 +6,9 @@ namespace xrn::ecs::system::detail {
 
 template <
     auto func,
-    typename
-> struct TupleHelper;
+    typename T
+> struct TupleHelper
+{};
 
 template <
     auto func,

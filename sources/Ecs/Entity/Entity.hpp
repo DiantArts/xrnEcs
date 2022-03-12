@@ -7,8 +7,10 @@
 ///////////////////////////////////////////////////////////////////////////
 #include <Util/Id.hpp>
 #include <Ecs/Detail/Constraint.hpp>
-#include <Ecs/Component/Container.hpp>
 #include <Ecs/Signature.hpp>
+#include <Ecs/Component/ForEach.hpp>
+
+namespace xrn::ecs::component { class Container; }
 
 
 
@@ -240,7 +242,7 @@ public:
     /// \see ::xrn::ecs::Component, ::xrn::ecs::component::Container
     ///
     ///////////////////////////////////////////////////////////////////////////
-    void clearComponents(
+    inline void removeComponents(
         ::xrn::ecs::component::Container& container
     );
 
@@ -294,10 +296,3 @@ private:
 // Alias name
 ///////////////////////////////////////////////////////////////////////////
 namespace xrn::ecs { using Entity = ::xrn::ecs::entity::Entity; }
-
-
-
-///////////////////////////////////////////////////////////////////////////
-// Header-implimentation
-///////////////////////////////////////////////////////////////////////////
-#include <Ecs/Entity/Entity.impl.hpp>

@@ -1,3 +1,5 @@
+#pragma once
+
 template <
     auto func,
     ::xrn::ecs::detail::constraint::isComponent... BanishedComponentTypes
