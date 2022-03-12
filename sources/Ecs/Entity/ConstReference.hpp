@@ -146,5 +146,3 @@ private:
     const ::xrn::ecs::Entity& m_entity;
 
 };
-
-#include <Ecs/Entity/ConstReference.impl.hpp>

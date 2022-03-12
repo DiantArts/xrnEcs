@@ -1,11 +1,9 @@
+#pragma once
+
 #include <Meta/ForEach.hpp>
 #include <Ecs/Component/Detail/Container.hpp>
+#include <Ecs/Component/ForEach.hpp>
 
-
-// ::xrn::ecs::component::Container::~Container()
-// {
-    // this->clear();
-// }
 
 // ------------------------------------------------------------------ Id
 
@@ -94,11 +92,27 @@ template <
     );
 }
 
+template <
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
+> void ::xrn::ecs::component::Container::removeMany(
+    ::xrn::Id entityId
+)
+{
+    (this->remove<ComponentTypes>(entityId), ...);
+}
+
+void ::xrn::ecs::component::Container::removeMany(
+    const ::xrn::Id entityId,
+    ::xrn::ecs::detail::constraint::isId auto... componentIds
+)
+{
+    (this->remove(entityId, componentIds), ...);
+}
 
 template <
     ::xrn::ecs::detail::constraint::isComponent RawComponentType
 > void ::xrn::ecs::component::Container::remove(
-    ::xrn::Id entityId
+    const ::xrn::Id entityId
 )
 {
     using ComponentType = ::std::remove_cvref_t<RawComponentType>;
@@ -113,17 +127,17 @@ template <
     pairComponentContainer.first.erase(it);
 }
 
-template <
-    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-> void ::xrn::ecs::component::Container::removeMany(
-    ::xrn::Id entityId
-)
+void ::xrn::ecs::component::Container::clear()
 {
-    (this->remove<ComponentTypes>(entityId), ...);
+    // ::xrn::ecs::component::ForEach::template runWithId<
+        // []<::xrn::ecs::detail::constraint::isComponent ComponentType> (
+            // ::xrn::Id componentId,
+            // ::xrn::ecs::component::Container& components
+        // ){
+            // components.removeVector<ComponentType>(componentId);
+        // }
+   // >(*this);
 }
-
-// void ::xrn::ecs::component::Container::clear()
-// {}
 
 
 
@@ -215,6 +229,26 @@ template <
     using ComponentType = ::std::remove_cvref_t<RawComponentType>;
     auto& pairComponentContainer{ this->getUnsafePairSubContainer<ComponentType>() };
     return (*static_cast<Container::SubContainerType<ComponentType>*>(pairComponentContainer.second));
+}
+
+template <
+    ::xrn::ecs::detail::constraint::isComponent RawComponentType
+> void ::xrn::ecs::component::Container::removeVector()
+{
+    // using ComponentType = ::std::remove_cvref_t<RawComponentType>;
+    // auto& pairComponentContainer{ this->getUnsafePairSubContainer<ComponentType>() };
+    // delete static_cast<Container::SubContainerType<ComponentType>*>(pairComponentContainer.second);
+}
+
+template <
+    ::xrn::ecs::detail::constraint::isComponent RawComponentType
+> void ::xrn::ecs::component::Container::removeVector(
+    ::xrn::Id componentId
+)
+{
+    // using ComponentType = ::std::remove_cvref_t<RawComponentType>;
+    // auto& pairComponentContainer{ this->getUnsafePairSubContainer(componentId) };
+    // delete static_cast<Container::SubContainerType<ComponentType>*>(pairComponentContainer.second);
 }
 
 template <

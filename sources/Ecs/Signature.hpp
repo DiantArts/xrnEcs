@@ -116,6 +116,20 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Adds components to the signature
     ///
+    /// \param componentIds Component Ids to add to the signature
+    ///
+    /// Same as set()
+    ///
+    /// \see set(), ::xrn::Id
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    constexpr void add(
+        ::xrn::ecs::detail::constraint::isId auto... componentIds
+    );
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Adds components to the signature
+    ///
     /// \tparam ComponentTypes Components to add to the signature
     ///
     /// Same as add()
@@ -124,6 +138,20 @@ public:
     template <
         ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
     > constexpr void set();
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Adds components to the signature
+    ///
+    /// \param componentIds Component Ids to add to the signature
+    ///
+    /// Same as add()
+    ///
+    /// \see add(), ::xrn::Id
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    constexpr void set(
+        ::xrn::ecs::detail::constraint::isId auto... componentIds
+    );
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Removes components from the signature
@@ -142,6 +170,20 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Removes components from the signature
     ///
+    /// \param componentIds Component Ids to remove from the signature
+    ///
+    /// Same as reset()
+    ///
+    /// \see reset(), ::xrn::Id
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    constexpr void remove(
+        ::xrn::ecs::detail::constraint::isId auto... componentIds
+    );
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Removes components from the signature
+    ///
     /// \tparam ComponentTypes Components to remove from the signature
     ///
     /// Same as remove()
@@ -152,6 +194,20 @@ public:
     template <
         ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
     > constexpr void reset();
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Removes components from the signature
+    ///
+    /// \param componentIds Component Ids to remove from the signature
+    ///
+    /// Same as remove()
+    ///
+    /// \see remove(), ::xrn::Id
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    constexpr void reset(
+        ::xrn::ecs::detail::constraint::isId auto... componentIds
+    );
 
 
 
@@ -320,7 +376,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto contains(
-        const ::xrn::ecs::detail::constraint::isId auto&... componentIds
+        ::xrn::ecs::detail::constraint::isId auto... componentIds
     ) const
         -> bool;
 
@@ -388,7 +444,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto containsAll(
-        const ::xrn::ecs::detail::constraint::isId auto&... componentIds
+        ::xrn::ecs::detail::constraint::isId auto... componentIds
     ) const
         -> bool;
 
@@ -456,7 +512,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto containsAny(
-        const ::xrn::ecs::detail::constraint::isId auto&... componentIds
+        ::xrn::ecs::detail::constraint::isId auto... componentIds
     ) const
         -> bool;
 
@@ -523,7 +579,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto containsNone(
-        const ::xrn::ecs::detail::constraint::isId auto&... componentIds
+        ::xrn::ecs::detail::constraint::isId auto... componentIds
     ) const
         -> bool;
 

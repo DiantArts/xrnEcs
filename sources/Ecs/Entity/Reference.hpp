@@ -296,5 +296,3 @@ private:
     ::xrn::ecs::Entity& m_entity;
 
 };
-
-#include <Ecs/Entity/Reference.impl.hpp>

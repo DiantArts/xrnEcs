@@ -1,7 +1,6 @@
 #include <pch.hpp>
-#include <Ecs/Entity/Reference.hpp>
+#include <Ecs/Entity.hpp>
 #include <Ecs/Component.hpp>
-#include <Ecs/Component/Container.hpp>
 
 
 

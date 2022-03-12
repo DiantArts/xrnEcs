@@ -1,3 +1,5 @@
+#pragma once
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // static elements
@@ -119,4 +121,20 @@ template <
 {
     components.removeMany<ComponentTypes...>(m_id);
     m_signature.reset<ComponentTypes...>();
+}
+
+void ::xrn::ecs::entity::Entity::removeComponents(
+    ::xrn::ecs::component::Container& components
+)
+{
+    // ::xrn::ecs::component::ForEach::template runWithId<
+        // []<::xrn::ecs::detail::constraint::isComponent ComponentType> (
+            // ::xrn::Id componentId,
+            // ::xrn::ecs::entity::Entity& entity,
+            // ::xrn::ecs::component::Container& components
+        // ){
+            // components.remove(entity.m_id, componentId);
+            // entity.m_signature.reset(componentId);
+        // }
+   // >(m_signature, *this, components);
 }

@@ -75,18 +75,28 @@ public:
     );
 
     template <
-        ::xrn::ecs::detail::constraint::isComponent ComponentType
-    > void remove(
-        ::xrn::Id entityId
-    );
-
-    template <
         ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
     > void removeMany(
         ::xrn::Id entityId
     );
 
-    // void clear();
+    void removeMany(
+        ::xrn::Id entityId,
+        ::xrn::ecs::detail::constraint::isId auto... componentIds
+    );
+
+    template <
+        ::xrn::ecs::detail::constraint::isComponent ComponentType
+    > void remove(
+        ::xrn::Id entityId
+    );
+
+    void remove(
+        ::xrn::Id entityId,
+        ::xrn::Id componentId
+    );
+
+    inline void clear();
 
 
 
@@ -130,10 +140,22 @@ public:
 
     template <
         ::xrn::ecs::detail::constraint::isComponent ComponentType
+    > void removeVector();
+
+    template <
+        ::xrn::ecs::detail::constraint::isComponent ComponentType
+    > void removeVector(
+        ::xrn::Id entityId
+    );
+
+    template <
+        ::xrn::ecs::detail::constraint::isComponent ComponentType
     > [[ nodiscard ]] auto vectorExists() const
         -> bool;
 
 
+
+private:
 
     // ------------------------------------------------------------------ SubContainers
     // Those functions are unsafe and should be use with caution
@@ -148,6 +170,10 @@ public:
     > [[ nodiscard ]] auto getUnsafePairSubContainer() const
         -> const SubPairContainerType&;
 
+    [[ nodiscard ]] auto getUnsafePairSubContainer(
+        ::xrn::Id id
+    ) -> SubPairContainerType&;
+
 
 
 private:
@@ -159,5 +185,3 @@ private:
 
 
 } // namespace xrn::ecs::component::
-
-#include <Ecs/Component/Container.impl.hpp>

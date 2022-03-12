@@ -42,7 +42,3 @@ namespace xrn::ecs {
         typename ComponentTypes
     > using AComponent = ::xrn::ecs::component::AComponent<ComponentTypes>;
 }
-
-
-
-#include <Ecs/Component/AComponent.impl.hpp>
