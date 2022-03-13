@@ -9,7 +9,7 @@
 
 template <
     ::xrn::ecs::detail::constraint::isComponent RawComponentType
-> constexpr auto ::xrn::ecs::component::Container::getId() const
+> consteval auto ::xrn::ecs::component::Container::getId() const
     -> ::xrn::Id
 {
     using ComponentType = ::std::remove_cvref_t<RawComponentType>;

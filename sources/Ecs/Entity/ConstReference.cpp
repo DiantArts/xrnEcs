@@ -18,10 +18,15 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
+::xrn::ecs::Entity::ConstReference::ConstReference() noexcept
+    : m_entity{ nullptr }
+{}
+
+///////////////////////////////////////////////////////////////////////////
 ::xrn::ecs::Entity::ConstReference::ConstReference(
     const ::xrn::ecs::Entity& entity
-)
-    : m_entity{ entity }
+) noexcept
+    : m_entity{ &entity }
 {}
 
 
@@ -34,28 +39,35 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
+[[ nodiscard ]] auto ::xrn::ecs::Entity::ConstReference::isValid() const
+    -> bool
+{
+    return m_entity != nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////
 auto ::xrn::ecs::Entity::ConstReference::getSignature() const
     -> const ::xrn::ecs::Signature&
 {
-    return m_entity.getSignature();
+    return m_entity->getSignature();
 }
 
 ///////////////////////////////////////////////////////////////////////////
 auto ::xrn::ecs::Entity::ConstReference::getId() const
     -> ::xrn::Id
 {
-    return m_entity.getId();
+    return m_entity->getId();
 }
 
 ///////////////////////////////////////////////////////////////////////////
 auto ::xrn::ecs::Entity::ConstReference::get() const
     -> const ::xrn::ecs::Entity&
 {
-    return m_entity;
+    return *m_entity;
 }
 
 ///////////////////////////////////////////////////////////////////////////
 ::xrn::ecs::Entity::ConstReference::operator const ::xrn::ecs::Entity&() const
 {
-    return m_entity;
+    return *m_entity;
 }

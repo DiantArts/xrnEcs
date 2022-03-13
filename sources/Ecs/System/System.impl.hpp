@@ -22,7 +22,7 @@ template <
         return entity.getSignature().contains(::xrn::ecs::system::System<func>::getSignature());
     } };
 
-    for (auto& entity : entities |::std::views::filter(isMatching)) {
+    for (auto& entity : entities | ::std::views::filter(isMatching)) {
         // get every args into a tupple
         using TupleType = ::xrn::ecs::detail::meta::Function<decltype(func)>::Arguments::Type;
         auto args{
@@ -55,12 +55,16 @@ template <
     const ::xrn::ecs::component::Container& components
 ) const
 {
-    auto isMatching{ [](const ::xrn::ecs::Entity& entity) {
-        return entity.getSignature().contains(::xrn::ecs::system::System<func>::getSignature());
-    } };
+    if constexpr (!::xrn::ecs::detail::meta::Function<decltype(func)>::Arguments::areConst) {
+        ::std::cerr
+            << "System called as const but doesn't contain const argments"
+            << ::std::endl;
+    } else {
+        auto isMatching{ [](const ::xrn::ecs::Entity& entity) {
+            return entity.getSignature().contains(::xrn::ecs::system::System<func>::getSignature());
+        } };
 
-    if constexpr (::xrn::ecs::detail::meta::Function<decltype(func)>::Arguments::areConst) {
-        for (auto& entity : entities |::std::views::filter(isMatching)) {
+        for (auto& entity : entities | ::std::views::filter(isMatching)) {
             // get every args into a tupple
             using TupleType = ::xrn::ecs::detail::meta::Function<decltype(func)>::Arguments::Type;
             auto args{
@@ -70,8 +74,6 @@ template <
             // exec the func
             ::std::apply(func, args);
         }
-    } else {
-        throw ::std::runtime_error{ "System called as const but doesn't contain const argments" };
     }
 }
 
@@ -144,7 +146,7 @@ template <
             );
     } };
 
-    for (auto& entity : entities |::std::views::filter(isMatching)) {
+    for (auto& entity : entities | ::std::views::filter(isMatching)) {
         // get every args into a tupple
         using TupleType = ::xrn::ecs::detail::meta::Function<decltype(func)>::Arguments::Type;
         auto args{
@@ -179,18 +181,23 @@ template <
     const ::xrn::ecs::component::Container& components
 ) const
 {
-    auto isMatching{ [](const ::xrn::ecs::Entity& entity) {
-        auto& signature{ entity.getSignature() };
-        return signature.contains(
-                ::xrn::ecs::system::System<func, BanishedComponentTypes...>::getSignature()
-            ) &&
-            !signature.containsAny(
-                ::xrn::ecs::system::System<func, BanishedComponentTypes...>::getBanishedSignature()
-            );
-    } };
+    if constexpr (!::xrn::ecs::detail::meta::Function<decltype(func)>::Arguments::areConst) {
+        ::std::cerr
+            << "ERROR: System (with banished types) called as const but doesn't contain const argments"
+            << ::std::endl;
+        return;
+    } else {
+        auto isMatching{ [](const ::xrn::ecs::Entity& entity) {
+            auto& signature{ entity.getSignature() };
+            return signature.contains(
+                    ::xrn::ecs::system::System<func, BanishedComponentTypes...>::getSignature()
+                ) &&
+                !signature.containsAny(
+                    ::xrn::ecs::system::System<func, BanishedComponentTypes...>::getBanishedSignature()
+                );
+        } };
 
-    if constexpr (::xrn::ecs::detail::meta::Function<decltype(func)>::Arguments::areConst) {
-        for (auto& entity : entities |::std::views::filter(isMatching)) {
+        for (auto& entity : entities | ::std::views::filter(isMatching)) {
             // get every args into a tupple
             using TupleType = ::xrn::ecs::detail::meta::Function<decltype(func)>::Arguments::Type;
             auto args{
@@ -200,8 +207,6 @@ template <
             // exec the func
             ::std::apply(func, args);
         }
-    } else {
-        throw ::std::runtime_error{ "System (with banished types) called as const but doesn't contain const argments" };
     }
 }
 

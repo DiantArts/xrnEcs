@@ -1,5 +1,12 @@
 #pragma once
 
+///////////////////////////////////////////////////////////////////////////
+// Headers
+///////////////////////////////////////////////////////////////////////////
+#include <Util/Id.hpp>
+
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Macro definition
@@ -116,19 +123,22 @@ DECLARE_COMPONENT(xrn::ecs::component::test, Transformable2d);
 /// Declares 'WithId' class and initializes baseIdCounter
 ///////////////////////////////////////////////////////////////////////////
 namespace xrn::ecs::component::declaration::detail {
-    static inline constexpr const ::std::size_t numberOfIds{
+    static inline constexpr const auto numberOfIds{
         __COUNTER__ - ::xrn::ecs::component::declaration::detail::baseIdCounter
     };
 } // namespace xrn::ecs::component::declaration::detail
 
 namespace xrn::ecs::component {
-    static inline constexpr const ::xrn::Id maxId{ ::xrn::ecs::component::declaration::detail::numberOfIds };
+    static inline constexpr const auto maxId{ ::xrn::ecs::component::declaration::detail::numberOfIds };
 } // namespace xrn::ecs::component
 
 namespace xrn::ecs {
     template <typename T> using IsComponent = xrn::ecs::component::IsComponent<T>;
-    template <typename T> inline constexpr bool IsComponent_v = xrn::ecs::IsComponent<T>::value;
+    template <typename T> inline constexpr const auto IsComponent_v = xrn::ecs::IsComponent<T>::value;
+    template <typename T> inline constexpr const auto isComponent = xrn::ecs::IsComponent<T>::value;
 } // namespace xrn::ecs
+
+
 
 ///////////////////////////////////////////////////////////////////////////
 /// Macros undefinition

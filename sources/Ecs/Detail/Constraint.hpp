@@ -95,11 +95,9 @@ template <
 /// \see ::xrn::ecs::component::AComponent
 ///
 ///////////////////////////////////////////////////////////////////////////
-
 template <
     typename Type
 > concept isComponent =
-    ::xrn::ecs::IsComponent_v<::std::remove_cvref_t<::std::remove_pointer_t<Type>>>;
-    // ::xrn::meta::IsBaseOfTemplate<::xrn::ecs::component::AComponent, Type>::value;
+    ::xrn::ecs::isComponent<::std::remove_cvref_t<::std::remove_pointer_t<Type>>>;
 
 } // namespace xrn::ecs::detail::constraint

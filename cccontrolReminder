@@ -17,6 +17,8 @@
 <C-b> <Esc>:call AppendNamespace()<CR>
 <C-x> ::std::cout << << ::std::endl;
 <C-A-x> ::std::cout << "" << ::std::endl;
+<C-k> auto&&... args
+<C-A-k> ::std::forward<decltype(args)>(args)...
 p :cnext
 P :cprevious
 y :cc

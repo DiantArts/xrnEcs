@@ -30,7 +30,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename... Types
-> inline constexpr bool uniqueTypes_v = ::xrn::meta::UniqueTypes<Types...>::value;
+> inline constexpr const bool uniqueTypes_v = ::xrn::meta::UniqueTypes<Types...>::value;
 
 } // namespace xrn::meta
 

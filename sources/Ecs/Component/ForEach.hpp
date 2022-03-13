@@ -17,6 +17,27 @@ public:
     template <
         auto func,
         ::xrn::Id::Type componentIndex = 0
+    > static constexpr void find(
+        ::xrn::Id::Type id,
+        auto&&... args
+    )
+    {
+        if constexpr (componentIndex < xrn::ecs::component::maxId) {
+            if (componentIndex == id) {
+                func.template operator()<typename ::xrn::ecs::component::IdInfo<componentIndex>::Type>(
+                    ::std::forward<decltype(args)>(args)...
+                );
+                return;
+            }
+           ::xrn::ecs::component::ForEach::find<func, componentIndex + 1>(
+                id, ::std::forward<decltype(args)>(args)...
+            );
+        }
+    }
+
+    template <
+        auto func,
+        ::xrn::Id::Type componentIndex = 0
     > static constexpr void run(
         auto&&... args
     )

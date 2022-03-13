@@ -28,11 +28,11 @@ template <
 
     struct Arguments {
         using Type = ::std::tuple<ArgsType...>;
-        static constexpr bool areConst{ ((
+        static constexpr const auto areConst{ ((
             ::std::is_const<::std::remove_reference_t<ArgsType>>::value ||
             !::std::is_reference<ArgsType>::value
         ) && ...) };
-        static inline constexpr auto signature{ ::xrn::ecs::Signature::generate<ArgsType...>() };
+        static inline constexpr const auto signature{ ::xrn::ecs::Signature::generate<ArgsType...>() };
     };
 
 };
@@ -69,11 +69,11 @@ template <
 
     struct Arguments {
         using Type = ::std::tuple<ArgsType...>;
-        static constexpr bool areConst{ ((
+        static constexpr const auto areConst{ ((
             ::std::is_const<::std::remove_reference_t<ArgsType>>::value ||
             !::std::is_reference<ArgsType>::value
         ) && ...) };
-        static inline constexpr auto signature{ ::xrn::ecs::Signature::generate<ArgsType...>() };
+        static inline constexpr const auto signature{ ::xrn::ecs::Signature::generate<ArgsType...>() };
     };
 };
 

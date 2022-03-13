@@ -166,7 +166,11 @@ public:
     ///
     /// Creates an entity from the component given as template parameter.
     ///
-    /// \warning This reference may be invalidated when an entity is created
+    /// \warning The returned ::xrn::ecs::Entity::Reference may be invalid.
+    ///          The user must call ::xrn::ecs::Entity::Reference::isValid()
+    ///          if he isn't certain that the entity is present in the
+    ///          container to check its validity.
+    /// \warning This reference may be invalidated when an entity is created.
     ///
     /// \tparam ComponentTypes Type of components to emplace inside the
     /// ::xrn::ecs::Entity when creating it
@@ -188,7 +192,11 @@ public:
     ///
     /// Creates an entity from the component given as template parameter.
     ///
-    /// \warning This reference may be invalidated when an entity is created
+    /// \warning The returned ::xrn::ecs::Entity::Reference may be invalid.
+    ///          The user must call ::xrn::ecs::Entity::Reference::isValid()
+    ///          if he isn't certain that the entity is present in the
+    ///          container to check its validity.
+    /// \warning This reference may be invalidated when an entity is created.
     ///
     /// \param components Components to emplace inside the entity created
     ///
@@ -273,7 +281,11 @@ public:
     ///
     /// \param entityId Entity to find and return
     ///
-    /// \throw ::std::runtime_error if the entity is not contained
+    /// \warning The returned ::xrn::ecs::Entity::Reference may be invalid.
+    ///          The user must call ::xrn::ecs::Entity::Reference::isValid()
+    ///          if he isn't certain that the entity is present in the
+    ///          container to check its validity.
+    /// \warning This reference may be invalidated when an entity is created.
     ///
     /// \see ::xrn::Id, ::xrn::ecs::Entity::ConstReference
     ///
@@ -289,7 +301,11 @@ public:
     ///
     /// \param entityId Entity to find and return
     ///
-    /// \throw ::std::runtime_error if the entity is not contained
+    /// \warning The returned ::xrn::ecs::Entity::Reference may be invalid.
+    ///          The user must call ::xrn::ecs::Entity::Reference::isValid()
+    ///          if he isn't certain that the entity is present in the
+    ///          container to check its validity.
+    /// \warning This reference may be invalidated when an entity is created.
     ///
     /// \see ::xrn::Id, ::xrn::ecs::Entity::Reference
     ///
@@ -304,7 +320,11 @@ public:
     ///
     /// \param entityId Entity to find and return
     ///
-    /// \throw ::std::runtime_error if the entity is not contained
+    /// \warning The returned ::xrn::ecs::Entity::Reference may be invalid.
+    ///          The user must call ::xrn::ecs::Entity::Reference::isValid()
+    ///          if he isn't certain that the entity is present in the
+    ///          container to check its validity.
+    /// \warning This reference may be invalidated when an entity is created.
     ///
     /// \see ::xrn::Id, ::xrn::ecs::Entity::ConstReference
     ///
@@ -320,7 +340,11 @@ public:
     ///
     /// \param entityId Entity to find and return
     ///
-    /// \throw ::std::runtime_error if the entity is not contained
+    /// \warning The returned ::xrn::ecs::Entity::Reference may be invalid.
+    ///          The user must call ::xrn::ecs::Entity::Reference::isValid()
+    ///          if he isn't certain that the entity is present in the
+    ///          container to check its validity.
+    /// \warning This reference may be invalidated when an entity is created.
     ///
     /// \see ::xrn::Id, ::xrn::ecs::Entity::Reference
     ///
@@ -333,8 +357,9 @@ public:
     /// \brief Gets a ::xrn::ecs::Entity::ConstReference to an entity contained
     /// it the container
     ///
-    /// \warning Using this method when the entity is not contained leads to
-    /// undefined behavior
+    /// \warning Calling this function while the entity is not present in the
+    ///          container leads to undefined behaviors.
+    /// \warning This reference may be invalidated when an entity is created.
     ///
     /// \param entityId Entity to find and return
     ///
@@ -350,8 +375,9 @@ public:
     /// \brief Gets a mutable ::xrn::ecs::Entity::Reference to an entity
     /// contained it the container
     ///
-    /// \warning Using this method when the entity is not contained leads to
-    /// undefined behavior
+    /// \warning Calling this function while the entity is not present in the
+    ///          container leads to undefined behaviors.
+    /// \warning This reference may be invalidated when an entity is created.
     ///
     /// \param entityId Entity to find and return
     ///
