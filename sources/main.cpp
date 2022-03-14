@@ -7,71 +7,19 @@
 // Headers
 ///////////////////////////////////////////////////////////////////////////
 #include <Ecs.hpp>
-#include <Ecs/Detail/Constraint.hpp>
-#include <MegaArray.hpp>
-#include <MegaArray.impl.hpp>
-#include <MemoryManager.impl.hpp>
+#include <Ecs/Component/Detail/Declaration.hpp>
+#include <Ecs/Component/Detail/MemoryManager.hpp>
+#include <Ecs/Component/Container.hpp>
+#include <Ecs/Component/Detail/MemoryManager.impl.hpp>
+#include <Ecs/Component/Container.impl.hpp>
 
-///////////////////////////////////////////////////////////////////////////
-// Components
-///////////////////////////////////////////////////////////////////////////
-auto nbOfComponent{ 0uz };
-namespace xrn::ecs::component {
-    class Drawable
-        : public ::xrn::ecs::AComponent<::xrn::ecs::component::Drawable>
-    {
-    public:
-        Drawable(){
-            ++nbOfComponent;
-            ::std::cout << "Creating: " << nbOfComponent << ::std::endl;
-        };
-        ~Drawable(){
-            --nbOfComponent;
-            ::std::cout << "Deleting: " << nbOfComponent << ::std::endl;
-        };
-    };
-    class Transformable
-        : public ::xrn::ecs::AComponent<::xrn::ecs::component::Transformable>
-    {
-    public:
-        Transformable(){
-            ++nbOfComponent;
-            ::std::cout << "Creating: " << nbOfComponent << ::std::endl;
-        };
-        ~Transformable(){
-            --nbOfComponent;
-            ::std::cout << "Deleting: " << nbOfComponent << ::std::endl;
-        };
-        int value{ 1 };
-    };
-    class Controllable
-        : public ::xrn::ecs::AComponent<::xrn::ecs::component::Controllable>
-    {
-    public:
-        Controllable(){
-            ++nbOfComponent;
-            ::std::cout << "Creating: " << nbOfComponent << ::std::endl;
-        };
-        ~Controllable(){
-            --nbOfComponent;
-            ::std::cout << "Deleting: " << nbOfComponent << ::std::endl;
-        };
-        int value{ 2 }, valu2{ 0 }; };
-    class Killable
-        : public ::xrn::ecs::AComponent<::xrn::ecs::component::Killable>
-    {
-    public:
-        Killable(int a, int b, int c) : value{ a }, valu2{ b }, valu3{ c } {
-            ++nbOfComponent;
-            ::std::cout << "Creating: " << nbOfComponent << ::std::endl;
-        }
-        ~Killable() {
-            --nbOfComponent;
-            ::std::cout << "Deleting: " << nbOfComponent << ::std::endl;
-        }
-        int value{ 3 }, valu2{ 0 }, valu3{ 0 };
-    };
-} // namespace xrn::ecs::component
+
+static void function1(
+    ::xrn::ecs::Entity& e,
+    ::xrn::ecs::component::Drawable& m
+) {
+    ++m.value;
+}
 
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
@@ -83,13 +31,16 @@ try {
     using C = ::xrn::ecs::component::Controllable;
     using K = ::xrn::ecs::component::Killable;
 
-    ::xrn::ecs::Entity e;
-    ::xrn::ecs::component::MegaArray array{ 254 };
+    ::xrn::ecs::component::Container components;
+    ::xrn::ecs::entity::Container entities{ components };
+    auto e1Id{ entities.emplace<D>().getId() };
+    auto e2Id{ entities.emplace<T>().getId() };
+    auto e3Id{ entities.emplace<D, T>().getId() };
 
-    array.emplace<T>(e);
-    array.emplace<C>(e);
-    array.remove<T>(e);
-    array.emplace<T>(e);
+    ::xrn::ecs::System<function1> system1;
+    // ::std::cout << (components.get<D>(e1Id)->value) << ::std::endl;
+    // ::std::cout << (components.get<T>(e2Id)->value) << ::std::endl;
+    // ::std::cout << (components.get<D>(e3Id)->value) << ", " << (components.get<T>(e3Id)->value) << ::std::endl;
     return EXIT_SUCCESS;
 } catch (const ::std::exception& e) {
    ::std::cerr << "ERROR: " << e.what() <<::std::endl;

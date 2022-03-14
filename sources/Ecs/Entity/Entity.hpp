@@ -31,12 +31,12 @@ namespace xrn::ecs::entity {
 /// \code
 /// ::xrn::ecs::component::Container components;
 /// ::xrn::ecs::Entity entity1;
-/// entity1.addComponent<::xrn::ecs::component::test::Movable>(components);
-/// entity1.hasComponent<::xrn::ecs::component::test::Movable>(); // true
-/// entity1.hasComponent<::xrn::ecs::component::test::Transformable>(); // false
-/// entity1.removeComponent<::xrn::ecs::component::test::Movable>(components);
-/// entity1.hasComponent<::xrn::ecs::component::test::Movable>(); // false
-/// entity1.hasComponent<::xrn::ecs::component::test::Transformable>(); // false
+/// entity1.addComponent<::xrn::ecs::component::test::ComponentA>(components);
+/// entity1.hasComponent<::xrn::ecs::component::test::ComponentA>(); // true
+/// entity1.hasComponent<::xrn::ecs::component::test::ComponentB>(); // false
+/// entity1.removeComponent<::xrn::ecs::component::test::ComponentA>(components);
+/// entity1.hasComponent<::xrn::ecs::component::test::ComponentA>(); // false
+/// entity1.hasComponent<::xrn::ecs::component::test::ComponentB>(); // false
 /// \endcode
 ///
 /// \see ::xrn::ecs::component::Container, ::xrn::ecs::Component,

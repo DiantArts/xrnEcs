@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Meta/UniqueTypes.hpp>
+
 namespace xrn::ecs::system::detail {
 
 
@@ -25,7 +27,7 @@ struct TupleHelper<
         ::xrn::ecs::Entity& entity
     ) -> ::std::tuple<ComponentTypes...>
     {
-        return { components.get<ComponentTypes>(entity.getId()) ... };
+        return { *components.get<ComponentTypes>(entity.getId()) ... };
     }
 
     static inline constexpr auto fill(
@@ -34,7 +36,7 @@ struct TupleHelper<
         const ::xrn::ecs::Entity& entity
     ) -> ::std::tuple<ComponentTypes...>
     {
-        return { components.get<ComponentTypes>(entity.getId()) ... };
+        return { *components.get<ComponentTypes>(entity.getId()) ... };
     }
 };
 
@@ -55,7 +57,7 @@ struct TupleHelper<
         const ::xrn::ecs::Entity& entity
     ) -> ::std::tuple<const ::xrn::ecs::Entity&, ComponentTypes...>
     {
-        return { entity, components.get<ComponentTypes>(entity.getId()) ... };
+        return { entity, *components.get<ComponentTypes>(entity.getId()) ... };
     }
 
     static inline constexpr auto fill(
@@ -64,7 +66,7 @@ struct TupleHelper<
         const ::xrn::ecs::Entity& entity
     ) -> ::std::tuple<const ::xrn::ecs::Entity&, ComponentTypes...>
     {
-        return { entity, components.get<ComponentTypes>(entity.getId()) ... };
+        return { entity, *components.get<ComponentTypes>(entity.getId()) ... };
     }
 };
 
@@ -83,7 +85,7 @@ struct TupleHelper<
         ::xrn::ecs::Entity& entity
     ) -> ::std::tuple<::xrn::ecs::Entity&, ComponentTypes...>
     {
-        return { entity, components.get<ComponentTypes>(entity.getId()) ... };
+        return { entity, *components.get<ComponentTypes>(entity.getId()) ... };
     }
 
     static inline constexpr auto fill(
@@ -92,7 +94,7 @@ struct TupleHelper<
         ::xrn::ecs::Entity& entity
     ) -> ::std::tuple<::xrn::ecs::Entity&, ComponentTypes...>
     {
-        return { entity, components.get<ComponentTypes>(entity.getId()) ... };
+        return { entity, *components.get<ComponentTypes>(entity.getId()) ... };
     }
 };
 
@@ -114,7 +116,7 @@ struct TupleHelper<
         const ::xrn::ecs::Entity& entity
     ) -> ::std::tuple<::xrn::Time, ComponentTypes...>
     {
-        return { t, components.get<ComponentTypes>(entity.getId()) ... };
+        return { t, *components.get<ComponentTypes>(entity.getId()) ... };
     }
 
     static inline constexpr auto fill(
@@ -123,7 +125,7 @@ struct TupleHelper<
         const ::xrn::ecs::Entity& entity
     ) -> ::std::tuple<::xrn::Time, ComponentTypes...>
     {
-        return { t, components.get<ComponentTypes>(entity.getId()) ... };
+        return { t, *components.get<ComponentTypes>(entity.getId()) ... };
     }
 };
 
@@ -142,7 +144,7 @@ struct TupleHelper<
         const ::xrn::ecs::Entity& entity
     ) -> ::std::tuple<::xrn::Time, const ::xrn::ecs::Entity&, ComponentTypes...>
     {
-        return { t, entity, components.get<ComponentTypes>(entity.getId()) ... };
+        return { t, entity, *components.get<ComponentTypes>(entity.getId()) ... };
     }
 
     static inline constexpr auto fill(
@@ -151,7 +153,7 @@ struct TupleHelper<
         const ::xrn::ecs::Entity& entity
     ) -> ::std::tuple<::xrn::Time, const ::xrn::ecs::Entity&, ComponentTypes...>
     {
-        return { t, entity, components.get<ComponentTypes>(entity.getId()) ... };
+        return { t, entity, *components.get<ComponentTypes>(entity.getId()) ... };
     }
 };
 
@@ -170,7 +172,7 @@ struct TupleHelper<
         ::xrn::ecs::Entity& entity
     ) -> ::std::tuple<::xrn::Time, ::xrn::ecs::Entity&, ComponentTypes...>
     {
-        return { t, entity, components.get<ComponentTypes>(entity.getId()) ... };
+        return { t, entity, *components.get<ComponentTypes>(entity.getId()) ... };
     }
 
     static inline constexpr auto fill(
@@ -179,7 +181,7 @@ struct TupleHelper<
         ::xrn::ecs::Entity& entity
     ) -> ::std::tuple<::xrn::Time, ::xrn::ecs::Entity&, ComponentTypes...>
     {
-        return { t, entity, components.get<ComponentTypes>(entity.getId()) ... };
+        return { t, entity, *components.get<ComponentTypes>(entity.getId()) ... };
     }
 };
 
@@ -200,7 +202,7 @@ struct TupleHelper<
         const ::xrn::ecs::Entity& entity
     ) -> ::std::tuple<const ::xrn::ecs::Entity&, ::xrn::Time, ComponentTypes...>
     {
-        return { entity, t, components.get<ComponentTypes>(entity.getId()) ... };
+        return { entity, t, *components.get<ComponentTypes>(entity.getId()) ... };
     }
 
     static inline constexpr auto fill(
@@ -209,7 +211,7 @@ struct TupleHelper<
         const ::xrn::ecs::Entity& entity
     ) -> ::std::tuple<const ::xrn::ecs::Entity&, ::xrn::Time, ComponentTypes...>
     {
-        return { entity, t, components.get<ComponentTypes>(entity.getId()) ... };
+        return { entity, t, *components.get<ComponentTypes>(entity.getId()) ... };
     }
 };
 
@@ -228,7 +230,7 @@ struct TupleHelper<
         ::xrn::ecs::Entity& entity
     ) -> ::std::tuple<::xrn::ecs::Entity&, ::xrn::Time, ComponentTypes...>
     {
-        return { entity, t, components.get<ComponentTypes>(entity.getId()) ... };
+        return { entity, t, *components.get<ComponentTypes>(entity.getId()) ... };
     }
 
     static inline constexpr auto fill(
@@ -237,7 +239,7 @@ struct TupleHelper<
         ::xrn::ecs::Entity& entity
     ) -> ::std::tuple<::xrn::ecs::Entity&, ::xrn::Time, ComponentTypes...>
     {
-        return { entity, t, components.get<ComponentTypes>(entity.getId()) ... };
+        return { entity, t, *components.get<ComponentTypes>(entity.getId()) ... };
     }
 };
 

@@ -1,5 +1,13 @@
 #pragma once
 
+///////////////////////////////////////////////////////////////////////////
+// Headers
+///////////////////////////////////////////////////////////////////////////
+#include <Ecs/Detail/Constraint.hpp>
+#include <Ecs/Component/ForEach.hpp>
+
+
+
 namespace xrn::ecs::component::detail {
 
 ///////////////////////////////////////////////////////////////////////////
@@ -8,7 +16,7 @@ namespace xrn::ecs::component::detail {
 ///
 /// \include MemoryManager.hpp <Ecs/Component/Detail/MemoryManager.hpp>
 ///
-/// Manages the memory of the ::xrn::ecs::component::MegaArray. This is
+/// Manages the memory of the ::xrn::ecs::component::Container. This is
 /// the class that does memory optimization.
 /// This class being an implementation detail, users are not supposed to
 /// look at it.
@@ -18,7 +26,7 @@ namespace xrn::ecs::component::detail {
 /// TODO code example
 /// \endcode
 ///
-/// \see ::xrn::ecs::component::MegaArray
+/// \see ::xrn::ecs::component::Container
 ///
 ///////////////////////////////////////////////////////////////////////////
 class MemoryManager {
@@ -37,7 +45,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     using ComponentId = ::xrn::Id;
-    using ComponentAddr = void*;
+    using ComponentIndex = ::std::size_t;
     using EntityId = ::xrn::Id;
 
 
@@ -57,7 +65,7 @@ public:
     /// \param data Reference to the memory that the memory MemoryManager
     ///        handles
     ///
-    /// \see ::xrn::ecs::component::MegaArray
+    /// \see ::xrn::ecs::component::Container
     ///
     ///////////////////////////////////////////////////////////////////////////
     explicit MemoryManager(
@@ -76,7 +84,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Destructor
     ///
-    /// Clears every component of every entity.
+    /// Does NOT clears any component.
     ///
     ///////////////////////////////////////////////////////////////////////////
     ~MemoryManager();
@@ -144,7 +152,7 @@ public:
     ///
     /// \param entityId Id of the entity that will be linked to the component
     ///
-    /// \see ::xrn::ecs::component::AComponent, ::xrn::ecs::Entity, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity, ::xrn::Id
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -167,7 +175,7 @@ public:
     /// \param entityId Id of the entity that will be unlinked from the
     ///        component
     ///
-    /// \see ::xrn::ecs::component::AComponent, ::xrn::ecs::Entity, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity, ::xrn::Id
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -179,34 +187,36 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Deallocates the memory of all the components given
     ///
-    /// Deallocates the memory of all the components given as template
+    /// Deallocates the memory of all the components of type given as template
     /// parameter and internally unlink them from all the entities related.
     /// Implementation detail: the deallocation is not required, some
     /// optimizations like for the component recycle can be done. However, the
     /// unlink is requiered.
     ///
-    /// \tparam ComponentTypes Types of the components to deallocate
+    /// \tparam ComponentType Type of the components to deallocate
     ///
-    /// \see ::xrn::ecs::component::AComponent, ::xrn::ecs::Entity, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity, ::xrn::Id
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
+        ::xrn::ecs::detail::constraint::isComponent ComponentType
     > void clear();
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Deallocates the memory of all the components
     ///
-    /// Deallocates the memory of all the components internally unlink them from
-    /// all the entities related.
+    /// Deallocates the memory of all the components and internally unlink them
+    /// from all the entities related.
     /// Implementation detail: the deallocation is not required, some
     /// optimizations like for the component recycle can be done. However, the
     /// unlink is requiered.
     ///
-    /// \see ::xrn::ecs::component::AComponent, ::xrn::ecs::Entity, ::xrn::Id
+    /// \tparam ComponentType Type of the components to deallocate
+    ///
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity, ::xrn::Id
     ///
     ///////////////////////////////////////////////////////////////////////////
-    void clear();
+    void clearAll();
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Checks whether the component is linked to the entity
@@ -220,14 +230,15 @@ public:
     ///
     /// \param entityId Id of the entity to check
     ///
-    /// \see ::xrn::ecs::component::AComponent, ::xrn::ecs::Entity, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity, ::xrn::Id
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
         ::xrn::ecs::detail::constraint::isComponent ComponentType
-    > [[ nodiscard ]] auto exists(
+    > [[ nodiscard ]] auto contains(
         MemoryManager::EntityId entityId
-    ) -> bool;
+    ) const
+        -> bool;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Get a pointer to the component of the entity
@@ -242,7 +253,7 @@ public:
     ///
     /// \param entityId Id of the entity to check
     ///
-    /// \see ::xrn::ecs::component::AComponent, ::xrn::ecs::Entity, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity, ::xrn::Id
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -250,6 +261,29 @@ public:
     > [[ nodiscard ]] auto getAddr(
         MemoryManager::EntityId entityId
     ) -> void*;
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Get a pointer to the component of the entity
+    ///
+    /// Get a pointer to the component given as template parameter linked to
+    /// the entity Id given as parameter if it exists.
+    ///
+    /// \return Pointer to the entity component, nullptr if the said component
+    ///         does not exist
+    ///
+    /// \tparam ComponentType Type of the component to check
+    ///
+    /// \param entityId Id of the entity to check
+    ///
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity, ::xrn::Id
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    template <
+        ::xrn::ecs::detail::constraint::isComponent ComponentType
+    > [[ nodiscard ]] auto getAddr(
+        MemoryManager::EntityId entityId
+    ) const
+        -> const void*;
 
 
 
@@ -268,12 +302,12 @@ private:
     /// This struct is used when a component is not linked to an entity. It
     /// allows component recycling.
     ///
-    /// \see ::xrn::ecs::component::AComponent
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent
     ///
     ///////////////////////////////////////////////////////////////////////////
     struct ComponentInfo {
         ::xrn::ecs::component::detail::MemoryManager::ComponentId id;
-        ::xrn::ecs::component::detail::MemoryManager::ComponentAddr addr;
+        ::xrn::ecs::component::detail::MemoryManager::ComponentIndex index;
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -281,7 +315,7 @@ private:
     ///
     /// This struct is used when a component is linked to an entity.
     ///
-    /// \see ::xrn::ecs::component::AComponent, ::xrn::ecs::Entity, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity, ::xrn::Id
     ///
     ///////////////////////////////////////////////////////////////////////////
     struct OwnedComponentInfo : ComponentInfo {
@@ -290,9 +324,9 @@ private:
         /// \brief Constructor
         ///
         ///////////////////////////////////////////////////////////////////////////
-        OwnedComponentInfo(
+        explicit OwnedComponentInfo(
             ::xrn::ecs::component::detail::MemoryManager::ComponentId id,
-            ::xrn::ecs::component::detail::MemoryManager::ComponentAddr addr,
+            ::xrn::ecs::component::detail::MemoryManager::ComponentIndex index,
             ::xrn::ecs::component::detail::MemoryManager::EntityId ownerId
         );
 
@@ -304,13 +338,14 @@ private:
         ///////////////////////////////////////////////////////////////////////////
         [[ nodiscard ]] auto operator<=>(
             const ::xrn::ecs::component::detail::MemoryManager::OwnedComponentInfo& other
-        ) const;
+        ) const
+            -> ::std::strong_ordering;
 
         ///////////////////////////////////////////////////////////////////////////
         // Data
         ///////////////////////////////////////////////////////////////////////////
         using ::xrn::ecs::component::detail::MemoryManager::ComponentInfo::id;
-        using ::xrn::ecs::component::detail::MemoryManager::ComponentInfo::addr;
+        using ::xrn::ecs::component::detail::MemoryManager::ComponentInfo::index;
         mutable ::xrn::ecs::component::detail::MemoryManager::EntityId ownerId;
     };
 

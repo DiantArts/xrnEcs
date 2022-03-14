@@ -27,7 +27,7 @@ namespace xrn::ecs::system {
 /// \code
 /// \endcode
 ///
-/// \see ::xrn::ecs::component::AComponent
+/// \see ::xrn::ecs::component::declaration::detail::AComponent
 ///
 ///////////////////////////////////////////////////////////////////////////
 template <
