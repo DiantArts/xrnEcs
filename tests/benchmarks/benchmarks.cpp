@@ -14,26 +14,8 @@
 #include <Ecs.hpp>
 
 
-
-///////////////////////////////////////////////////////////////////////////
-// Test components
-///////////////////////////////////////////////////////////////////////////
-namespace xrn::ecs::component::test {
-    class Movable
-        : public ::xrn::ecs::AComponent<::xrn::ecs::component::test::Movable>
-    {};
-
-    class Transformable
-        : public ::xrn::ecs::AComponent<::xrn::ecs::component::test::Transformable>
-    {
-    public:
-        int value[100];
-    };
-} // namespace xrn::ecs::component::test
-
-
 void addsAllints(
-    ::xrn::ecs::component::test::Transformable& t
+    ::xrn::ecs::component::test::Benchmark100ints& t
 )
 {
     int a{ 0 };
@@ -61,7 +43,7 @@ auto main()
         bench.run(
             "entity: create",
             [&components]{
-                using Component = ::xrn::ecs::component::test::Transformable;
+                using Component = ::xrn::ecs::component::test::Benchmark100ints;
                 auto entity{ ::xrn::ecs::Entity::generate<Component>(components) };
                 entity.removeComponent<Component>(components);
             }
@@ -76,7 +58,7 @@ auto main()
         ::xrn::ecs::entity::Container entities{ components };
         ::xrn::ecs::System<addsAllints> systemAdd;
         ::xrn::Clock c;
-        entities.emplace<::xrn::ecs::component::test::Transformable>();
+        entities.emplace<::xrn::ecs::component::test::Benchmark100ints>();
         bench.run(
             "system: adds",
             [&]{

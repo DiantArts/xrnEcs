@@ -25,7 +25,7 @@ namespace xrn::ecs::entity {
 /// \code
 /// ::xrn::ecs::component::Container components;
 /// ::xrn::ecs::entity::Container entities{ components };
-/// auto entity1{ entities.emplace<::xrn::ecs::component::test::Movable>() };
+/// auto entity1{ entities.emplace<::xrn::ecs::component::test::ComponentA>() };
 /// auto entity2{ entities.get(entity1.getId()) }; // same as entity1
 /// auto entity3{ entities[entity1.getId()] }; // same as entity1
 ///
@@ -74,7 +74,7 @@ public:
     ///
     /// \param amount Time in milliseconds
     ///
-    /// \see ::xrn::ecs::component::AComponent
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent
     ///
     ///////////////////////////////////////////////////////////////////////////
     explicit Container(
@@ -179,7 +179,7 @@ public:
     ///
     /// \returns An ::xrn::ecs::Entity::Reference to the entity emplaced
     ///
-    /// \see ::xrn::ecs::component::AComponent
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -202,7 +202,7 @@ public:
     ///
     /// \returns An ::xrn::ecs::Entity::Reference to the entity emplaced
     ///
-    /// \see ::xrn::ecs::component::AComponent
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent
     ///
     ///////////////////////////////////////////////////////////////////////////
     auto emplace(

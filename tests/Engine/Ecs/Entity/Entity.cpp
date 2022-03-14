@@ -2,43 +2,6 @@
 #include <Ecs/Entity.hpp>
 #include <Ecs/Component.hpp>
 #include <Ecs/Component/Container.hpp>
-
-
-
-// ------------------------------------------------------------------ Class test
-
-namespace xrn::ecs::component::test {
-
-
-
-    class Movable
-        : public ::xrn::ecs::AComponent<::xrn::ecs::component::test::Movable>
-    {
-    public:
-        Movable() = default;
-        ~Movable() = default;
-
-        bool operator==(const ::xrn::ecs::component::test::Movable& that) const {
-            return this == &that;
-        }
-
-    };
-
-    class Transformable
-        : public ::xrn::ecs::AComponent<::xrn::ecs::component::test::Transformable>
-    {
-    public:
-        Transformable() = default;
-        ~Transformable() = default;
-
-    };
-
-
-
-} // namespace xrn::ecs::component::test
-
-
-
 #include <boost/test/unit_test.hpp>
 BOOST_AUTO_TEST_SUITE(Engine)
 BOOST_AUTO_TEST_SUITE(Core)
@@ -57,44 +20,44 @@ BOOST_AUTO_TEST_CASE(addNhas1)
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::Entity entity;
 
-    entity.addComponent<::xrn::ecs::component::test::Movable>(components);
-    BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::Movable>());
-    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::Transformable>());
+    entity.addComponent<::xrn::ecs::component::test::ComponentA>(components);
+    BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::ComponentA>());
+    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::ComponentB>());
 }
 
 BOOST_AUTO_TEST_CASE(addNhas2)
 {
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::Entity entity;
-    entity.addComponent<::xrn::ecs::component::test::Transformable>(components);
+    entity.addComponent<::xrn::ecs::component::test::ComponentB>(components);
 
-    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::Movable>());
-    BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::Transformable>());
+    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::ComponentA>());
+    BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::ComponentB>());
 }
 
 BOOST_AUTO_TEST_CASE(removeNhas)
 {
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::Entity entity;
-    entity.addComponent<::xrn::ecs::component::test::Movable>(components);
+    entity.addComponent<::xrn::ecs::component::test::ComponentA>(components);
 
-    BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::Movable>());
-    BOOST_TEST(components.exists<::xrn::ecs::component::test::Movable>(entity.getId()));
+    BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::ComponentA>());
+    BOOST_TEST(components.contains<::xrn::ecs::component::test::ComponentA>(entity.getId()));
 
-    entity.removeComponent<::xrn::ecs::component::test::Movable>(components);
-    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::Movable>());
-    BOOST_TEST(!components.exists<::xrn::ecs::component::test::Movable>(entity.getId()));
+    entity.removeComponent<::xrn::ecs::component::test::ComponentA>(components);
+    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::ComponentA>());
+    BOOST_TEST(!components.contains<::xrn::ecs::component::test::ComponentA>(entity.getId()));
 }
 
 BOOST_AUTO_TEST_CASE(addNhasMulti1)
 {
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::Entity entity;
-    entity.addComponent<::xrn::ecs::component::test::Movable>(components);
-    entity.addComponent<::xrn::ecs::component::test::Transformable>(components);
+    entity.addComponent<::xrn::ecs::component::test::ComponentA>(components);
+    entity.addComponent<::xrn::ecs::component::test::ComponentB>(components);
 
-    BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::Movable>());
-    BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::Transformable>());
+    BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::ComponentA>());
+    BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::ComponentB>());
 }
 
 BOOST_AUTO_TEST_CASE(addNhasMulti2)
@@ -102,15 +65,15 @@ BOOST_AUTO_TEST_CASE(addNhasMulti2)
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::Entity entity;
     entity.addComponents<
-        ::xrn::ecs::component::test::Movable,
-        ::xrn::ecs::component::test::Transformable
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB
     >(components);
 
-    BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::Movable>());
-    BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::Transformable>());
+    BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::ComponentA>());
+    BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::ComponentB>());
     BOOST_TEST((entity.hasComponents<
-        ::xrn::ecs::component::test::Movable,
-        ::xrn::ecs::component::test::Transformable
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB
     >()));
 }
 
@@ -119,14 +82,14 @@ BOOST_AUTO_TEST_CASE(addNhasMulti3)
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::Entity entity;
     entity.addComponents<
-        ::xrn::ecs::component::test::Transformable
+        ::xrn::ecs::component::test::ComponentB
     >(components);
 
-    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::Movable>());
-    BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::Transformable>());
+    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::ComponentA>());
+    BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::ComponentB>());
     BOOST_TEST(!(entity.hasComponents<
-        ::xrn::ecs::component::test::Movable,
-        ::xrn::ecs::component::test::Transformable
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB
     >()));
 }
 
@@ -134,13 +97,13 @@ BOOST_AUTO_TEST_CASE(generate)
 {
     ::xrn::ecs::component::Container components;
     auto entity{ ::xrn::ecs::Entity::generate<
-        ::xrn::ecs::component::test::Movable,
-        ::xrn::ecs::component::test::Transformable
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB
     >(components) };
 
     BOOST_TEST((entity.hasComponents<
-        ::xrn::ecs::component::test::Movable,
-        ::xrn::ecs::component::test::Transformable
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB
     >()));
 }
 
@@ -149,20 +112,20 @@ BOOST_AUTO_TEST_CASE(removeNhasMulti1)
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::Entity entity;
     entity.addComponents<
-        ::xrn::ecs::component::test::Movable,
-        ::xrn::ecs::component::test::Transformable
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB
     >(components);
 
     BOOST_TEST((entity.hasComponents<
-        ::xrn::ecs::component::test::Movable,
-        ::xrn::ecs::component::test::Transformable
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB
     >()));
-    entity.removeComponent<::xrn::ecs::component::test::Movable>(components);
-    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::Movable>());
-    BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::Transformable>());
-    entity.removeComponent<::xrn::ecs::component::test::Transformable>(components);
-    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::Movable>());
-    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::Transformable>());
+    entity.removeComponent<::xrn::ecs::component::test::ComponentA>(components);
+    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::ComponentA>());
+    BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::ComponentB>());
+    entity.removeComponent<::xrn::ecs::component::test::ComponentB>(components);
+    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::ComponentA>());
+    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::ComponentB>());
 }
 
 BOOST_AUTO_TEST_CASE(removeNhasMulti2)
@@ -170,24 +133,24 @@ BOOST_AUTO_TEST_CASE(removeNhasMulti2)
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::Entity entity;
     entity.addComponents<
-        ::xrn::ecs::component::test::Movable,
-        ::xrn::ecs::component::test::Transformable
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB
     >(components);
 
     BOOST_TEST((entity.hasComponents<
-        ::xrn::ecs::component::test::Movable,
-        ::xrn::ecs::component::test::Transformable
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB
     >()));
     entity.removeComponents<
-        ::xrn::ecs::component::test::Movable,
-        ::xrn::ecs::component::test::Transformable
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB
     >(components);
     BOOST_TEST(!(entity.hasComponents<
-        ::xrn::ecs::component::test::Movable,
-        ::xrn::ecs::component::test::Transformable
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB
     >()));
-    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::Movable>());
-    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::Transformable>());
+    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::ComponentA>());
+    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::ComponentB>());
 }
 
 
@@ -201,8 +164,8 @@ BOOST_AUTO_TEST_SUITE(Signature)
 BOOST_AUTO_TEST_CASE(single)
 {
     ::xrn::ecs::component::Container components;
-    auto entity{ ::xrn::ecs::Entity::generate<::xrn::ecs::component::test::Movable>(components) };
-    auto signature{ ::xrn::ecs::Signature::generate<::xrn::ecs::component::test::Movable>() };
+    auto entity{ ::xrn::ecs::Entity::generate<::xrn::ecs::component::test::ComponentA>(components) };
+    auto signature{ ::xrn::ecs::Signature::generate<::xrn::ecs::component::test::ComponentA>() };
 
     BOOST_TEST((entity.getSignature() == signature));
 }
@@ -211,12 +174,12 @@ BOOST_AUTO_TEST_CASE(multi)
 {
     ::xrn::ecs::component::Container components;
     auto entity{ ::xrn::ecs::Entity::generate<
-        ::xrn::ecs::component::test::Movable,
-        ::xrn::ecs::component::test::Transformable
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB
     >(components) };
     auto signature{ ::xrn::ecs::Signature::generate<
-        ::xrn::ecs::component::test::Movable,
-        ::xrn::ecs::component::test::Transformable
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB
     >() };
 
     BOOST_TEST((entity.getSignature() == signature));

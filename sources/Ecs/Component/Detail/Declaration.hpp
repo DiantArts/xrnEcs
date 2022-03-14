@@ -9,19 +9,39 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
-// Macro definition
+// Start the component declaration
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
-// Stores informations about ids. Allow Id to Type conversion
+/// Declares 'IdHandler' class and initializes baseIdCounter
 ///////////////////////////////////////////////////////////////////////////
-namespace xrn::ecs::component {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
+namespace xrn::ecs::component::declaration::detail {
+    template <typename> class IdHandler;
     template <::xrn::Id::Type id> struct IdInfo;
     template <typename T> struct IsComponent : public ::std::false_type {};
-} // namespace xrn::ecs::component
+    static inline constexpr const ::std::size_t baseIdCounter{ __COUNTER__ + 1 };
+    template <typename T> class AComponent
+        : public ::xrn::ecs::component::declaration::detail::IdHandler<::std::remove_cvref_t<T>>
+    {
+    public:
+        virtual ~AComponent() = 0; // TODO: rule of 5
+    };
+} // namespace xrn::ecs::component::declaration::detail
+#pragma GCC diagnostic pop
+template <typename T> ::xrn::ecs::component::declaration::detail::AComponent<T>::~AComponent() = default;
 
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Macro definition
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Declares a component in a namespace
@@ -34,42 +54,41 @@ namespace xrn::ecs::component {
 /// behaviors.
 ///
 ///////////////////////////////////////////////////////////////////////////
-#define DECLARE_COMPONENT(namespaceName, className) \
-    namespace namespaceName { class className; } \
-    template <> \
-    class xrn::ecs::component::declaration::detail::WithId<namespaceName::className> { \
-    public: \
-        [[ nodiscard ]] static inline consteval ::std::size_t getId() { return m_id; } \
-    private: \
-        static inline constexpr const auto m_id{ \
+#define COMPONENT(className) \
+    class className; \
+    template <> class xrn::ecs::component::declaration::detail::IdHandler<className> { \
+    public: [[ nodiscard ]] static inline consteval ::std::size_t getId() { return m_id; } \
+    private: static inline constexpr const auto m_id{ \
             __COUNTER__ - ::xrn::ecs::component::declaration::detail::baseIdCounter \
         }; \
     }; \
     template < \
-    > struct xrn::ecs::component::IdInfo< \
-        xrn::ecs::component::declaration::detail::WithId<namespaceName::className>::getId() \
-    > { \
-        using Type = namespaceName::className; \
+    > struct xrn::ecs::component::declaration::detail::IdInfo< \
+        ::xrn::ecs::component::declaration::detail::IdHandler<className>::getId() \
+    > { using Type = className; }; \
+    template <> \
+    struct xrn::ecs::component::declaration::detail::IsComponent<className> : public ::std::true_type \
+    {}; \
+    class className : public ::xrn::ecs::component::declaration::detail::AComponent<className> \
+
+#define COMPONENT_IN_NAMESPACE(namespaceName, className) \
+    class className; \
+    } /* leaving namespace */ \
+    template <> class xrn::ecs::component::declaration::detail::IdHandler<namespaceName::className> { \
+    public: [[ nodiscard ]] static inline consteval ::std::size_t getId() { return m_id; } \
+    private: static inline constexpr const auto m_id{ \
+            __COUNTER__ - ::xrn::ecs::component::declaration::detail::baseIdCounter \
+        }; \
     }; \
     template < \
-    > struct xrn::ecs::component::IsComponent<namespaceName::className> : public ::std::true_type {}
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////
-// Start the component declaration
-//
-///////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////////////////////////////
-/// Declares 'WithId' class and initializes baseIdCounter
-///////////////////////////////////////////////////////////////////////////
-namespace xrn::ecs::component::declaration::detail {
-    template <typename> class WithId;
-    static inline constexpr const ::std::size_t baseIdCounter{ __COUNTER__ + 1 };
-} // namespace xrn::ecs::component::declaration::detail
+    > struct xrn::ecs::component::declaration::detail::IdInfo< \
+        ::xrn::ecs::component::declaration::detail::IdHandler<namespaceName::className>::getId() \
+    > { using Type = namespaceName::className; }; \
+    template <> \
+    struct xrn::ecs::component::declaration::detail::IsComponent<namespaceName::className> : public ::std::true_type \
+    {}; \
+    namespace namespaceName { /* reentering namespace */ \
+    class className : public ::xrn::ecs::component::declaration::detail::AComponent<className> \
 
 
 
@@ -85,9 +104,7 @@ namespace xrn::ecs::component::declaration::detail {
 /// implemetation details.
 ///////////////////////////////////////////////////////////////////////////
 #ifdef TEST
-DECLARE_COMPONENT(xrn::ecs::component::test, Movable);
-DECLARE_COMPONENT(xrn::ecs::component::test, Transformable);
-DECLARE_COMPONENT(xrn::ecs::component::test, Transformable2d);
+#include <Ecs/Component/Detail/TestDeclaration.hpp>
 #endif // TEST
 
 
@@ -108,7 +125,9 @@ DECLARE_COMPONENT(xrn::ecs::component::test, Transformable2d);
 // Ecs/Component/Declaration.hpp is the base file, but more can be added
 // and included here.
 ///////////////////////////////////////////////////////////////////////////
+#ifndef TEST
 #include <Ecs/Component/Declaration.hpp>
+#endif // aTEST
 
 
 
@@ -120,20 +139,17 @@ DECLARE_COMPONENT(xrn::ecs::component::test, Transformable2d);
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
-/// Declares 'WithId' class and initializes baseIdCounter
+/// Declares 'IdHandler' class and initializes baseIdCounter
 ///////////////////////////////////////////////////////////////////////////
-namespace xrn::ecs::component::declaration::detail {
-    static inline constexpr const auto numberOfIds{
+namespace xrn::ecs::component {
+    static inline constexpr const auto maxId{
         __COUNTER__ - ::xrn::ecs::component::declaration::detail::baseIdCounter
     };
-} // namespace xrn::ecs::component::declaration::detail
-
-namespace xrn::ecs::component {
-    static inline constexpr const auto maxId{ ::xrn::ecs::component::declaration::detail::numberOfIds };
-} // namespace xrn::ecs::component
+    template <auto id> using IdInfo = ::xrn::ecs::component::declaration::detail::IdInfo<id>;
+} // namespace xrn::ecs
 
 namespace xrn::ecs {
-    template <typename T> using IsComponent = xrn::ecs::component::IsComponent<T>;
+    template <typename T> using IsComponent = xrn::ecs::component::declaration::detail::IsComponent<T>;
     template <typename T> inline constexpr const auto IsComponent_v = xrn::ecs::IsComponent<T>::value;
     template <typename T> inline constexpr const auto isComponent = xrn::ecs::IsComponent<T>::value;
 } // namespace xrn::ecs
@@ -143,5 +159,5 @@ namespace xrn::ecs {
 ///////////////////////////////////////////////////////////////////////////
 /// Macros undefinition
 ///////////////////////////////////////////////////////////////////////////
-#undef DECLARE_COMPONENT
-#undef DECLARE_COMPONENT
+#undef COMPONENT
+#undef COMPONENT

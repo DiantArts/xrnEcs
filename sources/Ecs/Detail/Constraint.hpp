@@ -9,7 +9,7 @@
 #include <Ecs/Component/Detail/Declaration.hpp>
 
 ///////////////////////////////////////////////////////////////////////////
-// Forward declerations
+// Forward declarations
 ///////////////////////////////////////////////////////////////////////////
 namespace xrn::ecs::entity { class Entity; }
 namespace xrn::ecs::component { template <typename T> class AComponent; }
@@ -82,7 +82,7 @@ template <
 
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Checks whether the Type given as template parameter inherits
-///        from ::xrn::ecs::component::AComponent
+///        from ::xrn::ecs::component::declaration::detail::AComponent
 ///
 /// The comparison ignores cv-qualifiers and references (compares the type
 /// referenced).
@@ -90,9 +90,9 @@ template <
 /// \tparam Type to check
 ///
 /// \return True if the Type given as template parameter inherits from
-///         ::xrn::ecs::component::AComponent. False otherwise
+///         ::xrn::ecs::component::declaration::detail::AComponent. False otherwise
 ///
-/// \see ::xrn::ecs::component::AComponent
+/// \see ::xrn::ecs::component::declaration::detail::AComponent
 ///
 ///////////////////////////////////////////////////////////////////////////
 template <

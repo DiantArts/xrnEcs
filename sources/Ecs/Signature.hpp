@@ -3,7 +3,7 @@
 ///////////////////////////////////////////////////////////////////////////
 // Headers
 ///////////////////////////////////////////////////////////////////////////
-#include <Ecs/Component/AComponent.hpp>
+#include <Ecs/Component/Detail/Declaration.hpp>
 #include <Ecs/Detail/Constraint.hpp>
 
 
@@ -26,10 +26,10 @@ namespace xrn::ecs {
 /// Usage example:
 /// \code
 /// constexpr auto constexprSignature{ ::xrn::ecs::Signature::generate<
-///     ::xrn::ecs::component::test::Movable,
-///     ::xrn::ecs::component::test::Transformable
+///     ::xrn::ecs::component::test::ComponentA,
+///     ::xrn::ecs::component::test::ComponentB
 /// >() };
-/// auto runtimeSignature{ ::xrn::ecs::Signature::generate<::xrn::ecs::component::test::Movable>() };
+/// auto runtimeSignature{ ::xrn::ecs::Signature::generate<::xrn::ecs::component::test::ComponentA>() };
 ///
 /// constexprSignature != runtimeSignature; // true
 /// constexprSignature.containsNone(runtimeSignature); // false
@@ -37,7 +37,7 @@ namespace xrn::ecs {
 /// runtimeSignature.containsAll(constexprSignature); // false
 /// \endcode
 ///
-/// \see ::xrn::ecs::component::AComponent, ::xrn::ecs::Entity
+/// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::Entity
 ///
 ///////////////////////////////////////////////////////////////////////////
 class Signature {
@@ -65,7 +65,7 @@ public:
     ///
     /// \return ::xrn::ecs::Signature just created
     ///
-    /// \see ::xrn::ecs::component::AComponent
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -106,7 +106,7 @@ public:
     ///
     /// Same as set()
     ///
-    /// \see set(), ::xrn::ecs::component::AComponent
+    /// \see set(), ::xrn::ecs::component::declaration::detail::AComponent
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -160,7 +160,7 @@ public:
     ///
     /// Same as reset()
     ///
-    /// \see reset(), ::xrn::ecs::component::AComponent
+    /// \see reset(), ::xrn::ecs::component::declaration::detail::AComponent
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -188,7 +188,7 @@ public:
     ///
     /// Same as remove()
     ///
-    /// \see remove(), ::xrn::ecs::component::AComponent
+    /// \see remove(), ::xrn::ecs::component::declaration::detail::AComponent
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -227,7 +227,7 @@ public:
     ///
     /// \return True if the component is present, false otherwise
     ///
-    /// \see containsAll(), ::xrn::ecs::component::AComponent
+    /// \see containsAll(), ::xrn::ecs::component::declaration::detail::AComponent
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -277,7 +277,7 @@ public:
     ///
     /// \return True if the component is present, false otherwise
     ///
-    /// \see get(), ::xrn::ecs::component::AComponent
+    /// \see get(), ::xrn::ecs::component::declaration::detail::AComponent
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto operator[](
@@ -338,7 +338,7 @@ public:
     ///
     /// \return True if all the components are present, false otherwise
     ///
-    /// \see containsAll(), ::xrn::ecs::component::AComponent
+    /// \see containsAll(), ::xrn::ecs::component::declaration::detail::AComponent
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -355,7 +355,7 @@ public:
     ///
     /// \return True if all the components are present, false otherwise
     ///
-    /// \see containsAll(), ::xrn::ecs::component::AComponent
+    /// \see containsAll(), ::xrn::ecs::component::declaration::detail::AComponent
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto contains(
@@ -406,7 +406,7 @@ public:
     ///
     /// \return True if all the components are present, false otherwise
     ///
-    /// \see contains(), ::xrn::ecs::component::AComponent
+    /// \see contains(), ::xrn::ecs::component::declaration::detail::AComponent
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -423,7 +423,7 @@ public:
     ///
     /// \return True if all the components are present, false otherwise
     ///
-    /// \see contains(), ::xrn::ecs::component::AComponent
+    /// \see contains(), ::xrn::ecs::component::declaration::detail::AComponent
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto containsAll(
@@ -472,7 +472,7 @@ public:
     ///
     /// \return True if at least one components is present, false otherwise
     ///
-    /// \see testAny(), ::xrn::ecs::component::AComponent
+    /// \see testAny(), ::xrn::ecs::component::declaration::detail::AComponent
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -490,7 +490,7 @@ public:
     ///
     /// \return True if at least one components is present, false otherwise
     ///
-    /// \see testAny(), ::xrn::ecs::component::AComponent
+    /// \see testAny(), ::xrn::ecs::component::declaration::detail::AComponent
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto containsAny(
@@ -539,7 +539,7 @@ public:
     ///
     /// \return True if no component is present, false otherwise
     ///
-    /// \see testNone(), ::xrn::ecs::component::AComponent
+    /// \see testNone(), ::xrn::ecs::component::declaration::detail::AComponent
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -557,7 +557,7 @@ public:
     ///
     /// \return True if no component is present, false otherwise
     ///
-    /// \see testNone(), ::xrn::ecs::component::AComponent
+    /// \see testNone(), ::xrn::ecs::component::declaration::detail::AComponent
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto containsNone(
@@ -575,7 +575,7 @@ public:
     ///
     /// \return True if no component is present, false otherwise
     ///
-    /// \see testNone(), ::xrn::ecs::component::AComponent
+    /// \see testNone(), ::xrn::ecs::component::declaration::detail::AComponent
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto containsNone(

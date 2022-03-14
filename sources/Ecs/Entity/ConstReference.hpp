@@ -1,8 +1,13 @@
 #pragma once
 
+///////////////////////////////////////////////////////////////////////////
+// Headers
+///////////////////////////////////////////////////////////////////////////
 #include <Ecs/Entity/Entity.hpp>
 
-
+///////////////////////////////////////////////////////////////////////////
+// Forward declarations
+///////////////////////////////////////////////////////////////////////////
 namespace xrn::ecs::component { class Container; }
 
 
@@ -13,18 +18,18 @@ namespace xrn::ecs::component { class Container; }
 ///
 /// \include Reference.hpp <Ecs/Entity/Reference.hpp>
 ///
-/// Refers to an ::xrn::ecs::Entity, the difference between a
-/// ::xrn::ecs::Entity::Reference and a ::xrn::ecs::Entity::ConstReference
+/// Refers to an ::xrn::ecs::entity::Entity, the difference between a
+/// ::xrn::ecs::entity::Entity::Reference and a ::xrn::ecs::entity::Entity::ConstReference
 /// is that xrn::ecs::Entity::Reference contains a reference to a
 /// ::xrn::ecs::component::Container that is passed to the constructor. It
 /// allows actions like addComponent() and removeComponent() that are not
-/// possible with ::xrn::ecs::Entity::ConstReference.
+/// possible with ::xrn::ecs::entity::Entity::ConstReference.
 ///
 /// Usage example:
 /// \code
 /// \endcode
 ///
-/// \see ::xrn::ecs::Entity, ::xrn::ecs::Entity::Reference,
+/// \see ::xrn::ecs::entity::Entity, ::xrn::ecs::entity::Entity::Reference,
 ///      ::xrn::ecs::component::Container
 ///
 ///////////////////////////////////////////////////////////////////////////
@@ -52,11 +57,11 @@ public:
     /// \brief Constructor
     ///
     /// Constructs a xrn::ecs::Entity::ConstReference from an
-    /// ::xrn::ecs::Entity.
+    /// ::xrn::ecs::entity::Entity.
     ///
     /// \param entity Entity that the class is refering to
     ///
-    /// \see ::xrn::ecs::Entity
+    /// \see ::xrn::ecs::entity::Entity
     ///
     ///////////////////////////////////////////////////////////////////////////
     explicit ConstReference(
@@ -73,13 +78,13 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Checks if the ::xrn::ecs::Entity referred has the component
+    /// \brief Checks if the ::xrn::ecs::entity::Entity referred has the component
     ///
     /// \tparam ComponentTypes Type of component to search
     ///
     /// \Return True if the component is contained by the entity
     ///
-    /// \see ::xrn::ecs::Entity, ::xrn::ecs::Component
+    /// \see ::xrn::ecs::entity::Entity, ::xrn::ecs::Component
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -88,13 +93,13 @@ public:
         -> bool;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Checks if the ::xrn::ecs::Entity referred has multiple components
+    /// \brief Checks if the ::xrn::ecs::entity::Entity referred has multiple components
     ///
     /// \tparam ComponentTypes Type of component to search
     ///
     /// \Return True if the component is contained by the entity
     ///
-    /// \see ::xrn::ecs::Entity, ::xrn::ecs::Component
+    /// \see ::xrn::ecs::entity::Entity, ::xrn::ecs::Component
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -119,37 +124,37 @@ public:
         -> bool;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Gets the signature of the ::xrn::ecs::Entity referred
+    /// \brief Gets the signature of the ::xrn::ecs::entity::Entity referred
     ///
-    /// \see ::xrn::ecs::Entity, ::xrn::ecs::Signature
+    /// \see ::xrn::ecs::entity::Entity, ::xrn::ecs::Signature
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto getSignature() const
         -> const ::xrn::ecs::Signature&;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Gets the Id of the ::xrn::ecs::Entity referred
+    /// \brief Gets the Id of the ::xrn::ecs::entity::Entity referred
     ///
-    /// \see ::xrn::ecs::Entity, ::xrn::Id
+    /// \see ::xrn::ecs::entity::Entity, ::xrn::Id
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto getId() const
         -> ::xrn::Id;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Gets the ::xrn::ecs::Entity referred
+    /// \brief Gets the ::xrn::ecs::entity::Entity referred
     ///
-    /// \see ::xrn::ecs::Entity
+    /// \see ::xrn::ecs::entity::Entity
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto get() const
         -> const ::xrn::ecs::Entity&;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Implicitly converts the refernce into the ::xrn::ecs::Entity
+    /// \brief Implicitly converts the refernce into the ::xrn::ecs::entity::Entity
     /// referred
     ///
-    /// \see ::xrn::ecs::Entity
+    /// \see ::xrn::ecs::entity::Entity
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] operator const ::xrn::ecs::Entity&() const;

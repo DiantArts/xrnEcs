@@ -1,59 +1,31 @@
 #include <pch.hpp>
 #include <Ecs/System/Detail/Meta/Function.hpp>
 
-// ------------------------------------------------------------------ Class test
-
-namespace xrn::ecs::component::test {
-
-
-
-    class Movable
-        : public ::xrn::ecs::AComponent<::xrn::ecs::component::test::Movable>
-    {
-    public:
-        Movable() = default;
-        ~Movable() = default;
-
-    };
-
-    class Transformable
-        : public ::xrn::ecs::AComponent<::xrn::ecs::component::test::Transformable>
-    {
-    public:
-        Transformable() = default;
-        ~Transformable() = default;
-
-    };
-
-
-
-} // namespace xrn::ecs::component::test
-
 static void func1(int) {}
 auto lambda1{ [](int){} };
 
 static int func2(int, float) { return 0; }
 auto lambda2{ [](int, float) -> int { return 0; }};
 
-static void func3(::xrn::ecs::component::test::Movable) {}
-auto lambda3{ [](::xrn::ecs::component::test::Movable){} };
+static void func3(::xrn::ecs::component::test::ComponentA) {}
+auto lambda3{ [](::xrn::ecs::component::test::ComponentA){} };
 
 static void func4(
-    ::xrn::ecs::component::test::Movable&,
-    ::xrn::ecs::component::test::Transformable&
+    ::xrn::ecs::component::test::ComponentA&,
+    ::xrn::ecs::component::test::ComponentB&
 ) {}
 auto lambda4{ [](
-    ::xrn::ecs::component::test::Movable&,
-    ::xrn::ecs::component::test::Transformable&
+    ::xrn::ecs::component::test::ComponentA&,
+    ::xrn::ecs::component::test::ComponentB&
 ){} };
 
 static void func5(
-    const ::xrn::ecs::component::test::Movable&,
-    const ::xrn::ecs::component::test::Transformable&
+    const ::xrn::ecs::component::test::ComponentA&,
+    const ::xrn::ecs::component::test::ComponentB&
 ) {}
 auto lambda5{ [](
-    const ::xrn::ecs::component::test::Movable&,
-    const ::xrn::ecs::component::test::Transformable&
+    const ::xrn::ecs::component::test::ComponentA&,
+    const ::xrn::ecs::component::test::ComponentB&
 ){} };
 
 
@@ -83,19 +55,19 @@ BOOST_AUTO_TEST_CASE(ReturnType)
 BOOST_AUTO_TEST_CASE(ArgumentsType)
 {
     BOOST_TEST((::std::is_same<::xrn::ecs::detail::meta::Function<decltype(func3)>::Arguments::Type,
-        ::std::tuple<::xrn::ecs::component::test::Movable>>::value));
+        ::std::tuple<::xrn::ecs::component::test::ComponentA>>::value));
     BOOST_TEST((::std::is_same<::xrn::ecs::detail::meta::Function<decltype(lambda3)>::Arguments::Type,
-        ::std::tuple<::xrn::ecs::component::test::Movable>>::value));
+        ::std::tuple<::xrn::ecs::component::test::ComponentA>>::value));
     bool value = ::std::is_same<::xrn::ecs::detail::meta::Function<decltype(func4)>::Arguments::Type,
         ::std::tuple<
-            ::xrn::ecs::component::test::Movable&,
-            ::xrn::ecs::component::test::Transformable&
+            ::xrn::ecs::component::test::ComponentA&,
+            ::xrn::ecs::component::test::ComponentB&
         >>::value;
     BOOST_TEST(value);
     value = ::std::is_same<::xrn::ecs::detail::meta::Function<decltype(lambda4)>::Arguments::Type,
         ::std::tuple<
-            ::xrn::ecs::component::test::Movable&,
-            ::xrn::ecs::component::test::Transformable&
+            ::xrn::ecs::component::test::ComponentA&,
+            ::xrn::ecs::component::test::ComponentB&
         >>::value;
     BOOST_TEST(value);
     BOOST_TEST((::std::is_same<
@@ -111,22 +83,22 @@ BOOST_AUTO_TEST_CASE(ArgumentsType)
 BOOST_AUTO_TEST_CASE(ArgumentsSignature)
 {
     auto value{ ::xrn::ecs::detail::meta::Function<decltype(func3)>::Arguments::signature ==
-        ::xrn::ecs::Signature::generate<::xrn::ecs::component::test::Movable>() };
+        ::xrn::ecs::Signature::generate<::xrn::ecs::component::test::ComponentA>() };
     BOOST_TEST(value);
     value = ::xrn::ecs::detail::meta::Function<decltype(lambda3)>::Arguments::signature ==
-        ::xrn::ecs::Signature::generate<::xrn::ecs::component::test::Movable>();
+        ::xrn::ecs::Signature::generate<::xrn::ecs::component::test::ComponentA>();
     BOOST_TEST(value);
 
     value = ::xrn::ecs::detail::meta::Function<decltype(func4)>::Arguments::signature ==
         ::xrn::ecs::Signature::generate<
-            ::xrn::ecs::component::test::Movable,
-            ::xrn::ecs::component::test::Transformable
+            ::xrn::ecs::component::test::ComponentA,
+            ::xrn::ecs::component::test::ComponentB
         >();
     BOOST_TEST(value);
     value = ::xrn::ecs::detail::meta::Function<decltype(lambda4)>::Arguments::signature ==
         ::xrn::ecs::Signature::generate<
-            ::xrn::ecs::component::test::Movable,
-            ::xrn::ecs::component::test::Transformable
+            ::xrn::ecs::component::test::ComponentA,
+            ::xrn::ecs::component::test::ComponentB
         >();
     BOOST_TEST(value);
 }

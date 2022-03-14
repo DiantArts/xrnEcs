@@ -1,290 +1,271 @@
 #pragma once
 
-#include <Meta/ForEach.hpp>
-#include <Ecs/Component/Detail/Container.hpp>
-#include <Ecs/Component/ForEach.hpp>
-
-
-// ------------------------------------------------------------------ Id
-
-template <
-    ::xrn::ecs::detail::constraint::isComponent RawComponentType
-> consteval auto ::xrn::ecs::component::Container::getId() const
-    -> ::xrn::Id
-{
-    using ComponentType = ::std::remove_cvref_t<RawComponentType>;
-    return ComponentType::getId();
-}
-
-consteval auto ::xrn::ecs::component::Container::getMaxId()
-    -> ::xrn::Id
-{
-    return ::xrn::ecs::component::maxId;
-}
+///////////////////////////////////////////////////////////////////////////
+// Headers
+///////////////////////////////////////////////////////////////////////////
+#include <Ecs/Entity/Entity.hpp>
 
 
 
-// ------------------------------------------------------------------ Emplace/Remove
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Emplace
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////
 template <
     ::xrn::ecs::detail::constraint::isComponent RawComponentType
 > auto ::xrn::ecs::component::Container::emplace(
-    ::xrn::Id entityId,
+    ::xrn::ecs::entity::Entity& entity,
     auto&&... args
-)
-    -> RawComponentType&
+) -> ::std::remove_cvref_t<::std::remove_pointer_t<RawComponentType>>&
 {
-    using ComponentType = ::std::remove_cvref_t<RawComponentType>;
-    auto& pairComponentContainer{ this->getUnsafePairSubContainer<ComponentType>() };
-    auto it{ ::std::ranges::find(pairComponentContainer.first, entityId) };
-    if (it != pairComponentContainer.first.end()) {
-        throw ::std::runtime_error(
-            "Entity '"s + static_cast<::std::string>(entityId) + "' already contain an '"s +
-                boost::typeindex::type_id<ComponentType>().pretty_name() + "' component"
-        );
-    }
-    pairComponentContainer.first.push_back(::std::move(entityId));
-    return (*static_cast<Container::SubContainerType<ComponentType>*>(pairComponentContainer.second)).
-        emplace_back(::std::forward<decltype(args)>(args)...);
+    return this->emplace<RawComponentType>(entity.getId(), ::std::forward<decltype(args)>(args)...);
 }
 
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isComponent RawComponentType
+> auto ::xrn::ecs::component::Container::emplace(
+    const Container::EntityId entityId,
+    auto&&... args
+) -> ::std::remove_cvref_t<::std::remove_pointer_t<RawComponentType>>&
+{
+    using ComponentType = ::std::remove_cvref_t<::std::remove_pointer_t<RawComponentType>>;
+    return *new(m_memoryManager.alloc<ComponentType>(entityId)) ComponentType{
+        ::std::forward<decltype(args)>(args)...
+    };
+}
+
+///////////////////////////////////////////////////////////////////////////
 template <
     ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > void ::xrn::ecs::component::Container::emplaceMany(
-    ::xrn::Id entityId
+    ::xrn::ecs::entity::Entity& entity
+)
+{
+    (this->emplace<ComponentTypes>(entity.getId()), ...);
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
+> void ::xrn::ecs::component::Container::emplaceMany(
+    const Container::EntityId entityId
 )
 {
     (this->emplace<ComponentTypes>(entityId), ...);
 }
 
+///////////////////////////////////////////////////////////////////////////
+void ::xrn::ecs::component::Container::push(
+    ::xrn::ecs::entity::Entity& entity,
+    ::xrn::ecs::detail::constraint::isComponent auto&& component
+)
+{
+    return this->push(entity.getId(), ::std::forward<decltype(component)>(component));
+}
+
+///////////////////////////////////////////////////////////////////////////
+void ::xrn::ecs::component::Container::push(
+    const Container::EntityId entityId,
+    ::xrn::ecs::detail::constraint::isComponent auto&& component
+)
+{
+    using ComponentType = ::std::remove_cvref_t<::std::remove_pointer_t<decltype(component)>>;
+    new(m_memoryManager.alloc<ComponentType>(entityId)) ComponentType{ ::std::move(component) };
+}
+
+///////////////////////////////////////////////////////////////////////////
+void ::xrn::ecs::component::Container::pushMany(
+    ::xrn::ecs::entity::Entity& entity,
+    ::xrn::ecs::detail::constraint::isComponent auto&&... components
+)
+{
+    (this->push(entity.getId(), components), ...);
+}
+
+///////////////////////////////////////////////////////////////////////////
+void ::xrn::ecs::component::Container::pushMany(
+    const Container::EntityId entityId,
+    ::xrn::ecs::detail::constraint::isComponent auto&&... components
+)
+{
+    (this->push(entityId, components), ...);
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Remove
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////
 template <
     ::xrn::ecs::detail::constraint::isComponent RawComponentType
-> void ::xrn::ecs::component::Container::push(
-    ::xrn::Id entityId,
-    RawComponentType&& component
+> void ::xrn::ecs::component::Container::remove(
+    ::xrn::ecs::entity::Entity& entity
 )
 {
-    using ComponentType = ::std::remove_cvref_t<RawComponentType>;
-    auto& pairComponentContainer{ this->getUnsafePairSubContainer<ComponentType>() };
-    auto it{ ::std::ranges::find(pairComponentContainer.first, entityId) };
-    if (it != pairComponentContainer.first.end()) {
-        throw ::std::runtime_error(
-            "Entity '"s + static_cast<::std::string>(entityId) + "' already contain an '"s +
-                boost::typeindex::type_id<ComponentType>().pretty_name() + "' component"
-        );
-    }
-    pairComponentContainer.first.push_back(::std::move(entityId));
-    (*static_cast<Container::SubContainerType<ComponentType>*>(pairComponentContainer.second)).
-        push_back(::std::forward<decltype(component)>(component));
+    this->remove<RawComponentType>(entity.getId());
 }
 
+///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-> void ::xrn::ecs::component::Container::pushMany(
-    ::xrn::Id entityId,
-    ComponentTypes&&... components
+    ::xrn::ecs::detail::constraint::isComponent RawComponentType
+> void ::xrn::ecs::component::Container::remove(
+    const Container::EntityId entityId
 )
 {
-    ::xrn::ecs::component::detail::PushMany<ComponentTypes...>::use(
-        *this,
-        entityId,
-        ::std::forward<ComponentTypes>(components)...
-    );
+    using ComponentType = ::std::remove_cvref_t<::std::remove_pointer_t<RawComponentType>>;
+    m_memoryManager.free<ComponentType>(entityId);
 }
 
+///////////////////////////////////////////////////////////////////////////
 template <
     ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > void ::xrn::ecs::component::Container::removeMany(
-    ::xrn::Id entityId
+    ::xrn::ecs::entity::Entity& entity
+)
+{
+    (this->remove<ComponentTypes>(entity.getId()), ...);
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
+> void ::xrn::ecs::component::Container::removeMany(
+    const Container::EntityId entityId
 )
 {
     (this->remove<ComponentTypes>(entityId), ...);
 }
 
-void ::xrn::ecs::component::Container::removeMany(
-    const ::xrn::Id entityId,
-    ::xrn::ecs::detail::constraint::isId auto... componentIds
-)
-{
-    (this->remove(entityId, componentIds), ...);
-}
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Clear
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////
 template <
     ::xrn::ecs::detail::constraint::isComponent RawComponentType
-> void ::xrn::ecs::component::Container::remove(
-    const ::xrn::Id entityId
-)
+> void ::xrn::ecs::component::Container::clear()
 {
-    using ComponentType = ::std::remove_cvref_t<RawComponentType>;
-    auto& pairComponentContainer{ this->getUnsafePairSubContainer<ComponentType>() };
-    auto it{ ::std::ranges::find(pairComponentContainer.first, entityId) };
-    if (it == pairComponentContainer.first.end()) {
-        throw ::std::runtime_error(
-            "Entity '"s + static_cast<::std::string>(entityId) + "' doesn't contain an '"s +
-                boost::typeindex::type_id<ComponentType>().pretty_name() + "' component"
-        );
-    }
-    pairComponentContainer.first.erase(it);
+    using ComponentType = ::std::remove_cvref_t<::std::remove_pointer_t<RawComponentType>>;
+    m_memoryManager.clear<ComponentType>();
 }
 
-void ::xrn::ecs::component::Container::clear()
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
+> void ::xrn::ecs::component::Container::clearMany()
 {
-    // ::xrn::ecs::component::ForEach::template runWithId<
-        // []<::xrn::ecs::detail::constraint::isComponent ComponentType> (
-            // ::xrn::Id componentId,
-            // ::xrn::ecs::component::Container& components
-        // ){
-            // components.removeVector<ComponentType>(componentId);
-        // }
-   // >(*this);
+    this->clear<ComponentTypes...>();
 }
 
 
 
-// ------------------------------------------------------------------ Get
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Accessors
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isComponent ComponentType
+> auto ::xrn::ecs::component::Container::get(
+    ::xrn::ecs::entity::Entity& entity
+) -> ::std::remove_cvref_t<::std::remove_pointer_t<ComponentType>>*
+{
+    return this->get<ComponentType>(entity.getId());
+}
+
+///////////////////////////////////////////////////////////////////////////
 template <
     ::xrn::ecs::detail::constraint::isComponent RawComponentType
 > auto ::xrn::ecs::component::Container::get(
-    ::xrn::Id entityId
-) const
-    -> const RawComponentType&
+    const Container::EntityId entityId
+) -> ::std::remove_cvref_t<::std::remove_pointer_t<RawComponentType>>*
 {
-    using ComponentType = ::std::remove_cvref_t<RawComponentType>;
-    auto& pairComponentContainer{ this->getUnsafePairSubContainer<ComponentType>() };
-    auto it{ ::std::ranges::find(pairComponentContainer.first, entityId) };
-    if (it == pairComponentContainer.first.end()) {
-        throw ::std::runtime_error(
-            "Entity '"s + static_cast<::std::string>(entityId) + "' doesn't contain an '"s +
-                boost::typeindex::type_id<ComponentType>().pretty_name() + "' component"
-        );
-    }
-    return (*static_cast<Container::SubContainerType<ComponentType>*>(pairComponentContainer.second)).at(
-        it - pairComponentContainer.first.begin()
-    );
+    using ComponentType = ::std::remove_cvref_t<::std::remove_pointer_t<RawComponentType>>;
+    return static_cast<ComponentType*>(m_memoryManager.getAddr<ComponentType>(entityId));
 }
 
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isComponent ComponentType
+> auto ::xrn::ecs::component::Container::get(
+    ::xrn::ecs::entity::Entity& entity
+) const
+    -> const ::std::remove_cvref_t<::std::remove_pointer_t<ComponentType>>*
+{
+    return this->get<ComponentType>(entity.getId());
+}
+
+///////////////////////////////////////////////////////////////////////////
 template <
     ::xrn::ecs::detail::constraint::isComponent RawComponentType
 > auto ::xrn::ecs::component::Container::get(
-    ::xrn::Id entityId
-)
-    -> RawComponentType&
-{
-    using ComponentType = ::std::remove_cvref_t<RawComponentType>;
-    auto& pairComponentContainer{ this->getUnsafePairSubContainer<ComponentType>() };
-    auto it{ ::std::ranges::find(pairComponentContainer.first, entityId) };
-    if (it == pairComponentContainer.first.end()) {
-        throw ::std::runtime_error(
-            "Entity '"s + static_cast<::std::string>(entityId) + "' doesn't contain an '"s +
-                boost::typeindex::type_id<ComponentType>().pretty_name() + "' component"
-        );
-    }
-    return (*static_cast<Container::SubContainerType<ComponentType>*>(pairComponentContainer.second)).at(
-        it - pairComponentContainer.first.begin()
-    );
-}
-
-template <
-    ::xrn::ecs::detail::constraint::isComponent RawComponentType
-> auto ::xrn::ecs::component::Container::getIndex(
-    ::xrn::Id entityId
+    const Container::EntityId entityId
 ) const
-    -> ::std::size_t
+    -> const ::std::remove_cvref_t<::std::remove_pointer_t<RawComponentType>>*
 {
-    using ComponentType = ::std::remove_cvref_t<RawComponentType>;
-    auto& IdContainer{ this->getUnsafePairSubContainer<ComponentType>().first };
-    auto it{ ::std::ranges::find(IdContainer, entityId) };
-    if (it == IdContainer.end()) {
-        throw ::std::runtime_error(
-            "Entity '"s + static_cast<::std::string>(entityId) + "' doesn't contain an '"s +
-                boost::typeindex::type_id<ComponentType>().pretty_name() + "' component"
-        );
-    }
-    return it - IdContainer.begin();
+    using ComponentType = ::std::remove_cvref_t<::std::remove_pointer_t<RawComponentType>>;
+    return static_cast<const ComponentType*>(m_memoryManager.getAddr<ComponentType>(entityId));
 }
 
+///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isComponent RawComponentType
-> auto ::xrn::ecs::component::Container::exists(
-    ::xrn::Id entityId
+    ::xrn::ecs::detail::constraint::isComponent ComponentType
+> auto ::xrn::ecs::component::Container::contains(
+    ::xrn::ecs::entity::Entity& entity
 ) const
     -> bool
 {
-    using ComponentType = ::std::remove_cvref_t<RawComponentType>;
-    auto it{ m_container.find(ComponentType::getId()) };
-    if (it == m_container.end()) {
-        return false;
-    }
-    return ::std::ranges::find(it->second.first, entityId) != it->second.first.end();
+    return this->contains<ComponentType>(entity.getId());
 }
 
-
-
+///////////////////////////////////////////////////////////////////////////
 template <
     ::xrn::ecs::detail::constraint::isComponent RawComponentType
-> auto ::xrn::ecs::component::Container::getVector() const
-    -> const ::std::vector<RawComponentType>&
-{
-    using ComponentType = ::std::remove_cvref_t<RawComponentType>;
-    auto& pairComponentContainer{ this->getUnsafePairSubContainer<ComponentType>() };
-    return (*static_cast<Container::SubContainerType<ComponentType>*>(pairComponentContainer.second));
-}
-
-template <
-    ::xrn::ecs::detail::constraint::isComponent RawComponentType
-> void ::xrn::ecs::component::Container::removeVector()
-{
-    // using ComponentType = ::std::remove_cvref_t<RawComponentType>;
-    // auto& pairComponentContainer{ this->getUnsafePairSubContainer<ComponentType>() };
-    // delete static_cast<Container::SubContainerType<ComponentType>*>(pairComponentContainer.second);
-}
-
-template <
-    ::xrn::ecs::detail::constraint::isComponent RawComponentType
-> void ::xrn::ecs::component::Container::removeVector(
-    ::xrn::Id componentId
-)
-{
-    // using ComponentType = ::std::remove_cvref_t<RawComponentType>;
-    // auto& pairComponentContainer{ this->getUnsafePairSubContainer(componentId) };
-    // delete static_cast<Container::SubContainerType<ComponentType>*>(pairComponentContainer.second);
-}
-
-template <
-    ::xrn::ecs::detail::constraint::isComponent RawComponentType
-> auto ::xrn::ecs::component::Container::vectorExists() const
+> auto ::xrn::ecs::component::Container::contains(
+    const Container::EntityId entityId
+) const
     -> bool
 {
-    using ComponentType = ::std::remove_cvref_t<RawComponentType>;
-    return m_container.find(ComponentType::getId()) != m_container.end();
+    using ComponentType = ::std::remove_cvref_t<::std::remove_pointer_t<RawComponentType>>;
+    return m_memoryManager.contains<ComponentType>(entityId);
 }
 
-
-
-// ------------------------------------------------------------------ Private
-
+///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isComponent RawComponentType
-> auto ::xrn::ecs::component::Container::getUnsafePairSubContainer()
-    -> SubPairContainerType&
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
+> auto ::xrn::ecs::component::Container::containsMany(
+    ::xrn::ecs::entity::Entity& entity
+) const
+    -> bool
 {
-    using ComponentType = ::std::remove_cvref_t<RawComponentType>;
-
-    return m_container.try_emplace(
-        ComponentType::getId(),
-        ::std::make_pair<::std::vector<::xrn::Id>, void*>(
-            ::std::vector<::xrn::Id>{},
-            new ::std::vector<ComponentType>{}
-        )
-    ).first->second;
+    return (this->contains<ComponentTypes>(entity.getId()) && ...);
 }
 
+///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isComponent RawComponentType
-> auto ::xrn::ecs::component::Container::getUnsafePairSubContainer() const
-    -> const SubPairContainerType&
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
+> auto ::xrn::ecs::component::Container::containsMany(
+    const Container::EntityId entityId
+) const
+    -> bool
 {
-    using ComponentType = ::std::remove_cvref_t<RawComponentType>;
-    return m_container.at(ComponentType::getId());
+    return (this->contains<ComponentTypes>(entityId) && ...);
 }
