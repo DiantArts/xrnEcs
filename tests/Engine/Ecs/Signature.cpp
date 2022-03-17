@@ -4,7 +4,10 @@
 
 
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Weffc++"
 #include <boost/test/unit_test.hpp>
+#pragma GCC diagnostic pop
 BOOST_AUTO_TEST_SUITE(Engine)
 BOOST_AUTO_TEST_SUITE(Core)
 BOOST_AUTO_TEST_SUITE(Ecs)
@@ -17,6 +20,10 @@ BOOST_AUTO_TEST_CASE(constexprness)
     auto signature1{ ::xrn::ecs::Signature::generate<::xrn::ecs::component::test::ComponentA>() };
     constexpr auto signature2{ ::xrn::ecs::Signature::generate<::xrn::ecs::component::test::ComponentA>() };
     constexpr auto signature3{ ::xrn::ecs::Signature::generate<::xrn::ecs::component::test::ComponentA>() };
+    constexpr auto signature4{ ::xrn::ecs::Signature::generate<
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::AbilityA
+    >() };
     if constexpr (signature2 == signature3) {}
 }
 
@@ -77,6 +84,18 @@ BOOST_AUTO_TEST_CASE(true4)
     BOOST_TEST(signature2.contains(signature1));
 }
 
+BOOST_AUTO_TEST_CASE(true5)
+{
+    constexpr auto signature1{ ::xrn::ecs::Signature::generate<
+        ::xrn::ecs::component::test::AbilityA
+    >() };
+    constexpr auto signature2{ ::xrn::ecs::Signature::generate<
+        ::xrn::ecs::component::test::AbilityA
+    >() };
+    BOOST_TEST(signature1.contains(signature2));
+    BOOST_TEST(signature2.contains(signature1));
+}
+
 BOOST_AUTO_TEST_CASE(false1)
 {
     constexpr auto signature1{ ::xrn::ecs::Signature::generate<
@@ -99,6 +118,31 @@ BOOST_AUTO_TEST_CASE(false2)
         ::xrn::ecs::component::test::ComponentB
     >() };
     BOOST_TEST(!signature1.contains(signature2));
+}
+
+BOOST_AUTO_TEST_CASE(false3)
+{
+    constexpr auto signature1{ ::xrn::ecs::Signature::generate<
+        ::xrn::ecs::component::test::ComponentA
+    >() };
+    constexpr auto signature2{ ::xrn::ecs::Signature::generate<
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::AbilityA
+    >() };
+    BOOST_TEST(!signature1.contains(signature2));
+    BOOST_TEST(signature2.contains(signature1));
+}
+
+BOOST_AUTO_TEST_CASE(false4)
+{
+    constexpr auto signature1{ ::xrn::ecs::Signature::generate<
+        ::xrn::ecs::component::test::AbilityA
+    >() };
+    constexpr auto signature2{ ::xrn::ecs::Signature::generate<
+        ::xrn::ecs::component::test::AbilityB
+    >() };
+    BOOST_TEST(!signature1.contains(signature2));
+    BOOST_TEST(!signature2.contains(signature1));
 }
 
 
@@ -457,6 +501,22 @@ BOOST_AUTO_TEST_CASE(reset2Arg)
     >();
     BOOST_TEST((signature1 == signature2));
     BOOST_TEST((signature2 == signature1));
+}
+
+BOOST_AUTO_TEST_CASE(resetAll)
+{
+    auto signature{ ::xrn::ecs::Signature::generate<
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB,
+        ::xrn::ecs::component::test::AbilityA
+    >() };
+    BOOST_TEST(signature.contains<::xrn::ecs::component::test::ComponentA>());
+    BOOST_TEST(signature.contains<::xrn::ecs::component::test::ComponentB>());
+    BOOST_TEST(signature.contains<::xrn::ecs::component::test::AbilityA>());
+    signature.reset();
+    BOOST_TEST(!signature.contains<::xrn::ecs::component::test::ComponentA>());
+    BOOST_TEST(!signature.contains<::xrn::ecs::component::test::ComponentB>());
+    BOOST_TEST(!signature.contains<::xrn::ecs::component::test::AbilityA>());
 }
 
 BOOST_AUTO_TEST_CASE(ostream)

@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  gcc_tests:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: .ci/ubuntu.dockerfile
+      args:
+        CXX_PACKAGE: libstdc++-11-dev g++-11
+        CXX: g++-11

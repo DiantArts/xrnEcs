@@ -81,8 +81,8 @@ template <
     ::xrn::meta::constraint::sameAs<::xrn::Id::Type, Type>;
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Checks whether the Type given as template parameter inherits
-///        from ::xrn::ecs::component::declaration::detail::AComponent
+/// \brief Checks whether the Type given as template parameter is a
+///        component.
 ///
 /// The comparison ignores cv-qualifiers and references (compares the type
 /// referenced).
@@ -99,5 +99,27 @@ template <
     typename Type
 > concept isComponent =
     ::xrn::ecs::isComponent<::std::remove_cvref_t<::std::remove_pointer_t<Type>>>;
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Checks whether the Type given as template parameter is an
+///        ability.
+///
+/// Abilities are empty uninstantiable componens only providing a functionality to
+/// the linked entity.
+/// The comparison ignores cv-qualifiers and references (compares the type
+/// referenced).
+///
+/// \tparam Type to check
+///
+/// \return True if the Type given as template parameter inherits from
+///         ::xrn::ecs::component::declaration::detail::AComponent. False otherwise
+///
+/// \see ::xrn::ecs::component::declaration::detail::AComponent
+///
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename Type
+> concept isAbility =
+    ::xrn::ecs::isAbility<::std::remove_cvref_t<::std::remove_pointer_t<Type>>>;
 
 } // namespace xrn::ecs::detail::constraint

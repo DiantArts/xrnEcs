@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  gcc_tests:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: .ci/fedora.dockerfile
+      args:
+        CXX_PACKAGE: gcc-c++
+        CXX: g++

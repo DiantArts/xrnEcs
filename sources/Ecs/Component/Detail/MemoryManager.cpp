@@ -78,7 +78,7 @@ void ::xrn::ecs::component::detail::MemoryManager::clearAll()
 {
     auto nonDeletedComponents{ [](const auto& componentInfos){ return componentInfos.ownerId; } };
     for (auto& componentInfos : m_indexTable | ::std::views::filter(nonDeletedComponents)) {
-        ::xrn::ecs::component::ForEach::template find<
+        ::xrn::ecs::component::detail::ForEach::template find<
             []<::xrn::ecs::detail::constraint::isComponent ComponentType>(auto* addr){
                 ::std::bit_cast<ComponentType*>(addr)->~ComponentType();
             }

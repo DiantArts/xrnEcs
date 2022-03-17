@@ -43,7 +43,6 @@
 #include <cstring>
 
 #include <experimental/type_traits>
-#include <boost/type_index.hpp>
 
 using ::std::string_literals::operator""s;
 using ::std::literals::string_view_literals::operator""sv;

@@ -5,9 +5,9 @@
 ## Makefile for c++23
 ##
 
+XRN_MAKEFILE_ERRORFILE		?=	true
+XRN_MAKEFILE_USE_COVERAGE	?=	true
 # DEBUG_MAKEFILE	:=	true
-ERRORFILE			:=	true
-USE_COVERAGE		:=	true
 
 ARGV			:=
 NAME			:=	xrnEcs
@@ -56,9 +56,9 @@ else
 COMMON_FLAGS	:=	-fmax-errors=10 -fdiagnostics-color=always
 endif
 C_FLAGS			:=	
-CPP_FLAGS		:=	-std=c++2b
-CPPM_FLAGS		:=	-std=c++2b
-PCH_FLAGS		:=	-std=c++2b
+CPP_FLAGS		?=	-std=c++2b
+CPPM_FLAGS		?=	-std=c++2b
+PCH_FLAGS		?=	-std=c++2b
 
 ## -I
 COMMON_CPPFLAGS	:=	$(INCDIR) $(SRCDIR) $(EXTERNDIR) $(EXTERNDIR)/HdrOnly $(LIBDIR)
@@ -100,7 +100,7 @@ else ifeq (tests,$(findstring tests,$(MAKECMDGOALS)))
 
 MODE_EXT		:=	_tests
 MODE_FLAGS		:=	-g3 -O0 -DTEST=1
-ifeq "$(USE_COVERAGE)" "true"
+ifeq "$(XRN_MAKEFILE_USE_COVERAGE)" "true"
 COVERAGE_FLAG	:=	-fprofile-arcs -ftest-coverage -fPIC --coverage -fno-inline -fno-inline-small-functions -fno-default-inline
 LIBBIN			+=	gcov
 endif
@@ -132,8 +132,8 @@ DEPDIR			:=	$(MOD_BUILDDIR)/$(DEPDIR)
 OBJEXTERNDIR	:=	$(BUILDDIR)/$(OBJEXTERNDIR)
 DEPEXTERNDIR	:=	$(BUILDDIR)/$(DEPEXTERNDIR)
 
-CC				:=	gcc
-CXX				:=	g++
+CC				?=	gcc
+CXX				?=	g++
 
 MAIN			:=	$(SRCDIR)/main$(CPP_SRCEXT)
 
@@ -298,7 +298,7 @@ linkage : $(NAME)$(MODE_EXT)
 ## ============================================================================
 
 $(NAME)$(MODE_EXT): compilation | libraries externs $(BINDIR)
-ifdef ERRORFILE
+ifeq "$(XRN_MAKEFILE_ERRORFILE)" "true"
 	$(CXX) $(OUTPUT_OPTION) $(CPP_OBJ) $(CPPM_OBJ) $(LDFLAGS) $(LDLIBS) 2>&1> $(BUILDDIR)/$(TMP_ERROR_FILE) \
 		|| (cat $(BUILDDIR)/$(TMP_ERROR_FILE); (sed 's/\x1b\[[0-9;]*[a-zA-Z]//g' $(BUILDDIR)/$(TMP_ERROR_FILE)) >> $(BUILDDIR)/$(ERROR_FILE); false)
 else
@@ -371,7 +371,7 @@ $(OBJDIR)/%$(OBJEXT): %$(C_SRCEXT) | $(C_PCH_OBJ)
 # .cpp
 $(OBJDIR)/%$(OBJEXT): %$(CPP_SRCEXT) | $(CPPM_OBJ) precompilation
 	mkdir -p $(@D) $(patsubst $(OBJDIR)%,./$(DEPDIR)%,$(@D))
-ifdef ERRORFILE
+ifeq "$(XRN_MAKEFILE_ERRORFILE)" "true"
 	$(CXX) -c $(OUTPUT_OPTION) $(CPPFLAGS) $(CXXFLAGS) $(COVERAGE_FLAG) $< \
 		-MT $@ -MMD -MP -MF $(patsubst $(OBJDIR)%$(OBJEXT),$(DEPDIR)/%$(DEPEXT),$(patsubst ./%,%,$@)) 2> $(BUILDDIR)/$(TMP_ERROR_FILE) \
 		|| (cat $(BUILDDIR)/$(TMP_ERROR_FILE); (sed 's/\x1b\[[0-9;]*[a-zA-Z]//g' $(BUILDDIR)/$(TMP_ERROR_FILE)) >> $(BUILDDIR)/$(ERROR_FILE); false)
@@ -460,7 +460,7 @@ auto_tests : tests
 	rm -f .build/**.gcda .build/**.gcno
 	# ./$(NAME)$(MODE_EXT)
 	valgrind ./$(NAME)$(MODE_EXT)
-ifeq "$(USE_COVERAGE)" "true"
+ifeq "$(XRN_MAKEFILE_USE_COVERAGE)" "true"
 	gcovr --exclude='tests' --exclude='externs' -j8 -d
 endif
 

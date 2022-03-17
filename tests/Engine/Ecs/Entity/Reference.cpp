@@ -1,7 +1,10 @@
 #include <pch.hpp>
 #include <Ecs/Entity.hpp>
 #include <Ecs/Component.hpp>
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Weffc++"
 #include <boost/test/unit_test.hpp>
+#pragma GCC diagnostic pop
 BOOST_AUTO_TEST_SUITE(Engine)
 BOOST_AUTO_TEST_SUITE(Core)
 BOOST_AUTO_TEST_SUITE(Ecs)
@@ -109,6 +112,7 @@ BOOST_AUTO_TEST_CASE(others)
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::Entity entity;
     ::xrn::ecs::Entity::Reference ref{ components, entity };
+    const ::xrn::ecs::Entity::Reference constNonConstRef{ components, entity };
     const ::xrn::ecs::Entity::Reference constMutableRef{ components, entity };
     ::xrn::ecs::Entity::ConstReference constRef{ ref };
     const ::xrn::ecs::Entity& entityRef = ref; // operator=() avoids copy for some reasons lmao
@@ -117,7 +121,8 @@ BOOST_AUTO_TEST_CASE(others)
     BOOST_TEST(entity.getId() == constMutableRef.getId());
     BOOST_TEST(&constRef.get() == &ref.get());
     BOOST_TEST(&constRef.get() == &entity);
-    BOOST_TEST(&constRef.get() == &entityRef); // TODO
+    BOOST_TEST(&constRef.get() == &entityRef);
+    BOOST_TEST(&constNonConstRef.get() == &entityRef);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

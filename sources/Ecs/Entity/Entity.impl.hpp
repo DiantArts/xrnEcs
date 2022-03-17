@@ -1,5 +1,8 @@
 #pragma once
 
+#include <Ecs/Component/Container.hpp>
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // static elements
@@ -9,14 +12,24 @@
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-> [[ nodiscard ]] constexpr auto ::xrn::ecs::entity::Entity::generate(
+    typename... Types
+> constexpr auto ::xrn::ecs::entity::Entity::generate(
     ::xrn::ecs::component::Container& components
 )
     -> ::xrn::ecs::entity::Entity
 {
     ::xrn::ecs::entity::Entity entity;
-    entity.addComponents<ComponentTypes...>(components);
+    ::xrn::meta::ForEach<Types...>::template run<[]<typename Type>(auto& components, auto& entity){
+        static_assert(
+            ::xrn::ecs::isComponent<Type> || ::xrn::ecs::isAbility<Type>,
+            "Invalid type: Entity::generate takes only Component and Ability types."
+        );
+        if constexpr (::xrn::ecs::isComponent<Type>) {
+            entity.template addComponents<Type>(components);
+        } else {
+            entity.template addAbility<Type>();
+        }
+    }>(components, entity);
     return entity;
 }
 
@@ -24,10 +37,30 @@ template <
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
-// Add components
+// Add
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename... Types
+> void ::xrn::ecs::entity::Entity::add(
+    ::xrn::ecs::component::Container& components
+)
+{
+    ::xrn::meta::ForEach<Types...>::template run<[]<typename Type>(auto& entity, auto& components){
+        static_assert(
+            ::xrn::ecs::isComponent<Type> || ::xrn::ecs::isAbility<Type>,
+            "Invalid type: Entity::add takes only Component and Ability types."
+        );
+        if constexpr (::xrn::ecs::isComponent<Type>) {
+            entity.template addComponents<Type>(components);
+        } else {
+            entity.template addAbility<Type>();
+        }
+    }>(*this, components);
+}
 
 ///////////////////////////////////////////////////////////////////////////
 template <
@@ -64,6 +97,22 @@ template <
     m_signature.set<ComponentTypes...>();
 }
 
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isAbility AbilityType
+> void ::xrn::ecs::entity::Entity::addAbility()
+{
+    m_signature.set<AbilityType>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
+> void ::xrn::ecs::entity::Entity::addAbilities()
+{
+    m_signature.set<AbilityTypes...>();
+}
+
 
 
 
@@ -76,8 +125,17 @@ template <
 
 ///////////////////////////////////////////////////////////////////////////
 template <
+    typename... Types
+> auto ::xrn::ecs::entity::Entity::has() const
+    -> bool
+{
+    return m_signature.contains<Types...>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
     ::xrn::ecs::detail::constraint::isComponent ComponentType
-> [[ nodiscard ]] auto ::xrn::ecs::entity::Entity::hasComponent() const
+> auto ::xrn::ecs::entity::Entity::hasComponent() const
     -> bool
 {
     return m_signature.contains<ComponentType>();
@@ -86,10 +144,28 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-> [[ nodiscard ]] auto ::xrn::ecs::entity::Entity::hasComponents() const
+> auto ::xrn::ecs::entity::Entity::hasComponents() const
     -> bool
 {
     return m_signature.contains<ComponentTypes...>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isAbility AbilityType
+> auto ::xrn::ecs::entity::Entity::hasAbility() const
+    -> bool
+{
+    return m_signature.contains<AbilityType>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
+> auto ::xrn::ecs::entity::Entity::hasAbilities() const
+    -> bool
+{
+    return m_signature.contains<AbilityTypes...>();
 }
 
 
@@ -100,6 +176,26 @@ template <
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename... Types
+> void ::xrn::ecs::entity::Entity::remove(
+    ::xrn::ecs::component::Container& components
+)
+{
+    ::xrn::meta::ForEach<Types...>::template run<[]<typename Type>(auto& entity, auto& components){
+        static_assert(
+            ::xrn::ecs::isComponent<Type> || ::xrn::ecs::isAbility<Type>,
+            "Invalid type: Entity::remove takes only Component and Ability types."
+        );
+        if constexpr (::xrn::ecs::isComponent<Type>) {
+            entity.template removeComponent<Type>(components);
+        } else {
+            entity.template removeAbility<Type>();
+        }
+    }>(*this, components);
+}
 
 ///////////////////////////////////////////////////////////////////////////
 template <
@@ -123,18 +219,18 @@ template <
     m_signature.reset<ComponentTypes...>();
 }
 
-void ::xrn::ecs::entity::Entity::removeComponents(
-    ::xrn::ecs::component::Container& components
-)
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isAbility AbilityType
+> void ::xrn::ecs::entity::Entity::removeAbility()
 {
-    // ::xrn::ecs::component::ForEach::template runWithId<
-        // []<::xrn::ecs::detail::constraint::isComponent ComponentType> (
-            // ::xrn::Id componentId,
-            // ::xrn::ecs::entity::Entity& entity,
-            // ::xrn::ecs::component::Container& components
-        // ){
-            // components.remove(entity.m_id, componentId);
-            // entity.m_signature.reset(componentId);
-        // }
-   // >(m_signature, *this, components);
+    m_signature.reset<AbilityType>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
+> void ::xrn::ecs::entity::Entity::removeAbilities()
+{
+    m_signature.reset<AbilityTypes...>();
 }
