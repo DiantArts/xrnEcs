@@ -6,7 +6,51 @@
 ///////////////////////////////////////////////////////////////////////////
 // Headers
 ///////////////////////////////////////////////////////////////////////////
-#include <Ecs/Entity/Entity.hpp>
+#include <Ecs/Entity.hpp>
+#include <Ecs/Component.hpp>
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Remove components
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////
+void ::xrn::ecs::entity::Entity::remove(
+    ::xrn::ecs::component::Container& components
+)
+{
+    components.removeAll(*this);
+    m_signature.reset();
+}
+
+///////////////////////////////////////////////////////////////////////////
+void ::xrn::ecs::entity::Entity::removeComponents(
+    ::xrn::ecs::component::Container& components
+)
+{
+    ::xrn::ecs::component::detail::ForEach::template runIfSignature<
+        []<::xrn::ecs::detail::constraint::isComponent RawComponentType>(auto& entity, auto& components){
+            using ComponentType = ::std::remove_cvref_t<::std::remove_pointer_t<RawComponentType>>;
+            components.template remove<ComponentType>(entity);
+            entity.m_signature.reset(ComponentType::getId());
+        }
+    >(m_signature, *this, components);
+}
+
+///////////////////////////////////////////////////////////////////////////
+void ::xrn::ecs::entity::Entity::removeAbilities()
+{
+    ::xrn::ecs::ability::detail::ForEach::template runIfSignature<
+        []<::xrn::ecs::detail::constraint::isAbility RawAbilityType>(auto& entity){
+            using AbilityType = ::std::remove_cvref_t<::std::remove_pointer_t<RawAbilityType>>;
+            entity.m_signature.reset(AbilityType::getId());
+        }
+    >(m_signature, *this);
+}
 
 
 

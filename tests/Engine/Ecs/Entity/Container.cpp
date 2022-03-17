@@ -2,7 +2,10 @@
 #include <Ecs/Entity.hpp>
 #include <Ecs/Component.hpp>
 #include <Ecs/Component/Container.hpp>
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Weffc++"
 #include <boost/test/unit_test.hpp>
+#pragma GCC diagnostic pop
 BOOST_AUTO_TEST_SUITE(Engine)
 BOOST_AUTO_TEST_SUITE(Core)
 BOOST_AUTO_TEST_SUITE(Ecs)
@@ -74,8 +77,10 @@ BOOST_AUTO_TEST_CASE(remove)
     auto entityId2{ entities.emplace<::xrn::ecs::component::test::ComponentA>().getId() };
     auto entityId3{ entities.emplace<::xrn::ecs::component::test::ComponentA>().getId() };
     auto entityId4{ entities.emplace<::xrn::ecs::component::test::ComponentA>().getId() };
+    BOOST_TEST(components.contains<::xrn::ecs::component::test::ComponentA>(entityId));
     BOOST_TEST(entities.contains(entityId));
     entities.remove(entityId);
+    BOOST_TEST(!components.contains<::xrn::ecs::component::test::ComponentA>(entityId));
     BOOST_TEST(!entities.contains(entityId));
     BOOST_TEST(entities.contains(entityId2));
     entities.remove(entities[entityId2]);

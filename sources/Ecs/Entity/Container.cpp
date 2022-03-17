@@ -43,64 +43,6 @@
     this->clear();
 }
 
-///////////////////////////////////////////////////////////////////////////
-/// \brief Copy constructor
-///
-///////////////////////////////////////////////////////////////////////////
-::xrn::ecs::entity::Container::Container(
-    const ::xrn::ecs::entity::Container& that
-) noexcept = default;
-
-///////////////////////////////////////////////////////////////////////////
-/// \brief Copy assign operator
-///
-///////////////////////////////////////////////////////////////////////////
-auto ::xrn::ecs::entity::Container::operator=(
-    const ::xrn::ecs::entity::Container& that
-) noexcept
-    -> ::xrn::ecs::entity::Container&
-{
-    this->swap(::xrn::ecs::entity::Container{ that });
-    return *this;
-}
-
-///////////////////////////////////////////////////////////////////////////
-/// \brief Move constructor
-///
-///////////////////////////////////////////////////////////////////////////
-::xrn::ecs::entity::Container::Container(
-    ::xrn::ecs::entity::Container&& that
-) noexcept = default;
-
-///////////////////////////////////////////////////////////////////////////
-/// \brief Move assign operator
-///
-///////////////////////////////////////////////////////////////////////////
-auto ::xrn::ecs::entity::Container::operator=(
-    ::xrn::ecs::entity::Container&& that
-) noexcept
-    -> ::xrn::ecs::entity::Container&
-{
-    this->swap(that);
-    return *this;
-}
-
-///////////////////////////////////////////////////////////////////////////
-void ::xrn::ecs::entity::Container::swap(
-    ::xrn::ecs::entity::Container& that
-)
-{
-    ::std::swap(m_entities, that.m_entities);
-}
-
-///////////////////////////////////////////////////////////////////////////
-void ::xrn::ecs::entity::Container::swap(
-    ::xrn::ecs::entity::Container&& that
-)
-{
-    ::std::swap(m_entities, that.m_entities);
-}
-
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -115,16 +57,13 @@ void ::xrn::ecs::entity::Container::remove(
     ::xrn::Id entityId
 )
 {
-    m_entities.erase(::std::ranges::find_if(
-        m_entities,
-        [this, entityId](auto& entity){
-            if (entity.getId() == entityId) {
-                entity.removeComponents(m_components);
-                return true;
-            }
-            return false;
-        }
-    ));
+    auto it{ ::std::ranges::find_if(
+        m_entities, [this, entityId](auto& entity){ return entity.getId() == entityId; }
+    ) };
+    if (it != m_entities.end()) {
+        it->removeComponents(m_components);
+        m_entities.erase(it);
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -132,16 +71,7 @@ void ::xrn::ecs::entity::Container::remove(
     const ::xrn::ecs::Entity::Reference& entityReference
 )
 {
-    m_entities.erase(::std::ranges::find_if(
-        m_entities,
-        [this, entityReference](auto& entity){
-            if (&entity == &entityReference.get()) {
-                entity.removeComponents(m_components);
-                return true;
-            }
-            return false;
-        }
-    ));
+    this->remove(entityReference.getId());
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -149,16 +79,7 @@ void ::xrn::ecs::entity::Container::remove(
     const ::xrn::ecs::Entity::ConstReference& entityReference
 )
 {
-    m_entities.erase(::std::ranges::find_if(
-        m_entities,
-        [this, entityReference](auto& entity){
-            if (&entity == &entityReference.get()) {
-                entity.removeComponents(m_components);
-                return true;
-            }
-            return false;
-        }
-    ));
+    this->remove(entityReference.getId());
 }
 
 ///////////////////////////////////////////////////////////////////////////

@@ -3,7 +3,11 @@
 
 template class ::xrn::util::BasicForwardId<::std::size_t>;
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Weffc++"
 #include <boost/test/unit_test.hpp>
+#pragma GCC diagnostic pop
+
 BOOST_AUTO_TEST_SUITE(test)
 BOOST_AUTO_TEST_SUITE(xrn)
 BOOST_AUTO_TEST_SUITE(util)

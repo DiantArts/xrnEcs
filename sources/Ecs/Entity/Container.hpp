@@ -104,7 +104,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     Container(
         const ::xrn::ecs::entity::Container& other
-    ) noexcept;
+    ) noexcept = delete;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Copy assign operator
@@ -113,7 +113,7 @@ public:
     auto operator=(
         const ::xrn::ecs::entity::Container& other
     ) noexcept
-        -> ::xrn::ecs::entity::Container&;
+        -> ::xrn::ecs::entity::Container& = delete;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Move constructor
@@ -121,7 +121,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     Container(
         ::xrn::ecs::entity::Container&& that
-    ) noexcept;
+    ) noexcept = delete;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Move assign operator
@@ -130,27 +130,7 @@ public:
     auto operator=(
         ::xrn::ecs::entity::Container&& that
     ) noexcept
-        -> ::xrn::ecs::entity::Container&;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Swaps the containers
-    ///
-    /// Required for the assignement operator.
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    void swap(
-        ::xrn::ecs::entity::Container& that
-    );
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Swaps the containers
-    ///
-    /// Required for the assignement operator.
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    void swap(
-        ::xrn::ecs::entity::Container&& that
-    );
+        -> ::xrn::ecs::entity::Container& = delete;
 
 
 
@@ -478,3 +458,10 @@ private:
 };
 
 } // namespace xrn::ecs::entity
+
+
+
+///////////////////////////////////////////////////////////////////////////
+// Header-implimentation
+///////////////////////////////////////////////////////////////////////////
+#include <Ecs/Entity/Container.impl.hpp>

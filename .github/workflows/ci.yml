@@ -1,0 +1,25 @@
+name: Unit tests CI
+
+on:
+  push:
+    # branches: [ main, releases/**, latest, !release/**-alpha, !release/**-beta, !release/**-unstable, dev ]
+    branches: [ main ]
+  pull_request:
+    # branches: [ main, releases/**, latest, !release/**-alpha, !release/**-beta, !release/**-unstable ]
+    branches: [ main ]
+
+jobs:
+  ubuntu-build:
+    runs-on: ubuntu-latest
+    name: Ubuntu tests
+    steps:
+      - uses: actions/checkout@v2
+      - run: cp .ci/ubuntu.docker-compose ubuntu-docker-compose.yml
+      - run: docker-compose -f ubuntu-docker-compose.yml up
+  fedora-build:
+    runs-on: ubuntu-latest
+    name: Fedora tests
+    steps:
+      - uses: actions/checkout@v2
+      - run: cp .ci/fedora.docker-compose fedora-docker-compose.yml
+      - run: docker-compose -f fedora-docker-compose.yml up

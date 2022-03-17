@@ -1,6 +1,7 @@
 <C-o> ::std::
 <C-A-o> ::xrn::
 <C-e> this->
+<C-A-e> *this
 <C-u> ::std::vector
 <C-A-u> ::std::span
 <C-u> ::std::make_unique<>()

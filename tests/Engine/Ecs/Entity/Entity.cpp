@@ -2,7 +2,10 @@
 #include <Ecs/Entity.hpp>
 #include <Ecs/Component.hpp>
 #include <Ecs/Component/Container.hpp>
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Weffc++"
 #include <boost/test/unit_test.hpp>
+#pragma GCC diagnostic pop
 BOOST_AUTO_TEST_SUITE(Engine)
 BOOST_AUTO_TEST_SUITE(Core)
 BOOST_AUTO_TEST_SUITE(Ecs)
@@ -93,17 +96,45 @@ BOOST_AUTO_TEST_CASE(addNhasMulti3)
     >()));
 }
 
+BOOST_AUTO_TEST_CASE(addNhasMulti4)
+{
+    ::xrn::ecs::component::Container components;
+    ::xrn::ecs::Entity entity;
+    entity.add<
+        ::xrn::ecs::component::test::ComponentB,
+        ::xrn::ecs::component::test::AbilityA
+    >(components);
+
+    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::ComponentA>());
+    BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::ComponentB>());
+    BOOST_TEST(entity.hasAbility<::xrn::ecs::component::test::AbilityA>());
+    BOOST_TEST(!(entity.hasComponents<
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB
+    >()));
+    BOOST_TEST((entity.has<
+        ::xrn::ecs::component::test::ComponentB,
+        ::xrn::ecs::component::test::AbilityA
+    >()));
+    BOOST_TEST((entity.has<
+        ::xrn::ecs::component::test::AbilityA,
+        ::xrn::ecs::component::test::ComponentB
+    >()));
+}
+
 BOOST_AUTO_TEST_CASE(generate)
 {
     ::xrn::ecs::component::Container components;
     auto entity{ ::xrn::ecs::Entity::generate<
         ::xrn::ecs::component::test::ComponentA,
-        ::xrn::ecs::component::test::ComponentB
+        ::xrn::ecs::component::test::ComponentB,
+        ::xrn::ecs::component::test::AbilityA
     >(components) };
 
-    BOOST_TEST((entity.hasComponents<
+    BOOST_TEST((entity.has<
         ::xrn::ecs::component::test::ComponentA,
-        ::xrn::ecs::component::test::ComponentB
+        ::xrn::ecs::component::test::ComponentB,
+        ::xrn::ecs::component::test::AbilityA
     >()));
 }
 
@@ -132,25 +163,68 @@ BOOST_AUTO_TEST_CASE(removeNhasMulti2)
 {
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::Entity entity;
-    entity.addComponents<
+    entity.add<
         ::xrn::ecs::component::test::ComponentA,
-        ::xrn::ecs::component::test::ComponentB
+        ::xrn::ecs::component::test::ComponentB,
+        ::xrn::ecs::component::test::AbilityA
     >(components);
 
-    BOOST_TEST((entity.hasComponents<
+    BOOST_TEST((entity.has<
         ::xrn::ecs::component::test::ComponentA,
-        ::xrn::ecs::component::test::ComponentB
+        ::xrn::ecs::component::test::ComponentB,
+        ::xrn::ecs::component::test::AbilityA
     >()));
-    entity.removeComponents<
+    entity.remove<
         ::xrn::ecs::component::test::ComponentA,
-        ::xrn::ecs::component::test::ComponentB
+        ::xrn::ecs::component::test::ComponentB,
+        ::xrn::ecs::component::test::AbilityA
     >(components);
-    BOOST_TEST(!(entity.hasComponents<
+    BOOST_TEST(!(entity.has<::xrn::ecs::component::test::ComponentA>()));
+    BOOST_TEST(!(entity.has<::xrn::ecs::component::test::ComponentB>()));
+    BOOST_TEST(!(entity.has<::xrn::ecs::component::test::AbilityA>()));
+}
+
+BOOST_AUTO_TEST_CASE(remove2)
+{
+    ::xrn::ecs::component::Container components;
+    ::xrn::ecs::Entity entity;
+    entity.add<
         ::xrn::ecs::component::test::ComponentA,
-        ::xrn::ecs::component::test::ComponentB
+        ::xrn::ecs::component::test::ComponentB,
+        ::xrn::ecs::component::test::AbilityA
+    >(components);
+
+    BOOST_TEST((entity.has<
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB,
+        ::xrn::ecs::component::test::AbilityA
     >()));
-    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::ComponentA>());
-    BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::ComponentB>());
+    entity.remove(components);
+    BOOST_TEST(!(entity.has<::xrn::ecs::component::test::ComponentA>()));
+    BOOST_TEST(!(entity.has<::xrn::ecs::component::test::ComponentB>()));
+    BOOST_TEST(!(entity.has<::xrn::ecs::component::test::AbilityA>()));
+}
+
+BOOST_AUTO_TEST_CASE(remove3)
+{
+    ::xrn::ecs::component::Container components;
+    ::xrn::ecs::Entity entity;
+    entity.add<
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB,
+        ::xrn::ecs::component::test::AbilityA
+    >(components);
+
+    BOOST_TEST((entity.has<
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB,
+        ::xrn::ecs::component::test::AbilityA
+    >()));
+    entity.removeComponents(components);
+    entity.removeAbilities();
+    BOOST_TEST(!(entity.has<::xrn::ecs::component::test::ComponentA>()));
+    BOOST_TEST(!(entity.has<::xrn::ecs::component::test::ComponentB>()));
+    BOOST_TEST(!(entity.has<::xrn::ecs::component::test::AbilityA>()));
 }
 
 

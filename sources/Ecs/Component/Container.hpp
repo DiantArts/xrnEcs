@@ -401,6 +401,21 @@ public:
         Container::EntityId entityId
     );
 
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Removes all components from an entity
+    ///
+    /// Deletes all the components of the entity given as parameter from the
+    /// container. The destructor of the components will be called.
+    ///
+    /// \param entity Entity that contains the components
+    ///
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    void removeAll(
+        ::xrn::ecs::entity::Entity& entity
+    );
+
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -653,3 +668,10 @@ private:
 };
 
 } // namespace xrn::ecs::component
+
+
+
+///////////////////////////////////////////////////////////////////////////
+// Header-implimentation
+///////////////////////////////////////////////////////////////////////////
+#include <Ecs/Component/Container.impl.hpp>
