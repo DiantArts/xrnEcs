@@ -164,15 +164,12 @@ BOOST_AUTO_TEST_CASE(mulpiteComponentMulipleEntityMulipleSystem)
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 3);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 2);
 
-    ::xrn::ecs::System<
-        detail::function1,
-        ::xrn::ecs::component::test::ComponentB
-    > system4;
+    ::xrn::ecs::System<detail::function1> system4;
     system4(c.restart(), components, entities);
     system4(c.restart(), entities, components);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 4);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 1);
-    BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 3);
+    BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 5);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 2);
 
     const ::xrn::ecs::System<detail::function4> system5;

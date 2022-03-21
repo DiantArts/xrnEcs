@@ -83,6 +83,46 @@ BOOST_AUTO_TEST_CASE(push)
     );
 }
 
+BOOST_AUTO_TEST_CASE(other)
+{
+    ::xrn::ecs::component::Container container3;
+    {
+        ::xrn::ecs::component::Container container{ 1024 };
+        container.emplace<::xrn::ecs::component::test::ComponentA>(1);
+        BOOST_TEST(container.get<::xrn::ecs::component::test::ComponentA>(1)->value == 0);
+        auto container2{ ::std::move(container) };
+        container2.emplace<::xrn::ecs::component::test::ComponentB>(2);
+        BOOST_TEST(container2.get<::xrn::ecs::component::test::ComponentA>(1)->value == 0);
+        BOOST_TEST(container2.get<::xrn::ecs::component::test::ComponentB>(2)->value == 0);
+        container3 = ::std::move(container2);
+    }
+    container3.emplace<::xrn::ecs::component::test::ComponentA>(3);
+    BOOST_TEST(container3.get<::xrn::ecs::component::test::ComponentA>(1)->value == 0);
+    BOOST_TEST(container3.get<::xrn::ecs::component::test::ComponentB>(2)->value == 0);
+    BOOST_TEST(container3.get<::xrn::ecs::component::test::ComponentA>(3)->value == 0);
+    container3.clear();
+    BOOST_TEST(container3.get<::xrn::ecs::component::test::ComponentA>(1) == nullptr);
+    BOOST_TEST(container3.get<::xrn::ecs::component::test::ComponentB>(2) == nullptr);
+    BOOST_TEST(container3.get<::xrn::ecs::component::test::ComponentA>(3) == nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(recycle)
+{
+    ::xrn::ecs::component::Container container{ 1024 };
+    container.emplace<::xrn::ecs::component::test::ComponentA>(1);
+    void* ptr{ container.get<::xrn::ecs::component::test::ComponentA>(1) };
+    container.remove<::xrn::ecs::component::test::ComponentA>(1);
+
+    BOOST_TEST((&container.emplace<::xrn::ecs::component::test::ComponentA>(2) == ptr));
+    container.remove<::xrn::ecs::component::test::ComponentA>(2);
+
+    // ::xrn::ecs::component::Container container2;
+    // container2 = ::std::move(container);
+    // ::std::cout << &container2.emplace<::xrn::ecs::component::test::ComponentA>(3) << " == " << ptr << ::std::endl;
+    // BOOST_TEST((&container2.emplace<::xrn::ecs::component::test::ComponentA>(3) == ptr));
+    // container.remove<::xrn::ecs::component::test::ComponentA>(3);
+}
+
 
 
 BOOST_AUTO_TEST_SUITE_END()
