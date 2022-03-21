@@ -32,18 +32,8 @@ namespace xrn::ecs::system {
 ///////////////////////////////////////////////////////////////////////////
 template <
     auto function,
-    typename... BanishedComponentTypes
-> class System;
-
-
-
-///////////////////////////////////////////////////////////////////////////
-/// \brief System containing no banished components
-///
-///////////////////////////////////////////////////////////////////////////
-template <
-    auto function
-> class System<function>
+    typename... Types
+> class System
     : public ::xrn::ecs::system::ASystem
 {
 
@@ -51,31 +41,31 @@ public:
 
     // ------------------------------------------------------------------ Constructors
 
-    System();
+    constexpr System();
 
 
 
     // ------------------------------------------------------------------ Run
 
-    void operator()(
+    constexpr void operator()(
         ::xrn::Time t,
         ::xrn::ecs::entity::Container& entities,
         ::xrn::ecs::component::Container& components
     ) override;
 
-    void operator()(
+    constexpr void operator()(
         ::xrn::Time t,
         ::xrn::ecs::component::Container& components,
         ::xrn::ecs::entity::Container& entities
     );
 
-    void operator()(
+    constexpr void operator()(
         ::xrn::Time t,
         const ::xrn::ecs::entity::Container& entities,
         const ::xrn::ecs::component::Container& components
     ) const override;
 
-    void operator()(
+    constexpr void operator()(
         ::xrn::Time t,
         const ::xrn::ecs::component::Container& components,
         const ::xrn::ecs::entity::Container& entities
@@ -85,75 +75,16 @@ public:
 
     // ------------------------------------------------------------------ Signature
 
-    [[ nodiscard ]] static constexpr auto getSignature()
-        -> const ::xrn::ecs::Signature&;
-
-};
-
-
-
-///////////////////////////////////////////////////////////////////////////
-/// \brief System containing banished components
-///
-///////////////////////////////////////////////////////////////////////////
-template <
-    auto function,
-    ::xrn::ecs::detail::constraint::isComponent... BanishedComponentTypes
-> class System<function, BanishedComponentTypes...>
-    : public ::xrn::ecs::system::ASystem
-{
-
-public:
-
-    // ------------------------------------------------------------------ Constructors
-
-    System();
-
-
-
-    // ------------------------------------------------------------------ Run
-
-    void operator()(
-        ::xrn::Time t,
-        ::xrn::ecs::entity::Container& entities,
-        ::xrn::ecs::component::Container& components
-    ) override;
-
-    void operator()(
-        ::xrn::Time t,
-        ::xrn::ecs::component::Container& components,
-        ::xrn::ecs::entity::Container& entities
-    );
-
-    void operator()(
-        ::xrn::Time t,
-        const ::xrn::ecs::entity::Container& entities,
-        const ::xrn::ecs::component::Container& components
-    ) const override;
-
-    void operator()(
-        ::xrn::Time t,
-        const ::xrn::ecs::component::Container& components,
-        const ::xrn::ecs::entity::Container& entities
-    ) const;
-
-
-
-    // ------------------------------------------------------------------ Signature
-
-    [[ nodiscard ]] static constexpr auto getSignature()
-        -> const ::xrn::ecs::Signature&;
-
-    [[ nodiscard ]] static constexpr auto getBanishedSignature()
-        -> const ::xrn::ecs::Signature&;
+    [[ nodiscard ]] static consteval auto getSignature()
+        -> ::xrn::ecs::Signature;
 
 
 
 private:
 
-    static constexpr const auto m_banishedSignature{
-        ::xrn::ecs::Signature::generate<BanishedComponentTypes...>()
-    };
+    // static inline constexpr auto m_signature{
+        // ::xrn::ecs::detail::meta::Function<decltype(function)>::Arguments::signature.template add<Types...>()
+    // };
 
 };
 
@@ -167,6 +98,6 @@ private:
 namespace xrn::ecs {
     template <
         auto function,
-        ::xrn::ecs::detail::constraint::isComponent... BanishedComponentTypes
-    > using System = ::xrn::ecs::system::System<function, BanishedComponentTypes...>;
+        typename... Types
+    > using System = ::xrn::ecs::system::System<function, Types...>;
 }

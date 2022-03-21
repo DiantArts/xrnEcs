@@ -31,13 +31,16 @@ try {
     using C = ::xrn::ecs::component::Controllable;
     using K = ::xrn::ecs::component::Killable;
 
-    ::xrn::ecs::component::Container components;
-    ::xrn::ecs::entity::Container entities{ components };
-    auto e1Id{ entities.emplace<D>().getId() };
-    auto e2Id{ entities.emplace<T>().getId() };
-    auto e3Id{ entities.emplace<D, T>().getId() };
+    // constexpr ::xrn::ecs::Signature signature;
+    // signature.add<D>();
 
-    ::xrn::ecs::System<function1> system1;
+    // ::xrn::ecs::component::Container components;
+    // ::xrn::ecs::entity::Container entities{ components };
+    // auto e1Id{ entities.emplace<D>().getId() };
+    // auto e2Id{ entities.emplace<T>().getId() };
+    // auto e3Id{ entities.emplace<D, T>().getId() };
+
+    // ::xrn::ecs::System<function1> system1;
     // ::std::cout << (components.get<D>(e1Id)->value) << ::std::endl;
     // ::std::cout << (components.get<T>(e2Id)->value) << ::std::endl;
     // ::std::cout << (components.get<D>(e3Id)->value) << ", " << (components.get<T>(e3Id)->value) << ::std::endl;

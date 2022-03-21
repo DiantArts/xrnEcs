@@ -199,6 +199,69 @@ BOOST_AUTO_TEST_CASE(inlineLambdaMulpiteComponentMulipleEntityMulipleSystem)
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 3);
 }
 
+BOOST_AUTO_TEST_CASE(constSystems)
+{
+    ::xrn::Clock c;
+    ::xrn::ecs::component::Container components;
+    ::xrn::ecs::entity::Container entities{ components };
+    auto e1Id{ entities.emplace<::xrn::ecs::component::test::ComponentA>().getId() };
+    auto e2Id{ entities.emplace<::xrn::ecs::component::test::ComponentB>().getId() };
+    auto e3Id{ entities.emplace<
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB
+    >().getId() };
+    ::xrn::ecs::system::Container systems;
+    const ::xrn::ecs::system::Container& constSystems = systems;
+
+    systems.emplace<[](const ::xrn::ecs::component::test::ComponentA& m){}>();
+    constSystems.run(c.getElapsed(), entities, components);
+}
+
+BOOST_AUTO_TEST_CASE(nonConstOnConst)
+{
+    ::xrn::Clock c;
+    ::xrn::ecs::component::Container components;
+    ::xrn::ecs::entity::Container entities{ components };
+    auto e1Id{ entities.emplace<::xrn::ecs::component::test::ComponentA>().getId() };
+    auto e2Id{ entities.emplace<::xrn::ecs::component::test::ComponentB>().getId() };
+    ::xrn::ecs::system::Container systems;
+    const ::xrn::ecs::system::Container& constSystems = systems;
+
+    systems.emplace<[](const ::xrn::ecs::Entity& e, ::xrn::ecs::component::test::ComponentA& m){}>();
+    systems.emplace<
+        [](const ::xrn::ecs::Entity& e, ::xrn::Time dt, ::xrn::ecs::component::test::ComponentA& m){}
+    >();
+    systems.emplace<
+        [](::xrn::Time dt, const ::xrn::ecs::Entity& e, ::xrn::ecs::component::test::ComponentA& m){}
+    >();
+
+    ::std::cerr.setstate(::std::ios::failbit);
+    constSystems.run(c.getElapsed(), entities, components);
+    ::std::cerr.clear();
+}
+
+
+BOOST_AUTO_TEST_CASE(other)
+{
+    ::xrn::Clock c;
+    ::xrn::ecs::component::Container components;
+    ::xrn::ecs::entity::Container entities{ components };
+    auto e1Id{ entities.emplace<::xrn::ecs::component::test::ComponentA>().getId() };
+    auto e2Id{ entities.emplace<::xrn::ecs::component::test::ComponentB>().getId() };
+    ::xrn::ecs::system::Container systems;
+    const ::xrn::ecs::system::Container& constSystems = systems;
+
+    systems.emplace<[](const ::xrn::ecs::Entity& e, const ::xrn::ecs::component::test::ComponentA& m){}>();
+    systems.emplace<
+        [](const ::xrn::ecs::Entity& e, ::xrn::Time dt, const ::xrn::ecs::component::test::ComponentA& m){}
+    >();
+    systems.emplace<
+        [](::xrn::Time dt, const ::xrn::ecs::Entity& e, const ::xrn::ecs::component::test::ComponentA& m){}
+    >();
+    systems.run(c.getElapsed(), entities, components);
+    constSystems.run(c.getElapsed(), entities, components);
+}
+
 
 
 BOOST_AUTO_TEST_SUITE_END()
