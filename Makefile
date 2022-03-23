@@ -415,13 +415,13 @@ re :
 	$(MAKE) auto
 
 clean :
-	rm -rf $(OBJDIR) $(DEPDIR)
-	rm -f $(BUILDDIR)/$(ERROR_FILE)
+	rm -rf $(BUILDDIR)
 	rm -f vgcore.*
 	rm -f .build/**.gcda .build/**.gcno
 	$(PRINTF) "$(DARKGRAY)[Clean]$(NORMAL) done\n"
 
 fclean : clean
+	rm -rf $(BINDIR)
 	rm -f $(NAME) $(NAME)_debug $(NAME)_valgrind $(NAME)_gdb
 	$(foreach libbin, $(FOUNDLIBS),rm -f $(BINDIR)/lib$(libbin).a $(BINDIR)/lib$(libbin)_debug.a $(BINDIR)/lib$(libbin)_valgrind.a $(BINDIR)/lib$(libbin)_gdb.a)
 	$(PRINTF) "$(DARKGRAY)[FClean]$(NORMAL) done\n"
@@ -429,11 +429,6 @@ fclean : clean
 ffclean : fclean
 	find . -name \*.gch -delete
 	$(PRINTF) "$(DARKGRAY)[FFClean]$(NORMAL) done\n"
-
-fffclean : ffclean
-	rm -rf $(BUILDDIR)
-	rm -rf $(BINDIR)
-	$(PRINTF) "$(DARKGRAY)[FFFClean]$(NORMAL) done\n"
 
 ## auto
 

@@ -12,7 +12,6 @@
 // Forward declarations
 ///////////////////////////////////////////////////////////////////////////
 namespace xrn::ecs::entity { class Entity; }
-namespace xrn::ecs::component { template <typename T> class AComponent; }
 
 
 
@@ -89,10 +88,8 @@ template <
 ///
 /// \tparam Type to check
 ///
-/// \return True if the Type given as template parameter inherits from
-///         ::xrn::ecs::component::declaration::detail::AComponent. False otherwise
-///
-/// \see ::xrn::ecs::component::declaration::detail::AComponent
+/// \return True if the Type given as template parameter is declared by
+///         COMPONENT or COMPONENT_IN_NAMESPACE macros. False otherwise
 ///
 ///////////////////////////////////////////////////////////////////////////
 template <
@@ -111,15 +108,32 @@ template <
 ///
 /// \tparam Type to check
 ///
-/// \return True if the Type given as template parameter inherits from
-///         ::xrn::ecs::component::declaration::detail::AComponent. False otherwise
-///
-/// \see ::xrn::ecs::component::declaration::detail::AComponent
+/// \return True if the Type given as template parameter is declared by
+///         ABILITY or ABILITY_IN_NAMESPACE macros. False otherwise
 ///
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename Type
 > concept isAbility =
     ::xrn::ecs::isAbility<::std::remove_cvref_t<::std::remove_pointer_t<Type>>>;
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Checks whether the Type given as template parameter is an
+///        ability or a component.
+///
+/// The comparison ignores cv-qualifiers and references (compares the type
+/// referenced).
+///
+/// \tparam Type to check
+///
+/// \return True if the Type given as template parameter is declared by
+///         COMPONENT, COMPONENT_IN_NAMESPACE, ABILITY or
+///         ABILITY_IN_NAMESPACE macros. False otherwise
+///
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename Type
+> concept isEcsRegistered =
+    ::xrn::ecs::detail::constraint::isComponent<Type> || ::xrn::ecs::detail::constraint::isAbility<Type>;
 
 } // namespace xrn::ecs::detail::constraint

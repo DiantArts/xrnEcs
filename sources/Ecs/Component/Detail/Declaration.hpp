@@ -190,7 +190,29 @@ namespace xrn::ecs::component::declaration::detail {
 /// implemetation details.
 ///////////////////////////////////////////////////////////////////////////
 #ifdef TEST
-#include <Ecs/Component/Detail/TestDeclaration.hpp>
+namespace xrn::ecs::component::test {
+ABILITY_IN_NAMESPACE(xrn::ecs::component::test, AbilityA);
+ABILITY_IN_NAMESPACE(xrn::ecs::component::test, AbilityB);
+COMPONENT_IN_NAMESPACE(xrn::ecs::component::test, ComponentA) {
+public:
+    auto operator<=>(const ::xrn::ecs::component::test::ComponentA& other) const
+    { return value <=> other.value; }
+    auto operator==(const ::xrn::ecs::component::test::ComponentA& other) const
+    { return value == other.value; }
+    int value{ 0 };
+};
+COMPONENT_IN_NAMESPACE(xrn::ecs::component::test, ComponentB) {
+public:
+    ComponentB(int val = 0) : value{ val } {}
+    auto operator<=>(const ::xrn::ecs::component::test::ComponentB& other) const
+    { return value <=> other.value; }
+    int value{ 0 };
+};
+COMPONENT_IN_NAMESPACE(xrn::ecs::component::test, Benchmark100ints) {
+public:
+    int value[100];
+};
+} // namespace xrn::ecs::component::test
 #endif // TEST
 
 

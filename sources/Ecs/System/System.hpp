@@ -4,30 +4,36 @@
 // Headers
 ///////////////////////////////////////////////////////////////////////////
 #include <Ecs/Signature.hpp>
-#include <Ecs/System/Detail/Meta/Function.hpp>
+#include <Ecs/Entity.hpp>
+#include <Ecs/Component.hpp>
 #include <Ecs/System/ASystem.hpp>
-
-namespace xrn::ecs::component { class Container; }
-namespace xrn::ecs::entity { class Container; }
+#include <Ecs/System/Detail/SystemFiller.hpp>
+#include <Ecs/System/Detail/Meta/Function.hpp>
 
 
 namespace xrn::ecs::system {
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Simplifies time measures
+/// \brief Representation a system in the xrn ecs Project
 /// \ingroup ecs-system
 ///
 /// \include System.hpp <Ecs/System/System.hpp>
 ///
-/// Represents the system of the xrn's ECS. This class allows actions
-/// (represented by callable - functions or classes with operator())
-/// on components.
+/// ::xrn::ecs::system::System inherits from ::xrn::ecs::system::ASystem
+/// and represents how a general system. It is the kind of system the user
+/// is supposed to manipulate. Those systems are pushed as
+/// ::xrn::ecs::system::ASystem inside a ::xrn::ecs::system::Container.
+/// This class is aliased with ::xrn::ecs::System.
+///
+/// \tparam function Function to create a system from
+/// \tparam Types    Types (usually Abilities) that the entity must possess
+///                  to use the System
 ///
 /// Usage example:
 /// \code
 /// \endcode
 ///
-/// \see ::xrn::ecs::component::declaration::detail::AComponent
+/// \see ::xrn::ecs::system::ASystem, ::xrn::ecs::system::Container
 ///
 ///////////////////////////////////////////////////////////////////////////
 template <
@@ -39,42 +45,75 @@ template <
 
 public:
 
-    // ------------------------------------------------------------------ Constructors
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // Constructors
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Constructor
+    ///
+    ///////////////////////////////////////////////////////////////////////////
     constexpr System();
 
 
 
-    // ------------------------------------------------------------------ Run
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // Run
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Runs the system
+    ///
+    /// \param deltaTime Represents the time passed by the user. It is usually
+    ///                  used to know the elapsed since the last runs of
+    ///                  systems
+    /// \param entities  Container of entities that the system will act upon
+    ///
+    /// \see ::xrn::Time, ::xrn::ecs::entity::Container
+    ///
+    ///////////////////////////////////////////////////////////////////////////
     constexpr void operator()(
-        ::xrn::Time t,
-        ::xrn::ecs::entity::Container& entities,
-        ::xrn::ecs::component::Container& components
+        ::xrn::Time deltaTime,
+        ::xrn::ecs::entity::Container& entities
     ) override;
 
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Runs the system as const
+    ///
+    /// \param deltaTime Represents the time passed by the user. It is usually
+    ///                  used to know the elapsed since the last runs of
+    ///                  systems
+    /// \param entities  Container of entities that the system will act upon
+    ///
+    /// \see ::xrn::Time, ::xrn::ecs::entity::Container
+    ///
+    ///////////////////////////////////////////////////////////////////////////
     constexpr void operator()(
-        ::xrn::Time t,
-        ::xrn::ecs::component::Container& components,
-        ::xrn::ecs::entity::Container& entities
-    );
-
-    constexpr void operator()(
-        ::xrn::Time t,
-        const ::xrn::ecs::entity::Container& entities,
-        const ::xrn::ecs::component::Container& components
+        ::xrn::Time deltaTime,
+        const ::xrn::ecs::entity::Container& entities
     ) const override;
 
-    constexpr void operator()(
-        ::xrn::Time t,
-        const ::xrn::ecs::component::Container& components,
-        const ::xrn::ecs::entity::Container& entities
-    ) const;
 
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // Others
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    // ------------------------------------------------------------------ Signature
-
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets the signature of the system
+    ///
+    /// \see ::xrn::ecs::Signature
+    ///
+    ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] static consteval auto getSignature()
         -> ::xrn::ecs::Signature;
 
@@ -101,3 +140,10 @@ namespace xrn::ecs {
         typename... Types
     > using System = ::xrn::ecs::system::System<function, Types...>;
 }
+
+
+
+///////////////////////////////////////////////////////////////////////////
+// Header-implimentation
+///////////////////////////////////////////////////////////////////////////
+#include <Ecs/System/System.impl.hpp>

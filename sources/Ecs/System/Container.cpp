@@ -10,26 +10,31 @@
 
 
 
-// ------------------------------------------------------------------ Run
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Run
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////
 void ::xrn::ecs::system::Container::run(
     ::xrn::Time t,
-    ::xrn::ecs::entity::Container& entities,
-    ::xrn::ecs::component::Container& components
+    ::xrn::ecs::entity::Container& entities
 )
 {
     for (auto& system : m_systems) {
-        system->operator()(t, entities, components);
+        system->operator()(t, entities);
     }
 }
 
+///////////////////////////////////////////////////////////////////////////
 void ::xrn::ecs::system::Container::run(
     ::xrn::Time t,
-    const ::xrn::ecs::entity::Container& entities,
-    const ::xrn::ecs::component::Container& components
+    const ::xrn::ecs::entity::Container& entities
 ) const
 {
     for (auto& system : m_systems) {
-        system->operator()(t, entities, components);
+        system->operator()(t, entities);
     }
 }

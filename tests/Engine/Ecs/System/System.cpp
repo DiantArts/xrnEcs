@@ -138,42 +138,42 @@ BOOST_AUTO_TEST_CASE(mulpiteComponentMulipleEntityMulipleSystem)
 
     ::xrn::ecs::System<detail::function1> system1;
     ::xrn::Clock c;
-    system1(c.restart(), entities, components);
+    system1(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 0);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 0);
 
-    system1(c.restart(), components, entities);
+    system1(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 0);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 0);
 
     ::xrn::ecs::System<detail::function2> system2;
-    system2(c.restart(), entities, components);
+    system2(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 1);
 
     ::xrn::ecs::System<detail::function3> system3;
-    system3(c.restart(), entities, components);
+    system3(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 3);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 2);
 
     ::xrn::ecs::System<detail::function1> system4;
-    system4(c.restart(), components, entities);
-    system4(c.restart(), entities, components);
+    system4(c.restart(), entities);
+    system4(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 4);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 5);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 2);
 
     const ::xrn::ecs::System<detail::function4> system5;
-    system5(c.restart(), entities, components);
+    system5(c.restart(), entities);
 }
 
 BOOST_AUTO_TEST_CASE(lambdaMulpiteComponentMulipleEntityMulipleSystem)
@@ -189,27 +189,27 @@ BOOST_AUTO_TEST_CASE(lambdaMulpiteComponentMulipleEntityMulipleSystem)
 
     ::xrn::ecs::System<detail::lambda1> system1;
     ::xrn::Clock c;
-    system1(c.restart(), entities, components);
+    system1(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 0);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 0);
 
-    system1(c.restart(), components, entities);
+    system1(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 0);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 0);
 
     ::xrn::ecs::System<detail::lambda2> system2;
-    system2(c.restart(), entities, components);
+    system2(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 1);
 
     ::xrn::ecs::System<detail::lambda3> system3;
-    system3(c.restart(), entities, components);
+    system3(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 3);
@@ -229,13 +229,13 @@ BOOST_AUTO_TEST_CASE(inlineLambdaMulpiteComponentMulipleEntityMulipleSystem)
 
     ::xrn::ecs::System<[](::xrn::ecs::component::test::ComponentA& m) { ++m.value;}> system1;
     ::xrn::Clock c;
-    system1(c.restart(), entities, components);
+    system1(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 0);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 0);
 
-    system1(c.restart(), components, entities);
+    system1(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 0);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 2);
@@ -243,7 +243,7 @@ BOOST_AUTO_TEST_CASE(inlineLambdaMulpiteComponentMulipleEntityMulipleSystem)
 
     ::xrn::ecs::System<[](::xrn::ecs::component::test::ComponentB& t) -> int
         { ++t.value; return 0; }> system2;
-    system2(c.restart(), entities, components);
+    system2(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 2);
@@ -257,7 +257,7 @@ BOOST_AUTO_TEST_CASE(inlineLambdaMulpiteComponentMulipleEntityMulipleSystem)
             ++t.value;
         }
     > system3;
-    system3(c.restart(), entities, components);
+    system3(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 3);
@@ -277,38 +277,38 @@ BOOST_AUTO_TEST_CASE(systemTime)
 
     ::xrn::ecs::System<detail::function5> system1;
     ::xrn::Clock c;
-    system1(c.restart(), entities, components);
+    system1(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 0);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 0);
 
     ::xrn::ecs::System<detail::function6> system2;
-    system2(c.restart(), entities, components);
+    system2(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 0);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 0);
 
     ::xrn::ecs::System<detail::function7> system3;
-    system3(c.restart(), entities, components);
+    system3(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 3);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 0);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 3);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 0);
 
     ::xrn::ecs::System<detail::function8> system4;
-    system4(c.restart(), entities, components);
+    system4(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 3);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 0);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 4);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 1);
 
     ::xrn::ecs::System<detail::function9> system5;
-    system5(c.restart(), entities, components);
+    system5(c.restart(), entities);
 
     ::xrn::ecs::System<detail::function10> system6;
-    system6(c.restart(), entities, components);
+    system6(c.restart(), entities);
 }
 
 BOOST_AUTO_TEST_CASE(systemAdditionalArgs)
@@ -319,7 +319,7 @@ BOOST_AUTO_TEST_CASE(systemAdditionalArgs)
 
     // ::xrn::ecs::System<[](int a, const::xrn::ecs::component::test::ComponentA& m){}> system1{ 2 };
     // ::xrn::Clock c;
-    // system1(c.restart(), entities, components);
+    // system1(c.restart(), entities);
 }
 
 BOOST_AUTO_TEST_CASE(signature)
