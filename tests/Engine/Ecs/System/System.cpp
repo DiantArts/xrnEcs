@@ -1,5 +1,5 @@
 #include <pch.hpp>
-#include <Ecs/System.hpp>
+#include <xrn/Ecs/System.hpp>
 
 
 
@@ -57,13 +57,6 @@ namespace detail {
             ++t.value;
         }
     };
-
-    static void function4(
-        const ::xrn::ecs::entity::Entity& e,
-        const ::xrn::ecs::component::test::ComponentA& m,
-        const ::xrn::ecs::component::test::ComponentB& t
-    )
-    {}
 
     static void function5(
         ::xrn::Time deltaTime,

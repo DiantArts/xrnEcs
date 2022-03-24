@@ -1,6 +1,6 @@
 #include <pch.hpp>
-#include <Ecs/Entity.hpp>
-#include <Ecs/Component.hpp>
+#include <xrn/Ecs/Entity.hpp>
+#include <xrn/Ecs/Component.hpp>
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Weffc++"
 #include <boost/test/unit_test.hpp>
@@ -61,6 +61,40 @@ BOOST_AUTO_TEST_CASE(removeNhas)
     BOOST_TEST(!ref.hasComponent<::xrn::ecs::component::test::ComponentA>());
     BOOST_TEST(!components.contains<::xrn::ecs::component::test::ComponentA>(entity.getId()));
     BOOST_TEST(!components.contains<::xrn::ecs::component::test::ComponentA>(ref.getId()));
+
+    ref.addComponents<::xrn::ecs::component::test::ComponentA, ::xrn::ecs::component::test::ComponentB>();
+    BOOST_TEST(ref.hasComponent<::xrn::ecs::component::test::ComponentA>());
+    BOOST_TEST(ref.hasComponent<::xrn::ecs::component::test::ComponentB>());
+    ref.removeComponents();
+    BOOST_TEST(!ref.hasComponent<::xrn::ecs::component::test::ComponentA>());
+    BOOST_TEST(!ref.hasComponent<::xrn::ecs::component::test::ComponentB>());
+
+    ref.addAbilities<::xrn::ecs::component::test::AbilityA, ::xrn::ecs::component::test::AbilityB>();
+    BOOST_TEST(ref.hasAbility<::xrn::ecs::component::test::AbilityA>());
+    BOOST_TEST(ref.hasAbility<::xrn::ecs::component::test::AbilityB>());
+    ref.removeAbilities();
+    BOOST_TEST(!ref.hasAbility<::xrn::ecs::component::test::AbilityA>());
+    BOOST_TEST(!ref.hasAbility<::xrn::ecs::component::test::AbilityB>());
+
+    ref.add<
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB,
+        ::xrn::ecs::component::test::AbilityA,
+        ::xrn::ecs::component::test::AbilityB
+    >();
+    BOOST_TEST((ref.has<
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB,
+        ::xrn::ecs::component::test::AbilityA,
+        ::xrn::ecs::component::test::AbilityB
+    >()));
+    ref.removeAbilitiesAndComponents();
+    BOOST_TEST((!ref.has<
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB,
+        ::xrn::ecs::component::test::AbilityA,
+        ::xrn::ecs::component::test::AbilityB
+    >()));
 }
 
 

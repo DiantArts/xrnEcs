@@ -5,7 +5,7 @@
 ## Makefile for c++23
 ##
 
-XRN_MAKEFILE_ERRORFILE		?=	true
+XRN_MAKEFILE_ERRORFILE		?=	false
 XRN_MAKEFILE_USE_COVERAGE	?=	true
 # DEBUG_MAKEFILE	:=	true
 
@@ -114,6 +114,14 @@ MODE_EXT		:=	_benchmarks
 MODE_FLAGS		:=	-Ofast -pipe -DTEST=1
 MOD_BUILDDIR	:=	$(addsuffix /benchmarks,$(BUILDDIR))
 NAME			:=	$(TNAME)
+
+# ============================================================================= Mode library
+else ifeq (library,$(findstring library,$(MAKECMDGOALS)))
+
+MODE_EXT		:=
+MODE_FLAGS		:=	-Ofast -pipe
+MOD_BUILDDIR	:=	$(addsuffix /release,$(BUILDDIR))
+NAME			:=	lib$(NAME).a
 
 # ============================================================================= Mode release
 else
@@ -275,6 +283,8 @@ endif
 
 all: linkage | emptyErrorFile
 
+library: all
+
 emptyErrorFile :
 	mkdir -p $(BUILDDIR)
 	touch $(BUILDDIR)/$(ERROR_FILE)
@@ -298,11 +308,15 @@ linkage : $(NAME)$(MODE_EXT)
 ## ============================================================================
 
 $(NAME)$(MODE_EXT): compilation | libraries externs $(BINDIR)
+ifeq (library,$(findstring library,$(MAKECMDGOALS)))
+	ar -rc $@ $$(find $(OBJDIR) -name \*.o)
+else
 ifeq "$(XRN_MAKEFILE_ERRORFILE)" "true"
 	$(CXX) $(OUTPUT_OPTION) $(CPP_OBJ) $(CPPM_OBJ) $(LDFLAGS) $(LDLIBS) 2>&1> $(BUILDDIR)/$(TMP_ERROR_FILE) \
 		|| (cat $(BUILDDIR)/$(TMP_ERROR_FILE); (sed 's/\x1b\[[0-9;]*[a-zA-Z]//g' $(BUILDDIR)/$(TMP_ERROR_FILE)) >> $(BUILDDIR)/$(ERROR_FILE); false)
 else
 	$(CXX) $(OUTPUT_OPTION) $(CPP_OBJ) $(CPPM_OBJ) $(LDFLAGS) $(LDLIBS)
+endif
 endif
 
 $(TEST_NAME)$(MODE_EXT): compilation | libraries externs $(BINDIR)

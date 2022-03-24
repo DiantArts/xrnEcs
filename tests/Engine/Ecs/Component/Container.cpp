@@ -1,6 +1,6 @@
 #include <pch.hpp>
-#include <Ecs/Component.hpp>
-#include <Ecs/Component/Container.hpp>
+#include <xrn/Ecs/Component.hpp>
+#include <xrn/Ecs/Component/Container.hpp>
 
 
 

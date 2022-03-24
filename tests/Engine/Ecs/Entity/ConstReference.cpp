@@ -1,7 +1,7 @@
 #include <pch.hpp>
-#include <Ecs/Entity.hpp>
-#include <Ecs/Component.hpp>
-#include <Ecs/Component/Container.hpp>
+#include <xrn/Ecs/Entity.hpp>
+#include <xrn/Ecs/Component.hpp>
+#include <xrn/Ecs/Component/Container.hpp>
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Weffc++"
 #include <boost/test/unit_test.hpp>
