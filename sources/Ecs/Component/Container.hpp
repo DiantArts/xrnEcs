@@ -21,12 +21,18 @@ namespace xrn::ecs::component {
 ///
 /// \include Container.hpp <Ecs/Component/Container.hpp>
 ///
-/// Contains all ::xrn::ecs::Component of the ::xrn::ecs::entity::Container and
+/// Contains all components of the ::xrn::ecs::entity::Container and
 /// ::xrn::ecs::entity::Entity.
 ///
 /// Usage example:
 /// \code
-/// TODO code example
+/// using namespace ::xrn::ecs::component::test;
+/// ::xrn::ecs::Entity entity;
+/// ::xrn::ecs::component::Container container;
+/// container.emplace<ComponentA>(entity);
+/// auto* component{ container.get<ComponentA>(entity) }; // may return nullptr
+/// container.remove<ComponentA>(entity.getId());
+/// container.pushMany(entity, ComponentA{}, ComponentB{ 5 });
 /// \endcode
 ///
 /// \see ::xrn::ecs::entity::Entity
@@ -166,7 +172,8 @@ public:
     ///
     /// \returns Reference to the component created
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::ecs::entity::Entity
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -196,7 +203,8 @@ public:
     ///
     /// \returns Reference to the component created
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -218,7 +226,8 @@ public:
     /// \param args   Argument to perfect forward to the constructor of the
     ///               component
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::ecs::entity::Entity
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -239,7 +248,8 @@ public:
     /// \param args     Argument to perfect forward to the constructor of the
     ///                 component
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -274,7 +284,8 @@ public:
     /// \param entityId  Id referencing the Entity that contains the component
     /// \param component Component to move inside the container
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     void push(
@@ -291,7 +302,8 @@ public:
     /// \param entity     Entity that contains the component
     /// \param components Components to move inside the container
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::ecs::entity::Entity
     ///
     ///////////////////////////////////////////////////////////////////////////
     void pushMany(
@@ -308,7 +320,8 @@ public:
     /// \param entityId   Id referencing the Entity that contains the component
     /// \param components Components to move inside the container
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     void pushMany(
@@ -335,7 +348,8 @@ public:
     ///
     /// \param entity Entity that contains the component
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::ecs::entity::Entity
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -354,7 +368,8 @@ public:
     ///
     /// \param entityId Id referencing the Entity that contains the component
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -373,7 +388,8 @@ public:
     ///
     /// \param entity Entity that contains the components
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::ecs::entity::Entity
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -392,7 +408,8 @@ public:
     ///
     /// \param entityId Id referencing the Entity that contains the components
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -409,7 +426,8 @@ public:
     ///
     /// \param entity Entity that contains the components
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::ecs::entity::Entity
     ///
     ///////////////////////////////////////////////////////////////////////////
     void removeAll(
@@ -497,7 +515,8 @@ public:
     ///
     /// \param entity Entity that contains the components
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::ecs::entity::Entity
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -522,7 +541,8 @@ public:
     ///
     /// \param entityId Id referencing the Entity that contains the components
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -545,7 +565,8 @@ public:
     ///
     /// \param entity Entity that contains the components
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::ecs::entity::Entity
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -571,7 +592,8 @@ public:
     ///
     /// \param entityId Id referencing the Entity that contains the components
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -590,7 +612,8 @@ public:
     ///
     /// \param entity Entity that contains the component
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::ecs::entity::Entity
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -609,7 +632,8 @@ public:
     ///
     /// \param entityId Id referencing the Entity that contains the component
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -628,7 +652,8 @@ public:
     ///
     /// \param entity Entity that contains the components
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::ecs::entity::Entity
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -647,7 +672,8 @@ public:
     ///
     /// \param entityId Id referencing the Entity that contains the components
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <

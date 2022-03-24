@@ -15,7 +15,7 @@ namespace xrn::util {
 ///
 /// \include Clock.hpp <Util/Clock.hpp>
 ///
-/// ::xrn::util::Clock provide an high resolution clock allowing precise
+/// ::xrn::util::BasicClock provide an high resolution clock allowing precise
 /// elapsed time measures.
 ///
 /// Usage example:
@@ -27,7 +27,7 @@ namespace xrn::util {
 /// ::xrn::Time time2{ clock.restart() };
 /// \endcode
 ///
-/// \see ::xrn::Time
+/// \see ::xrn::util::BasicTime
 ///
 ///////////////////////////////////////////////////////////////////////////
 template <
@@ -65,9 +65,9 @@ public:
     ///
     /// Constructs a clock and starts it automatically. The return types will
     /// be of the type given as template parameter. By default, the internal
-    /// type is ::xrn::Time.
+    /// type is ::xrn::util::BasicTime.
     ///
-    /// \see ::xrn::Time
+    /// \see ::xrn::util::BasicTime
     ///
     ///////////////////////////////////////////////////////////////////////////
     explicit BasicClock() noexcept;

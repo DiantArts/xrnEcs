@@ -21,8 +21,8 @@ BOOST_AUTO_TEST_SUITE(Component)
 BOOST_AUTO_TEST_CASE(addNhas)
 {
     ::xrn::ecs::component::Container components;
-    ::xrn::ecs::Entity entity;
-    ::xrn::ecs::Entity::Reference ref{ components, entity };
+    ::xrn::ecs::entity::Entity entity;
+    ::xrn::ecs::entity::Reference ref{ components, entity };
     ref.addComponent<::xrn::ecs::component::test::ComponentA>();
 
     BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::ComponentA>());
@@ -34,8 +34,8 @@ BOOST_AUTO_TEST_CASE(addNhas)
 BOOST_AUTO_TEST_CASE(addNhas2)
 {
     ::xrn::ecs::component::Container components;
-    ::xrn::ecs::Entity entity;
-    ::xrn::ecs::Entity::Reference ref{ entity, components };
+    ::xrn::ecs::entity::Entity entity;
+    ::xrn::ecs::entity::Reference ref{ entity, components };
     ref.addComponents(::xrn::ecs::component::test::ComponentB{});
 
     BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::ComponentA>());
@@ -47,8 +47,8 @@ BOOST_AUTO_TEST_CASE(addNhas2)
 BOOST_AUTO_TEST_CASE(removeNhas)
 {
     ::xrn::ecs::component::Container components;
-    ::xrn::ecs::Entity entity;
-    ::xrn::ecs::Entity::Reference ref{ components, entity };
+    ::xrn::ecs::entity::Entity entity;
+    ::xrn::ecs::entity::Reference ref{ components, entity };
 
     ref.addComponent<::xrn::ecs::component::test::ComponentA>();
     BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::ComponentA>());
@@ -74,8 +74,8 @@ BOOST_AUTO_TEST_SUITE(Signature)
 BOOST_AUTO_TEST_CASE(single)
 {
     ::xrn::ecs::component::Container components;
-    ::xrn::ecs::Entity entity;
-    ::xrn::ecs::Entity::Reference ref{ components, entity };
+    ::xrn::ecs::entity::Entity entity;
+    ::xrn::ecs::entity::Reference ref{ components, entity };
 
     ref.addComponent<::xrn::ecs::component::test::ComponentA>();
     auto signature{ ::xrn::ecs::Signature::generate<::xrn::ecs::component::test::ComponentA>() };
@@ -97,8 +97,8 @@ BOOST_AUTO_TEST_SUITE(Id)
 BOOST_AUTO_TEST_CASE(incrementation)
 {
     ::xrn::ecs::component::Container components;
-    ::xrn::ecs::Entity entity;
-    ::xrn::ecs::Entity::Reference ref{components, entity};
+    ::xrn::ecs::entity::Entity entity;
+    ::xrn::ecs::entity::Reference ref{components, entity};
 
     BOOST_TEST(entity.getId() == ref.getId());
 }
@@ -110,20 +110,38 @@ BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_CASE(others)
 {
     ::xrn::ecs::component::Container components;
-    ::xrn::ecs::Entity entity;
-    ::xrn::ecs::Entity::Reference ref{ components, entity };
-    const ::xrn::ecs::Entity::Reference constNonConstRef{ components, entity };
-    const ::xrn::ecs::Entity::Reference constMutableRef{ components, entity };
-    ::xrn::ecs::Entity::ConstReference constRef{ ref };
-    const ::xrn::ecs::Entity& entityRef = ref; // operator=() avoids copy for some reasons lmao
+    ::xrn::ecs::entity::Entity entity;
+    ::xrn::ecs::entity::Reference ref{ components, entity };
+    const ::xrn::ecs::entity::Reference constNonConstRef{ components, entity };
+    const ::xrn::ecs::entity::Reference constMutableRef{ components, entity };
+    ::xrn::ecs::entity::ConstReference constRef{ ref };
+    const ::xrn::ecs::entity::Entity& entityRef = ref; // operator=() avoids copy for some reasons lmao
 
-    BOOST_TEST(&entity == &static_cast<const ::xrn::ecs::Entity&>(ref));
+    BOOST_TEST(&entity == &static_cast<const ::xrn::ecs::entity::Entity&>(ref));
     BOOST_TEST(entity.getId() == constMutableRef.getId());
     BOOST_TEST(&constRef.get() == &ref.get());
     BOOST_TEST(&constRef.get() == &entity);
     BOOST_TEST(&constRef.get() == &entityRef);
     BOOST_TEST(&constNonConstRef.get() == &entityRef);
 }
+
+BOOST_AUTO_TEST_CASE(example)
+{
+    using namespace ::xrn::ecs::component::test;
+
+    ::xrn::ecs::component::Container components;
+    ::xrn::ecs::entity::Entity entity;
+    ::xrn::ecs::entity::Reference ref{ components, entity };
+
+    BOOST_TEST(!entity.hasComponent<ComponentA>());
+    BOOST_TEST(!ref.hasComponent<ComponentA>());
+    BOOST_TEST(!entity.hasComponent<ComponentB>());
+    BOOST_TEST(!ref.hasComponent<ComponentB>());
+    ref.addComponents<ComponentA, ComponentB>();
+    BOOST_TEST((entity.hasComponents<ComponentA, ComponentB>()));
+    BOOST_TEST((ref.hasComponents<ComponentA, ComponentB>()));
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

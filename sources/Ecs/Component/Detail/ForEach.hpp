@@ -23,6 +23,7 @@ namespace xrn::ecs { class Signature; }
 namespace xrn::ecs::component::detail {
 
 ///////////////////////////////////////////////////////////////////////////
+/// \internal
 /// \brief Iterates over each components
 /// \ingroup ecs-component
 ///
@@ -112,6 +113,7 @@ public:
 namespace xrn::ecs::ability::detail {
 
 ///////////////////////////////////////////////////////////////////////////
+/// \internal
 /// \brief Iterates over each ability
 /// \ingroup ecs-component
 ///
@@ -201,6 +203,16 @@ public:
 
 namespace xrn::ecs::detail {
 
+///////////////////////////////////////////////////////////////////////////
+/// \internal
+/// \brief Iterates over each ability
+/// \ingroup ecs-component
+///
+/// \include ForEach.hpp <Ecs/Component/Detail/ForEach.hpp>
+///
+/// Iterates over each ability types
+///
+///////////////////////////////////////////////////////////////////////////
 class ForEach {
 
 public:

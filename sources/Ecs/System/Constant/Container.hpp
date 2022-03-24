@@ -4,13 +4,14 @@
 // Headers
 ///////////////////////////////////////////////////////////////////////////
 #include <Util/Clock.hpp>
-#include <Ecs/System/System.hpp>
 #include <Ecs/Component.hpp>
 #include <Ecs/Entity.hpp>
+#include <Ecs/System/Constant/System.hpp>
+#include <Ecs/System/Detail/Meta/Function.hpp>
 
 
 
-namespace xrn::ecs::system {
+namespace xrn::ecs::system::constant {
 
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Representation a system in the xrn ecs Project
@@ -66,24 +67,28 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Runs the systems
+    /// \brief Runs the systems as const
     ///
     /// Runs all the system contained by the container. The system matching
     /// will match the component signature and automatically send the arguments
     /// requiered to the system.
+    /// The systems will be run as const.
+    ///
+    /// \warning If the systems are run as const but their components are not,
+    ///          it will print so to ::std::cerr and not run anything.
     ///
     /// \param deltaTime Represents the time passed by the user. It is usually
     ///                  used to know the elapsed since the last runs of
     ///                  systems
     /// \param entities  Container of entities that the system will act upon
     ///
-    /// \see ::xrn::util::BasicTime, ::xrn::ecs::entity::Container
+    /// \see ::xrn::util::BasicForwardTime, ::xrn::ecs::entity::Container
     ///
     ///////////////////////////////////////////////////////////////////////////
     void run(
         ::xrn::Time t,
-        ::xrn::ecs::entity::Container& entities
-    );
+        const ::xrn::ecs::entity::Container& entities
+    ) const;
 
 
 
@@ -102,6 +107,8 @@ public:
     /// \tparam function Function to pass to the system
     /// \tparam Types    Types to pass to the system
     ///
+    /// \see ::xrn::ecs::system::System
+    ///
     ///////////////////////////////////////////////////////////////////////////
     template <
         auto function,
@@ -112,7 +119,7 @@ public:
 
 private:
 
-    ::std::vector<::std::unique_ptr<::xrn::ecs::system::ASystem>> m_systems{};
+    ::std::vector<::std::unique_ptr<::xrn::ecs::system::constant::ASystem>> m_systems{};
 
 };
 
@@ -121,6 +128,13 @@ private:
 
 
 ///////////////////////////////////////////////////////////////////////////
+// Alias name
+///////////////////////////////////////////////////////////////////////////
+namespace xrn::ecs::system { using ConstContainer = ::xrn::ecs::system::constant::Container; }
+
+
+
+///////////////////////////////////////////////////////////////////////////
 // Header-implimentation
 ///////////////////////////////////////////////////////////////////////////
-#include <Ecs/System/Container.impl.hpp>
+#include <Ecs/System/Constant/Container.impl.hpp>

@@ -11,13 +11,13 @@
 template <
     ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > auto ::xrn::ecs::entity::Container::emplace()
-    -> ::xrn::ecs::Entity::Reference
+    -> ::xrn::ecs::entity::Reference
 {
     auto& entity{ m_entities.emplace_back() };
     if constexpr (sizeof...(ComponentTypes) > 0) {
         entity.addComponents<ComponentTypes...>(m_components);
     }
-    return ::xrn::ecs::Entity::Reference{ m_components, entity };
+    return ::xrn::ecs::entity::Reference{ m_components, entity };
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -25,7 +25,7 @@ template <
     ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > auto ::xrn::ecs::entity::Container::emplace(
     ComponentTypes&&... components
-) -> ::xrn::ecs::Entity::Reference
+) -> ::xrn::ecs::entity::Reference
 {
     auto& entity{ m_entities.emplace_back() };
     if constexpr (sizeof...(ComponentTypes) > 0) {
@@ -34,5 +34,5 @@ template <
             ::std::forward<ComponentTypes>(components)...
         );
     }
-    return ::xrn::ecs::Entity::Reference{ m_components, entity };
+    return ::xrn::ecs::entity::Reference{ m_components, entity };
 }

@@ -16,6 +16,10 @@ namespace xrn::util {
 ///
 /// Usage example:
 /// \code
+/// ::xrn::Id id1{ 1 };
+/// constexpr ::xrn::Id id2{ 1 };
+/// ::std::cout << id1 << ' ' << id2 << ::std::endl;
+/// return ++id1 == id2;
 /// \endcode
 ///
 ///////////////////////////////////////////////////////////////////////////

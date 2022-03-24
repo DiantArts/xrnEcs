@@ -12,24 +12,22 @@
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    typename... Types
+    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
 > constexpr auto ::xrn::ecs::entity::Entity::generate(
     ::xrn::ecs::component::Container& components
 )
     -> ::xrn::ecs::entity::Entity
 {
     ::xrn::ecs::entity::Entity entity;
-    ::xrn::meta::ForEach<Types...>::template run<[]<typename Type>(auto& components, auto& entity){
-        static_assert(
-            ::xrn::ecs::isComponent<Type> || ::xrn::ecs::isAbility<Type>,
-            "Invalid type: Entity::generate takes only Component and Ability types."
-        );
-        if constexpr (::xrn::ecs::isComponent<Type>) {
-            entity.template addComponents<Type>(components);
-        } else {
-            entity.template addAbility<Type>();
+    ::xrn::meta::ForEach<Types...>::template run<
+        []<::xrn::ecs::detail::constraint::isEcsRegistered Type>(auto& components, auto& entity){
+            if constexpr (::xrn::ecs::isComponent<Type>) {
+                entity.template addComponents<Type>(components);
+            } else {
+                entity.template addAbility<Type>();
+            }
         }
-    }>(components, entity);
+    >(components, entity);
     return entity;
 }
 
@@ -44,22 +42,21 @@ template <
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    typename... Types
+    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
 > void ::xrn::ecs::entity::Entity::add(
     ::xrn::ecs::component::Container& components
 )
 {
-    ::xrn::meta::ForEach<Types...>::template run<[]<typename Type>(auto& entity, auto& components){
-        static_assert(
-            ::xrn::ecs::isComponent<Type> || ::xrn::ecs::isAbility<Type>,
-            "Invalid type: Entity::add takes only Component and Ability types."
-        );
-        if constexpr (::xrn::ecs::isComponent<Type>) {
-            entity.template addComponents<Type>(components);
-        } else {
-            entity.template addAbility<Type>();
+    static_assert(sizeof...(Types), "Add called with 0 arguments");
+    ::xrn::meta::ForEach<Types...>::template run<
+        []<::xrn::ecs::detail::constraint::isEcsRegistered Type>(auto& entity, auto& components){
+            if constexpr (::xrn::ecs::isComponent<Type>) {
+                entity.template addComponents<Type>(components);
+            } else {
+                entity.template addAbility<Type>();
+            }
         }
-    }>(*this, components);
+    >(*this, components);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -81,6 +78,7 @@ template <
     ::xrn::ecs::component::Container& components
 )
 {
+    static_assert(sizeof...(ComponentTypes), "Add components called with 0 arguments");
     components.emplaceMany<ComponentTypes...>(m_id);
     m_signature.set<ComponentTypes...>();
 }
@@ -93,6 +91,7 @@ template <
     ComponentTypes&&... components
 )
 {
+    static_assert(sizeof...(ComponentTypes), "Add components called with 0 arguments");
     componentsContainer.pushMany<ComponentTypes...>(m_id, ::std::forward<ComponentTypes>(components)...);
     m_signature.set<ComponentTypes...>();
 }
@@ -110,6 +109,7 @@ template <
     ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
 > void ::xrn::ecs::entity::Entity::addAbilities()
 {
+    static_assert(sizeof...(AbilityTypes), "Add ability called with 0 arguments");
     m_signature.set<AbilityTypes...>();
 }
 
@@ -125,10 +125,11 @@ template <
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    typename... Types
+    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
 > auto ::xrn::ecs::entity::Entity::has() const
     -> bool
 {
+    static_assert(sizeof...(Types), "Has called with 0 arguments");
     return m_signature.contains<Types...>();
 }
 
@@ -147,6 +148,7 @@ template <
 > auto ::xrn::ecs::entity::Entity::hasComponents() const
     -> bool
 {
+    static_assert(sizeof...(ComponentTypes), "Has components called with 0 arguments");
     return m_signature.contains<ComponentTypes...>();
 }
 
@@ -165,6 +167,7 @@ template <
 > auto ::xrn::ecs::entity::Entity::hasAbilities() const
     -> bool
 {
+    static_assert(sizeof...(AbilityTypes), "Has abilities called with 0 arguments");
     return m_signature.contains<AbilityTypes...>();
 }
 
@@ -179,22 +182,21 @@ template <
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    typename... Types
+    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
 > void ::xrn::ecs::entity::Entity::remove(
     ::xrn::ecs::component::Container& components
 )
 {
-    ::xrn::meta::ForEach<Types...>::template run<[]<typename Type>(auto& entity, auto& components){
-        static_assert(
-            ::xrn::ecs::isComponent<Type> || ::xrn::ecs::isAbility<Type>,
-            "Invalid type: Entity::remove takes only Component and Ability types."
-        );
-        if constexpr (::xrn::ecs::isComponent<Type>) {
-            entity.template removeComponent<Type>(components);
-        } else {
-            entity.template removeAbility<Type>();
+    static_assert(sizeof...(Types), "Remove called with 0 arguments");
+    ::xrn::meta::ForEach<Types...>::template run<
+        []<::xrn::ecs::detail::constraint::isEcsRegistered Type>(auto& entity, auto& components){
+            if constexpr (::xrn::ecs::isComponent<Type>) {
+                entity.template removeComponent<Type>(components);
+            } else {
+                entity.template removeAbility<Type>();
+            }
         }
-    }>(*this, components);
+    >(*this, components);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -215,6 +217,7 @@ template <
     ::xrn::ecs::component::Container& components
 )
 {
+    static_assert(sizeof...(ComponentTypes), "Remove components called with 0 arguments");
     components.removeMany<ComponentTypes...>(m_id);
     m_signature.reset<ComponentTypes...>();
 }
@@ -232,5 +235,6 @@ template <
     ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
 > void ::xrn::ecs::entity::Entity::removeAbilities()
 {
+    static_assert(sizeof...(AbilityTypes), "Remove abilities called with 0 arguments");
     m_signature.reset<AbilityTypes...>();
 }

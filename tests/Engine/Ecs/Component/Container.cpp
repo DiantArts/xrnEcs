@@ -19,15 +19,16 @@ BOOST_AUTO_TEST_SUITE(Container)
 
 BOOST_AUTO_TEST_CASE(compareEmplaceRetValAndGetRetVal)
 {
+    ::xrn::ecs::Entity entity1, entity2;
     ::xrn::ecs::component::Container container;
-    const auto& movableComponent{ container.emplace<::xrn::ecs::component::test::ComponentA>(1) };
-    BOOST_TEST((movableComponent == *container.get<::xrn::ecs::component::test::ComponentA>(1)));
+    const auto& movableComponent{ container.emplace<::xrn::ecs::component::test::ComponentA>(entity1) };
+    BOOST_TEST((movableComponent == *container.get<::xrn::ecs::component::test::ComponentA>(entity1)));
     BOOST_TEST((movableComponent.value == 0));
 
-    container.emplace<::xrn::ecs::component::test::ComponentB>(2, 3);
+    container.emplace<::xrn::ecs::component::test::ComponentB>(entity2, 3);
     BOOST_TEST((
-        container.get<::xrn::ecs::component::test::ComponentA>(1)->value + 3 ==
-        container.get<::xrn::ecs::component::test::ComponentB>(2)->value
+        container.get<::xrn::ecs::component::test::ComponentA>(entity1)->value + 3 ==
+        container.get<::xrn::ecs::component::test::ComponentB>(entity2)->value
     ));
 }
 
@@ -63,7 +64,7 @@ BOOST_AUTO_TEST_CASE(multipleComponentValue)
 BOOST_AUTO_TEST_CASE(push)
 {
     ::xrn::ecs::component::Container container;
-    container.push<::xrn::ecs::component::test::ComponentA>(
+    container.push(
         1,
         ::xrn::ecs::component::test::ComponentA{}
     );
@@ -121,6 +122,17 @@ BOOST_AUTO_TEST_CASE(recycle)
     // ::std::cout << &container2.emplace<::xrn::ecs::component::test::ComponentA>(3) << " == " << ptr << ::std::endl;
     // BOOST_TEST((&container2.emplace<::xrn::ecs::component::test::ComponentA>(3) == ptr));
     // container.remove<::xrn::ecs::component::test::ComponentA>(3);
+}
+
+BOOST_AUTO_TEST_CASE(example)
+{
+    using namespace ::xrn::ecs::component::test;
+    ::xrn::ecs::Entity entity;
+    ::xrn::ecs::component::Container container;
+    container.emplace<ComponentA>(entity);
+    auto* component{ container.get<ComponentA>(entity) }; // may return nullptr
+    container.remove<ComponentA>(entity.getId());
+    container.pushMany(entity, ComponentA{}, ComponentB{ 5 });
 }
 
 

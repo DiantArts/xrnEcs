@@ -9,7 +9,7 @@
 
 
 
-namespace xrn::ecs::system {
+namespace xrn::ecs::system::constant {
 
 ///////////////////////////////////////////////////////////////////////////
 /// \internal
@@ -18,11 +18,12 @@ namespace xrn::ecs::system {
 ///
 /// \include ASystem.hpp <Ecs/System/ASystem.hpp>
 ///
-/// ::xrn::ecs::system::ASystem represents how a system is stocked inside a
-/// ::xrn::ecs::system::Container.
-/// This class is aliased with ::xrn::ecs::system::ASystem.
+/// ::xrn::ecs::system::constant::ASystem represents how a system is
+/// stocked inside a ::xrn::ecs::system::constant::Container.
+/// This class is aliased with ::xrn::ecs::system::constant::ASystem.
 ///
-/// \see ::xrn::ecs::system::System, ::xrn::ecs::system::Container
+/// \see ::xrn::ecs::system::constant::System,
+///      ::xrn::ecs::system::constant::Container
 ///
 ///////////////////////////////////////////////////////////////////////////
 class ASystem {
@@ -62,7 +63,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     ASystem(
-        const ::xrn::ecs::system::ASystem& other
+        const ::xrn::ecs::system::constant::ASystem& other
     ) noexcept = delete;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -70,16 +71,16 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     auto operator=(
-        const ::xrn::ecs::system::ASystem& other
+        const ::xrn::ecs::system::constant::ASystem& other
     ) noexcept
-        -> ::xrn::ecs::system::ASystem& = delete;
+        -> ::xrn::ecs::system::constant::ASystem& = delete;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Move constructor
     ///
     ///////////////////////////////////////////////////////////////////////////
     ASystem(
-        ::xrn::ecs::system::ASystem&& that
+        ::xrn::ecs::system::constant::ASystem&& that
     ) noexcept = delete;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -87,9 +88,9 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     auto operator=(
-        ::xrn::ecs::system::ASystem&& that
+        ::xrn::ecs::system::constant::ASystem&& that
     ) noexcept
-        -> ::xrn::ecs::system::ASystem& = delete;
+        -> ::xrn::ecs::system::constant::ASystem& = delete;
 
 
 
@@ -113,16 +114,16 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     virtual void operator()(
         ::xrn::Time t,
-        ::xrn::ecs::entity::Container& entities
-    ) = 0;
+        const ::xrn::ecs::entity::Container& entities
+    ) const = 0;
 
 };
 
-} // namespace xrn::ecs::system
+} // namespace xrn::ecs::system::constant
 
 
 
 ///////////////////////////////////////////////////////////////////////////
 // Alias name
 ///////////////////////////////////////////////////////////////////////////
-namespace xrn::ecs { using ASystem = ::xrn::ecs::system::ASystem; }
+namespace xrn::ecs { using AConstSystem = ::xrn::ecs::system::constant::ASystem; }

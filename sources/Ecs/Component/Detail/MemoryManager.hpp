@@ -10,6 +10,7 @@
 namespace xrn::ecs::component::detail {
 
 ///////////////////////////////////////////////////////////////////////////
+/// \internal
 /// \brief Manages the memory of the ::xrn::ecs::component::Container
 /// \ingroup ecs-component
 ///
@@ -22,7 +23,13 @@ namespace xrn::ecs::component::detail {
 ///
 /// Usage example:
 /// \code
-/// TODO code example
+/// using ComponentType = ::xrn::ecs::component::test::ComponentA
+/// ::xrn::ecs::Entity entity;
+/// ::std::vector<::std::byte> data{ 1024 };
+/// ::xrn::ecs::component::detail::MemoryManager memoryManager{ data }
+/// auto component{ *new(memoryManager.alloc<ComponentType>(entity.getId())) ComponentType{} };
+/// memoryManager.getAddr<COmponentType>(enity.getId());
+/// memoryManager.free<COmponentType>(enity.getId());
 /// \endcode
 ///
 /// \see ::xrn::ecs::component::Container
@@ -151,7 +158,8 @@ public:
     ///
     /// \param entityId Id of the entity that will be linked to the component
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::ecs::entity::Entity, ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -174,7 +182,8 @@ public:
     /// \param entityId Id of the entity that will be unlinked from the
     ///        component
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::ecs::entity::Entity, ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -194,7 +203,8 @@ public:
     ///
     /// \tparam ComponentType Type of the components to deallocate
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::ecs::entity::Entity, ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -212,7 +222,8 @@ public:
     ///
     /// \tparam ComponentType Type of the components to deallocate
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::ecs::entity::Entity, ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     void clearAll();
@@ -229,7 +240,8 @@ public:
     ///
     /// \param entityId Id of the entity to check
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::ecs::entity::Entity, ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -252,7 +264,8 @@ public:
     ///
     /// \param entityId Id of the entity to check
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::ecs::entity::Entity, ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -274,7 +287,8 @@ public:
     ///
     /// \param entityId Id of the entity to check
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::ecs::entity::Entity, ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
@@ -296,6 +310,7 @@ private:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
+    /// \internal
     /// \brief Tracks the requiered informations of a component
     ///
     /// This struct is used when a component is not linked to an entity. It
@@ -310,11 +325,13 @@ private:
     };
 
     ///////////////////////////////////////////////////////////////////////////
+    /// \internal
     /// \brief Tracks the requiered informations of a component
     ///
     /// This struct is used when a component is linked to an entity.
     ///
-    /// \see ::xrn::ecs::component::declaration::detail::AComponent, ::xrn::ecs::entity::Entity, ::xrn::Id
+    /// \see ::xrn::ecs::component::declaration::detail::AComponent,
+    ///      ::xrn::ecs::entity::Entity, ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     struct OwnedComponentInfo : ComponentInfo {

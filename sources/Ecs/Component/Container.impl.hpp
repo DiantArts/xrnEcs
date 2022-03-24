@@ -46,6 +46,7 @@ template <
     ::xrn::ecs::entity::Entity& entity
 ) noexcept
 {
+    static_assert(sizeof...(ComponentTypes), "Emplace many called with 0 arguments");
     (this->emplace<ComponentTypes>(entity.getId()), ...);
 }
 
@@ -56,6 +57,7 @@ template <
     const Container::EntityId entityId
 ) noexcept
 {
+    static_assert(sizeof...(ComponentTypes), "Emplace many called with 0 arguments");
     (this->emplace<ComponentTypes>(entityId), ...);
 }
 
@@ -79,20 +81,26 @@ void ::xrn::ecs::component::Container::push(
 }
 
 ///////////////////////////////////////////////////////////////////////////
-void ::xrn::ecs::component::Container::pushMany(
+template <
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
+> void ::xrn::ecs::component::Container::pushMany(
     ::xrn::ecs::entity::Entity& entity,
-    ::xrn::ecs::detail::constraint::isComponent auto&&... components
+    ComponentTypes&&... components
 ) noexcept
 {
+    static_assert(sizeof...(ComponentTypes), "Push many called with 0 arguments");
     (this->push(entity.getId(), components), ...);
 }
 
 ///////////////////////////////////////////////////////////////////////////
-void ::xrn::ecs::component::Container::pushMany(
+template <
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
+> void ::xrn::ecs::component::Container::pushMany(
     const Container::EntityId entityId,
-    ::xrn::ecs::detail::constraint::isComponent auto&&... components
+    ComponentTypes&&... components
 ) noexcept
 {
+    static_assert(sizeof...(ComponentTypes), "Push many called with 0 arguments");
     (this->push(entityId, components), ...);
 }
 
@@ -133,6 +141,7 @@ template <
     ::xrn::ecs::entity::Entity& entity
 )
 {
+    static_assert(sizeof...(ComponentTypes), "Remove many called with 0 arguments");
     (this->remove<ComponentTypes>(entity.getId()), ...);
 }
 
@@ -143,6 +152,7 @@ template <
     const Container::EntityId entityId
 )
 {
+    static_assert(sizeof...(ComponentTypes), "Remove many called with 0 arguments");
     (this->remove<ComponentTypes>(entityId), ...);
 }
 
@@ -169,6 +179,7 @@ template <
     ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > void ::xrn::ecs::component::Container::clearMany()
 {
+    static_assert(sizeof...(ComponentTypes), "Clear many called with 0 arguments");
     this->clear<ComponentTypes...>();
 }
 
@@ -256,6 +267,7 @@ template <
 ) const
     -> bool
 {
+    static_assert(sizeof...(ComponentTypes), "Contains many called with 0 arguments");
     return (this->contains<ComponentTypes>(entity.getId()) && ...);
 }
 
@@ -267,5 +279,6 @@ template <
 ) const
     -> bool
 {
+    static_assert(sizeof...(ComponentTypes), "Contains many called with 0 arguments");
     return (this->contains<ComponentTypes>(entityId) && ...);
 }

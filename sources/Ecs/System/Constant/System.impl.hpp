@@ -11,7 +11,7 @@
 template <
     auto func,
     typename... Types
-> constexpr ::xrn::ecs::system::System<func, Types...>::System() = default;
+> constexpr ::xrn::ecs::system::constant::System<func, Types...>::System() = default;
 
 
 
@@ -26,19 +26,19 @@ template <
 template <
     auto func,
     typename... Types
-> constexpr void ::xrn::ecs::system::System<func, Types...>::operator()(
+> constexpr void ::xrn::ecs::system::constant::System<func, Types...>::operator()(
     ::xrn::Time deltaTime,
-    ::xrn::ecs::entity::Container& entities
-)
+    const ::xrn::ecs::entity::Container& entities
+) const
 {
-    auto isMatching{ [](const ::xrn::ecs::Entity& entity) {
-        return entity.getSignature().contains(::xrn::ecs::System<func, Types...>::getSignature());
+    auto isMatching{ [](const ::xrn::ecs::entity::Entity& entity) {
+        return entity.getSignature().contains(::xrn::ecs::ConstSystem<func, Types...>::getSignature());
     } };
 
     for (auto& entity : entities | ::std::views::filter(isMatching)) {
         // get every args into a tupple
-        using TupleArgumentTypes = ::xrn::ecs::detail::meta::Function<decltype(func)>::Arguments::Type;
-        auto args{ ::xrn::ecs::system::detail::SystemFiller<TupleArgumentTypes>::fill(
+        using TupleType = ::xrn::ecs::detail::meta::Function<decltype(func)>::Arguments::Type;
+        auto args{ ::xrn::ecs::system::detail::SystemFiller<TupleType>::fill(
             deltaTime, entities.getComponentContainer(), entity
         ) };
 
@@ -60,7 +60,7 @@ template <
 template <
     auto func,
     typename... Types
-> consteval auto ::xrn::ecs::system::System<func, Types...>::getSignature()
+> consteval auto ::xrn::ecs::system::constant::System<func, Types...>::getSignature()
     -> ::xrn::ecs::Signature
 {
     return ::xrn::ecs::detail::meta::Function<decltype(func)>::Arguments::signature;
