@@ -6,14 +6,14 @@
 namespace detail {
 
     static void function1(
-        ::xrn::ecs::Entity& e,
+        ::xrn::ecs::entity::Entity& e,
         ::xrn::ecs::component::test::ComponentA& m
     ) {
         ++m.value;
     }
     static auto lambda1{
         [](
-            ::xrn::ecs::Entity& e,
+            ::xrn::ecs::entity::Entity& e,
             ::xrn::ecs::component::test::ComponentA& m
         ) {
             ++m.value;
@@ -21,7 +21,7 @@ namespace detail {
     };
 
     static int function2(
-        ::xrn::ecs::Entity& e,
+        ::xrn::ecs::entity::Entity& e,
         ::xrn::ecs::component::test::ComponentB& t
     )
     {
@@ -30,7 +30,7 @@ namespace detail {
     }
     static auto lambda2{
         [](
-            ::xrn::ecs::Entity& e,
+            ::xrn::ecs::entity::Entity& e,
             ::xrn::ecs::component::test::ComponentB& t
         )
             -> int
@@ -59,7 +59,7 @@ namespace detail {
     };
 
     static void function4(
-        const ::xrn::ecs::Entity& e,
+        const ::xrn::ecs::entity::Entity& e,
         const ::xrn::ecs::component::test::ComponentA& m,
         const ::xrn::ecs::component::test::ComponentB& t
     )
@@ -74,14 +74,14 @@ namespace detail {
 
     static void function6(
         ::xrn::Time deltaTime,
-        ::xrn::ecs::Entity& e,
+        ::xrn::ecs::entity::Entity& e,
         ::xrn::ecs::component::test::ComponentA& m
     ) {
         ++m.value;
     }
 
     static void function7(
-        ::xrn::ecs::Entity& e,
+        ::xrn::ecs::entity::Entity& e,
         ::xrn::Time deltaTime,
         ::xrn::ecs::component::test::ComponentA& m
     ) {
@@ -90,7 +90,7 @@ namespace detail {
 
     static void function8(
         ::xrn::Time deltaTime,
-        const ::xrn::ecs::Entity& e,
+        const ::xrn::ecs::entity::Entity& e,
         ::xrn::ecs::component::test::ComponentA& m,
         ::xrn::ecs::component::test::ComponentB& t
     ) {
@@ -99,13 +99,13 @@ namespace detail {
     }
 
     static void function9(
-        const ::xrn::ecs::Entity& e,
+        const ::xrn::ecs::entity::Entity& e,
         const ::xrn::Time deltaTime,
         const ::xrn::ecs::component::test::ComponentA& m
     ) {}
 
     static void function10(
-        const ::xrn::ecs::Entity& e,
+        const ::xrn::ecs::entity::Entity& e,
         const ::xrn::Time deltaTime,
         const::xrn::ecs::component::test::ComponentA& m
     ) {}
@@ -171,9 +171,6 @@ BOOST_AUTO_TEST_CASE(mulpiteComponentMulipleEntityMulipleSystem)
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 5);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 2);
-
-    const ::xrn::ecs::System<detail::function4> system5;
-    system5(c.restart(), entities);
 }
 
 BOOST_AUTO_TEST_CASE(lambdaMulpiteComponentMulipleEntityMulipleSystem)

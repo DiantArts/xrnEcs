@@ -17,7 +17,7 @@ namespace xrn::ecs {
 /// \include Signature.hpp <Ecs/Signature.hpp>
 ///
 /// ::xrn::Signature's purpuse is to tracks the components contained by a
-/// class (mainly an ::xrn::ecs::Entity). It contains a bit for every
+/// class (mainly an ::xrn::ecs::entity::Entity). It contains a bit for every
 /// component declared in the Ecs/Component/Declaration.hpp. This bit is always
 /// either true or false.
 /// ::xrn::Signature can be generated and used at compile time through
@@ -37,7 +37,7 @@ namespace xrn::ecs {
 /// runtimeSignature.containsAll(constexprSignature); // false
 /// \endcode
 ///
-/// \see ::xrn::ecs::Entity
+/// \see ::xrn::ecs::entity::Entity
 ///
 ///////////////////////////////////////////////////////////////////////////
 class Signature {
@@ -146,7 +146,7 @@ public:
     ///
     /// Same as set()
     ///
-    /// \see set(), ::xrn::Id
+    /// \see set(), ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     constexpr void add(
@@ -196,7 +196,7 @@ public:
     ///
     /// Same as add()
     ///
-    /// \see add(), ::xrn::Id
+    /// \see add(), ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     constexpr void set(
@@ -261,7 +261,7 @@ public:
     ///
     /// Same as reset()
     ///
-    /// \see reset(), ::xrn::Id
+    /// \see reset(), ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     constexpr void remove(
@@ -323,7 +323,7 @@ public:
     ///
     /// Same as remove()
     ///
-    /// \see remove(), ::xrn::Id
+    /// \see remove(), ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     constexpr void reset(
@@ -406,7 +406,7 @@ public:
     ///
     /// \return True if the component is present, false otherwise
     ///
-    /// \see ::xrn::Id
+    /// \see ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto get(
@@ -442,7 +442,7 @@ public:
     ///
     /// \return True if the component is present, false otherwise
     ///
-    /// \see get(), ::xrn::Id
+    /// \see get(), ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto operator[](
@@ -555,7 +555,7 @@ public:
     ///
     /// \return True if all the components are present, false otherwise
     ///
-    /// \see containsAll(), ::xrn::util::Id
+    /// \see containsAll(), ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto contains(
@@ -658,7 +658,7 @@ public:
     ///
     /// \return True if all the components are present, false otherwise
     ///
-    /// \see contains(), ::xrn::util::Id
+    /// \see contains(), ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto containsAll(
@@ -752,7 +752,7 @@ public:
     ///
     /// \return True if at least one components is present, false otherwise
     ///
-    /// \see ::xrn::util::Id
+    /// \see ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto containsAny(

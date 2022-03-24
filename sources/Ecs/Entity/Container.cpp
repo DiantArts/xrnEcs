@@ -68,7 +68,7 @@ void ::xrn::ecs::entity::Container::remove(
 
 ///////////////////////////////////////////////////////////////////////////
 void ::xrn::ecs::entity::Container::remove(
-    const ::xrn::ecs::Entity::Reference& entityReference
+    const ::xrn::ecs::entity::Reference& entityReference
 )
 {
     this->remove(entityReference.getId());
@@ -76,7 +76,7 @@ void ::xrn::ecs::entity::Container::remove(
 
 ///////////////////////////////////////////////////////////////////////////
 void ::xrn::ecs::entity::Container::remove(
-    const ::xrn::ecs::Entity::ConstReference& entityReference
+    const ::xrn::ecs::entity::ConstReference& entityReference
 )
 {
     this->remove(entityReference.getId());
@@ -104,71 +104,71 @@ void ::xrn::ecs::entity::Container::clear()
 auto ::xrn::ecs::entity::Container::operator[](
     ::xrn::Id entityId
 ) const
-    -> ::xrn::ecs::Entity::ConstReference
+    -> ::xrn::ecs::entity::ConstReference
 {
     auto it{ ::std::ranges::find_if(
         m_entities,
         [entityId](const auto& entity){ return entity.getId() == entityId; }
     ) };
     if (it == m_entities.end()) {
-        return ::xrn::ecs::Entity::ConstReference{};
+        return ::xrn::ecs::entity::ConstReference{};
     }
-    return ::xrn::ecs::Entity::ConstReference{ *it };
+    return ::xrn::ecs::entity::ConstReference{ *it };
 }
 
 ///////////////////////////////////////////////////////////////////////////
 auto ::xrn::ecs::entity::Container::operator[](
     ::xrn::Id entityId
-) -> ::xrn::ecs::Entity::Reference
+) -> ::xrn::ecs::entity::Reference
 {
     auto it{ ::std::ranges::find_if(
         m_entities,
         [entityId](const auto& entity){ return entity.getId() == entityId; }
     ) };
     if (it == m_entities.end()) {
-        return ::xrn::ecs::Entity::Reference{};
+        return ::xrn::ecs::entity::Reference{};
     }
-    return ::xrn::ecs::Entity::Reference{ m_components, *it };
+    return ::xrn::ecs::entity::Reference{ m_components, *it };
 }
 
 ///////////////////////////////////////////////////////////////////////////
 auto ::xrn::ecs::entity::Container::get(
     ::xrn::Id entityId
 ) const
-    -> ::xrn::ecs::Entity::ConstReference
+    -> ::xrn::ecs::entity::ConstReference
 {
     auto it{ ::std::ranges::find_if(
         m_entities,
         [entityId](const auto& entity){ return entity.getId() == entityId; }
     ) };
     if (it == m_entities.end()) {
-        return ::xrn::ecs::Entity::ConstReference{};
+        return ::xrn::ecs::entity::ConstReference{};
     }
-    return ::xrn::ecs::Entity::ConstReference{ *it };
+    return ::xrn::ecs::entity::ConstReference{ *it };
 }
 
 ///////////////////////////////////////////////////////////////////////////
 auto ::xrn::ecs::entity::Container::get(
     ::xrn::Id entityId
-) -> ::xrn::ecs::Entity::Reference
+) -> ::xrn::ecs::entity::Reference
 {
     auto it{ ::std::ranges::find_if(
         m_entities,
         [entityId](const auto& entity){ return entity.getId() == entityId; }
     ) };
     if (it == m_entities.end()) {
-        return ::xrn::ecs::Entity::Reference{};
+        return ::xrn::ecs::entity::Reference{};
     }
-    return ::xrn::ecs::Entity::Reference{ m_components, *it };
+    return ::xrn::ecs::entity::Reference{ m_components, *it };
 }
 
 ///////////////////////////////////////////////////////////////////////////
 auto ::xrn::ecs::entity::Container::unsafeGet(
     ::xrn::Id entityId
 ) const
-    -> ::xrn::ecs::Entity::ConstReference
+    -> ::xrn::ecs::entity::ConstReference
 {
-    return ::xrn::ecs::Entity::ConstReference{ *::std::ranges::find_if(
+    return ::xrn::ecs::entity::ConstReference{ *::std::ranges::find_if(
         m_entities,
         [entityId](const auto& entity){ return entity.getId() == entityId; }
     ) };
@@ -177,9 +177,9 @@ auto ::xrn::ecs::entity::Container::unsafeGet(
 ///////////////////////////////////////////////////////////////////////////
 auto ::xrn::ecs::entity::Container::unsafeGet(
     ::xrn::Id entityId
-) -> ::xrn::ecs::Entity::Reference
+) -> ::xrn::ecs::entity::Reference
 {
-    return ::xrn::ecs::Entity::Reference{ m_components, *::std::ranges::find_if(
+    return ::xrn::ecs::entity::Reference{ m_components, *::std::ranges::find_if(
         m_entities,
         [entityId](const auto& entity){ return entity.getId() == entityId; }
     ) };

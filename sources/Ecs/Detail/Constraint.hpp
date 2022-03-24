@@ -39,7 +39,7 @@ template <
 
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Checks whether the Type given as template parameter is a
-///        ::xrn::util::Time
+///        ::xrn::util::BasicTime
 ///
 /// The comparison ignores cv-qualifiers and references (compares the type
 /// referenced).
@@ -47,9 +47,9 @@ template <
 /// \tparam Type to check
 ///
 /// \return True if the Type given as template parameter is a
-///         ::xrn::util::Time. False otherwise
+///         ::xrn::util::BasicTime. False otherwise
 ///
-/// \see ::xrn::util::Time
+/// \see ::xrn::util::BasicTime
 ///
 ///////////////////////////////////////////////////////////////////////////
 template <
@@ -59,18 +59,19 @@ template <
 
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Checks whether the Type given as template parameter is an
-///        ::xrn::util::Id
+///        ::xrn::util::BasicForwardId
 ///
 /// The comparison ignores cv-qualifiers and references (compares the type
 /// referenced).
-/// A ::xrn::util::Id::Type is concidered as an ::xrn::util::Id.
+/// A ::xrn::util::BasicForwardId::Type is concidered as an
+/// ::xrn::util::BasicForwardId.
 ///
 /// \tparam Type to check
 ///
 /// \return True if the Type given as template parameter is an
-///         ::xrn::util::Id. False otherwise
+///         ::xrn::util::BasicForwardId. False otherwise
 ///
-/// \see ::xrn::util::Id
+/// \see ::xrn::util::BasicForwardId
 ///
 ///////////////////////////////////////////////////////////////////////////
 template <

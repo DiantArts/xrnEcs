@@ -669,7 +669,7 @@ namespace xrn { using Time = ::xrn::util::Time; }
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Adds ::xrn::Time given as parameter
+/// \brief Adds ::xrn::util::BasicTime given as parameter
 ///
 /// Same as add, but does return a copy.
 ///
@@ -689,7 +689,7 @@ template <
 ) -> ::xrn::util::BasicTime<T>;
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Substracts ::xrn::Time given as parameter
+/// \brief Substracts ::xrn::util::BasicTime given as parameter
 ///
 /// Same as substract, but does return a copy.
 ///
@@ -720,11 +720,11 @@ template <
 namespace xrn::util::literal {
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Alias for the ::xrn::Time::createAsSeconds()
+/// \brief Alias for the ::xrn::util::BasicTime::createAsSeconds()
 ///
 /// \param amount Value contructed from the amount of seconds
 ///
-/// \see ::xrn::Time::createAsSeconds()
+/// \see ::xrn::util::BasicTime::createAsSeconds()
 ///
 ///////////////////////////////////////////////////////////////////////////
 [[ nodiscard ]] constexpr auto operator""_s(
@@ -732,11 +732,11 @@ namespace xrn::util::literal {
 ) -> ::xrn::Time;
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Alias for the ::xrn::Time::createAsSeconds()
+/// \brief Alias for the ::xrn::util::BasicTime::createAsSeconds()
 ///
 /// \param amount Value contructed from the amount of seconds
 ///
-/// \see ::xrn::Time::createAsSeconds()
+/// \see ::xrn::util::BasicTime::createAsSeconds()
 ///
 ///////////////////////////////////////////////////////////////////////////
 [[ nodiscard ]] constexpr auto operator""_s(
@@ -744,11 +744,11 @@ namespace xrn::util::literal {
 ) -> ::xrn::Time;
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Alias for the ::xrn::Time::createAsMilliseconds()
+/// \brief Alias for the ::xrn::util::BasicTime::createAsMilliseconds()
 ///
 /// \param amount Value contructed from the amount of milliseconds
 ///
-/// \see ::xrn::Time::createAsMilliseconds()
+/// \see ::xrn::util::BasicTime::createAsMilliseconds()
 ///
 ///////////////////////////////////////////////////////////////////////////
 [[ nodiscard ]] constexpr auto operator""_ms(
@@ -756,11 +756,11 @@ namespace xrn::util::literal {
 ) -> ::xrn::Time;
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Alias for the ::xrn::Time::createAsMilliseconds()
+/// \brief Alias for the ::xrn::util::BasicTime::createAsMilliseconds()
 ///
 /// \param amount Value contructed from the amount of milliseconds
 ///
-/// \see ::xrn::Time::createAsMilliseconds()
+/// \see ::xrn::util::BasicTime::createAsMilliseconds()
 ///
 ///////////////////////////////////////////////////////////////////////////
 [[ nodiscard ]] constexpr auto operator""_ms(
@@ -768,11 +768,11 @@ namespace xrn::util::literal {
 ) -> ::xrn::Time;
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Alias for the ::xrn::Time::createAsMicroseconds()
+/// \brief Alias for the ::xrn::util::BasicTime::createAsMicroseconds()
 ///
 /// \param amount Value contructed from the amount of microseconds
 ///
-/// \see ::xrn::Time::createAsMicroseconds()
+/// \see ::xrn::util::BasicTime::createAsMicroseconds()
 ///
 ///////////////////////////////////////////////////////////////////////////
 [[ nodiscard ]] constexpr auto operator""_us(
@@ -780,11 +780,11 @@ namespace xrn::util::literal {
 ) -> ::xrn::Time;
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Alias for the ::xrn::Time::createAsMicroseconds()
+/// \brief Alias for the ::xrn::util::BasicTime::createAsMicroseconds()
 ///
 /// \param amount Value contructed from the amount of microseconds
 ///
-/// \see ::xrn::Time::createAsMicroseconds()
+/// \see ::xrn::util::BasicTime::createAsMicroseconds()
 ///
 ///////////////////////////////////////////////////////////////////////////
 [[ nodiscard ]] constexpr auto operator""_us(
@@ -792,11 +792,11 @@ namespace xrn::util::literal {
 ) -> ::xrn::Time;
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Alias for the ::xrn::Time::createAsNanoseconds()
+/// \brief Alias for the ::xrn::util::BasicTime::createAsNanoseconds()
 ///
 /// \param amount Value contructed from the amount of nanoseconds
 ///
-/// \see ::xrn::Time::createAsNanoseconds()
+/// \see ::xrn::util::BasicTime::createAsNanoseconds()
 ///
 ///////////////////////////////////////////////////////////////////////////
 [[ nodiscard ]] constexpr auto operator""_ns(
@@ -804,11 +804,11 @@ namespace xrn::util::literal {
 ) -> ::xrn::Time;
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Alias for the ::xrn::Time::createAsNanoseconds()
+/// \brief Alias for the ::xrn::util::BasicTime::createAsNanoseconds()
 ///
 /// \param amount Value contructed from the amount of nanoseconds
 ///
-/// \see ::xrn::Time::createAsNanoseconds()
+/// \see ::xrn::util::BasicTime::createAsNanoseconds()
 ///
 ///////////////////////////////////////////////////////////////////////////
 [[ nodiscard ]] constexpr auto operator""_ns(

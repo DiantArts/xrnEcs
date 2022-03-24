@@ -17,7 +17,7 @@ namespace xrn::ecs::entity {
 ///
 /// \include Container.hpp <Ecs/Entity/Container.hpp>
 ///
-/// Contains all ::xrn::ecs::Entity needed for the ECS architecture. All the
+/// Contains all ::xrn::ecs::entity::Entity needed for the ECS architecture. All the
 /// entity components are placed in the ::xrn::ecs::component::Container passed
 /// as constructor argument. This container is kept as reference.
 ///
@@ -35,7 +35,7 @@ namespace xrn::ecs::entity {
 /// &entity1.get() == &entity3.get(); // true
 /// \endcode
 ///
-/// \see ::xrn::ecs::Entity
+/// \see ::xrn::ecs::entity::Entity
 ///
 ///////////////////////////////////////////////////////////////////////////
 class Container {
@@ -53,7 +53,7 @@ public:
     /// \brief Type internally contained by the class
     ///
     ///////////////////////////////////////////////////////////////////////////
-    using Type = ::std::vector<::xrn::ecs::Entity>;
+    using Type = ::std::vector<::xrn::ecs::entity::Entity>;
 
 
 
@@ -146,18 +146,18 @@ public:
     ///
     /// Creates an entity from the component given as template parameter.
     ///
-    /// \warning The returned ::xrn::ecs::Entity::Reference may be invalid.
-    ///          The user must call ::xrn::ecs::Entity::Reference::isValid()
+    /// \warning The returned ::xrn::ecs::entity::Reference may be invalid.
+    ///          The user must call ::xrn::ecs::entity::Reference::isValid()
     ///          if he isn't certain that the entity is present in the
     ///          container to check its validity.
     /// \warning This reference may be invalidated when an entity is created.
     ///
     /// \tparam ComponentTypes Type of components to emplace inside the
-    /// ::xrn::ecs::Entity when creating it
+    /// ::xrn::ecs::entity::Entity when creating it
     ///
     /// \param amount Time in milliseconds
     ///
-    /// \returns An ::xrn::ecs::Entity::Reference to the entity emplaced
+    /// \returns An ::xrn::ecs::entity::Reference to the entity emplaced
     ///
     /// \see ::xrn::ecs::component::declaration::detail::AComponent
     ///
@@ -165,29 +165,29 @@ public:
     template <
         ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
     > auto emplace()
-        -> ::xrn::ecs::Entity::Reference;
+        -> ::xrn::ecs::entity::Reference;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Emplaces an entity
     ///
     /// Creates an entity from the component given as template parameter.
     ///
-    /// \warning The returned ::xrn::ecs::Entity::Reference may be invalid.
-    ///          The user must call ::xrn::ecs::Entity::Reference::isValid()
+    /// \warning The returned ::xrn::ecs::entity::Reference may be invalid.
+    ///          The user must call ::xrn::ecs::entity::Reference::isValid()
     ///          if he isn't certain that the entity is present in the
     ///          container to check its validity.
     /// \warning This reference may be invalidated when an entity is created.
     ///
     /// \param components Components to emplace inside the entity created
     ///
-    /// \returns An ::xrn::ecs::Entity::Reference to the entity emplaced
+    /// \returns An ::xrn::ecs::entity::Reference to the entity emplaced
     ///
     /// \see ::xrn::ecs::component::declaration::detail::AComponent
     ///
     ///////////////////////////////////////////////////////////////////////////
     auto emplace(
         ::xrn::ecs::detail::constraint::isComponent auto&&... components
-    ) -> ::xrn::ecs::Entity::Reference;
+    ) -> ::xrn::ecs::entity::Reference;
 
 
 
@@ -199,13 +199,13 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Removes an ::xrn::ecs::Entity from the container
+    /// \brief Removes an ::xrn::ecs::entity::Entity from the container
     ///
-    /// Remove the entity that matches the ::xrn::Id given as parameter.
+    /// Remove the entity that matches the ::xrn::util::BasicForwardId given as parameter.
     ///
     /// \param entityId Id to find and delete
     ///
-    /// \see ::xrn::Id
+    /// \see ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     void remove(
@@ -213,35 +213,35 @@ public:
     );
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Removes an ::xrn::ecs::Entity from the container
+    /// \brief Removes an ::xrn::ecs::entity::Entity from the container
     ///
-    /// Remove the entity referenced by the ::xrn::ecs::Entity::Reference.
-    ///
-    /// \param entityReference Entity to find and delete
-    ///
-    /// \see ::xrn::ecs::Entity::Reference
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    void remove(
-        const ::xrn::ecs::Entity::Reference& entityReference
-    );
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Removes an ::xrn::ecs::Entity from the container
-    ///
-    /// Remove the entity referenced by the ::xrn::ecs::Entity::ConstReference.
+    /// Remove the entity referenced by the ::xrn::ecs::entity::Reference.
     ///
     /// \param entityReference Entity to find and delete
     ///
-    /// \see ::xrn::ecs::Entity::ConstReference
+    /// \see ::xrn::ecs::entity::Reference
     ///
     ///////////////////////////////////////////////////////////////////////////
     void remove(
-        const ::xrn::ecs::Entity::ConstReference& entityReference
+        const ::xrn::ecs::entity::Reference& entityReference
     );
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Removes all ::xrn::ecs::Entity from the container
+    /// \brief Removes an ::xrn::ecs::entity::Entity from the container
+    ///
+    /// Remove the entity referenced by the ::xrn::ecs::entity::ConstReference.
+    ///
+    /// \param entityReference Entity to find and delete
+    ///
+    /// \see ::xrn::ecs::entity::ConstReference
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    void remove(
+        const ::xrn::ecs::entity::ConstReference& entityReference
+    );
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Removes all ::xrn::ecs::entity::Entity from the container
     ///
     ///////////////////////////////////////////////////////////////////////////
     void clear();
@@ -256,85 +256,85 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Gets a ::xrn::ecs::Entity::ConstReference to an entity contained
+    /// \brief Gets a ::xrn::ecs::entity::ConstReference to an entity contained
     /// it the container
     ///
     /// \param entityId Entity to find and return
     ///
-    /// \warning The returned ::xrn::ecs::Entity::Reference may be invalid.
-    ///          The user must call ::xrn::ecs::Entity::Reference::isValid()
+    /// \warning The returned ::xrn::ecs::entity::Reference may be invalid.
+    ///          The user must call ::xrn::ecs::entity::Reference::isValid()
     ///          if he isn't certain that the entity is present in the
     ///          container to check its validity.
     /// \warning This reference may be invalidated when an entity is created.
     ///
-    /// \see ::xrn::Id, ::xrn::ecs::Entity::ConstReference
+    /// \see ::xrn::util::BasicForwardId, ::xrn::ecs::entity::ConstReference
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator[](
         ::xrn::Id entityId
     ) const
-        -> ::xrn::ecs::Entity::ConstReference;
+        -> ::xrn::ecs::entity::ConstReference;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Gets a mutable ::xrn::ecs::Entity::Reference to an entity
+    /// \brief Gets a mutable ::xrn::ecs::entity::Reference to an entity
     /// contained it the container
     ///
     /// \param entityId Entity to find and return
     ///
-    /// \warning The returned ::xrn::ecs::Entity::Reference may be invalid.
-    ///          The user must call ::xrn::ecs::Entity::Reference::isValid()
+    /// \warning The returned ::xrn::ecs::entity::Reference may be invalid.
+    ///          The user must call ::xrn::ecs::entity::Reference::isValid()
     ///          if he isn't certain that the entity is present in the
     ///          container to check its validity.
     /// \warning This reference may be invalidated when an entity is created.
     ///
-    /// \see ::xrn::Id, ::xrn::ecs::Entity::Reference
+    /// \see ::xrn::util::BasicForwardId, ::xrn::ecs::entity::Reference
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto operator[](
         ::xrn::Id entityId
-    ) -> ::xrn::ecs::Entity::Reference;
+    ) -> ::xrn::ecs::entity::Reference;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Gets a ::xrn::ecs::Entity::ConstReference to an entity contained
+    /// \brief Gets a ::xrn::ecs::entity::ConstReference to an entity contained
     /// it the container
     ///
     /// \param entityId Entity to find and return
     ///
-    /// \warning The returned ::xrn::ecs::Entity::Reference may be invalid.
-    ///          The user must call ::xrn::ecs::Entity::Reference::isValid()
+    /// \warning The returned ::xrn::ecs::entity::Reference may be invalid.
+    ///          The user must call ::xrn::ecs::entity::Reference::isValid()
     ///          if he isn't certain that the entity is present in the
     ///          container to check its validity.
     /// \warning This reference may be invalidated when an entity is created.
     ///
-    /// \see ::xrn::Id, ::xrn::ecs::Entity::ConstReference
+    /// \see ::xrn::util::BasicForwardId, ::xrn::ecs::entity::ConstReference
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto get(
         ::xrn::Id entityId
     ) const
-        -> ::xrn::ecs::Entity::ConstReference;
+        -> ::xrn::ecs::entity::ConstReference;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Gets a mutable ::xrn::ecs::Entity::Reference to an entity
+    /// \brief Gets a mutable ::xrn::ecs::entity::Reference to an entity
     /// contained it the container
     ///
     /// \param entityId Entity to find and return
     ///
-    /// \warning The returned ::xrn::ecs::Entity::Reference may be invalid.
-    ///          The user must call ::xrn::ecs::Entity::Reference::isValid()
+    /// \warning The returned ::xrn::ecs::entity::Reference may be invalid.
+    ///          The user must call ::xrn::ecs::entity::Reference::isValid()
     ///          if he isn't certain that the entity is present in the
     ///          container to check its validity.
     /// \warning This reference may be invalidated when an entity is created.
     ///
-    /// \see ::xrn::Id, ::xrn::ecs::Entity::Reference
+    /// \see ::xrn::util::BasicForwardId, ::xrn::ecs::entity::Reference
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto get(
         ::xrn::Id entityId
-    ) -> ::xrn::ecs::Entity::Reference;
+    ) -> ::xrn::ecs::entity::Reference;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Gets a ::xrn::ecs::Entity::ConstReference to an entity contained
+    /// \brief Gets a ::xrn::ecs::entity::ConstReference to an entity contained
     /// it the container
     ///
     /// \warning Calling this function while the entity is not present in the
@@ -343,16 +343,16 @@ public:
     ///
     /// \param entityId Entity to find and return
     ///
-    /// \see ::xrn::Id, ::xrn::ecs::Entity::ConstReference
+    /// \see ::xrn::util::BasicForwardId, ::xrn::ecs::entity::ConstReference
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto unsafeGet(
         ::xrn::Id entityId
     ) const
-        -> ::xrn::ecs::Entity::ConstReference;
+        -> ::xrn::ecs::entity::ConstReference;
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Gets a mutable ::xrn::ecs::Entity::Reference to an entity
+    /// \brief Gets a mutable ::xrn::ecs::entity::Reference to an entity
     /// contained it the container
     ///
     /// \warning Calling this function while the entity is not present in the
@@ -361,12 +361,12 @@ public:
     ///
     /// \param entityId Entity to find and return
     ///
-    /// \see ::xrn::Id, ::xrn::ecs::Entity::Reference
+    /// \see ::xrn::util::BasicForwardId, ::xrn::ecs::entity::Reference
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto unsafeGet(
         ::xrn::Id entityId
-    ) -> ::xrn::ecs::Entity::Reference;
+    ) -> ::xrn::ecs::entity::Reference;
 
 
 
@@ -385,7 +385,7 @@ public:
     ///
     /// \return True if the entity is contained. False otherwise
     ///
-    /// \see ::xrn::Id, ::xrn::ecs::Entity::Reference
+    /// \see ::xrn::util::BasicForwardId, ::xrn::ecs::entity::Reference
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] auto contains(

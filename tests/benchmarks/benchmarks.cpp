@@ -37,14 +37,14 @@ auto main()
         bench.run(
             "10k empty entities",
             []{
-                ankerl::nanobench::doNotOptimizeAway(::xrn::ecs::Entity{});
+                ankerl::nanobench::doNotOptimizeAway(::xrn::ecs::entity::Entity{});
             }
         );
         bench.run(
             "entity: create",
             [&components]{
                 using Component = ::xrn::ecs::component::test::Benchmark100ints;
-                auto entity{ ::xrn::ecs::Entity::generate<Component>(components) };
+                auto entity{ ::xrn::ecs::entity::Entity::generate<Component>(components) };
                 entity.removeComponent<Component>(components);
             }
         );
@@ -56,7 +56,7 @@ auto main()
 
         ::xrn::ecs::component::Container components;
         ::xrn::ecs::entity::Container entities{ components };
-        ::xrn::ecs::System<addsAllints> systemAdd;
+        ::xrn::ecs::system::System<addsAllints> systemAdd;
         ::xrn::Clock c;
         entities.emplace<::xrn::ecs::component::test::Benchmark100ints>();
         bench.run(

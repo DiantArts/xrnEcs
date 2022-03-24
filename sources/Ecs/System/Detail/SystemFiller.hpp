@@ -3,6 +3,7 @@
 namespace xrn::ecs::system::detail {
 
 ///////////////////////////////////////////////////////////////////////////
+/// \internal
 /// \brief Helps with filling the systems with the correct arguments
 /// \ingroup ecs-system
 ///

@@ -6,12 +6,12 @@
 #include <Ecs/Signature.hpp>
 #include <Ecs/Entity.hpp>
 #include <Ecs/Component.hpp>
-#include <Ecs/System/ASystem.hpp>
+#include <Ecs/System/Constant/ASystem.hpp>
 #include <Ecs/System/Detail/SystemFiller.hpp>
 
 
 
-namespace xrn::ecs::system {
+namespace xrn::ecs::system::constant {
 
 ///////////////////////////////////////////////////////////////////////////
 /// \brief Representation a system in the xrn ecs Project
@@ -19,10 +19,11 @@ namespace xrn::ecs::system {
 ///
 /// \include System.hpp <Ecs/System/System.hpp>
 ///
-/// ::xrn::ecs::system::System inherits from ::xrn::ecs::system::ASystem
-/// and represents how a general system. It is the kind of system the user
-/// is supposed to manipulate. Those systems are pushed as
-/// ::xrn::ecs::system::ASystem inside a ::xrn::ecs::system::Container.
+/// ::xrn::ecs::system::constant::System inherits from
+/// ::xrn::ecs::system::constant::ASystem and represents how a general
+/// system. It is the kind of system the user is supposed to manipulate.
+/// Those systems are pushed as ::xrn::ecs::system::constant::ASystem inside a
+/// ::xrn::ecs::system::Container.
 /// This class is aliased with ::xrn::ecs::System.
 ///
 /// \tparam function Function to create a system from
@@ -49,14 +50,14 @@ namespace xrn::ecs::system {
 /// components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value // 0;
 /// \endcode
 ///
-/// \see ::xrn::ecs::system::ASystem, ::xrn::ecs::system::Container
+/// \see ::xrn::ecs::system::constant::ASystem, ::xrn::ecs::system::Container
 ///
 ///////////////////////////////////////////////////////////////////////////
 template <
     auto function,
     typename... Types
 > class System
-    : public ::xrn::ecs::system::ASystem
+    : public ::xrn::ecs::system::constant::ASystem
 {
 
 public:
@@ -84,7 +85,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Runs the system
+    /// \brief Runs the system as const
     ///
     /// \param deltaTime Represents the time passed by the user. It is usually
     ///                  used to know the elapsed since the last runs of
@@ -96,8 +97,8 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     constexpr void operator()(
         ::xrn::Time deltaTime,
-        ::xrn::ecs::entity::Container& entities
-    ) override;
+        const ::xrn::ecs::entity::Container& entities
+    ) const override;
 
 
 
@@ -127,7 +128,7 @@ private:
 
 };
 
-} // namespace xrn::ecs::system
+} // namespace xrn::ecs::system::constant
 
 
 
@@ -138,7 +139,7 @@ namespace xrn::ecs {
     template <
         auto function,
         typename... Types
-    > using System = ::xrn::ecs::system::System<function, Types...>;
+    > using ConstSystem = ::xrn::ecs::system::constant::System<function, Types...>;
 }
 
 
@@ -146,4 +147,4 @@ namespace xrn::ecs {
 ///////////////////////////////////////////////////////////////////////////
 // Header-implimentation
 ///////////////////////////////////////////////////////////////////////////
-#include <Ecs/System/System.impl.hpp>
+#include <Ecs/System/Constant/System.impl.hpp>

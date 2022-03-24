@@ -11,6 +11,7 @@
 namespace xrn::ecs::system::detail {
 
 ///////////////////////////////////////////////////////////////////////////
+/// \internal
 /// \brief Helps with filling the systems with the correct arguments
 ///
 /// Fills the following arguments:
@@ -30,7 +31,7 @@ struct SystemFiller<
     static inline constexpr auto fill(
         ::xrn::Time,
         ::xrn::ecs::component::Container& components,
-        ::xrn::ecs::Entity& entity
+        ::xrn::ecs::entity::Entity& entity
     ) -> ::std::tuple<Types...>
     {
         return { *components.get<Types>(entity.getId()) ... };
@@ -39,7 +40,7 @@ struct SystemFiller<
     static inline constexpr auto fill(
         ::xrn::Time,
         const ::xrn::ecs::component::Container& components,
-        const ::xrn::ecs::Entity& entity
+        const ::xrn::ecs::entity::Entity& entity
     ) -> ::std::tuple<Types...>
     {
         return { *components.get<Types>(entity.getId()) ... };
@@ -49,6 +50,7 @@ struct SystemFiller<
 
 
 ///////////////////////////////////////////////////////////////////////////
+/// \internal
 /// \brief Helps with filling the systems with the correct arguments
 ///
 /// Fills the following arguments:
@@ -88,13 +90,14 @@ struct SystemFiller<
 
 
 ///////////////////////////////////////////////////////////////////////////
+/// \internal
 /// \brief Helps with filling the systems with the correct arguments
 ///
 /// Fills the following arguments:
 ///     - Time
 ///     - Components
 ///
-/// \see ::xrn::util::Time, ::xrn::ecs::entity::Entity
+/// \see ::xrn::util::BasicTime, ::xrn::ecs::entity::Entity
 ///
 ///////////////////////////////////////////////////////////////////////////
 template <
@@ -108,7 +111,7 @@ struct SystemFiller<
     static inline constexpr auto fill(
         ::xrn::Time t,
         ::xrn::ecs::component::Container& components,
-        const ::xrn::ecs::Entity& entity
+        const ::xrn::ecs::entity::Entity& entity
     ) -> ::std::tuple<Time, Types...>
     {
         return { t, *components.get<Types>(entity.getId()) ... };
@@ -117,7 +120,7 @@ struct SystemFiller<
     static inline constexpr auto fill(
         ::xrn::Time t,
         const ::xrn::ecs::component::Container& components,
-        const ::xrn::ecs::Entity& entity
+        const ::xrn::ecs::entity::Entity& entity
     ) -> ::std::tuple<Time, Types...>
     {
         return { t, *components.get<Types>(entity.getId()) ... };
@@ -127,6 +130,7 @@ struct SystemFiller<
 
 
 ///////////////////////////////////////////////////////////////////////////
+/// \internal
 /// \brief Helps with filling the systems with the correct arguments
 ///
 /// Fills the following arguments:
@@ -134,7 +138,7 @@ struct SystemFiller<
 ///     - Entity
 ///     - Components
 ///
-/// \see ::xrn::util::Time, ::xrn::ecs::entity::Entity
+/// \see ::xrn::util::BasicTime, ::xrn::ecs::entity::Entity
 ///
 ///////////////////////////////////////////////////////////////////////////
 template <
@@ -168,6 +172,7 @@ struct SystemFiller<
 
 
 ///////////////////////////////////////////////////////////////////////////
+/// \internal
 /// \brief Helps with filling the systems with the correct arguments
 ///
 /// Fills the following arguments:
@@ -175,7 +180,7 @@ struct SystemFiller<
 ///     - Time
 ///     - Components
 ///
-/// \see ::xrn::util::Time, ::xrn::ecs::entity::Entity
+/// \see ::xrn::util::BasicTime, ::xrn::ecs::entity::Entity
 ///
 ///////////////////////////////////////////////////////////////////////////
 template <

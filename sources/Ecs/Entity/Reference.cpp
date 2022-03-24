@@ -19,25 +19,52 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
-::xrn::ecs::Entity::Reference::Reference() noexcept
+::xrn::ecs::entity::Reference::Reference() noexcept
     : m_components{ nullptr }, m_entity{ nullptr }
 {}
 
 ///////////////////////////////////////////////////////////////////////////
-::xrn::ecs::Entity::Reference::Reference(
+::xrn::ecs::entity::Reference::Reference(
     ::xrn::ecs::component::Container& components,
-    ::xrn::ecs::Entity& entity
+    ::xrn::ecs::entity::Entity& entity
 ) noexcept
     : m_components{ &components }, m_entity{ &entity }
 {}
 
 ///////////////////////////////////////////////////////////////////////////
-::xrn::ecs::Entity::Reference::Reference(
-    ::xrn::ecs::Entity& entity,
+::xrn::ecs::entity::Reference::Reference(
+    ::xrn::ecs::entity::Entity& entity,
     ::xrn::ecs::component::Container& components
 ) noexcept
     : m_components{ &components }, m_entity{ &entity }
 {}
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Remove
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////
+void ::xrn::ecs::entity::Reference::removeAbilitiesAndComponents()
+{
+    m_entity->removeAbilitiesAndComponents(*m_components);
+}
+
+///////////////////////////////////////////////////////////////////////////
+void ::xrn::ecs::entity::Reference::removeComponents()
+{
+    m_entity->removeComponents(*m_components);
+}
+
+///////////////////////////////////////////////////////////////////////////
+void ::xrn::ecs::entity::Reference::removeAbilities()
+{
+    m_entity->removeAbilities();
+}
 
 
 
@@ -49,48 +76,48 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
-[[ nodiscard ]] auto ::xrn::ecs::Entity::Reference::isValid() const
+[[ nodiscard ]] auto ::xrn::ecs::entity::Reference::isValid() const
     -> bool
 {
     return m_entity != nullptr;
 }
 
 ///////////////////////////////////////////////////////////////////////////
-auto ::xrn::ecs::Entity::Reference::getSignature() const
+auto ::xrn::ecs::entity::Reference::getSignature() const
     -> const ::xrn::ecs::Signature&
 {
     return m_entity->getSignature();
 }
 
 ///////////////////////////////////////////////////////////////////////////
-auto ::xrn::ecs::Entity::Reference::getId() const
+auto ::xrn::ecs::entity::Reference::getId() const
     -> ::xrn::Id
 {
     return m_entity->getId();
 }
 
 ///////////////////////////////////////////////////////////////////////////
-auto ::xrn::ecs::Entity::Reference::get()
-    -> ::xrn::ecs::Entity&
+auto ::xrn::ecs::entity::Reference::get()
+    -> ::xrn::ecs::entity::Entity&
 {
     return *m_entity;
 }
 
 ///////////////////////////////////////////////////////////////////////////
-auto ::xrn::ecs::Entity::Reference::get() const
-    -> const ::xrn::ecs::Entity&
+auto ::xrn::ecs::entity::Reference::get() const
+    -> const ::xrn::ecs::entity::Entity&
 {
     return *m_entity;
 }
 
 ///////////////////////////////////////////////////////////////////////////
-::xrn::ecs::Entity::Reference::operator const ::xrn::ecs::Entity&() const
+::xrn::ecs::entity::Reference::operator const ::xrn::ecs::entity::Entity&() const
 {
     return *m_entity;
 }
 
 ///////////////////////////////////////////////////////////////////////////
-::xrn::ecs::Entity::Reference::operator ::xrn::ecs::Entity::ConstReference() const
+::xrn::ecs::entity::Reference::operator ::xrn::ecs::entity::ConstReference() const
 {
-    return ::xrn::ecs::Entity::ConstReference{ *m_entity };
+    return ::xrn::ecs::entity::ConstReference{ *m_entity };
 }

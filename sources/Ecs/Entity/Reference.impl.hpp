@@ -9,28 +9,52 @@
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isComponent ComponentType
-> void ::xrn::ecs::Entity::Reference::addComponent(
-    auto&&... args
-) const
+    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
+> void ::xrn::ecs::entity::Reference::add()
 {
-    return m_entity->addComponent<ComponentType>(*m_components, ::std::forward<decltype(args)>(args)...);
+    m_entity->add<Types...>(*m_components);
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isComponent ComponentType
+> void ::xrn::ecs::entity::Reference::addComponent(
+    auto&&... args
+)
+{
+    m_entity->addComponent<ComponentType>(*m_components, ::std::forward<decltype(args)>(args)...);
 }
 
 ///////////////////////////////////////////////////////////////////////////
 template <
     ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-> void ::xrn::ecs::Entity::Reference::addComponents()
+> void ::xrn::ecs::entity::Reference::addComponents()
 {
     m_entity->addComponents<ComponentTypes...>(*m_components);
 }
 
 ///////////////////////////////////////////////////////////////////////////
-void ::xrn::ecs::Entity::Reference::addComponents(
+void ::xrn::ecs::entity::Reference::addComponents(
     ::xrn::ecs::detail::constraint::isComponent auto&&... components
 )
 {
     m_entity->addComponents(*m_components, ::std::forward<decltype(components)>(components)...);
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isAbility AbilityType
+> void ::xrn::ecs::entity::Reference::addAbility()
+{
+    m_entity->addAbility<AbilityType>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
+> void ::xrn::ecs::entity::Reference::addAbilities()
+{
+    m_entity->addAbilities<AbilityTypes...>();
 }
 
 
@@ -45,8 +69,17 @@ void ::xrn::ecs::Entity::Reference::addComponents(
 
 ///////////////////////////////////////////////////////////////////////////
 template <
+    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
+> auto ::xrn::ecs::entity::Reference::has() const
+    -> bool
+{
+    return m_entity->has<Types...>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
     ::xrn::ecs::detail::constraint::isComponent ComponentType
-> auto ::xrn::ecs::Entity::Reference::hasComponent() const
+> auto ::xrn::ecs::entity::Reference::hasComponent() const
     -> bool
 {
     return m_entity->hasComponent<ComponentType>();
@@ -55,10 +88,28 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-> auto ::xrn::ecs::Entity::Reference::hasComponents() const
+> auto ::xrn::ecs::entity::Reference::hasComponents() const
     -> bool
 {
     return m_entity->hasComponents<ComponentTypes...>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isAbility AbilityType
+> auto ::xrn::ecs::entity::Reference::hasAbility() const
+    -> bool
+{
+    return m_entity->hasAbility<AbilityType>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
+> auto ::xrn::ecs::entity::Reference::hasAbilities() const
+    -> bool
+{
+    return m_entity->hasAbilities<AbilityTypes...>();
 }
 
 
@@ -72,8 +123,16 @@ template <
 
 ///////////////////////////////////////////////////////////////////////////
 template <
+    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
+> void ::xrn::ecs::entity::Reference::remove()
+{
+    m_entity->remove<Types...>(*m_components);
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
     ::xrn::ecs::detail::constraint::isComponent ComponentType
-> void ::xrn::ecs::Entity::Reference::removeComponent()
+> void ::xrn::ecs::entity::Reference::removeComponent()
 {
     m_entity->removeComponent<ComponentType>(*m_components);
 }
@@ -81,7 +140,23 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-> void ::xrn::ecs::Entity::Reference::removeComponents()
+> void ::xrn::ecs::entity::Reference::removeComponents()
 {
     m_entity->removeComponents<ComponentTypes...>(*m_components);
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isAbility AbilityType
+> void ::xrn::ecs::entity::Reference::removeAbility()
+{
+    m_entity->removeAbility<AbilityType>(*m_components);
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
+> void ::xrn::ecs::entity::Reference::removeAbilities()
+{
+    m_entity->removeAbilities<AbilityTypes...>(*m_components);
 }
