@@ -1,5 +1,5 @@
 #include <pch.hpp>
-#include <Ecs/Component.hpp>
+#include <xrn/Ecs/Component.hpp>
 
 
 

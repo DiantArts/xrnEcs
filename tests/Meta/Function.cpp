@@ -1,5 +1,5 @@
 #include <pch.hpp>
-#include <Ecs/System/Detail/Meta/Function.hpp>
+#include <xrn/Ecs/System/Detail/Meta/Function.hpp>
 
 static void func1(int) {}
 auto lambda1{ [](int){} };
