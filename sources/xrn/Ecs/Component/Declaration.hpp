@@ -20,80 +20,30 @@
 namespace xrn::ecs::component {
 
 ///////////////////////////////////////////////////////////////////////////
-// Drawable component.
-//
+// Ability A
 ///////////////////////////////////////////////////////////////////////////
-COMPONENT(Drawable) {
+ABILITY(AbilityA);
+
+///////////////////////////////////////////////////////////////////////////
+// Ability B
+///////////////////////////////////////////////////////////////////////////
+ABILITY(AbilityB);
+
+///////////////////////////////////////////////////////////////////////////
+// Component A
+///////////////////////////////////////////////////////////////////////////
+COMPONENT(ComponentA) {
 public:
-    Drawable(){
-        ::std::cout << "Creating D: "
-            << ++this->nbOfComponent << ::std::endl;
-    };
-    ~Drawable(){
-        ::std::cout << "Deleting D: "
-            << --this->nbOfComponent << ::std::endl;
-    };
     int value{ 1 };
-    static inline auto nbOfComponent{ 0uz };
 };
 
-
 ///////////////////////////////////////////////////////////////////////////
-// Transformable component.
-//
+// Component B
 ///////////////////////////////////////////////////////////////////////////
-COMPONENT(Transformable) {
+COMPONENT(ComponentB) {
 public:
-    Transformable(){
-        ::std::cout << "Creating T: "
-            << ++this->nbOfComponent << ::std::endl;
-    };
-    ~Transformable(){
-        ::std::cout << "Deleting T: "
-            << --this->nbOfComponent << ::std::endl;
-    };
-    int value{ 2 }, valu2{ 0 };
-    static inline auto nbOfComponent{ 0uz };
-};
-
-
-
-///////////////////////////////////////////////////////////////////////////
-// Controllable component.
-//
-///////////////////////////////////////////////////////////////////////////
-COMPONENT(Controllable) {
-public:
-    Controllable(){
-        ::std::cout << "Creating C: "
-            << ++this->nbOfComponent << ::std::endl;
-    };
-    ~Controllable(){
-        ::std::cout << "Deleting C: "
-            << --this->nbOfComponent << ::std::endl;
-    };
-    int value{ 3 }, valu2{ 0 }, valu3{ 0 };
-    static inline auto nbOfComponent{ 0uz };
-};
-
-
-
-///////////////////////////////////////////////////////////////////////////
-// Killable component.
-//
-///////////////////////////////////////////////////////////////////////////
-COMPONENT(Killable) {
-public:
-    Killable(int a, int b, int c, int d) : value{ a }, valu2{ b }, valu3{ c }, valu4{ d } {
-        ::std::cout << "Creating K: "
-            << ++this->nbOfComponent << ::std::endl;
-    }
-    ~Killable() {
-        ::std::cout << "Deleting K: "
-            << --this->nbOfComponent << ::std::endl;
-    }
-    int value{ 3 }, valu2{ 0 }, valu3{ 0 }, valu4{ 0 };
-    static inline auto nbOfComponent{ 0uz };
+    ComponentB(int val) : value{ val }{}
+    int value;
 };
 
 } // namespace xr::ecs::component
