@@ -91,38 +91,44 @@
 ///
 ///     // emplacing all the system that will be executed each time systems.run() is called
 ///     // Single mutable component
-///     systems.emplace<[](ComponentA& a){
+///     systems.emplace([](ComponentA& a){
 ///         ++a.value;
-///     }>();
+///     });
 ///
 ///     // with the entity containing the component
-///     systems.emplace<[](::xrn::ecs::Entity&, ComponentA& a){
+///     systems.emplace([](::xrn::ecs::Entity&, ComponentA& a){
 ///         ++a.value;
-///     }>();
+///     });
 ///
 ///     // With multiple components
-///     systems.emplace<[](::xrn::ecs::Entity&, ComponentA& a, ComponentB& b){
+///     systems.emplace([](::xrn::ecs::Entity&, ComponentA& a, ComponentB& b){
 ///         ++a.value; ++b.value;
-///     }>();
+///     });
 ///
 ///     // With const Entity
-///     systems.emplace<[](const ::xrn::ecs::Entity&, ComponentA& a, ComponentB& b){
+///     systems.emplace([](const ::xrn::ecs::Entity&, ComponentA& a, ComponentB& b){
 ///         ++a.value; ++b.value;
-///     }>();
+///     });
 ///
 ///     // With const Components
-///     systems.emplace<[](::xrn::ecs::Entity&, ComponentA& a, const ComponentB& b){
+///     systems.emplace([](::xrn::ecs::Entity&, ComponentA& a, const ComponentB& b){
 ///         a.value += b.value;
-///     }>();
+///     });
 ///
 ///     // With Time
-///     systems.emplace<[](::xrn::Time, const ::xrn::ecs::Entity&, ComponentB& b){
+///     systems.emplace([](::xrn::Time, const ::xrn::ecs::Entity&, ComponentB& b){
 ///         ++b.value;
-///     }>();
+///     });
+///
+///     // With Capture
+///     int i{ 2 };
+///     systems.emplace([i](ComponentB& b){
+///         b.value += i;
+///     });
 ///
 ///     // emplacing all the const systems (everything has to be const or copied)
 ///     // with a function instead of a lambda
-///     constSystems.emplace<printComponentValues>();
+///     constSystems.emplace(printComponentValues);
 ///
 ///     // run all the systems with a clock
 ///     ::xrn::Clock clock;
@@ -136,16 +142,16 @@
 ///
 /// Output of this program:
 /// \code
-/// ComponentA: 12 ComponentB: 8
-/// ComponentA: 26 ComponentB: 11
-/// ComponentA: 43 ComponentB: 14
-/// ComponentA: 63 ComponentB: 17
-/// ComponentA: 86 ComponentB: 20
-/// ComponentA: 112 ComponentB: 23
-/// ComponentA: 141 ComponentB: 26
-/// ComponentA: 173 ComponentB: 29
-/// ComponentA: 208 ComponentB: 32
-/// ComponentA: 246 ComponentB: 35
+/// ComponentA: 12 ComponentB: 10
+/// ComponentA: 28 ComponentB: 15
+/// ComponentA: 49 ComponentB: 20
+/// ComponentA: 75 ComponentB: 25
+/// ComponentA: 106 ComponentB: 30
+/// ComponentA: 142 ComponentB: 35
+/// ComponentA: 183 ComponentB: 40
+/// ComponentA: 229 ComponentB: 45
+/// ComponentA: 280 ComponentB: 50
+/// ComponentA: 336 ComponentB: 55
 /// \endcode
 ///
 ///////////////////////////////////////////////////////////////////////////

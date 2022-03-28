@@ -39,7 +39,7 @@ namespace xrn::ecs::system {
 /// auto e2Id{ entities.emplace<ComponentB>().getId() };
 /// auto e3Id{ entities.emplace<ComponentA, ComponentB>().getId() };
 ///
-/// ::xrn::ecs::System<detail::function1> system;
+/// ::xrn::ecs::System system{ detail::function1 };
 /// ::xrn::Clock clock;
 /// system.run(clock.restart(), entities);
 ///

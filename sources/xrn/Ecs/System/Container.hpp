@@ -38,12 +38,12 @@ namespace xrn::ecs::system {
 /// auto function2{ [](ComponentB& b) { ++b.value; } }
 /// auto function3{ [](ComponentA& a, ComponentB& b) { ++a.value; ++b.value; } }
 ///
-/// systems.emplace<function1>();
+/// systems.emplace(function1);
 /// systems.run(clock.restart(), entities);
 /// systems.run(clock.restart(), entities);
-/// systems.emplace<function2>();
+/// systems.emplace(function2);
 /// systems.run(clock.restart(), entities);
-/// systems.emplace<function3>();
+/// systems.emplace(function3);
 /// systems.run(clock.restart(), entities);
 /// components.get<ComponentA>(e1Id)->value // 4;
 /// components.get<ComponentB>(e2Id)->value // 2;
