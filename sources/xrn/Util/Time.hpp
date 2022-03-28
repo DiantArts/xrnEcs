@@ -3,7 +3,7 @@
 namespace xrn::util {
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Representation of the time in the xrn Project
+/// \brief Allows simple Time manipulations
 /// \ingroup util
 ///
 /// \include Time.hpp <xrn/Util/Time.hpp>

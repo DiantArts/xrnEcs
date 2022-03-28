@@ -16,7 +16,7 @@ namespace xrn::ecs::component { class Container; }
 namespace xrn::ecs::entity {
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Contains all the entities
+/// \brief A mutable reference to an ::xrn::ecs::entity::Entity
 /// \ingroup ecs-entity
 ///
 /// \include Reference.hpp <xrn/Ecs/Entity/Reference.hpp>

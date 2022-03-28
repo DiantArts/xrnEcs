@@ -14,7 +14,7 @@
 namespace xrn::ecs::system::constant {
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Representation a system in the xrn ecs Project
+/// \brief Containers of const systems
 /// \ingroup ecs-system
 ///
 /// \include System.hpp <xrn/Ecs/System/System.hpp>
@@ -93,25 +93,28 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Emplaces a systems
+    /// \brief Emplaces a const systems
     ///
     /// Creates a system and push it to the container of systems.
+    ///
+    /// \warning Calling this method with non-const arguments may leads to
+    ///          undefined behaviors
     ///
     /// \tparam function Function to pass to the system
     /// \tparam Types    Types to pass to the system
     ///
-    /// \see ::xrn::ecs::system::System
+    /// \see ::xrn::ecs::system::constant::ASystem
     ///
     ///////////////////////////////////////////////////////////////////////////
-    void emplace(
+    auto emplace(
         auto function
-    );
+    ) -> ::xrn::ecs::constant::ASystem&;
 
 
 
 private:
 
-    ::std::vector<::std::unique_ptr<::xrn::ecs::system::constant::ASystem>> m_systems{};
+    ::std::vector<::std::unique_ptr<::xrn::ecs::constant::ASystem>> m_systems{};
 
 };
 

@@ -28,9 +28,10 @@ void ::xrn::ecs::system::Container::run(
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
-void ::xrn::ecs::system::Container::emplace(
+auto ::xrn::ecs::system::Container::emplace(
     auto function
-)
+) -> ::xrn::ecs::ASystem&
 {
     m_systems.push_back(::std::make_unique<::xrn::ecs::System<decltype(function)>>(function));
+    return *m_systems.back();
 }

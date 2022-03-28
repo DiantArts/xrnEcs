@@ -236,6 +236,9 @@ BOOST_AUTO_TEST_CASE(nonConstOnConst)
     systems.emplace(
         [](::xrn::Time dt, const ::xrn::ecs::entity::Entity& e, const ::xrn::ecs::component::test::ComponentA& m){}
     );
+    constSystems.emplace(
+        [](::xrn::Time dt, const ::xrn::ecs::entity::Entity& e, const ::xrn::ecs::component::test::ComponentA& m){}
+    );
     ::std::cerr.setstate(::std::ios::failbit);
     constSystems.emplace(
         [](::xrn::Time dt, ::xrn::ecs::entity::Entity& e, const ::xrn::ecs::component::test::ComponentA& m){}

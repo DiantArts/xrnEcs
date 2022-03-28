@@ -3,7 +3,7 @@
 namespace xrn::util {
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Representation of the time in the xrn Project
+/// \brief Allows simple unique Id manipulations
 /// \ingroup util
 ///
 /// \include Id.hpp <xrn/Util/Id.hpp>

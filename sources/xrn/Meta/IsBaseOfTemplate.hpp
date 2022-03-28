@@ -3,7 +3,7 @@
 namespace xrn::meta {
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Checks
+/// \brief Checks whether a class inherits from a template class
 /// \ingroup meta
 ///
 /// \include IsBaseOfTemplate.hpp <xrn/Meta/IsBaseOfTemplate.hpp>

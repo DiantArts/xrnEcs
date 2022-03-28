@@ -34,7 +34,8 @@ template <
 )
 {
     auto isMatching{ [*this](const ::xrn::ecs::Entity& entity) {
-        return entity.getSignature().contains(m_signature);
+        const auto& entitySignature{ entity.getSignature() };
+        return entitySignature.containsNone(m_banishedSignature) && entitySignature.contains(m_signature);
     } };
 
     for (auto& entity : entities | ::std::views::filter(isMatching)) {
@@ -64,7 +65,7 @@ template <
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
-// Others
+// Add to signature
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,8 +73,240 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     typename FunctionType
-> consteval auto ::xrn::ecs::system::System<FunctionType>::getSignature()
-    -> ::xrn::ecs::Signature
+> template <
+    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
+> constexpr void ::xrn::ecs::system::System<FunctionType>::addToSignature()
+{
+    m_signature.add<Types...>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename FunctionType
+> template <
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
+> constexpr void ::xrn::ecs::system::System<FunctionType>::addComponentsToSignature()
+{
+    m_signature.addComponents<ComponentTypes...>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename FunctionType
+> template <
+    ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
+> constexpr void ::xrn::ecs::system::System<FunctionType>::addAbilitiesToSignature()
+{
+    m_signature.addAbilities<AbilityTypes...>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename FunctionType
+> constexpr void ::xrn::ecs::system::System<FunctionType>::addToSignature(
+    ::xrn::ecs::detail::constraint::isId auto... componentIds
+)
+{
+    m_signature.add(componentIds...);
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Remove from signature
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename FunctionType
+> template <
+    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
+> constexpr void ::xrn::ecs::system::System<FunctionType>::removeFromSignature()
+{
+    m_signature.remove<Types...>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename FunctionType
+> template <
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
+> constexpr void ::xrn::ecs::system::System<FunctionType>::removeComponentsFromSignature()
+{
+    m_signature.removeComponents<ComponentTypes...>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename FunctionType
+> template <
+    ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
+> constexpr void ::xrn::ecs::system::System<FunctionType>::removeAbilitiesFromSignature()
+{
+    m_signature.removeAbilities<AbilityTypes...>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename FunctionType
+> constexpr void ::xrn::ecs::system::System<FunctionType>::removeFromSignature(
+    ::xrn::ecs::detail::constraint::isId auto... componentIds
+)
+{
+    m_signature.remove(componentIds...);
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Signature
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename FunctionType
+> constexpr auto ::xrn::ecs::system::System<FunctionType>::getSignature()
+    -> ::xrn::ecs::Signature&
 {
     return m_signature;
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename FunctionType
+> constexpr auto ::xrn::ecs::system::System<FunctionType>::getSignature() const
+    -> const ::xrn::ecs::Signature&
+{
+    return m_signature;
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Banish
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename FunctionType
+> template <
+    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
+> constexpr void ::xrn::ecs::system::System<FunctionType>::banish()
+{
+    m_banishedSignature.add<Types...>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename FunctionType
+> template <
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
+> constexpr void ::xrn::ecs::system::System<FunctionType>::banishComponents()
+{
+    m_banishedSignature.addComponents<ComponentTypes...>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename FunctionType
+> template <
+    ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
+> constexpr void ::xrn::ecs::system::System<FunctionType>::banishAbilities()
+{
+    m_banishedSignature.addAbilities<AbilityTypes...>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename FunctionType
+> constexpr void ::xrn::ecs::system::System<FunctionType>::banish(
+    ::xrn::ecs::detail::constraint::isId auto... componentIds
+)
+{
+    m_banishedSignature.add(componentIds...);
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Remove from signature
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename FunctionType
+> template <
+    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
+> constexpr void ::xrn::ecs::system::System<FunctionType>::removeFromBanishedSignature()
+{
+    m_banishedSignature.remove<Types...>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename FunctionType
+> template <
+    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
+> constexpr void ::xrn::ecs::system::System<FunctionType>::removeComponentsFromBanishedSignature()
+{
+    m_banishedSignature.removeComponents<ComponentTypes...>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename FunctionType
+> template <
+    ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
+> constexpr void ::xrn::ecs::system::System<FunctionType>::removeAbilitiesFromBanishedSignature()
+{
+    m_banishedSignature.removeAbilities<AbilityTypes...>();
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename FunctionType
+> constexpr void ::xrn::ecs::system::System<FunctionType>::removeFromBanishedSignature(
+    ::xrn::ecs::detail::constraint::isId auto... componentIds
+)
+{
+    m_banishedSignature.remove(componentIds...);
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Signature
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename FunctionType
+> constexpr auto ::xrn::ecs::system::System<FunctionType>::getBanishedSignature()
+    -> ::xrn::ecs::Signature&
+{
+    return m_banishedSignature;
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename FunctionType
+> constexpr auto ::xrn::ecs::system::System<FunctionType>::getBanishedSignature() const
+    -> const ::xrn::ecs::Signature&
+{
+    return m_banishedSignature;
 }
