@@ -59,9 +59,16 @@ auto main()
 try {
     using namespace ::xrn::ecs::component;
 
-    int value2{ 7 };
-    System2 system{ [value2](){ ::std::cout << value2 << ::std::endl; } };
-    system.run();
+    // int value2{ 7 };
+    // System2 system{ [value2](){ ::std::cout << value2 << ::std::endl; } };
+    // system.run();
+
+    ::xrn::Clock c;
+    ::xrn::ecs::component::Container components;
+    ::xrn::ecs::entity::Container entities{ components };
+    ::xrn::ecs::system::Container systems;
+    systems.emplace([](const ::xrn::ecs::entity::Entity& e, ComponentA& m){});
+    systems.run(c.restart(), entities);
 
     return EXIT_SUCCESS;
 } catch (const ::std::exception& e) {

@@ -110,10 +110,9 @@ public:
     /// \see ::xrn::ecs::system::System
     ///
     ///////////////////////////////////////////////////////////////////////////
-    template <
-        auto function,
-        typename... Types
-    > void emplace();
+    void emplace(
+        auto function
+    );
 
 
 
@@ -130,6 +129,8 @@ private:
 ///////////////////////////////////////////////////////////////////////////
 // Alias name
 ///////////////////////////////////////////////////////////////////////////
+namespace xrn::ecs::system::constant { using Container = ::xrn::ecs::system::constant::Container; }
+namespace xrn::ecs::constant::system { using Container = ::xrn::ecs::system::constant::Container; }
 namespace xrn::ecs::system { using ConstContainer = ::xrn::ecs::system::constant::Container; }
 
 

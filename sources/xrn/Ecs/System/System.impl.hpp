@@ -9,9 +9,12 @@
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    auto func,
-    typename... Types
-> constexpr ::xrn::ecs::system::System<func, Types...>::System() = default;
+    typename FunctionType
+> constexpr ::xrn::ecs::system::System<FunctionType>::System(
+    FunctionType function
+)
+    : m_function{ function }
+{}
 
 
 
@@ -24,27 +27,37 @@ template <
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    auto func,
-    typename... Types
-> constexpr void ::xrn::ecs::system::System<func, Types...>::operator()(
+    typename FunctionType
+> constexpr void ::xrn::ecs::system::System<FunctionType>::run(
     ::xrn::Time deltaTime,
     ::xrn::ecs::entity::Container& entities
 )
 {
-    auto isMatching{ [](const ::xrn::ecs::Entity& entity) {
-        return entity.getSignature().contains(::xrn::ecs::System<func, Types...>::getSignature());
+    auto isMatching{ [*this](const ::xrn::ecs::Entity& entity) {
+        return entity.getSignature().contains(m_signature);
     } };
 
     for (auto& entity : entities | ::std::views::filter(isMatching)) {
         // get every args into a tupple
-        using TupleArgumentTypes = ::xrn::ecs::detail::meta::Function<decltype(func)>::Arguments::Type;
+        using TupleArgumentTypes = ::xrn::ecs::detail::meta::Function<FunctionType>::Arguments::Type;
         auto args{ ::xrn::ecs::system::detail::SystemFiller<TupleArgumentTypes>::fill(
             deltaTime, entities.getComponentContainer(), entity
         ) };
 
-        // exec the func
-        ::std::apply(func, args);
+        // exec the function
+        ::std::apply(m_function, args);
     }
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename FunctionType
+> constexpr void ::xrn::ecs::system::System<FunctionType>::operator()(
+    ::xrn::Time deltaTime,
+    ::xrn::ecs::entity::Container& entities
+)
+{
+    this->run(deltaTime, entities);
 }
 
 
@@ -58,10 +71,9 @@ template <
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    auto func,
-    typename... Types
-> consteval auto ::xrn::ecs::system::System<func, Types...>::getSignature()
+    typename FunctionType
+> consteval auto ::xrn::ecs::system::System<FunctionType>::getSignature()
     -> ::xrn::ecs::Signature
 {
-    return ::xrn::ecs::detail::meta::Function<decltype(func)>::Arguments::signature;
+    return m_signature;
 }

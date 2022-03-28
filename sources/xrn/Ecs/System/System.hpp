@@ -41,7 +41,7 @@ namespace xrn::ecs::system {
 ///
 /// ::xrn::ecs::System<detail::function1> system;
 /// ::xrn::Clock clock;
-/// system(clock.restart(), entities);
+/// system.run(clock.restart(), entities);
 ///
 /// components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value // 1;
 /// components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value // 0;
@@ -53,8 +53,7 @@ namespace xrn::ecs::system {
 ///
 ///////////////////////////////////////////////////////////////////////////
 template <
-    auto function,
-    typename... Types
+    typename FunctionType
 > class System
     : public ::xrn::ecs::system::ASystem
 {
@@ -72,7 +71,9 @@ public:
     /// \brief Constructor
     ///
     ///////////////////////////////////////////////////////////////////////////
-    constexpr System();
+    constexpr System(
+        FunctionType function
+    );
 
 
 
@@ -94,10 +95,26 @@ public:
     /// \see ::xrn::util::BasicTime, ::xrn::ecs::entity::Container
     ///
     ///////////////////////////////////////////////////////////////////////////
-    constexpr void operator()(
+    constexpr void run(
         ::xrn::Time deltaTime,
         ::xrn::ecs::entity::Container& entities
     ) override;
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Runs the system
+    ///
+    /// \param deltaTime Represents the time passed by the user. It is usually
+    ///                  used to know the elapsed since the last runs of
+    ///                  systems
+    /// \param entities  Container of entities that the system will act upon
+    ///
+    /// \see ::xrn::util::BasicTime, ::xrn::ecs::entity::Container
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    constexpr void operator()(
+        ::xrn::Time deltaTime,
+        ::xrn::ecs::entity::Container& entities
+    );
 
 
 
@@ -121,9 +138,11 @@ public:
 
 private:
 
-    // static inline constexpr auto m_signature{
-        // ::xrn::ecs::detail::meta::Function<decltype(function)>::Arguments::signature.template add<Types...>()
-    // };
+    static inline constexpr const auto m_signature{
+        ::xrn::ecs::detail::meta::Function<FunctionType>::Arguments::signature
+    };
+
+    FunctionType m_function;
 
 };
 
@@ -136,9 +155,8 @@ private:
 ///////////////////////////////////////////////////////////////////////////
 namespace xrn::ecs {
     template <
-        auto function,
-        typename... Types
-    > using System = ::xrn::ecs::system::System<function, Types...>;
+        typename FunctionType
+    > using System = ::xrn::ecs::system::System<FunctionType>;
 }
 
 

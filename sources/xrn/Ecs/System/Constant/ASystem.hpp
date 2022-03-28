@@ -38,10 +38,10 @@ public:
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////
-    /// \brief Constructor
+    /// \brief Destructor
     ///
     ///////////////////////////////////////////////////////////////////////////
-    inline ASystem() noexcept;
+    constexpr ASystem() noexcept;
 
 
 
@@ -56,41 +56,41 @@ public:
     /// \brief Destructor
     ///
     ///////////////////////////////////////////////////////////////////////////
-    inline virtual ~ASystem() noexcept = 0;
+    constexpr virtual ~ASystem() noexcept = 0;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Copy constructor
     ///
     ///////////////////////////////////////////////////////////////////////////
-    ASystem(
-        const ::xrn::ecs::system::constant::ASystem& other
-    ) noexcept = delete;
+    constexpr ASystem(
+        const ::xrn::ecs::system::ASystem& other
+    ) noexcept;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Copy assign operator
     ///
     ///////////////////////////////////////////////////////////////////////////
-    auto operator=(
-        const ::xrn::ecs::system::constant::ASystem& other
+    constexpr auto operator=(
+        const ::xrn::ecs::system::ASystem& other
     ) noexcept
-        -> ::xrn::ecs::system::constant::ASystem& = delete;
+        -> ::xrn::ecs::system::ASystem&;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Move constructor
     ///
     ///////////////////////////////////////////////////////////////////////////
-    ASystem(
-        ::xrn::ecs::system::constant::ASystem&& that
-    ) noexcept = delete;
+    constexpr ASystem(
+        ::xrn::ecs::system::ASystem&& that
+    ) noexcept;
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Move assign operator
     ///
     ///////////////////////////////////////////////////////////////////////////
-    auto operator=(
-        ::xrn::ecs::system::constant::ASystem&& that
+    constexpr auto operator=(
+        ::xrn::ecs::system::ASystem&& that
     ) noexcept
-        -> ::xrn::ecs::system::constant::ASystem& = delete;
+        -> ::xrn::ecs::system::ASystem&;
 
 
 
@@ -112,8 +112,8 @@ public:
     /// \see ::xrn::util::BasicTime, ::xrn::ecs::entity::Container
     ///
     ///////////////////////////////////////////////////////////////////////////
-    virtual void operator()(
-        ::xrn::Time t,
+    virtual void run(
+        ::xrn::Time deltaTime,
         const ::xrn::ecs::entity::Container& entities
     ) const = 0;
 
@@ -126,7 +126,8 @@ public:
 ///////////////////////////////////////////////////////////////////////////
 // Alias name
 ///////////////////////////////////////////////////////////////////////////
-namespace xrn::ecs { using AConstSystem = ::xrn::ecs::system::constant::ASystem; }
+namespace xrn::ecs::constant { using ASystem = ::xrn::ecs::system::constant::ASystem; }
+namespace xrn::ecs { using AConstSystem = ::xrn::ecs::constant::ASystem; }
 
 
 

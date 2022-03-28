@@ -100,7 +100,7 @@ namespace detail {
     static void function10(
         const ::xrn::ecs::entity::Entity& e,
         const ::xrn::Time deltaTime,
-        const::xrn::ecs::component::test::ComponentA& m
+        const ::xrn::ecs::component::test::ComponentA& m
     ) {}
 
 }
@@ -129,7 +129,7 @@ BOOST_AUTO_TEST_CASE(mulpiteComponentMulipleEntityMulipleSystem)
         ::xrn::ecs::component::test::ComponentB
     >().getId() };
 
-    ::xrn::ecs::System<detail::function1> system1;
+    ::xrn::ecs::System system1{ detail::function1 };
     ::xrn::Clock c;
     system1(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 1);
@@ -143,21 +143,21 @@ BOOST_AUTO_TEST_CASE(mulpiteComponentMulipleEntityMulipleSystem)
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 0);
 
-    ::xrn::ecs::System<detail::function2> system2;
+    ::xrn::ecs::System system2{ detail::function2 };
     system2(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 1);
 
-    ::xrn::ecs::System<detail::function3> system3;
+    ::xrn::ecs::System system3{ detail::function3 };
     system3(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 3);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 2);
 
-    ::xrn::ecs::System<detail::function1> system4;
+    ::xrn::ecs::System system4{ detail::function1 };
     system4(c.restart(), entities);
     system4(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 4);
@@ -177,7 +177,7 @@ BOOST_AUTO_TEST_CASE(lambdaMulpiteComponentMulipleEntityMulipleSystem)
         ::xrn::ecs::component::test::ComponentB
     >().getId() };
 
-    ::xrn::ecs::System<detail::lambda1> system1;
+    ::xrn::ecs::System system1{ detail::lambda1 };
     ::xrn::Clock c;
     system1(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 1);
@@ -191,14 +191,14 @@ BOOST_AUTO_TEST_CASE(lambdaMulpiteComponentMulipleEntityMulipleSystem)
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 0);
 
-    ::xrn::ecs::System<detail::lambda2> system2;
+    ::xrn::ecs::System system2{ detail::lambda2 };
     system2(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 1);
 
-    ::xrn::ecs::System<detail::lambda3> system3;
+    ::xrn::ecs::System system3{ detail::lambda3 };
     system3(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 1);
@@ -217,7 +217,7 @@ BOOST_AUTO_TEST_CASE(inlineLambdaMulpiteComponentMulipleEntityMulipleSystem)
         ::xrn::ecs::component::test::ComponentB
     >().getId() };
 
-    ::xrn::ecs::System<[](::xrn::ecs::component::test::ComponentA& m) { ++m.value;}> system1;
+    ::xrn::ecs::System system1{ [](::xrn::ecs::component::test::ComponentA& m) { ++m.value;} };
     ::xrn::Clock c;
     system1(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 1);
@@ -231,22 +231,21 @@ BOOST_AUTO_TEST_CASE(inlineLambdaMulpiteComponentMulipleEntityMulipleSystem)
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 0);
 
-    ::xrn::ecs::System<[](::xrn::ecs::component::test::ComponentB& t) -> int
-        { ++t.value; return 0; }> system2;
+    ::xrn::ecs::System system2{
+        [](::xrn::ecs::component::test::ComponentB& t) -> int { ++t.value; return 0; }
+    };
     system2(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 1);
 
-    ::xrn::ecs::System<[](
-            ::xrn::ecs::component::test::ComponentA& m,
-            ::xrn::ecs::component::test::ComponentB& t
-        ) {
+    ::xrn::ecs::System system3{
+        [](::xrn::ecs::component::test::ComponentA& m, ::xrn::ecs::component::test::ComponentB& t) {
             ++m.value;
             ++t.value;
         }
-    > system3;
+    };
     system3(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 1);
@@ -265,7 +264,7 @@ BOOST_AUTO_TEST_CASE(systemTime)
         ::xrn::ecs::component::test::ComponentB
     >().getId() };
 
-    ::xrn::ecs::System<detail::function5> system1;
+    ::xrn::ecs::System system1{ detail::function5 };
     ::xrn::Clock c;
     system1(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 1);
@@ -273,31 +272,31 @@ BOOST_AUTO_TEST_CASE(systemTime)
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 1);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 0);
 
-    ::xrn::ecs::System<detail::function6> system2;
+    ::xrn::ecs::System system2{ detail::function6 };
     system2(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 0);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 2);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 0);
 
-    ::xrn::ecs::System<detail::function7> system3;
+    ::xrn::ecs::System system3{ detail::function7 };
     system3(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 3);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 0);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 3);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 0);
 
-    ::xrn::ecs::System<detail::function8> system4;
+    ::xrn::ecs::System system4{ detail::function8 };
     system4(c.restart(), entities);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 3);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 0);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 4);
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 1);
 
-    ::xrn::ecs::System<detail::function9> system5;
+    ::xrn::ecs::System system5{ detail::function9 };
     system5(c.restart(), entities);
 
-    ::xrn::ecs::System<detail::function10> system6;
+    ::xrn::ecs::System system6{ detail::function10 };
     system6(c.restart(), entities);
 }
 
@@ -307,84 +306,82 @@ BOOST_AUTO_TEST_CASE(systemAdditionalArgs)
     ::xrn::ecs::entity::Container entities{ components };
     auto e1Id{ entities.emplace<::xrn::ecs::component::test::ComponentA>().getId() };
 
-    // ::xrn::ecs::System<[](int a, const::xrn::ecs::component::test::ComponentA& m){}> system1{ 2 };
-    // ::xrn::Clock c;
-    // system1(c.restart(), entities);
+    ::xrn::ecs::System system1{
+        [i = 5](::xrn::ecs::component::test::ComponentA& m){ m.value += i; }
+    };
+    ::xrn::Clock c;
+    BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 0);
+    system1(c.restart(), entities);
+    BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 5);
 }
 
 BOOST_AUTO_TEST_CASE(signature)
 {
-    auto value{ ::xrn::ecs::System<detail::function1>::getSignature() ==
+    ::xrn::ecs::System system1{ detail::function1 };
+    auto value{ system1.getSignature() ==
         ::xrn::ecs::Signature::generate<::xrn::ecs::component::test::ComponentA>()
     };
     BOOST_TEST(value);
 
-    value = ::xrn::ecs::System<detail::lambda1>::getSignature() ==
+    ::xrn::ecs::System system2{ detail::lambda1 };
+    value = system2.getSignature() ==
         ::xrn::ecs::Signature::generate<::xrn::ecs::component::test::ComponentA>();
     BOOST_TEST(value);
 
-    value = ::xrn::ecs::System<detail::function3>::getSignature() ==
+    ::xrn::ecs::System system3{ detail::function3 };
+    value = system3.getSignature() ==
         ::xrn::ecs::Signature::generate<
             ::xrn::ecs::component::test::ComponentA,
             ::xrn::ecs::component::test::ComponentB
         >();
     BOOST_TEST(value);
 
-    value = ::xrn::ecs::System<detail::lambda3>::getSignature() ==
+    ::xrn::ecs::System system4{ detail::lambda3 };
+    value = system4.getSignature() ==
         ::xrn::ecs::Signature::generate<
             ::xrn::ecs::component::test::ComponentA,
             ::xrn::ecs::component::test::ComponentB
         >();
     BOOST_TEST(value);
 
-    constexpr auto value2{ ::xrn::ecs::System<detail::function3>::getSignature() ==
-        ::xrn::ecs::Signature::generate<
-            ::xrn::ecs::component::test::ComponentA,
-            ::xrn::ecs::component::test::ComponentB
-        >()
-    };
-    BOOST_TEST(value2);
-
-    constexpr auto value3{ ::xrn::ecs::System<detail::lambda3>::getSignature() ==
-        ::xrn::ecs::Signature::generate<
-            ::xrn::ecs::component::test::ComponentA,
-            ::xrn::ecs::component::test::ComponentB
-        >()
-    };
-    BOOST_TEST(value3);
-
-    value = ::xrn::ecs::System<detail::function5>::getSignature() ==
+    ::xrn::ecs::System system5{ detail::function5 };
+    value = system5.getSignature() ==
         ::xrn::ecs::Signature::generate<
             ::xrn::ecs::component::test::ComponentA
         >();
     BOOST_TEST(value);
 
-    value = ::xrn::ecs::System<detail::function6>::getSignature() ==
+    ::xrn::ecs::System system6{ detail::function6 };
+    value = system6.getSignature() ==
         ::xrn::ecs::Signature::generate<
             ::xrn::ecs::component::test::ComponentA
         >();
     BOOST_TEST(value);
 
-    value = ::xrn::ecs::System<detail::function7>::getSignature() ==
+    ::xrn::ecs::System system7{ detail::function7 };
+    value = system7.getSignature() ==
         ::xrn::ecs::Signature::generate<
             ::xrn::ecs::component::test::ComponentA
         >();
     BOOST_TEST(value);
 
-    value = ::xrn::ecs::System<detail::function8>::getSignature() ==
+    ::xrn::ecs::System system8{ detail::function8 };
+    value = system8.getSignature() ==
         ::xrn::ecs::Signature::generate<
             ::xrn::ecs::component::test::ComponentA,
             ::xrn::ecs::component::test::ComponentB
         >();
     BOOST_TEST(value);
 
-    value = ::xrn::ecs::System<detail::function9>::getSignature() ==
+    ::xrn::ecs::System system9{ detail::function9 };
+    value = system9.getSignature() ==
         ::xrn::ecs::Signature::generate<
             ::xrn::ecs::component::test::ComponentA
         >();
     BOOST_TEST(value);
 
-    value = ::xrn::ecs::System<detail::function10>::getSignature() ==
+    ::xrn::ecs::System system10{ detail::function10 };
+    value = system10.getSignature() ==
         ::xrn::ecs::Signature::generate<
             ::xrn::ecs::component::test::ComponentA
         >();
