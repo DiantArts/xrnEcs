@@ -40,14 +40,9 @@ namespace xrn::ecs::system::constant {
 /// auto e2Id{ entities.emplace<ComponentB>().getId() };
 /// auto e3Id{ entities.emplace<ComponentA, ComponentB>().getId() };
 ///
-/// ::xrn::ecs::System<detail::function1> system;
+/// ::xrn::ecs::ConstSystem system{ detail::function1 };
 /// ::xrn::Clock clock;
 /// system(clock.restart(), entities);
-///
-/// components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value // 1;
-/// components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value // 0;
-/// components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value // 1;
-/// components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value // 0;
 /// \endcode
 ///
 /// \see ::xrn::ecs::system::constant::ASystem, ::xrn::ecs::system::Container

@@ -33,23 +33,16 @@ namespace xrn::ecs::system::constant {
 /// auto e1Id{ entities.emplace<ComponentA>().getId() };
 /// auto e2Id{ entities.emplace<ComponentB>().getId() };
 /// auto e3Id{ entities.emplace<ComponentA, ComponentB>().getId() };
-/// ::xrn::ecs::system::Container systems;
+/// ::xrn::ecs::constant::system::Container systems;
 ///
-/// auto function1{ [](ComponentA& a) { ++a.value; } }
-/// auto function2{ [](ComponentB& b) { ++b.value; } }
-/// auto function3{ [](ComponentA& a, ComponentB& b) { ++a.value; ++b.value; } }
+/// auto function1{ [](ComponentA& a) { /* ... */ } }
+/// auto function2{ [](ComponentB& b) { /* ... */ } }
+/// auto function3{ [](ComponentA& a, ComponentB& b) { /* ... */ } }
 ///
-/// systems.emplace<function1>();
+/// systems.emplace(function1);
+/// systems.emplace(function2);
+/// systems.emplace(function3);
 /// systems.run(clock.restart(), entities);
-/// systems.run(clock.restart(), entities);
-/// systems.emplace<function2>();
-/// systems.run(clock.restart(), entities);
-/// systems.emplace<function3>();
-/// systems.run(clock.restart(), entities);
-/// components.get<ComponentA>(e1Id)->value // 4;
-/// components.get<ComponentB>(e2Id)->value // 2;
-/// components.get<ComponentA>(e3Id)->value // 5;
-/// components.get<ComponentB>(e3Id)->value // 3;
 /// \endcode
 ///
 /// \see ::xrn::ecs::system::System
