@@ -47,13 +47,13 @@
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
+    ::xrn::ecs::detail::constraint::isEcsRegistered... ComponentTypes
 > auto ::xrn::ecs::entity::Container::emplace()
     -> ::xrn::ecs::entity::Reference
 {
     auto& entity{ m_entities.emplace_back() };
     if constexpr (sizeof...(ComponentTypes) > 0) {
-        entity.addComponents<ComponentTypes...>(m_components);
+        entity.add<ComponentTypes...>(m_components);
     }
     return ::xrn::ecs::entity::Reference{ m_components, entity };
 }

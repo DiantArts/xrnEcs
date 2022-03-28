@@ -10,7 +10,7 @@
 namespace xrn::meta {
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Execute actions for each type
+/// \brief Execute actions for each types
 /// \ingroup meta
 ///
 /// \include ForEach.hpp <xrn/Meta/ForEach.hpp>

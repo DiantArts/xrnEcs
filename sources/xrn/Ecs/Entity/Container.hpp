@@ -163,7 +163,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
+        ::xrn::ecs::detail::constraint::isEcsRegistered... ComponentTypes
     > auto emplace()
         -> ::xrn::ecs::entity::Reference;
 

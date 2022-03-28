@@ -30,9 +30,9 @@ void ::xrn::ecs::system::constant::Container::run(
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
-void ::xrn::ecs::system::constant::Container::emplace(
+auto ::xrn::ecs::system::constant::Container::emplace(
     auto function
-)
+) -> ::xrn::ecs::constant::ASystem&
 {
     if constexpr (!::xrn::ecs::detail::meta::Function<decltype(function)>::Arguments::areConst) {
         ::std::cerr
@@ -41,4 +41,5 @@ void ::xrn::ecs::system::constant::Container::emplace(
     } else {
         m_systems.push_back(::std::make_unique<::xrn::ecs::ConstSystem<decltype(function)>>(function));
     }
+    return *m_systems.back();
 }

@@ -3,16 +3,16 @@
 namespace xrn::meta::constraint {
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Checks whether the Type given as template parameter is an
-///        ::xrn::ecs::entity::Entity
+/// \brief Checks whether the two types given as template parameter are the
+///        same
 ///
 /// The comparison ignores cv-qualifiers, references (compares the type
 /// referenced) and pointers (compares the type pointed)
 ///
 /// \tparam Type to check
 ///
-/// \return True if the Type given as template parameter is an
-///         ::xrn::ecs::entity::Entity. False otherwise
+/// \return True if the types given as template parameter are the same.
+///         False otherwise
 ///
 /// \see ::xrn::ecs::entity::Entity
 ///
@@ -47,7 +47,7 @@ template <
 /// \brief Is the value given to a function or method mutates the original
 /// variable
 ///
-/// Same as ::xrn::meta::constraint::isConst, but retirns.
+/// Opposite of ::xrn::meta::constraint::isConst.
 ///
 /// \tparam Type to check
 ///

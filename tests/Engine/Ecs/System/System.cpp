@@ -315,6 +315,127 @@ BOOST_AUTO_TEST_CASE(systemAdditionalArgs)
     BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 5);
 }
 
+BOOST_AUTO_TEST_CASE(banished)
+{
+    ::xrn::ecs::component::Container components;
+    ::xrn::ecs::entity::Container entities{ components };
+    auto e1Id{ entities.emplace<::xrn::ecs::component::test::ComponentA>().getId() };
+    auto e2Id{ entities.emplace<::xrn::ecs::component::test::ComponentB>().getId() };
+    auto e3Id{ entities.emplace<
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB
+    >().getId() };
+
+    ::xrn::ecs::System system1{ detail::function1 };
+    ::xrn::Clock c;
+    system1(c.restart(), entities);
+    BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 1);
+    BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 0);
+    BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 1);
+    BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 0);
+
+    system1.banish<::xrn::ecs::component::test::ComponentB>();
+    system1(c.restart(), entities);
+    BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 2);
+    BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 0);
+    BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 1);
+    BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 0);
+}
+
+BOOST_AUTO_TEST_CASE(ability)
+{
+    ::xrn::ecs::component::Container components;
+    ::xrn::ecs::entity::Container entities{ components };
+    auto e1Id{ entities.emplace<
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::AbilityA
+    >().getId() };
+    auto e2Id{ entities.emplace<::xrn::ecs::component::test::ComponentB>().getId() };
+    auto e3Id{ entities.emplace<
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB
+    >().getId() };
+
+    ::xrn::ecs::System system1{ detail::function1 };
+    ::xrn::Clock c;
+    system1(c.restart(), entities);
+    BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 1);
+    BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 0);
+    BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 1);
+    BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 0);
+
+    system1.addToSignature<::xrn::ecs::component::test::AbilityA>();
+    system1(c.restart(), entities);
+    BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e1Id)->value == 2);
+    BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e2Id)->value == 0);
+    BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentA>(e3Id)->value == 1);
+    BOOST_TEST(components.get<::xrn::ecs::component::test::ComponentB>(e3Id)->value == 0);
+}
+
+BOOST_AUTO_TEST_CASE(banishedConst)
+{
+    ::xrn::ecs::component::Container components;
+    ::xrn::ecs::entity::Container entities{ components };
+    auto e1Id{ entities.emplace<
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::AbilityA
+    >().getId() };
+    auto e2Id{ entities.emplace<::xrn::ecs::component::test::ComponentB>().getId() };
+    auto e3Id{ entities.emplace<
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB
+    >().getId() };
+
+    int i = 0;
+    ::xrn::ecs::ConstSystem system1{
+        [&i](
+            const ::xrn::ecs::entity::Entity& e,
+            const ::xrn::ecs::component::test::ComponentA& m
+        ) {
+            i++;
+        }
+    };
+    ::xrn::Clock c;
+    system1(c.restart(), entities);
+    BOOST_TEST(i == 2);
+
+    system1.banish<::xrn::ecs::component::test::ComponentB>();
+    system1(c.restart(), entities);
+    BOOST_TEST(i == 3);
+}
+
+BOOST_AUTO_TEST_CASE(abilityConst)
+{
+    ::xrn::ecs::component::Container components;
+    ::xrn::ecs::entity::Container entities{ components };
+    auto e1Id{ entities.emplace<
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::AbilityA
+    >().getId() };
+    auto e2Id{ entities.emplace<::xrn::ecs::component::test::ComponentB>().getId() };
+    auto e3Id{ entities.emplace<
+        ::xrn::ecs::component::test::ComponentA,
+        ::xrn::ecs::component::test::ComponentB
+    >().getId() };
+
+    int i = 0;
+    ::xrn::ecs::ConstSystem system1{
+        [&i](
+            const ::xrn::ecs::entity::Entity& e,
+            const ::xrn::ecs::component::test::ComponentA& m
+        ) {
+            i++;
+        }
+    };
+    ::xrn::Clock c;
+    system1(c.restart(), entities);
+    BOOST_TEST(i == 2);
+
+    system1.addToSignature<::xrn::ecs::component::test::AbilityA>();
+    system1(c.restart(), entities);
+    BOOST_TEST(i == 3);
+}
+
 BOOST_AUTO_TEST_CASE(signature)
 {
     ::xrn::ecs::System system1{ detail::function1 };

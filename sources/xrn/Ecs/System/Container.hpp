@@ -13,7 +13,7 @@
 namespace xrn::ecs::system {
 
 ///////////////////////////////////////////////////////////////////////////
-/// \brief Representation a system in the xrn ecs Project
+/// \brief Containers of systems
 /// \ingroup ecs-system
 ///
 /// \include System.hpp <xrn/Ecs/System/System.hpp>
@@ -102,16 +102,18 @@ public:
     /// \tparam function Function to pass to the system
     /// \tparam Types    Types to pass to the system
     ///
+    /// \see ::xrn::ecs::system::ASystem
+    ///
     ///////////////////////////////////////////////////////////////////////////
-    void emplace(
+    auto emplace(
         auto function
-    );
+    ) -> ::xrn::ecs::ASystem&;
 
 
 
 private:
 
-    ::std::vector<::std::unique_ptr<::xrn::ecs::system::ASystem>> m_systems{};
+    ::std::vector<::std::unique_ptr<::xrn::ecs::ASystem>> m_systems{};
 
 };
 
