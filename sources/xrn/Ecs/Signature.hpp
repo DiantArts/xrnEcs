@@ -67,7 +67,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        typename... Types
+        ::xrn::ecs::detail::constraint::isEcsRegistered... Types
     > [[ nodiscard ]] static consteval auto generate() noexcept
         -> ::xrn::ecs::Signature;
 
@@ -108,7 +108,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        typename... Types
+        ::xrn::ecs::detail::constraint::isEcsRegistered... Types
     > constexpr void add();
 
     ///////////////////////////////////////////////////////////////////////////
@@ -123,7 +123,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     template <
         ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-    > constexpr void add();
+    > constexpr void addComponents();
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Adds abilities to the signature
@@ -137,7 +137,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     template <
         ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
-    > constexpr void add();
+    > constexpr void addAbilities();
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Adds components to the signature
@@ -162,7 +162,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        typename... Types
+        ::xrn::ecs::detail::constraint::isEcsRegistered... Types
     > constexpr void set();
 
     ///////////////////////////////////////////////////////////////////////////
@@ -175,7 +175,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     template <
         ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-    > constexpr void set();
+    > constexpr void setComponents();
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Adds abilities to the signature
@@ -187,7 +187,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     template <
         ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
-    > constexpr void set();
+    > constexpr void setAbilities();
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Adds components to the signature
@@ -223,7 +223,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        typename... ComponentTypes
+        ::xrn::ecs::detail::constraint::isEcsRegistered... Types
     > constexpr void remove();
 
     ///////////////////////////////////////////////////////////////////////////
@@ -238,7 +238,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     template <
         ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-    > constexpr void remove();
+    > constexpr void removeComponents();
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Removes abilities from the signature
@@ -251,8 +251,8 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        ::xrn::ecs::detail::constraint::isAbility... ComponentTypes
-    > constexpr void remove();
+        ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
+    > constexpr void removeAbilities();
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Removes components from the signature
@@ -285,7 +285,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        typename... ComponentTypes
+        ::xrn::ecs::detail::constraint::isEcsRegistered... Types
     > constexpr void reset();
 
     ///////////////////////////////////////////////////////////////////////////
@@ -300,7 +300,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     template <
         ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-    > constexpr void reset();
+    > constexpr void resetComponents();
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Removes abilities from the signature
@@ -313,8 +313,8 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        ::xrn::ecs::detail::constraint::isAbility... ComponentTypes
-    > constexpr void reset();
+        ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
+    > constexpr void resetAbilities();
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Removes components from the signature
@@ -348,7 +348,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        typename Type
+        ::xrn::ecs::detail::constraint::isEcsRegistered Type
     > [[ nodiscard ]] constexpr auto get() const
         -> bool;
 
@@ -364,7 +364,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     template <
         ::xrn::ecs::detail::constraint::isComponent ComponentType
-    > [[ nodiscard ]] constexpr auto get() const
+    > [[ nodiscard ]] constexpr auto getComponent() const
         -> bool;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -378,8 +378,8 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        ::xrn::ecs::detail::constraint::isAbility ComponentType
-    > [[ nodiscard ]] constexpr auto get() const
+        ::xrn::ecs::detail::constraint::isAbility AbilityType
+    > [[ nodiscard ]] constexpr auto getAbility() const
         -> bool;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -491,7 +491,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        typename... Types
+        ::xrn::ecs::detail::constraint::isEcsRegistered... Types
     > [[ nodiscard ]] constexpr auto contains() const
         -> bool;
 
@@ -508,8 +508,8 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-    > [[ nodiscard ]] constexpr auto contains() const
+        ::xrn::ecs::detail::constraint::isComponent... AbilityTypes
+    > [[ nodiscard ]] constexpr auto containsComponents() const
         -> bool;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -526,7 +526,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     template <
         ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
-    > [[ nodiscard ]] constexpr auto contains() const
+    > [[ nodiscard ]] constexpr auto containsAbilities() const
         -> bool;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -594,7 +594,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        typename... ComponentTypes
+        ::xrn::ecs::detail::constraint::isEcsRegistered... Types
     > [[ nodiscard ]] constexpr auto containsAll() const
         -> bool;
 
@@ -612,7 +612,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     template <
         ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-    > [[ nodiscard ]] constexpr auto containsAll() const
+    > [[ nodiscard ]] constexpr auto containsAllComponents() const
         -> bool;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -629,7 +629,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     template <
         ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
-    > [[ nodiscard ]] constexpr auto containsAll() const
+    > [[ nodiscard ]] constexpr auto containsAllAbilities() const
         -> bool;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -690,7 +690,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        typename... Types
+        ::xrn::ecs::detail::constraint::isEcsRegistered... Types
     > [[ nodiscard ]] constexpr auto containsAny() const
         -> bool;
 
@@ -707,7 +707,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     template <
         ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-    > [[ nodiscard ]] constexpr auto containsAny() const
+    > [[ nodiscard ]] constexpr auto containsAnyComponent() const
         -> bool;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -723,7 +723,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     template <
         ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
-    > [[ nodiscard ]] constexpr auto containsAny() const
+    > [[ nodiscard ]] constexpr auto containsAnyAbility() const
         -> bool;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -783,7 +783,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        typename... ComponentTypes
+        ::xrn::ecs::detail::constraint::isEcsRegistered... Types
     > [[ nodiscard ]] constexpr auto containsNone() const
         -> bool;
 
@@ -797,7 +797,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     template <
         ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-    > [[ nodiscard ]] constexpr auto containsNone() const
+    > [[ nodiscard ]] constexpr auto containsNoneComponent() const
         -> bool;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -810,7 +810,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     template <
         ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
-    > [[ nodiscard ]] constexpr auto containsNone() const
+    > [[ nodiscard ]] constexpr auto containsNoneAbility() const
         -> bool;
 
     ///////////////////////////////////////////////////////////////////////////

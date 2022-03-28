@@ -201,15 +201,31 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Removes an ::xrn::ecs::entity::Entity from the container
     ///
-    /// Remove the entity that matches the ::xrn::util::BasicForwardId given as parameter.
+    /// Remove the entity that matches the ::xrn::util::BasicForwardId given as
+    /// parameter.
     ///
-    /// \param entityId Id to find and delete
+    /// \param Entity entity to find and delete
+    ///
+    /// \see ::xrn::ecs::entity::Entity
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    inline void remove(
+        ::xrn::Id entityId
+    );
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Removes an ::xrn::ecs::entity::Entity from the container
+    ///
+    /// Remove the entity that matches the ::xrn::util::BasicForwardId given as
+    /// parameter.
+    ///
+    /// \param entity Id to find and delete
     ///
     /// \see ::xrn::util::BasicForwardId
     ///
     ///////////////////////////////////////////////////////////////////////////
     inline void remove(
-        ::xrn::Id entityId
+        const ::xrn::ecs::Entity& entity
     );
 
     ///////////////////////////////////////////////////////////////////////////
@@ -367,6 +383,203 @@ public:
     [[ nodiscard ]] inline auto unsafeGet(
         ::xrn::Id entityId
     ) -> ::xrn::ecs::entity::Reference;
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // GetComponents
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets the entity component
+    ///
+    /// \warning The component pointer might be invalidated if an action other
+    ///          than accessing is performed on the component container.
+    ///
+    /// \tparam ComponentType Component to search in the container and return
+    ///         if existing
+    ///
+    /// \param entityId Entity to find
+    ///
+    /// \return Pointer to the component, or nullptr if the component does not
+    ///         exist.
+    ///
+    /// \see ::xrn::util::BasicForwardId
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    template <
+        ::xrn::ecs::detail::constraint::isComponent ComponentType
+    > [[ nodiscard ]] auto getComponent(
+        ::xrn::Id entityId
+    ) const
+        -> const ::std::remove_cvref_t<::std::remove_pointer_t<ComponentType>>*;
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets the entity component
+    ///
+    /// \warning The component pointer might be invalidated if an action other
+    ///          than accessing is performed on the component container.
+    ///
+    /// \tparam ComponentType Component to search in the container and return
+    ///         if existing
+    ///
+    /// \param entity Reference to the Entity
+    ///
+    /// \return Pointer to the component, or nullptr if the component does not
+    ///         exist.
+    ///
+    /// \see ::xrn::ecs::Entity
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    template <
+        ::xrn::ecs::detail::constraint::isComponent ComponentType
+    > [[ nodiscard ]] auto getComponent(
+        const ::xrn::ecs::Entity& entity
+    ) const
+        -> const ::std::remove_cvref_t<::std::remove_pointer_t<ComponentType>>*;
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets the entity component
+    ///
+    /// \warning The component pointer might be invalidated if an action other
+    ///          than accessing is performed on the component container.
+    ///
+    /// \tparam ComponentType Component to search in the container and return
+    ///         if existing
+    ///
+    /// \param entityReference Reference to the Entity
+    ///
+    /// \return Pointer to the component, or nullptr if the component does not
+    ///         exist.
+    ///
+    /// \see ::xrn::ecs::entity::Reference
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    template <
+        ::xrn::ecs::detail::constraint::isComponent ComponentType
+    > [[ nodiscard ]] auto getComponent(
+        const ::xrn::ecs::entity::Reference& entityReference
+    ) const
+        -> const ::std::remove_cvref_t<::std::remove_pointer_t<ComponentType>>*;
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets the entity component
+    ///
+    /// \warning The component pointer might be invalidated if an action other
+    ///          than accessing is performed on the component container.
+    ///
+    /// \tparam ComponentType Component to search in the container and return
+    ///         if existing
+    ///
+    /// \param entityReference Reference to the Entity
+    ///
+    /// \return Pointer to the component, or nullptr if the component does not
+    ///         exist.
+    ///
+    /// \see ::xrn::ecs::entity::Reference
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    template <
+        ::xrn::ecs::detail::constraint::isComponent ComponentType
+    > [[ nodiscard ]] auto getComponent(
+        const ::xrn::ecs::entity::ConstReference& entityReference
+    ) const
+        -> const ::std::remove_cvref_t<::std::remove_pointer_t<ComponentType>>*;
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets the mutable entity component
+    ///
+    /// \warning The component pointer might be invalidated if an action other
+    ///          than accessing is performed on the component container.
+    ///
+    /// \tparam ComponentType Component to search in the container and return
+    ///         if existing
+    ///
+    /// \param entityId Entity to find
+    ///
+    /// \return Pointer to the component, or nullptr if the component does not
+    ///         exist.
+    ///
+    /// \see ::xrn::util::BasicForwardId
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    template <
+        ::xrn::ecs::detail::constraint::isComponent ComponentType
+    > [[ nodiscard ]] auto getComponent(
+        ::xrn::Id entityId
+    ) -> ::std::remove_cvref_t<::std::remove_pointer_t<ComponentType>>*;
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets the mutable entity component
+    ///
+    /// \warning The component pointer might be invalidated if an action other
+    ///          than accessing is performed on the component container.
+    ///
+    /// \tparam ComponentType Component to search in the container and return
+    ///         if existing
+    ///
+    /// \param entity Reference to the Entity
+    ///
+    /// \return Pointer to the component, or nullptr if the component does not
+    ///         exist.
+    ///
+    /// \see ::xrn::ecs::Entity
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    template <
+        ::xrn::ecs::detail::constraint::isComponent ComponentType
+    > [[ nodiscard ]] auto getComponent(
+        const ::xrn::ecs::Entity& entity
+    ) -> ::std::remove_cvref_t<::std::remove_pointer_t<ComponentType>>*;
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets the mutable entity component
+    ///
+    /// \warning The component pointer might be invalidated if an action other
+    ///          than accessing is performed on the component container.
+    ///
+    /// \tparam ComponentType Component to search in the container and return
+    ///         if existing
+    ///
+    /// \param entityReference Reference to the Entity
+    ///
+    /// \return Pointer to the component, or nullptr if the component does not
+    ///         exist.
+    ///
+    /// \see ::xrn::ecs::entity::Reference
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    template <
+        ::xrn::ecs::detail::constraint::isComponent ComponentType
+    > [[ nodiscard ]] auto getComponent(
+        const ::xrn::ecs::entity::Reference& entityReference
+    ) -> ::std::remove_cvref_t<::std::remove_pointer_t<ComponentType>>*;
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets the mutable entity component
+    ///
+    /// \warning The component pointer might be invalidated if an action other
+    ///          than accessing is performed on the component container.
+    ///
+    /// \tparam ComponentType Component to search in the container and return
+    ///         if existing
+    ///
+    /// \param entityReference Reference to the Entity
+    ///
+    /// \return Pointer to the component, or nullptr if the component does not
+    ///         exist.
+    ///
+    /// \see ::xrn::ecs::entity::ConstReference
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    template <
+        ::xrn::ecs::detail::constraint::isComponent ComponentType
+    > [[ nodiscard ]] auto getComponent(
+        const ::xrn::ecs::entity::ConstReference& entityReference
+    ) -> ::std::remove_cvref_t<::std::remove_pointer_t<ComponentType>>*;
 
 
 

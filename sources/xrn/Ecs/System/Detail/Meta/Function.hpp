@@ -7,6 +7,22 @@
 namespace xrn::ecs::detail::meta {
 
 
+template <
+    typename... ArgTypes
+> [[ nodiscard ]] static inline consteval auto generateSignature()
+{
+    ::xrn::ecs::Signature signature;
+    ::xrn::meta::ForEach<ArgTypes...>::template run<
+        []<typename Type>(::xrn::ecs::Signature& signature){
+            if constexpr (::xrn::ecs::detail::constraint::isEcsRegistered<Type>) {
+                signature.add<Type>();
+            }
+        }
+    >(signature);
+    return signature;
+}
+
+
 
 template <
     typename func
@@ -18,20 +34,20 @@ template <
 
 template <
     typename RetType,
-    typename... ArgsType
-> struct Function<RetType(ArgsType...)> {
+    typename... ArgTypes
+> struct Function<RetType(ArgTypes...)> {
 
     struct Return {
         using Type = RetType;
     };
 
     struct Arguments {
-        using Type = ::std::tuple<ArgsType...>;
+        using Type = ::std::tuple<ArgTypes...>;
         static constexpr const auto areConst{ ((
-            ::std::is_const<::std::remove_reference_t<ArgsType>>::value ||
-            !::std::is_reference<ArgsType>::value
+            ::std::is_const<::std::remove_reference_t<ArgTypes>>::value ||
+            !::std::is_reference<ArgTypes>::value
         ) && ...) };
-        static inline constexpr auto signature{ ::xrn::ecs::Signature::generate<ArgsType...>() };
+        static inline constexpr auto signature{ ::xrn::ecs::detail::meta::generateSignature<ArgTypes...>() };
     };
 
 };
@@ -40,18 +56,18 @@ template <
 
 template <
     typename RetType,
-    typename... ArgsType
-> struct Function<RetType(*)(ArgsType...)>
-    : public ::xrn::ecs::detail::meta::Function<RetType(ArgsType...)>
+    typename... ArgTypes
+> struct Function<RetType(*)(ArgTypes...)>
+    : public ::xrn::ecs::detail::meta::Function<RetType(ArgTypes...)>
 {};
 
 
 
 template <
     typename RetType,
-    typename... ArgsType
-> struct Function<::std::function<RetType(ArgsType...)>>
-    : public ::xrn::ecs::detail::meta::Function<RetType(ArgsType...)>
+    typename... ArgTypes
+> struct Function<::std::function<RetType(ArgTypes...)>>
+    : public ::xrn::ecs::detail::meta::Function<RetType(ArgTypes...)>
 {};
 
 
@@ -59,20 +75,20 @@ template <
 template <
     typename ClassType,
     typename RetType,
-    typename... ArgsType
->struct Function<RetType(ClassType::*)(ArgsType...) const> {
+    typename... ArgTypes
+>struct Function<RetType(ClassType::*)(ArgTypes...) const> {
 
     struct Return {
         using Type = RetType;
     };
 
     struct Arguments {
-        using Type = ::std::tuple<ArgsType...>;
+        using Type = ::std::tuple<ArgTypes...>;
         static constexpr const auto areConst{ ((
-            ::std::is_const<::std::remove_reference_t<ArgsType>>::value ||
-            !::std::is_reference<ArgsType>::value
+            ::std::is_const<::std::remove_reference_t<ArgTypes>>::value ||
+            !::std::is_reference<ArgTypes>::value
         ) && ...) };
-        static inline constexpr auto signature{ ::xrn::ecs::Signature::generate<ArgsType...>() };
+        static inline constexpr auto signature{ ::xrn::ecs::detail::meta::generateSignature<ArgTypes...>() };
     };
 };
 
