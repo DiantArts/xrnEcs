@@ -221,6 +221,99 @@ auto ::xrn::ecs::entity::Container::unsafeGet(
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
+// GetComponents
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isComponent ComponentType
+> auto ::xrn::ecs::entity::Container::getComponent(
+    ::xrn::Id entityId
+) const
+    -> const ::std::remove_cvref_t<::std::remove_pointer_t<ComponentType>>*
+{
+    return m_components.get<ComponentType>(entityId);
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isComponent ComponentType
+> auto ::xrn::ecs::entity::Container::getComponent(
+    const ::xrn::ecs::Entity& entity
+) const
+    -> const ::std::remove_cvref_t<::std::remove_pointer_t<ComponentType>>*
+{
+    return m_components.get<ComponentType>(entity.getId());
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isComponent ComponentType
+> auto ::xrn::ecs::entity::Container::getComponent(
+    const ::xrn::ecs::entity::Reference& entityReference
+) const
+    -> const ::std::remove_cvref_t<::std::remove_pointer_t<ComponentType>>*
+{
+    return m_components.get<ComponentType>(entityReference.getId());
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isComponent ComponentType
+> auto ::xrn::ecs::entity::Container::getComponent(
+    const ::xrn::ecs::entity::ConstReference& entityReference
+) const
+    -> const ::std::remove_cvref_t<::std::remove_pointer_t<ComponentType>>*
+{
+    return m_components.get<ComponentType>(entityReference.getId());
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isComponent ComponentType
+> auto ::xrn::ecs::entity::Container::getComponent(
+    ::xrn::Id entityId
+) -> ::std::remove_cvref_t<::std::remove_pointer_t<ComponentType>>*
+{
+    return m_components.get<ComponentType>(entityId);
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isComponent ComponentType
+> auto ::xrn::ecs::entity::Container::getComponent(
+    const ::xrn::ecs::Entity& entity
+) -> ::std::remove_cvref_t<::std::remove_pointer_t<ComponentType>>*
+{
+    return m_components.get<ComponentType>(entity.getId());
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isComponent ComponentType
+> auto ::xrn::ecs::entity::Container::getComponent(
+    const ::xrn::ecs::entity::Reference& entityReference
+) -> ::std::remove_cvref_t<::std::remove_pointer_t<ComponentType>>*
+{
+    return m_components.get<ComponentType>(entityReference.getId());
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    ::xrn::ecs::detail::constraint::isComponent ComponentType
+> auto ::xrn::ecs::entity::Container::getComponent(
+    const ::xrn::ecs::entity::ConstReference& entityReference
+) -> ::std::remove_cvref_t<::std::remove_pointer_t<ComponentType>>*
+{
+    return m_components.get<ComponentType>(entityReference.getId());
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 // Contains
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////

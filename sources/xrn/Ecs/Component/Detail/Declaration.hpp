@@ -51,7 +51,7 @@ namespace xrn::ecs::component::declaration::detail {
 ///
 ///////////////////////////////////////////////////////////////////////////
 #define COMPONENT(className) \
-    class className; \
+    struct className; \
     template <> class xrn::ecs::component::declaration::detail::IdHandler<className> { \
     public: [[ nodiscard ]] static inline consteval ::std::size_t getId() { return m_id; } \
     private: static inline constexpr const auto m_id{ \
@@ -66,7 +66,7 @@ namespace xrn::ecs::component::declaration::detail {
     struct xrn::ecs::component::declaration::detail::IsComponent<className> \
         : public ::std::true_type \
     {}; \
-    class className \
+    struct className \
         : public ::xrn::ecs::component::declaration::detail::IdHandler<::std::remove_cvref_t<className>> \
 
 ///////////////////////////////////////////////////////////////////////////
@@ -83,7 +83,7 @@ namespace xrn::ecs::component::declaration::detail {
 ///
 ///////////////////////////////////////////////////////////////////////////
 #define COMPONENT_IN_NAMESPACE(namespaceName, className) \
-    class className; \
+    struct className; \
     } /* leaving namespace */ \
     template <> class xrn::ecs::component::declaration::detail::IdHandler<namespaceName::className> { \
     public: [[ nodiscard ]] static inline consteval ::std::size_t getId() { return m_id; } \
@@ -100,7 +100,7 @@ namespace xrn::ecs::component::declaration::detail {
         : public ::std::true_type \
     {}; \
     namespace namespaceName { /* reentering namespace */ \
-    class className \
+    struct className \
         : public ::xrn::ecs::component::declaration::detail::IdHandler<::std::remove_cvref_t<className>> \
 
 ///////////////////////////////////////////////////////////////////////////
@@ -119,7 +119,7 @@ namespace xrn::ecs::component::declaration::detail {
 ///
 ///////////////////////////////////////////////////////////////////////////
 #define ABILITY(className) \
-    class className; \
+    struct className; \
     template <> class xrn::ecs::component::declaration::detail::IdHandler<className> { \
     public: [[ nodiscard ]] static inline consteval ::std::size_t getId() { return m_id; } \
     private: static inline constexpr const auto m_id{ \
@@ -134,7 +134,7 @@ namespace xrn::ecs::component::declaration::detail {
     struct xrn::ecs::component::declaration::detail::IsAbility<className> \
         : public ::std::true_type \
     {}; \
-    class className final \
+    struct className final \
         : public ::xrn::ecs::component::declaration::detail::IdHandler<::std::remove_cvref_t<className>> \
     { className(); } \
 
@@ -154,7 +154,7 @@ namespace xrn::ecs::component::declaration::detail {
 ///
 ///////////////////////////////////////////////////////////////////////////
 #define ABILITY_IN_NAMESPACE(namespaceName, className) \
-    class className; \
+    struct className; \
     } /* leaving namespace */ \
     template <> class xrn::ecs::component::declaration::detail::IdHandler<namespaceName::className> { \
     public: [[ nodiscard ]] static inline consteval ::std::size_t getId() { return m_id; } \
@@ -171,7 +171,7 @@ namespace xrn::ecs::component::declaration::detail {
         : public ::std::true_type \
     {}; \
     namespace namespaceName { /* reentering namespace */ \
-    class className final \
+    struct className final \
         : public ::xrn::ecs::component::declaration::detail::IdHandler<::std::remove_cvref_t<className>> \
     { className(); } \
 

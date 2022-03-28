@@ -351,6 +351,55 @@ public:
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
+    // GetComponents
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets the entity component
+    ///
+    /// \warning The component pointer might be invalidated if an action other
+    ///          than accessing is performed on the component container.
+    ///
+    /// \tparam ComponentType Component to search in the container and return
+    ///         if existing
+    ///
+    /// \return Pointer to the component, or nullptr if the component does not
+    ///         exist.
+    ///
+    /// \see ::xrn::util::BasicForwardId
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    template <
+        ::xrn::ecs::detail::constraint::isComponent ComponentType
+    > [[ nodiscard ]] auto getComponent() const
+        -> const ::std::remove_cvref_t<::std::remove_pointer_t<ComponentType>>*;
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Gets the mutable entity component
+    ///
+    /// \warning The component pointer might be invalidated if an action other
+    ///          than accessing is performed on the component container.
+    ///
+    /// \tparam ComponentType Component to search in the container and return
+    ///         if existing
+    ///
+    /// \return Pointer to the component, or nullptr if the component does not
+    ///         exist.
+    ///
+    /// \see ::xrn::util::BasicForwardId
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    template <
+        ::xrn::ecs::detail::constraint::isComponent ComponentType
+    > [[ nodiscard ]] auto getComponent()
+        -> ::std::remove_cvref_t<::std::remove_pointer_t<ComponentType>>*;
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     // Getters
     //
     ///////////////////////////////////////////////////////////////////////////////////////////////

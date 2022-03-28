@@ -158,11 +158,8 @@ public:
     /// Creates a component and place it inside the container. This component
     /// will be linked to the entity given as parameter.
     ///
-    /// \warning The reference might be unvalidated when another component is
-    ///          created. Accessing the reference after a non const method
-    ///          might lead to undefined behaviors.
-    ///
-    /// \return Reference to the component created
+    /// \warning The component pointer might be invalidated if an action other
+    ///          than accessing is performed on the component container.
     ///
     /// \tparam ComponentType Type of the component to create
     ///
@@ -170,7 +167,7 @@ public:
     /// \param args   Argument to perfect forward to the constructor of the
     ///               component
     ///
-    /// \returns Reference to the component created
+    /// \return Reference to the component created
     ///
     /// \see ::xrn::ecs::component::declaration::detail::AComponent,
     ///      ::xrn::ecs::entity::Entity
@@ -189,19 +186,16 @@ public:
     /// Creates a component and place it inside the container. This component
     /// will be linked to the entity given as parameter.
     ///
-    /// \warning The reference might be unvalidated when another component is
-    ///          created. Accessing the reference after a non const method
-    ///          might lead to undefined behaviors.
-    ///
-    /// \return Reference to the component created
+    /// \warning The component pointer might be invalidated if an action other
+    ///          than accessing is performed on the component container.
     ///
     /// \tparam ComponentType Type of the component to create
     ///
-    /// \param entityId Id referencing the Entity that contains the component
-    /// \param args     Argument to perfect forward to the constructor of the
-    ///                 component
+    /// \param entity Entity that contains the component
+    /// \param args   Argument to perfect forward to the constructor of the
+    ///               component
     ///
-    /// \returns Reference to the component created
+    /// \return Reference to the component created
     ///
     /// \see ::xrn::ecs::component::declaration::detail::AComponent,
     ///      ::xrn::util::BasicForwardId
@@ -687,7 +681,7 @@ public:
 
 private:
 
-    static constexpr const auto defaultBaseSize{ 1024uz };
+    static constexpr const auto defaultBaseSize{ 1'024uz };
     ::xrn::ecs::component::detail::MemoryManager m_memoryManager;
     ::std::vector<::std::byte> m_data;
 

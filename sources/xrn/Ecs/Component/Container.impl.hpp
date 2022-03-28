@@ -99,7 +99,7 @@ template <
     ::xrn::ecs::entity::Entity& entity
 ) noexcept
 {
-    static_assert(sizeof...(ComponentTypes), "Emplace many called with 0 arguments");
+    static_assert(sizeof...(ComponentTypes), "Emplace many called with 0 template arguments");
     (this->emplace<ComponentTypes>(entity.getId()), ...);
 }
 
@@ -110,7 +110,7 @@ template <
     const Container::EntityId entityId
 ) noexcept
 {
-    static_assert(sizeof...(ComponentTypes), "Emplace many called with 0 arguments");
+    static_assert(sizeof...(ComponentTypes), "Emplace many called with 0 template arguments");
     (this->emplace<ComponentTypes>(entityId), ...);
 }
 
@@ -194,7 +194,7 @@ template <
     ::xrn::ecs::entity::Entity& entity
 )
 {
-    static_assert(sizeof...(ComponentTypes), "Remove many called with 0 arguments");
+    static_assert(sizeof...(ComponentTypes), "Remove many called with 0 template arguments");
     (this->remove<ComponentTypes>(entity.getId()), ...);
 }
 
@@ -205,7 +205,7 @@ template <
     const Container::EntityId entityId
 )
 {
-    static_assert(sizeof...(ComponentTypes), "Remove many called with 0 arguments");
+    static_assert(sizeof...(ComponentTypes), "Remove many called with 0 template arguments");
     (this->remove<ComponentTypes>(entityId), ...);
 }
 
@@ -244,7 +244,7 @@ template <
     ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > void ::xrn::ecs::component::Container::clearMany()
 {
-    static_assert(sizeof...(ComponentTypes), "Clear many called with 0 arguments");
+    static_assert(sizeof...(ComponentTypes), "Clear many called with 0 template arguments");
     this->clear<ComponentTypes...>();
 }
 
@@ -344,7 +344,7 @@ template <
 ) const
     -> bool
 {
-    static_assert(sizeof...(ComponentTypes), "Contains many called with 0 arguments");
+    static_assert(sizeof...(ComponentTypes), "Contains many called with 0 template arguments");
     return (this->contains<ComponentTypes>(entity.getId()) && ...);
 }
 
@@ -356,6 +356,6 @@ template <
 ) const
     -> bool
 {
-    static_assert(sizeof...(ComponentTypes), "Contains many called with 0 arguments");
+    static_assert(sizeof...(ComponentTypes), "Contains many called with 0 template arguments");
     return (this->contains<ComponentTypes>(entityId) && ...);
 }

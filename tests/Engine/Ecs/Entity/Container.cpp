@@ -45,6 +45,12 @@ BOOST_AUTO_TEST_CASE(singleComponent)
 
     BOOST_TEST(entity.hasComponent<::xrn::ecs::component::test::ComponentA>());
     BOOST_TEST(!entity.hasComponent<::xrn::ecs::component::test::ComponentB>());
+    BOOST_TEST(entity.getComponent<::xrn::ecs::component::test::ComponentA>());
+    BOOST_TEST(!entity.getComponent<::xrn::ecs::component::test::ComponentB>());
+    BOOST_TEST(entities.getComponent<::xrn::ecs::component::test::ComponentA>(entity));
+    BOOST_TEST(!entities.getComponent<::xrn::ecs::component::test::ComponentB>(entity));
+    BOOST_TEST(entities.getComponent<::xrn::ecs::component::test::ComponentA>(entity.getId()));
+    BOOST_TEST(!entities.getComponent<::xrn::ecs::component::test::ComponentB>(entity.getId()));
 }
 
 BOOST_AUTO_TEST_CASE(multipleComponent)
