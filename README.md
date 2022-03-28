@@ -18,8 +18,8 @@ trouble for the base of a Game Engine where all small optimizations are welcome.
 
 ## Technologies used
 * c++2b
-* boost 1.78.0 (only for boost::tests tho)
-* Nanobench 4.3.6 (only for benchmarks, not necessary for the usage)
+* [boost](https://github.com/boostorg/boost) 1.78.0 / [boost::tests](https://github.com/boostorg/test) (only for unitary tests)
+* [Nanobench](https://github.com/martinus/nanobench) 4.3.6 (only for benchmarks)
 * [bitset2](https://github.com/ClaasBontus/bitset2)
 
 ## Launch
@@ -30,6 +30,7 @@ of your choice:
 git clone git@github.com:DiantArts/xrnEcs.git && cp xrnEcs/sources/xrn/ path/to/your/directory
 ```
 Then, all is left to do is to add the directory where `xrn` directory have been copied to the list of include.
+Else, it is possible to directly clone the directory in the repositorp and set 'xrnEcs/sources' to the list of includes.
 
 ## Example of use
 Content of `xrn/Ecs/Component/Declaration.hpp`:

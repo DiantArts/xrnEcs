@@ -54,8 +54,7 @@ namespace xrn::ecs::system::constant {
 ///
 ///////////////////////////////////////////////////////////////////////////
 template <
-    auto function,
-    typename... Types
+    typename FunctionType
 > class System
     : public ::xrn::ecs::system::constant::ASystem
 {
@@ -73,7 +72,9 @@ public:
     /// \brief Constructor
     ///
     ///////////////////////////////////////////////////////////////////////////
-    constexpr System();
+    constexpr System(
+        FunctionType function
+    );
 
 
 
@@ -95,10 +96,26 @@ public:
     /// \see ::xrn::util::BasicTime, ::xrn::ecs::entity::Container
     ///
     ///////////////////////////////////////////////////////////////////////////
-    constexpr void operator()(
+    constexpr void run(
         ::xrn::Time deltaTime,
         const ::xrn::ecs::entity::Container& entities
     ) const override;
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// \brief Runs the system as const
+    ///
+    /// \param deltaTime Represents the time passed by the user. It is usually
+    ///                  used to know the elapsed since the last runs of
+    ///                  systems
+    /// \param entities  Container of entities that the system will act upon
+    ///
+    /// \see ::xrn::util::BasicTime, ::xrn::ecs::entity::Container
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    constexpr void operator()(
+        ::xrn::Time deltaTime,
+        const ::xrn::ecs::entity::Container& entities
+    ) const;
 
 
 
@@ -122,9 +139,11 @@ public:
 
 private:
 
-    // static inline constexpr auto m_signature{
-        // ::xrn::ecs::detail::meta::Function<decltype(function)>::Arguments::signature.template add<Types...>()
-    // };
+    static inline constexpr const auto m_signature{
+        ::xrn::ecs::detail::meta::Function<FunctionType>::Arguments::signature
+    };
+
+    FunctionType m_function;
 
 };
 
@@ -135,11 +154,15 @@ private:
 ///////////////////////////////////////////////////////////////////////////
 // Alias name
 ///////////////////////////////////////////////////////////////////////////
+namespace xrn::ecs::constant {
+    template <
+        typename FunctionType
+    > using System = ::xrn::ecs::system::constant::System<FunctionType>;
+}
 namespace xrn::ecs {
     template <
-        auto function,
-        typename... Types
-    > using ConstSystem = ::xrn::ecs::system::constant::System<function, Types...>;
+        typename FunctionType
+    > using ConstSystem = ::xrn::ecs::constant::System<FunctionType>;
 }
 
 

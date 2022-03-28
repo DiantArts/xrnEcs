@@ -16,7 +16,7 @@ void ::xrn::ecs::system::constant::Container::run(
 ) const
 {
     for (auto& system : m_systems) {
-        system->operator()(t, entities);
+        system->run(t, entities);
     }
 }
 
@@ -30,16 +30,15 @@ void ::xrn::ecs::system::constant::Container::run(
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
-template <
-    auto function,
-    typename... Types
-> void ::xrn::ecs::system::constant::Container::emplace()
+void ::xrn::ecs::system::constant::Container::emplace(
+    auto function
+)
 {
     if constexpr (!::xrn::ecs::detail::meta::Function<decltype(function)>::Arguments::areConst) {
         ::std::cerr
             << "[ERROR]: Trying to emplace a const system but argments are not const"
             << ::std::endl;
     } else {
-        m_systems.push_back(::std::make_unique<::xrn::ecs::ConstSystem<function, Types...>>());
+        m_systems.push_back(::std::make_unique<::xrn::ecs::ConstSystem<decltype(function)>>(function));
     }
 }

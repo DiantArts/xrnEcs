@@ -103,10 +103,9 @@ public:
     /// \tparam Types    Types to pass to the system
     ///
     ///////////////////////////////////////////////////////////////////////////
-    template <
-        auto function,
-        typename... Types
-    > void emplace();
+    void emplace(
+        auto function
+    );
 
 
 

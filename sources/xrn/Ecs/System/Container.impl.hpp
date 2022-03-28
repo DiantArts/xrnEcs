@@ -14,7 +14,7 @@ void ::xrn::ecs::system::Container::run(
 )
 {
     for (auto& system : m_systems) {
-        system->operator()(t, entities);
+        system->run(t, entities);
     }
 }
 
@@ -28,10 +28,9 @@ void ::xrn::ecs::system::Container::run(
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
-template <
-    auto function,
-    typename... Types
-> void ::xrn::ecs::system::Container::emplace()
+void ::xrn::ecs::system::Container::emplace(
+    auto function
+)
 {
-    m_systems.push_back(::std::make_unique<::xrn::ecs::System<function, Types...>>());
+    m_systems.push_back(::std::make_unique<::xrn::ecs::System<decltype(function)>>(function));
 }
