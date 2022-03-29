@@ -1,4 +1,6 @@
 # xrnEcs
+[![Build Status](https://github.com/DiantArts/xrnEcs/workflows/Unit%20tests%20CI/badge.svg)](https://github.com/DiantArts/xrnEcs/actions)
+
 ## Table of contents
 * [Introduction](#introduction)
 * [Goal of this project](#goal-of-this-project)

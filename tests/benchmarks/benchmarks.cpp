@@ -34,20 +34,14 @@ auto main()
         bench.epochs(50000).performanceCounters(true);
 
         ::xrn::ecs::component::Container components;
-        bench.run(
-            "10k empty entities",
-            []{
+        bench.run("10k empty entities", []{
                 ankerl::nanobench::doNotOptimizeAway(::xrn::ecs::entity::Entity{});
-            }
-        );
-        bench.run(
-            "entity: create",
-            [&components]{
-                using Component = ::xrn::ecs::component::test::Benchmark100ints;
-                auto entity{ ::xrn::ecs::entity::Entity::generate<Component>(components) };
-                entity.removeComponent<Component>(components);
-            }
-        );
+        });
+        bench.run("entity: create", [&components]{
+            using Component = ::xrn::ecs::component::test::Benchmark100ints;
+            auto entity{ ::xrn::ecs::entity::Entity::generate<Component>(components) };
+            entity.removeComponent<Component>(components);
+        });
     }
 
     {
@@ -56,15 +50,12 @@ auto main()
 
         ::xrn::ecs::component::Container components;
         ::xrn::ecs::entity::Container entities{ components };
-        ::xrn::ecs::system::System<addsAllints> systemAdd;
+        ::xrn::ecs::system::System systemAdd{ addsAllints };
         ::xrn::Clock c;
-        entities.emplace<::xrn::ecs::component::test::Benchmark100ints>();
-        bench.run(
-            "system: adds",
-            [&]{
-                systemAdd(c.restart(), entities, components);
-            }
-        );
+        for (auto i{ 0uz }; i < 100; ++i) {
+            entities.emplace<::xrn::ecs::component::test::Benchmark100ints>();
+        }
+        bench.run("system: adds", [&]{ systemAdd(c.restart(), entities); });
     }
     return 0;
 }
