@@ -681,9 +681,9 @@ public:
 
 private:
 
+    ::std::vector<::std::byte> m_data;
     static constexpr const auto defaultBaseSize{ 1'024uz };
     ::xrn::ecs::component::detail::MemoryManager m_memoryManager;
-    ::std::vector<::std::byte> m_data;
 
 };
 

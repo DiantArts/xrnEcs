@@ -4,7 +4,6 @@
 // Headers
 ///////////////////////////////////////////////////////////////////////////
 #include <xrn/Meta/Constraint.hpp>
-#include <xrn/Meta/IsBaseOfTemplate.hpp>
 #include <xrn/Util/Time.hpp>
 #include <xrn/Ecs/Component/Detail/Declaration.hpp>
 

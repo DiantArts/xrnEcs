@@ -232,10 +232,13 @@ public:
 ///////////////////////////////////////////////////////////////////////////
 // xrn/Ecs/Component/Declaration.hpp is the base file, but more can be added
 // and included here.
+// The default namespace cannot be changed
 ///////////////////////////////////////////////////////////////////////////
 #ifndef TEST
+namespace xrn::ecs::component {
 #include <xrn/Ecs/Component/Declaration.hpp>
-#endif // aTEST
+} // namespace xr::ecs::component
+#endif // TEST
 
 
 
@@ -271,4 +274,6 @@ namespace xrn::ecs {
 // Macros undefinition
 ///////////////////////////////////////////////////////////////////////////
 #undef COMPONENT
-#undef COMPONENT
+#undef COMPONENT_IN_NAMESPACE
+#undef ABILITY
+#undef ABILITY_IN_NAMESPACE

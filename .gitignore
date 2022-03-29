@@ -2,12 +2,13 @@
 .obj*
 .dep*
 .vscode*
-*.pdf*
-*.txt*
+*.pdf
+*.txt
 *.o
 *.d
 *.hpp.gch
 *.log.*
+*.log
 #*#
 *~
 binaries*

@@ -16,8 +16,8 @@
 
 ///////////////////////////////////////////////////////////////////////////
 ::xrn::ecs::component::Container::Container()
-    : m_memoryManager{ m_data }
-    , m_data{}
+    : m_data{}
+    , m_memoryManager{ m_data }
 {
     m_data.reserve(Container::defaultBaseSize);
 }
@@ -26,8 +26,8 @@
 ::xrn::ecs::component::Container::Container(
     ::std::size_t size
 )
-    : m_memoryManager{ m_data }
-    , m_data{}
+    : m_data{}
+    , m_memoryManager{ m_data }
 {
     m_data.reserve(size);
 }
