@@ -37,7 +37,7 @@ PCMEXT			?=	.pcm
 PCHEXT			?=	.gch
 
 ## wflags
-COMMON_WFLAGS	:=	pedantic all extra effc++
+COMMON_WFLAGS	:=	pedantic all extra
 C_WFLAGS		:=	
 CPP_WFLAGS		:=	no-unused-variable no-unused-parameter no-unused-local-typedefs
 CPPM_WFLAGS		:=
