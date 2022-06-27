@@ -42,8 +42,6 @@
 #include <compare>
 #include <cstring>
 
-#include <experimental/type_traits>
-
 using ::std::string_literals::operator""s;
 using ::std::literals::string_view_literals::operator""sv;
 using ::std::chrono_literals::operator""ms;
