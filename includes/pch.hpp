@@ -117,12 +117,6 @@ using ::std::string_literals::operator""s;
 using ::std::literals::string_view_literals::operator""sv;
 using ::std::chrono_literals::operator""ms;
 
-// suppresses warnings
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Weffc++"
-#include <Cbitset/Cbitset.hpp>
-#pragma GCC diagnostic pop
-
 #include <debugMacros.hpp>
 
 
