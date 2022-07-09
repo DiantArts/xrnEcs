@@ -37,7 +37,7 @@ PCMEXT			?=	.pcm
 PCHEXT			?=	.gch
 
 ## wflags
-COMMON_WFLAGS	:=	pedantic all extra effc++
+COMMON_WFLAGS	:=	pedantic all extra
 C_WFLAGS		:=	
 CPP_WFLAGS		:=	no-unused-variable no-unused-parameter no-unused-local-typedefs
 CPPM_WFLAGS		:=
@@ -194,9 +194,9 @@ CXXMFLAGS		+=	$(foreach flag, $(CPPM_WFLAGS),$(addprefix -W,$(flag)))
 
 ## cpp.gch flags
 CPP_PCHFLAGS	+=	-x c++-header -fconcepts-ts -fcoroutines -flto
-# CPP_PCHFLAGS	+=	$(foreach flag, $(COMMON_WFLAGS),$(addprefix -W,$(flag)))
-# CPP_PCHFLAGS	+=	$(foreach flag, $(CPP_WFLAGS),$(addprefix -W,$(flag)))
-# CPP_PCHFLAGS	+=	$(CPP_FLAGS)
+CPP_PCHFLAGS	+=	$(foreach flag, $(COMMON_WFLAGS),$(addprefix -W,$(flag)))
+CPP_PCHFLAGS	+=	$(foreach flag, $(CPP_WFLAGS),$(addprefix -W,$(flag)))
+CPP_PCHFLAGS	+=	$(CPP_FLAGS)
 
 ## mode flags
 CFLAGS			+=	$(MODE_FLAGS)
@@ -290,7 +290,6 @@ externs : $(FOUNDEXTERNBIN)
 
 compilation : $(C_OBJ) $(CPP_OBJ)
 	$(PRINTF) "$(LCYAN)[Compilation]$(NORMAL) done\n"
-	$(PRINTF) "$(LCYAN)[Compilation][Shaders]$(NORMAL) done\n"
 
 linkage : $(NAME)$(MODE_EXT)
 	$(PRINTF) "$(LCYAN)[Linkage]$(NORMAL) done\n"
