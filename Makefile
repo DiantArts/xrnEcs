@@ -209,6 +209,8 @@ CPPFLAGS		+=	$(foreach inc, $(COMMON_CPPFLAGS),$(addprefix -I,$(inc)))
 CPPFLAGS		+=	$(foreach inc, $(C_CPPFLAGS),$(addprefix -I,$(inc)))
 CPPFLAGS		+=	$(foreach inc, $(CXX_CPPFLAGS),$(addprefix -I,$(inc)))
 CPPFLAGS		+=	$(patsubst %,-I$(LIBDIR)/%/$(SRCDIR),$(FOUNDLIBS))
+CPPFLAGS		+=	$(patsubst %,-I$(LIBDIR)/%/$(EXTERNDIR),$(FOUNDLIBS))
+CPPFLAGS		+=	$(patsubst %,-I$(LIBDIR)/%/$(EXTERNDIR)/HdrOnly,$(FOUNDLIBS))
 
 ## libraries
 FOUNDLIBS		:=	$(patsubst $(LIBDIR)/%,%,$(FOUNDLIBS))
