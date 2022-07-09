@@ -7,6 +7,7 @@
 // Headers
 ///////////////////////////////////////////////////////////////////////////
 #include <xrn/Ecs.hpp>
+#include <xrn/Meta.hpp>
 
 void printComponentValues(
     ::xrn::Time,
@@ -25,7 +26,7 @@ try {
 
     // Creating the ECS containers needed
     // Containing all the components of the program
-    ::xrn::ecs::component::Container components;
+    ::xrn::ecs::component::Container components{ 10000 };
     // Containing all the entities of the program, links the component container to it
     ::xrn::ecs::entity::Container entities{ components };
     // Systems of the program. Systems can be applied on different component/entity containers

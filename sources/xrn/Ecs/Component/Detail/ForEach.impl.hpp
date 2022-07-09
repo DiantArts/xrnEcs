@@ -17,7 +17,7 @@
 ///////////////////////////////////////////////////////////////////////////
 template <
     auto func,
-    ::xrn::Id::Type componentIndex = 0
+    ::xrn::Id::Type componentIndex
 > constexpr void ::xrn::ecs::component::detail::ForEach::find(
     ::xrn::Id::Type id,
     auto&&... args
@@ -40,7 +40,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     auto func,
-    ::xrn::Id::Type componentIndex = 0
+    ::xrn::Id::Type componentIndex
 > constexpr void ::xrn::ecs::component::detail::ForEach::run(
     auto&&... args
 )
@@ -60,7 +60,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     auto func,
-    ::xrn::Id::Type componentIndex = 0
+    ::xrn::Id::Type componentIndex
 > constexpr void ::xrn::ecs::component::detail::ForEach::runIfSignature(
     const ::xrn::ecs::Signature& signature,
     auto&&... args
@@ -84,7 +84,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     auto func,
-    ::xrn::Id::Type componentIndex = 0
+    ::xrn::Id::Type componentIndex
 > constexpr void ::xrn::ecs::component::detail::ForEach::runWithId(
     auto&&... args
 )
@@ -105,7 +105,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     auto func,
-    ::xrn::Id::Type componentIndex = 0
+    ::xrn::Id::Type componentIndex
 > constexpr void ::xrn::ecs::component::detail::ForEach::runWithId(
     const ::xrn::ecs::Signature& signature,
     auto&&... args
@@ -139,7 +139,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     auto func,
-    ::xrn::Id::Type abilityIndex = 0
+    ::xrn::Id::Type abilityIndex
 > constexpr void ::xrn::ecs::ability::detail::ForEach::find(
     ::xrn::Id::Type id,
     auto&&... args
@@ -162,7 +162,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     auto func,
-    ::xrn::Id::Type abilityIndex = 0
+    ::xrn::Id::Type abilityIndex
 > constexpr void ::xrn::ecs::ability::detail::ForEach::run(
     auto&&... args
 )
@@ -182,7 +182,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     auto func,
-    ::xrn::Id::Type abilityIndex = 0
+    ::xrn::Id::Type abilityIndex
 > constexpr void ::xrn::ecs::ability::detail::ForEach::runIfSignature(
     const ::xrn::ecs::Signature& signature,
     auto&&... args
@@ -206,7 +206,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     auto func,
-    ::xrn::Id::Type abilityIndex = 0
+    ::xrn::Id::Type abilityIndex
 > constexpr void ::xrn::ecs::ability::detail::ForEach::runWithId(
     auto&&... args
 )
@@ -227,7 +227,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     auto func,
-    ::xrn::Id::Type abilityIndex = 0
+    ::xrn::Id::Type abilityIndex
 > constexpr void ::xrn::ecs::ability::detail::ForEach::runWithId(
     const ::xrn::ecs::Signature& signature,
     auto&&... args
@@ -261,7 +261,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     auto func,
-    ::xrn::Id::Type componentIndex = 0
+    ::xrn::Id::Type componentIndex
 > constexpr void ::xrn::ecs::detail::ForEach::find(
     ::xrn::Id::Type id,
     auto&&... args
@@ -282,7 +282,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     auto func,
-    ::xrn::Id::Type componentIndex = 0
+    ::xrn::Id::Type componentIndex
 > constexpr void ::xrn::ecs::detail::ForEach::run(
     auto&&... args
 )
@@ -300,7 +300,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     auto func,
-    ::xrn::Id::Type componentIndex = 0
+    ::xrn::Id::Type componentIndex
 > constexpr void ::xrn::ecs::detail::ForEach::runIfSignature(
     const ::xrn::ecs::Signature& signature,
     auto&&... args
@@ -322,7 +322,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     auto func,
-    ::xrn::Id::Type componentIndex = 0
+    ::xrn::Id::Type componentIndex
 > constexpr void ::xrn::ecs::detail::ForEach::runWithId(
     auto&&... args
 )
@@ -341,7 +341,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////
 template <
     auto func,
-    ::xrn::Id::Type componentIndex = 0
+    ::xrn::Id::Type componentIndex
 > constexpr void ::xrn::ecs::detail::ForEach::runWithId(
     const ::xrn::ecs::Signature& signature,
     auto&&... args

@@ -5,7 +5,6 @@
 ///////////////////////////////////////////////////////////////////////////
 #include <xrn/Meta/ForEach.hpp>
 #include <xrn/Meta/UniqueTypes.hpp>
-#include <xrn/Meta/IsBaseOfTemplate.hpp>
 #include <xrn/Meta/Constraint.hpp>
 
 
