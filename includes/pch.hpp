@@ -106,15 +106,12 @@
 #include <shared_mutex>
 #include <stop_token>
 #include <thread>
-<<<<<<< HEAD
-=======
 #include <utility>
 #include <concepts>
 #include <bitset>
 #include <initializer_list>
 #include <compare>
 #include <cstring>
->>>>>>> 28c32738418b4857270c15c3d7dc9bbe30ecc684
 
 using ::std::string_literals::operator""s;
 using ::std::literals::string_view_literals::operator""sv;
