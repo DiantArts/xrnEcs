@@ -16,3 +16,4 @@ binaries*
 _*
 cccontrolReminder
 TODO
+./sources/xrn/Ecs/Component/Declaration.hpp
