@@ -232,7 +232,7 @@ public:
 ///////////////////////////////////////////////////////////////////////////
 // xrn/Ecs/Component/Declaration.hpp is the base file, but more can be added
 // and included here.
-// The default namespace can also be changed
+// The default namespace cannot be changed
 ///////////////////////////////////////////////////////////////////////////
 #ifndef TEST
 namespace xrn::ecs::component {
