@@ -1,2 +1,2 @@
 #pragma once
-#include <.xrnEcsComponentIncluderImplementation.hpp>
+#include <.xrnEcsComponentIncluder.impl.hpp>
