@@ -35,12 +35,43 @@
 ///
 /// Here is a short example:
 ///
+/// Content of xrn/Ecs/Component/Declaration.hpp:
+/// \code
+/// namespace xrn::ecs::component {
+///
+/// ABILITY(AbilityA);
+/// ABILITY(AbilityB);
+///
+/// COMPONENT(ComponentA) {
+/// public:
+///     int value{ 1 };
+/// };
+///
+/// COMPONENT(ComponentB) {
+/// public:
+///     ComponentB(int val) : value{ val }{}
+///     int value;
+/// };
+///
+/// } // namespace xr::ecs::component
+/// \endcode
+///
+/// Content of the main:
 /// \code
 /// #include <xrn/Ecs.hpp>
 ///
+/// void printComponentValues(
+///     ::xrn::Time,
+///     const ::xrn::ecs::Entity&,
+///     const ::xrn::ecs::component::ComponentA& a,
+///     const ::xrn::ecs::component::ComponentB& b
+/// ){
+///     ::std::cout << "ComponentA: " << a.value << " ComponentB: " << b.value << ::std::endl;
+/// }
+///
 /// int main()
 /// {
-///     using namespace ::xrn::ecs::component::test;
+///     using namespace ::xrn::ecs::component;
 ///
 ///     // Creating the ECS containers needed
 ///     // Containing all the components of the program
@@ -49,7 +80,7 @@
 ///     ::xrn::ecs::entity::Container entities{ components };
 ///     // Systems of the program. Systems can be applied on different component/entity containers
 ///     ::xrn::ecs::system::Container systems;
-///     // Const systems are normal systems that are used to affect other things than component. like drawing to the screen
+///     // Const systems are normal systems that are used to affect other things than component (like drawing to the screen)
 ///     ::xrn::ecs::system::ConstContainer constSystems;
 ///
 ///     // Creating entities
@@ -59,16 +90,39 @@
 ///     auto entityId2{ entities.emplace(ComponentA{}, ComponentB{ 5 }).getId() };
 ///
 ///     // emplacing all the system that will be executed each time systems.run() is called
-///     systems.emplace<[](ComponentA& a){}>(); // Single mutable component
-///     systems.emplace<[](::xrn::ecs::Entity& entity, ComponentA& a){ ... }>(); // with the entity containing the component
-///     systems.emplace<[](::xrn::ecs::Entity& entity, ComponentA& a, ComponentB& b){ ... }>(); // With multiple components
-///     systems.emplace<[](const ::xrn::ecs::Entity& entity, ComponentA& a, ComponentB& b){ ... }>(); // With const Entity
-///     systems.emplace<[](::xrn::ecs::Entity& entity, ComponentA& a, const ComponentB& b){ ... }>(); // With const Components
-///     systems.emplace<[](::xrn::ecs::Entity& entity, const ComponentA& a, const ComponentB& b){ ... }>(); // With const Components
-///     systems.emplace<[](::xrn::Time, const ::xrn::ecs::Entity& entity, ComponentB& b){ ... }>(); // With Time
+///     // Single mutable component
+///     systems.emplace<[](ComponentA& a){
+///         ++a.value;
+///     }>();
 ///
-///     // emplacing all the const systems
-///     constSystems.emplace<[](::xrn::Time, const ::xrn::ecs::Entity& entity, const ComponentB& b){ ... }>(); // everything has to be const (or copy)
+///     // with the entity containing the component
+///     systems.emplace<[](::xrn::ecs::Entity&, ComponentA& a){
+///         ++a.value;
+///     }>();
+///
+///     // With multiple components
+///     systems.emplace<[](::xrn::ecs::Entity&, ComponentA& a, ComponentB& b){
+///         ++a.value; ++b.value;
+///     }>();
+///
+///     // With const Entity
+///     systems.emplace<[](const ::xrn::ecs::Entity&, ComponentA& a, ComponentB& b){
+///         ++a.value; ++b.value;
+///     }>();
+///
+///     // With const Components
+///     systems.emplace<[](::xrn::ecs::Entity&, ComponentA& a, const ComponentB& b){
+///         a.value += b.value;
+///     }>();
+///
+///     // With Time
+///     systems.emplace<[](::xrn::Time, const ::xrn::ecs::Entity&, ComponentB& b){
+///         ++b.value;
+///     }>();
+///
+///     // emplacing all the const systems (everything has to be const or copied)
+///     // with a function instead of a lambda
+///     constSystems.emplace<printComponentValues>();
 ///
 ///     // run all the systems with a clock
 ///     ::xrn::Clock clock;
@@ -76,7 +130,22 @@
 ///         systems.run(clock.getElapsed(), entities);
 ///         constSystems.run(clock.restart(), entities);
 ///     }
+///     return EXIT_SUCCESS;
 /// }
+/// \endcode
+///
+/// Output of this program:
+/// \code
+/// ComponentA: 12 ComponentB: 8
+/// ComponentA: 26 ComponentB: 11
+/// ComponentA: 43 ComponentB: 14
+/// ComponentA: 63 ComponentB: 17
+/// ComponentA: 86 ComponentB: 20
+/// ComponentA: 112 ComponentB: 23
+/// ComponentA: 141 ComponentB: 26
+/// ComponentA: 173 ComponentB: 29
+/// ComponentA: 208 ComponentB: 32
+/// ComponentA: 246 ComponentB: 35
 /// \endcode
 ///
 ///////////////////////////////////////////////////////////////////////////
