@@ -21,6 +21,11 @@ namespace xrn::util {
 ///
 /// Usage example:
 /// \code
+/// ::xrn::Clock clock;
+/// ...
+/// ::xrn::Time time1{ clock.getElapsedTime() };
+/// ...
+/// ::xrn::Time time2{ clock.restart() };
 /// \endcode
 ///
 /// \see ::xrn::Time
