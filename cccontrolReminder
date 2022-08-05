@@ -1,12 +1,16 @@
 <C-o> ::std::
 <C-A-o> ::xrn::
 <C-e> this->
+<<<<<<< HEAD
 <C-A-e> *this
+=======
+>>>>>>> 18da46b ([Clock])
 <C-u> ::std::vector
 <C-A-u> ::std::span
 <C-u> ::std::make_unique<>()
 <C-A-u> ::std::make_shared<>()
 <C-l> const
+<<<<<<< HEAD
 <C-a-l> constexpr
 <C-c> static
 <C-g> [[ nodiscard ]]
@@ -21,6 +25,18 @@
 <C-A-x> ::std::cout << "" << ::std::endl;
 <C-k> auto&&... args
 <C-A-k> ::std::forward<decltype(args)>(args)...
+=======
+<C-r> constexpr
+<C-c> static
+<C-g> [[ nodiscard ]]
+<C-f> noexcept
+<C-n> if ()
+<C-t> for (const auto& elem : )
+<C-h> while ()
+<C-d> switch ()
+<C-b> namespace
+<C-m> ::std::cout << "" << ::std::endl
+>>>>>>> 18da46b ([Clock])
 p :cnext
 P :cprevious
 y :cc

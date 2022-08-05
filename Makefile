@@ -6,11 +6,14 @@
 ##
 
 # DEBUG_MAKEFILE	:=	true
+ERRORFILE			:=	true
 USE_COVERAGE		:=	true
 
 ARGV			:=
 NAME			:=	xrnEcs
 TNAME			:=	unit
+
+ERROR_FILE		:=	errorFile
 
 BINDIR			:=	binaries
 SRCDIR			:=	sources
@@ -45,7 +48,11 @@ CPP_WFLAGS		:=	no-unused-variable no-unused-parameter
 CPPM_WFLAGS		:=
 
 ## flags
-COMMON_FLAGS	:=	-fmax-errors=10
+ifdef hide_color
+COMMON_FLAGS	:=	-fmax-errors=10 -fdiagnostics-color=never
+else
+COMMON_FLAGS	:=	-fmax-errors=10 -fdiagnostics-color=always
+endif
 C_FLAGS			:=	
 CPP_FLAGS		:=	-std=c++2b
 CPPM_FLAGS		:=	-std=c++2b
@@ -225,6 +232,7 @@ NAME			:=	$(BINDIR)/$(NAME)
 
 PRINTF				:=	@printf
 
+ifndef hide_color
 NORMAL				:=	\e[0m
 BLACK				:=	\e[0;30m
 DARKGRAY			:=	\e[1;30m
@@ -242,6 +250,7 @@ CYAN				:=	\e[0;36m
 LCYAN				:=	\e[1;36m
 LIGHT				:=	\e[0;37m
 WHITE				:=	\e[1;37m
+endif
 
 ifneq "$(DEBUG_MAKEFILE)" "true"
 MAKEFLAGS		+=	--silent --no-print-directory
@@ -251,7 +260,12 @@ endif
 
 ## ============================================================================
 
-all: linkage
+all: linkage | emptyErrorFile
+
+emptyErrorFile :
+	mkdir -p $(BUILDDIR)
+	touch $(BUILDDIR)/$(ERROR_FILE)
+	> $(BUILDDIR)/$(ERROR_FILE)
 
 precompilation : $(C_PCH_OBJ) $(CPP_PCH_OBJ)
 	$(PRINTF) "$(LCYAN)[Precompilation]$(NORMAL) done\n"
@@ -274,7 +288,12 @@ test_linkage : $(TEST_NAME)$(MODE_EXT)
 ## ============================================================================
 
 $(NAME)$(MODE_EXT): compilation | libraries externs $(BINDIR)
-	$(CXX) $(OUTPUT_OPTION) $(CPP_OBJ) $(CPPM_OBJ) $(LDFLAGS) $(LDLIBS)
+ifdef ERRORFILE
+	$(CXX) $(OUTPUT_OPTION) $(CPP_OBJ) $(CPPM_OBJ) $(LDFLAGS) $(LDLIBS) 2>&1 | tee -a $(BUILDDIR)/$(ERROR_FILE)
+	sed -i 's/\x1b\[[0-9;]*[a-zA-Z]//g' $(BUILDDIR)/$(ERROR_FILE)
+else
+	$(CXX) $(OUTPUT_OPTION) $(CPP_OBJ) $(CPPM_OBJ) $(LDFLAGS) $(LDLIBS) 2>&1
+endif
 
 $(TEST_NAME)$(MODE_EXT): compilation | libraries externs $(BINDIR)
 	$(CXX) $(OUTPUT_OPTION) $(CPP_OBJ) $(CPPM_OBJ) $(LDFLAGS) $(LDLIBS)
@@ -342,8 +361,14 @@ $(OBJDIR)/%$(OBJEXT): %$(C_SRCEXT) | $(C_PCH_OBJ)
 # .cpp
 $(OBJDIR)/%$(OBJEXT): %$(CPP_SRCEXT) | $(CPPM_OBJ) precompilation
 	mkdir -p $(@D) $(patsubst $(OBJDIR)%,./$(DEPDIR)%,$(@D))
+ifdef ERRORFILE
+	$(CXX) -c $(OUTPUT_OPTION) $(CPPFLAGS) $(CXXFLAGS) $(COVERAGE_FLAG) $< \
+		-MT $@ -MMD -MP -MF $(patsubst $(OBJDIR)%$(OBJEXT),$(DEPDIR)/%$(DEPEXT),$(patsubst ./%,%,$@)) 2>&1 | tee -a $(BUILDDIR)/$(ERROR_FILE)
+	sed -i 's/\x1b\[[0-9;]*[a-zA-Z]//g' $(BUILDDIR)/$(ERROR_FILE)
+else
 	$(CXX) -c $(OUTPUT_OPTION) $(CPPFLAGS) $(CXXFLAGS) $(COVERAGE_FLAG) $< \
 		-MT $@ -MMD -MP -MF $(patsubst $(OBJDIR)%$(OBJEXT),$(DEPDIR)/%$(DEPEXT),$(patsubst ./%,%,$@))
+endif
 	$(PRINTF) "$(LCYAN)[Compilation]$(NORMAL) $<\n"
 
 # .cppm
@@ -381,6 +406,7 @@ re :
 
 clean :
 	rm -rf $(OBJDIR) $(DEPDIR)
+	rm -f $(BUILDDIR)/$(ERROR_FILE)
 	rm -f vgcore.*
 	$(PRINTF) "$(DARKGRAY)[Clean]$(NORMAL) done\n"
 
@@ -400,7 +426,7 @@ fffclean : ffclean
 
 ## auto
 
-auto: all
+auto:all
 	$(PRINTF) "$(YELLOW)[Binary]$(NORMAL) auto $(ARGV)\n"
 	./$(NAME)$(MODE_EXT) $(ARGV)
 

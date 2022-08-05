@@ -3,7 +3,7 @@ template <
     typename T
 > constexpr auto ::xrn::util::BasicTime<T>::createAsSeconds(
     BasicTime<T>::Type amount
-) -> ::xrn::util::BasicTime<T>
+) noexcept -> ::xrn::util::BasicTime<T>
 {
     return ::xrn::util::BasicTime<T>{ amount * 1'000 };
 }
@@ -13,7 +13,7 @@ template <
     typename T
 > constexpr auto ::xrn::util::BasicTime<T>::createAsMilliseconds(
     BasicTime<T>::Type amount
-) -> ::xrn::util::BasicTime<T>
+) noexcept -> ::xrn::util::BasicTime<T>
 {
     return ::xrn::util::BasicTime<T>{ amount };
 }
@@ -23,7 +23,7 @@ template <
     typename T
 > constexpr auto ::xrn::util::BasicTime<T>::createAsMicroseconds(
     BasicTime<T>::Type amount
-) -> ::xrn::util::BasicTime<T>
+) noexcept -> ::xrn::util::BasicTime<T>
 {
     return ::xrn::util::BasicTime<T>{ amount / 1'000 };
 }
@@ -33,11 +33,10 @@ template <
     typename T
 > constexpr auto ::xrn::util::BasicTime<T>::createAsNanoseconds(
     BasicTime<T>::Type amount
-) -> ::xrn::util::BasicTime<T>
+) noexcept -> ::xrn::util::BasicTime<T>
 {
     return ::xrn::util::BasicTime<T>{ amount / 1'000'000 };
 }
-
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,6 +77,17 @@ template <
     typename T
 > constexpr auto ::xrn::util::BasicTime<T>::operator<=>(
     const BasicTime<T>::Type& rhs
+) const
+    -> ::std::partial_ordering
+{
+    return m_time <=> rhs;
+}
+
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename T
+> constexpr auto ::xrn::util::BasicTime<T>::operator<=>(
+    const auto& rhs
 ) const
     -> ::std::partial_ordering
 {
@@ -596,7 +606,7 @@ template <
 template <
     typename T
 > [[ nodiscard ]] constexpr auto operator+(
-    auto lhs,
+    const auto lhs,
     const ::xrn::util::BasicTime<T>& rhs
 ) -> ::xrn::util::BasicTime<T>
 {
@@ -608,7 +618,7 @@ template <
     typename T
 > [[ nodiscard ]] constexpr auto operator+(
     const ::xrn::util::BasicTime<T>& lhs,
-    auto rhs
+    const auto rhs
 ) -> ::xrn::util::BasicTime<T>
 {
     return lhs + ::xrn::util::BasicTime<T>::createAsMilliseconds(rhs);
@@ -618,7 +628,7 @@ template <
 template <
     typename T
 > [[ nodiscard ]] constexpr auto operator-(
-    auto lhs,
+    const auto lhs,
     const ::xrn::util::BasicTime<T>& rhs
 ) -> ::xrn::util::BasicTime<T>
 {
@@ -630,7 +640,7 @@ template <
     typename T
 > [[ nodiscard ]] constexpr auto operator-(
     const ::xrn::util::BasicTime<T>& lhs,
-    auto rhs
+    const auto rhs
 ) -> ::xrn::util::BasicTime<T>
 {
     return lhs - ::xrn::util::BasicTime<T>::createAsMilliseconds(rhs);
@@ -640,7 +650,7 @@ template <
 template <
     typename T
 > [[ nodiscard ]] constexpr auto operator*(
-    auto lhs,
+    const auto lhs,
     const ::xrn::util::BasicTime<T>& rhs
 ) -> ::xrn::util::BasicTime<T>
 {
@@ -652,7 +662,7 @@ template <
     typename T
 > [[ nodiscard ]] constexpr auto operator*(
     const ::xrn::util::BasicTime<T>& lhs,
-    auto rhs
+    const auto rhs
 ) -> ::xrn::util::BasicTime<T>
 {
     return lhs * ::xrn::util::BasicTime<T>::createAsMilliseconds(rhs);
@@ -662,7 +672,7 @@ template <
 template <
     typename T
 > [[ nodiscard ]] constexpr auto operator/(
-    auto lhs,
+    const auto lhs,
     const ::xrn::util::BasicTime<T>& rhs
 ) -> ::xrn::util::BasicTime<T>
 {
@@ -674,7 +684,7 @@ template <
     typename T
 > [[ nodiscard ]] constexpr auto operator/(
     const ::xrn::util::BasicTime<T>& lhs,
-    auto rhs
+    const auto rhs
 ) -> ::xrn::util::BasicTime<T>
 {
     return lhs / ::xrn::util::BasicTime<T>::createAsMilliseconds(rhs);
@@ -684,7 +694,7 @@ template <
 template <
     typename T
 > [[ nodiscard ]] constexpr auto operator%(
-    auto lhs,
+    const auto lhs,
     const ::xrn::util::BasicTime<T>& rhs
 ) -> ::xrn::util::BasicTime<T>
 {
@@ -696,7 +706,7 @@ template <
     typename T
 > [[ nodiscard ]] constexpr auto operator%(
     const ::xrn::util::BasicTime<T>& lhs,
-    auto rhs
+    const auto rhs
 ) -> ::xrn::util::BasicTime<T>
 {
     return lhs % ::xrn::util::BasicTime<T>::createAsMilliseconds(rhs);
@@ -712,7 +722,7 @@ template <
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
-[[ nodiscard ]] constexpr auto ::xrn::util::TimeLiteral::operator""_s(
+[[ nodiscard ]] constexpr auto ::xrn::util::literal::operator""_s(
     long double amount
 ) -> ::xrn::Time
 {
@@ -720,7 +730,7 @@ template <
 }
 
 ///////////////////////////////////////////////////////////////////////////
-[[ nodiscard ]] constexpr auto ::xrn::util::TimeLiteral::operator""_s(
+[[ nodiscard ]] constexpr auto ::xrn::util::literal::operator""_s(
     long long unsigned amount
 ) -> ::xrn::Time
 {
@@ -728,7 +738,7 @@ template <
 }
 
 ///////////////////////////////////////////////////////////////////////////
-[[ nodiscard ]] constexpr auto ::xrn::util::TimeLiteral::operator""_ms(
+[[ nodiscard ]] constexpr auto ::xrn::util::literal::operator""_ms(
     long double amount
 ) -> ::xrn::Time
 {
@@ -736,7 +746,7 @@ template <
 }
 
 ///////////////////////////////////////////////////////////////////////////
-[[ nodiscard ]] constexpr auto ::xrn::util::TimeLiteral::operator""_ms(
+[[ nodiscard ]] constexpr auto ::xrn::util::literal::operator""_ms(
     long long unsigned amount
 ) -> ::xrn::Time
 {
@@ -744,7 +754,7 @@ template <
 }
 
 ///////////////////////////////////////////////////////////////////////////
-[[ nodiscard ]] constexpr auto ::xrn::util::TimeLiteral::operator""_us(
+[[ nodiscard ]] constexpr auto ::xrn::util::literal::operator""_us(
     long double amount
 ) -> ::xrn::Time
 {
@@ -752,7 +762,7 @@ template <
 }
 
 ///////////////////////////////////////////////////////////////////////////
-[[ nodiscard ]] constexpr auto ::xrn::util::TimeLiteral::operator""_us(
+[[ nodiscard ]] constexpr auto ::xrn::util::literal::operator""_us(
     long long unsigned amount
 ) -> ::xrn::Time
 {
@@ -760,7 +770,7 @@ template <
 }
 
 ///////////////////////////////////////////////////////////////////////////
-[[ nodiscard ]] constexpr auto ::xrn::util::TimeLiteral::operator""_ns(
+[[ nodiscard ]] constexpr auto ::xrn::util::literal::operator""_ns(
     long double amount
 ) -> ::xrn::Time
 {
@@ -768,7 +778,7 @@ template <
 }
 
 ///////////////////////////////////////////////////////////////////////////
-[[ nodiscard ]] constexpr auto ::xrn::util::TimeLiteral::operator""_ns(
+[[ nodiscard ]] constexpr auto ::xrn::util::literal::operator""_ns(
     long long unsigned amount
 ) -> ::xrn::Time
 {
