@@ -14,7 +14,7 @@ template <
     auto&&... args
 ) const
 {
-    return m_entity.addComponent<ComponentType>(m_components, ::std::forward<decltype(args)>(args)...);
+    return m_entity->addComponent<ComponentType>(*m_components, ::std::forward<decltype(args)>(args)...);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -22,7 +22,7 @@ template <
     ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > void ::xrn::ecs::Entity::Reference::addComponents()
 {
-    m_entity.addComponents<ComponentTypes...>(m_components);
+    m_entity->addComponents<ComponentTypes...>(*m_components);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -30,7 +30,7 @@ void ::xrn::ecs::Entity::Reference::addComponents(
     ::xrn::ecs::detail::constraint::isComponent auto&&... components
 )
 {
-    m_entity.addComponents(m_components, ::std::forward<decltype(components)>(components)...);
+    m_entity->addComponents(*m_components, ::std::forward<decltype(components)>(components)...);
 }
 
 
@@ -49,7 +49,7 @@ template <
 > auto ::xrn::ecs::Entity::Reference::hasComponent() const
     -> bool
 {
-    return m_entity.hasComponent<ComponentType>();
+    return m_entity->hasComponent<ComponentType>();
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -58,7 +58,7 @@ template <
 > auto ::xrn::ecs::Entity::Reference::hasComponents() const
     -> bool
 {
-    return m_entity.hasComponents<ComponentTypes...>();
+    return m_entity->hasComponents<ComponentTypes...>();
 }
 
 
@@ -75,7 +75,7 @@ template <
     ::xrn::ecs::detail::constraint::isComponent ComponentType
 > void ::xrn::ecs::Entity::Reference::removeComponent()
 {
-    m_entity.removeComponent<ComponentType>(m_components);
+    m_entity->removeComponent<ComponentType>(*m_components);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -83,5 +83,5 @@ template <
     ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
 > void ::xrn::ecs::Entity::Reference::removeComponents()
 {
-    m_entity.removeComponents<ComponentTypes...>(m_components);
+    m_entity->removeComponents<ComponentTypes...>(*m_components);
 }

@@ -37,7 +37,7 @@ public:
 
     template <
         ::xrn::ecs::detail::constraint::isComponent ComponentType
-    > [[ nodiscard ]] constexpr auto getId() const
+    > [[ nodiscard ]] consteval auto getId() const
         -> ::xrn::Id;
 
     [[ nodiscard ]] static consteval auto getMaxId()

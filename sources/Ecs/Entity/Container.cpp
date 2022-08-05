@@ -190,8 +190,7 @@ auto ::xrn::ecs::entity::Container::operator[](
         [entityId](const auto& entity){ return entity.getId() == entityId; }
     ) };
     if (it == m_entities.end()) {
-        throw ::std::runtime_error("Entity '"s + static_cast<::std::string>(entityId) +
-                "' inst't present in the EntityContainer");
+        return ::xrn::ecs::Entity::ConstReference{};
     }
     return ::xrn::ecs::Entity::ConstReference{ *it };
 }
@@ -206,8 +205,7 @@ auto ::xrn::ecs::entity::Container::operator[](
         [entityId](const auto& entity){ return entity.getId() == entityId; }
     ) };
     if (it == m_entities.end()) {
-        throw ::std::runtime_error("Entity '"s + static_cast<::std::string>(entityId) +
-                "' inst't present in the EntityContainer");
+        return ::xrn::ecs::Entity::Reference{};
     }
     return ::xrn::ecs::Entity::Reference{ m_components, *it };
 }
@@ -223,8 +221,7 @@ auto ::xrn::ecs::entity::Container::get(
         [entityId](const auto& entity){ return entity.getId() == entityId; }
     ) };
     if (it == m_entities.end()) {
-        throw ::std::runtime_error("Entity '"s + static_cast<::std::string>(entityId) +
-                "' inst't present in the EntityContainer");
+        return ::xrn::ecs::Entity::ConstReference{};
     }
     return ::xrn::ecs::Entity::ConstReference{ *it };
 }
@@ -239,8 +236,7 @@ auto ::xrn::ecs::entity::Container::get(
         [entityId](const auto& entity){ return entity.getId() == entityId; }
     ) };
     if (it == m_entities.end()) {
-        throw ::std::runtime_error("Entity '"s + static_cast<::std::string>(entityId) +
-                "' inst't present in the EntityContainer");
+        return ::xrn::ecs::Entity::Reference{};
     }
     return ::xrn::ecs::Entity::Reference{ m_components, *it };
 }

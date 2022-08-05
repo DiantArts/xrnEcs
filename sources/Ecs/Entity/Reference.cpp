@@ -19,11 +19,16 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
+::xrn::ecs::Entity::Reference::Reference() noexcept
+    : m_components{ nullptr }, m_entity{ nullptr }
+{}
+
+///////////////////////////////////////////////////////////////////////////
 ::xrn::ecs::Entity::Reference::Reference(
     ::xrn::ecs::component::Container& components,
     ::xrn::ecs::Entity& entity
 ) noexcept
-    : m_components{ components }, m_entity{ entity }
+    : m_components{ &components }, m_entity{ &entity }
 {}
 
 ///////////////////////////////////////////////////////////////////////////
@@ -31,7 +36,7 @@
     ::xrn::ecs::Entity& entity,
     ::xrn::ecs::component::Container& components
 ) noexcept
-    : m_components{ components }, m_entity{ entity }
+    : m_components{ &components }, m_entity{ &entity }
 {}
 
 
@@ -44,41 +49,48 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
+[[ nodiscard ]] auto ::xrn::ecs::Entity::Reference::isValid() const
+    -> bool
+{
+    return m_entity != nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////
 auto ::xrn::ecs::Entity::Reference::getSignature() const
     -> const ::xrn::ecs::Signature&
 {
-    return m_entity.getSignature();
+    return m_entity->getSignature();
 }
 
 ///////////////////////////////////////////////////////////////////////////
 auto ::xrn::ecs::Entity::Reference::getId() const
     -> ::xrn::Id
 {
-    return m_entity.getId();
+    return m_entity->getId();
 }
 
 ///////////////////////////////////////////////////////////////////////////
 auto ::xrn::ecs::Entity::Reference::get()
     -> ::xrn::ecs::Entity&
 {
-    return m_entity;
+    return *m_entity;
 }
 
 ///////////////////////////////////////////////////////////////////////////
 auto ::xrn::ecs::Entity::Reference::get() const
     -> const ::xrn::ecs::Entity&
 {
-    return m_entity;
+    return *m_entity;
 }
 
 ///////////////////////////////////////////////////////////////////////////
 ::xrn::ecs::Entity::Reference::operator const ::xrn::ecs::Entity&() const
 {
-    return m_entity;
+    return *m_entity;
 }
 
 ///////////////////////////////////////////////////////////////////////////
 ::xrn::ecs::Entity::Reference::operator ::xrn::ecs::Entity::ConstReference() const
 {
-    return ::xrn::ecs::Entity::ConstReference{ m_entity };
+    return ::xrn::ecs::Entity::ConstReference{ *m_entity };
 }

@@ -65,7 +65,7 @@ public:
     // \brief Is it possible to call isCallable which the Derived type
     //
     ///////////////////////////////////////////////////////////////////////////
-    static inline constexpr bool value{ ::std::experimental::is_detected<IsCallable, Derived>::value };
+    static inline constexpr const auto value{ ::std::experimental::is_detected<IsCallable, Derived>::value };
 
 };
 
@@ -76,6 +76,15 @@ public:
 template <
     template <typename...> class Base,
     typename DerivedType
-> inline constexpr bool isBaseOfTemplate_v = ::xrn::meta::IsBaseOfTemplate<Base, DerivedType>::value;
+> inline constexpr const auto IsBaseOfTemplate_v = ::xrn::meta::IsBaseOfTemplate<Base, DerivedType>::value;
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Same as ::xrn::meta::IsBaseOfTemplate<Base, DerivedType>::value
+///
+///////////////////////////////////////////////////////////////////////////
+template <
+    template <typename...> class Base,
+    typename DerivedType
+> inline constexpr const auto isBaseOfTemplate = ::xrn::meta::IsBaseOfTemplate<Base, DerivedType>::value;
 
 } // namespace xrn::meta

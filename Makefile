@@ -46,7 +46,7 @@ PCHEXT			:=	.gch
 ## wflags
 COMMON_WFLAGS	:=	pedantic all extra effc++
 C_WFLAGS		:=	
-CPP_WFLAGS		:=	no-unused-variable no-unused-parameter
+CPP_WFLAGS		:=	no-unused-variable no-unused-parameter no-unused-local-typedefs
 CPPM_WFLAGS		:=
 
 ## flags

@@ -151,7 +151,7 @@ public:
 
 private:
 
-    static constexpr auto m_banishedSignature{
+    static constexpr const auto m_banishedSignature{
         ::xrn::ecs::Signature::generate<BanishedComponentTypes...>()
     };
 

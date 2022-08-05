@@ -13,7 +13,7 @@ template <
 > auto ::xrn::ecs::Entity::ConstReference::hasComponent() const
     -> bool
 {
-    return m_entity.hasComponent<ComponentType>();
+    return m_entity->hasComponent<ComponentType>();
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -22,5 +22,5 @@ template <
 > auto ::xrn::ecs::Entity::ConstReference::hasComponents() const
     -> bool
 {
-    return m_entity.hasComponents<ComponentTypes...>();
+    return m_entity->hasComponents<ComponentTypes...>();
 }

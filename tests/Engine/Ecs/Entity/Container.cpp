@@ -129,10 +129,10 @@ BOOST_AUTO_TEST_CASE(other)
     ::xrn::ecs::component::Container components;
     ::xrn::ecs::entity::Container entities{ components };
     const auto& constEntities{ entities };
-    BOOST_CHECK_THROW(entities[::xrn::Id{ 1 }], ::std::exception);
-    BOOST_CHECK_THROW(constEntities[::xrn::Id{ 1 }], ::std::exception);
-    BOOST_CHECK_THROW(entities.get(::xrn::Id{ 1 }), ::std::exception);
-    BOOST_CHECK_THROW(constEntities.get(::xrn::Id{ 1 }), ::std::exception);
+    BOOST_TEST(!entities[::xrn::Id{ 1 }].isValid());
+    BOOST_TEST(!constEntities[::xrn::Id{ 1 }].isValid());
+    BOOST_TEST(!entities.get(::xrn::Id{ 1 }).isValid());
+    BOOST_TEST(!constEntities.get(::xrn::Id{ 1 }).isValid());
 
     BOOST_TEST(&*entities.cbegin() == &*entities.begin());
     BOOST_TEST(&*constEntities.cbegin() == &*constEntities.begin());
