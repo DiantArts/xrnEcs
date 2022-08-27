@@ -4,7 +4,8 @@
 // Headers
 ///////////////////////////////////////////////////////////////////////////
 #include <Cbitset/Cbitset.hpp>
-#include <xrn/Ecs/Component/Detail/Declaration.hpp>
+#include <xrn/Meta/Constraint.hpp>
+#include <xrn/Meta/ForEach.hpp>
 #include <xrn/Ecs/Detail/Constraint.hpp>
 
 
@@ -26,11 +27,21 @@ namespace xrn::ecs {
 ///
 /// Usage example:
 /// \code
-/// constexpr auto constexprSignature{ ::xrn::ecs::Signature::generate<
+/// constexpr auto constexprSignature{ ::xrn::ecs::Signature<
+///     ::xrn::ecs::component::test::ComponentA,
+///     ::xrn::ecs::component::test::ComponentB
+/// >::generate<
 ///     ::xrn::ecs::component::test::ComponentA,
 ///     ::xrn::ecs::component::test::ComponentB
 /// >() };
-/// auto runtimeSignature{ ::xrn::ecs::Signature::generate<::xrn::ecs::component::test::ComponentA>() };
+/// auto runtimeSignature{
+///     ::xrn::ecs::Signature<
+///         ::xrn::ecs::component::test::ComponentA,
+///         ::xrn::ecs::component::test::ComponentB
+///     > ::generate<
+///         ::xrn::ecs::component::test::ComponentA
+///     >()
+/// };
 ///
 /// constexprSignature != runtimeSignature; // true
 /// constexprSignature.containsNone(runtimeSignature); // false
@@ -41,7 +52,9 @@ namespace xrn::ecs {
 /// \see ::xrn::ecs::entity::Entity
 ///
 ///////////////////////////////////////////////////////////////////////////
-class Signature {
+template <
+    typename... ComponentTypes
+> class Signature {
 
 public:
 
@@ -68,9 +81,11 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        ::xrn::ecs::detail::constraint::isEcsRegistered... Types
+        ::xrn::meta::constraint::contains<ComponentTypes...>... Types
     > [[ nodiscard ]] static consteval auto generate() noexcept
-        -> ::xrn::ecs::Signature;
+        -> ::xrn::ecs::Signature<ComponentTypes...>;
+
+
 
 public:
 
@@ -109,36 +124,8 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        ::xrn::ecs::detail::constraint::isEcsRegistered... Types
+        ::xrn::meta::constraint::contains<ComponentTypes...>... Types
     > constexpr void add();
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Adds components to the signature
-    ///
-    /// \tparam ComponentTypes Components to add to the signature
-    ///
-    /// Same as set()
-    ///
-    /// \see set()
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-    > constexpr void addComponents();
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Adds abilities to the signature
-    ///
-    /// \tparam AbilityTypes Abilities to add to the signature
-    ///
-    /// Same as set()
-    ///
-    /// \see set()
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
-    > constexpr void addAbilities();
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Adds components to the signature
@@ -163,32 +150,8 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        ::xrn::ecs::detail::constraint::isEcsRegistered... Types
+        ::xrn::meta::constraint::contains<ComponentTypes...>... Types
     > constexpr void set();
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Adds components to the signature
-    ///
-    /// \tparam ComponentTypes Components to add to the signature
-    ///
-    /// Same as add()
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-    > constexpr void setComponents();
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Adds abilities to the signature
-    ///
-    /// \tparam AbilityTypes Abilities to add to the signature
-    ///
-    /// Same as add()
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
-    > constexpr void setAbilities();
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Adds components to the signature
@@ -224,36 +187,8 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        ::xrn::ecs::detail::constraint::isEcsRegistered... Types
+        ::xrn::meta::constraint::contains<ComponentTypes...>... Types
     > constexpr void remove();
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Removes components from the signature
-    ///
-    /// \tparam ComponentTypes Components to remove from the signature
-    ///
-    /// Same as reset()
-    ///
-    /// \see reset()
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-    > constexpr void removeComponents();
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Removes abilities from the signature
-    ///
-    /// \tparam AbilityTypes Abilities to remove from the signature
-    ///
-    /// Same as reset()
-    ///
-    /// \see reset()
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
-    > constexpr void removeAbilities();
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Removes components from the signature
@@ -286,36 +221,8 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        ::xrn::ecs::detail::constraint::isEcsRegistered... Types
+        ::xrn::meta::constraint::contains<ComponentTypes...>... Types
     > constexpr void reset();
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Removes components from the signature
-    ///
-    /// \tparam ComponentTypes Components to remove from the signature
-    ///
-    /// Same as remove()
-    ///
-    /// \see remove()
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-    > constexpr void resetComponents();
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Removes abilities from the signature
-    ///
-    /// \tparam AbilityTypes Abilities to remove from the signature
-    ///
-    /// Same as remove()
-    ///
-    /// \see remove()
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
-    > constexpr void resetAbilities();
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Removes components from the signature
@@ -349,53 +256,8 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        ::xrn::ecs::detail::constraint::isEcsRegistered Type
+        ::xrn::meta::constraint::contains<ComponentTypes...> Type
     > [[ nodiscard ]] constexpr auto get() const
-        -> bool;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Checks whether the component is contained
-    ///
-    /// Checks whether the component given as parameter is contained.
-    ///
-    /// \tparam ComponentTypes Component to check
-    ///
-    /// \return True if the component is present, false otherwise
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        ::xrn::ecs::detail::constraint::isComponent ComponentType
-    > [[ nodiscard ]] constexpr auto getComponent() const
-        -> bool;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Checks whether the ability is contained
-    ///
-    /// Checks whether the ability given as parameter is contained.
-    ///
-    /// \tparam AbitityTypes Ability to check
-    ///
-    /// \return True if the ability is present, false otherwise
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        ::xrn::ecs::detail::constraint::isAbility AbilityType
-    > [[ nodiscard ]] constexpr auto getAbility() const
-        -> bool;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Checks whether the component is contained
-    ///
-    /// Checks whether the component given as parameter is contained.
-    ///
-    /// \tparam component Component to check
-    ///
-    /// \return True if the component is present, false otherwise
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] constexpr auto get(
-        ::xrn::ecs::detail::constraint::isComponent auto& component
-    ) const
         -> bool;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -412,24 +274,6 @@ public:
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto get(
         ::xrn::Id componentId
-    ) const
-        -> bool;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Checks whether the component is contained
-    ///
-    /// Checks whether the component given as parameter is contained.
-    /// Same as get().
-    ///
-    /// \param component Component to check
-    ///
-    /// \return True if the component is present, false otherwise
-    ///
-    /// \see get()
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] constexpr auto operator[](
-        ::xrn::ecs::detail::constraint::isComponent auto& components
     ) const
         -> bool;
 
@@ -473,7 +317,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto contains(
-        const ::xrn::ecs::Signature& signature
+        const ::xrn::ecs::Signature<ComponentTypes...>& signature
     ) const
         -> bool;
 
@@ -492,59 +336,8 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        ::xrn::ecs::detail::constraint::isEcsRegistered... Types
+        ::xrn::meta::constraint::contains<ComponentTypes...>... Types
     > [[ nodiscard ]] constexpr auto contains() const
-        -> bool;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Checks whether the components are present in the signature
-    ///
-    /// Same as containsAll().
-    ///
-    /// \tparam ComponentTypes Components to check
-    ///
-    /// \return True if all the components are present, false otherwise
-    ///
-    /// \see containsAll()
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        ::xrn::ecs::detail::constraint::isComponent... AbilityTypes
-    > [[ nodiscard ]] constexpr auto containsComponents() const
-        -> bool;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Checks whether the abilities are present in the signature
-    ///
-    /// Same as containsAll().
-    ///
-    /// \tparam AbilityTypes Components to check
-    ///
-    /// \return True if all the abilities are present, false otherwise
-    ///
-    /// \see containsAll()
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
-    > [[ nodiscard ]] constexpr auto containsAbilities() const
-        -> bool;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Checks whether the components are present in the signature
-    ///
-    /// Same as containsAll().
-    ///
-    /// \param components Components to check
-    ///
-    /// \return True if all the components are present, false otherwise
-    ///
-    /// \see containsAll()
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] constexpr auto contains(
-        const ::xrn::ecs::detail::constraint::isComponent auto&... components
-    ) const
         -> bool;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -577,7 +370,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto containsAll(
-        const ::xrn::ecs::Signature& signature
+        const ::xrn::ecs::Signature<ComponentTypes...>& signature
     ) const
         -> bool;
 
@@ -595,59 +388,8 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        ::xrn::ecs::detail::constraint::isEcsRegistered... Types
+        ::xrn::meta::constraint::contains<ComponentTypes...>... Types
     > [[ nodiscard ]] constexpr auto containsAll() const
-        -> bool;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Checks whether the components are present in the signature
-    ///
-    /// Same as contains().
-    ///
-    /// \tparam ComponentTypes Components to check
-    ///
-    /// \return True if all the components are present, false otherwise
-    ///
-    /// \see contains()
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-    > [[ nodiscard ]] constexpr auto containsAllComponents() const
-        -> bool;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Checks whether the abilities are present in the signature
-    ///
-    /// Same as contains().
-    ///
-    /// \tparam AbilityTypes Components to check
-    ///
-    /// \return True if all the abilities are present, false otherwise
-    ///
-    /// \see contains()
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
-    > [[ nodiscard ]] constexpr auto containsAllAbilities() const
-        -> bool;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Checks whether the components are present in the signature
-    ///
-    /// Same as contains().
-    ///
-    /// \param components Components to check
-    ///
-    /// \return True if all the components are present, false otherwise
-    ///
-    /// \see contains()
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] constexpr auto containsAll(
-        const ::xrn::ecs::detail::constraint::isComponent auto&... components
-    ) const
         -> bool;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -677,7 +419,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto containsAny(
-        const ::xrn::ecs::Signature& signature
+        const ::xrn::ecs::Signature<ComponentTypes...>& signature
     ) const
         -> bool;
 
@@ -691,56 +433,8 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        ::xrn::ecs::detail::constraint::isEcsRegistered... Types
+        ::xrn::meta::constraint::contains<ComponentTypes...>... Types
     > [[ nodiscard ]] constexpr auto containsAny() const
-        -> bool;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Checks whether at least a component is present in the signature
-    ///
-    /// Checks whether at least one component from the ComponentTypes given as
-    /// template parameter is present in the signature.
-    ///
-    /// \tparam ComponentTypes Components to check
-    ///
-    /// \return True if at least one components is present, false otherwise
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-    > [[ nodiscard ]] constexpr auto containsAnyComponent() const
-        -> bool;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Checks whether at least an ability is present in the signature
-    ///
-    /// Checks whether at least one ability from the AbilityTypes given as
-    /// template parameter is present in the signature.
-    ///
-    /// \tparam AbilityTypes Components to check
-    ///
-    /// \return True if at least one components is present, false otherwise
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
-    > [[ nodiscard ]] constexpr auto containsAnyAbility() const
-        -> bool;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Checks whether at least a component is present in the signature
-    ///
-    /// Checks whether at least one component from the components given as
-    /// parameter is present in the signature.
-    ///
-    /// \param components Components to check
-    ///
-    /// \return True if at least one components is present, false otherwise
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] constexpr auto containsAny(
-        const ::xrn::ecs::detail::constraint::isComponent auto&... components
-    ) const
         -> bool;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -770,7 +464,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto containsNone(
-        const ::xrn::ecs::Signature& signature
+        const ::xrn::ecs::Signature<ComponentTypes...>& signature
     ) const
         -> bool;
 
@@ -784,47 +478,8 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        ::xrn::ecs::detail::constraint::isEcsRegistered... Types
+        ::xrn::meta::constraint::contains<ComponentTypes...>... Types
     > [[ nodiscard ]] constexpr auto containsNone() const
-        -> bool;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Checks whether none of the component are present in the signature
-    ///
-    /// \tparam ComponentTypes Components to check
-    ///
-    /// \return True if no component is present, false otherwise
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-    > [[ nodiscard ]] constexpr auto containsNoneComponent() const
-        -> bool;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Checks whether none of the ability are present in the signature
-    ///
-    /// \tparam AbilityTypes Components to check
-    ///
-    /// \return True if no ability is present, false otherwise
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    template <
-        ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
-    > [[ nodiscard ]] constexpr auto containsNoneAbility() const
-        -> bool;
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// \brief Checks whether none of the component is present in the signature
-    ///
-    /// \param components Components to check
-    ///
-    /// \return True if no component is present, false otherwise
-    ///
-    ///////////////////////////////////////////////////////////////////////////
-    [[ nodiscard ]] constexpr auto containsNone(
-        const ::xrn::ecs::detail::constraint::isComponent auto&... components
-    ) const
         -> bool;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -849,7 +504,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto operator==(
-        const ::xrn::ecs::Signature& signature
+        const ::xrn::ecs::Signature<ComponentTypes...>& signature
     ) const
         -> bool;
 
@@ -862,7 +517,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto operator!=(
-        const ::xrn::ecs::Signature& signature
+        const ::xrn::ecs::Signature<ComponentTypes...>& signature
     ) const
         -> bool;
 
@@ -870,7 +525,7 @@ public:
 
 private:
 
-    ::cbitset::Cbitset<::xrn::ecs::component::maxId> m_bitset{};
+    ::cbitset::Cbitset<sizeof...(ComponentTypes)> m_bitset{};
 
 };
 
@@ -889,9 +544,11 @@ private:
 /// \brief Write the content of the signature to an ::std::ostream
 ///
 ///////////////////////////////////////////////////////////////////////////
-inline auto operator<<(
+template <
+    typename... ComponentTypes
+> inline auto operator<<(
     ::std::ostream& os,
-    const ::xrn::ecs::Signature& signature
+    const ::xrn::ecs::Signature<ComponentTypes...>& signature
 ) -> ::std::ostream&;
 
 

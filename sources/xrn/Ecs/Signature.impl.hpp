@@ -1,12 +1,5 @@
 #pragma once
 
-///////////////////////////////////////////////////////////////////////////
-// Headers
-///////////////////////////////////////////////////////////////////////////
-#include <xrn/Meta/ForEach.hpp>
-
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // static elements
@@ -16,17 +9,19 @@
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
-> consteval auto ::xrn::ecs::Signature::generate() noexcept
-    -> ::xrn::ecs::Signature
+    typename... ComponentTypes
+> template <
+    ::xrn::meta::constraint::contains<ComponentTypes...>... Types
+> consteval auto ::xrn::ecs::Signature<ComponentTypes...>::generate() noexcept
+    -> ::xrn::ecs::Signature<ComponentTypes...>
 {
-    ::xrn::ecs::Signature signature;
+    ::xrn::ecs::Signature<ComponentTypes...> signature;
 
     ::xrn::meta::ForEach<Types...>::template run<
-        []<::xrn::ecs::detail::constraint::isEcsRegistered Type>(
-            ::xrn::ecs::Signature& signature
+        []<::xrn::meta::constraint::contains<ComponentTypes...> Type>(
+            ::xrn::ecs::Signature<ComponentTypes...>& signatureRef
         ){
-            signature.set<Type>();
+            signatureRef.set<Type>();
         }
     >(signature);
     return signature;
@@ -40,7 +35,9 @@ template <
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
-constexpr ::xrn::ecs::Signature::Signature() noexcept = default;
+template <
+    typename... ComponentTypes
+> constexpr ::xrn::ecs::Signature<ComponentTypes...>::Signature() noexcept = default;
 
 
 
@@ -53,55 +50,27 @@ constexpr ::xrn::ecs::Signature::Signature() noexcept = default;
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
-> constexpr void ::xrn::ecs::Signature::add()
+    typename... ComponentTypes
+> template <
+    ::xrn::meta::constraint::contains<ComponentTypes...>... Types
+> constexpr void ::xrn::ecs::Signature<ComponentTypes...>::add()
 {
     static_assert(sizeof...(Types), "Adding to a signature with 0 template arguments");
 
     ::xrn::meta::ForEach<Types...>::template run<
-        []<::xrn::ecs::detail::constraint::isEcsRegistered RawType>(
-            ::cbitset::Cbitset<::xrn::ecs::component::maxId>& signature
+        []<::xrn::meta::constraint::contains<ComponentTypes...> RawType>(
+            ::cbitset::Cbitset<sizeof...(ComponentTypes)>& signature
         ){
             using Type = ::std::remove_cvref_t<::std::remove_pointer_t<RawType>>;
-            signature.set(Type::getId());
+            signature.set(::xrn::meta::ForEach<ComponentTypes...>::template getPosition<Type>());
         }
     >(m_bitset);
 }
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-> constexpr void ::xrn::ecs::Signature::addComponents()
-{
-    static_assert(sizeof...(ComponentTypes), "Adding to a signature with 0 template arguments");
-    ::xrn::meta::ForEach<ComponentTypes...>::template run<
-        []<::xrn::ecs::detail::constraint::isComponent RawComponentType>(
-            ::cbitset::Cbitset<::xrn::ecs::component::maxId>& signature
-        ){
-            using ComponentType = ::std::remove_cvref_t<::std::remove_pointer_t<RawComponentType>>;
-            signature.set(ComponentType::getId());
-        }
-    >(m_bitset);
-}
-
-///////////////////////////////////////////////////////////////////////////
-template <
-    ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
-> constexpr void ::xrn::ecs::Signature::addAbilities()
-{
-    static_assert(sizeof...(AbilityTypes), "Adding to a signature with 0 template arguments");
-    ::xrn::meta::ForEach<AbilityTypes...>::template run<
-        []<::xrn::ecs::detail::constraint::isAbility RawComponentType>(
-            ::cbitset::Cbitset<::xrn::ecs::component::maxId>& signature
-        ){
-            using ComponentType = ::std::remove_cvref_t<::std::remove_pointer_t<RawComponentType>>;
-            signature.set(ComponentType::getId());
-        }
-    >(m_bitset);
-}
-
-///////////////////////////////////////////////////////////////////////////
-constexpr void ::xrn::ecs::Signature::add(
+    typename... ComponentTypes
+> constexpr void ::xrn::ecs::Signature<ComponentTypes...>::add(
     ::xrn::ecs::detail::constraint::isId auto... componentIds
 )
 {
@@ -112,8 +81,10 @@ constexpr void ::xrn::ecs::Signature::add(
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
-> constexpr void ::xrn::ecs::Signature::set()
+    typename... ComponentTypes
+> template <
+    ::xrn::meta::constraint::contains<ComponentTypes...>... Types
+> constexpr void ::xrn::ecs::Signature<ComponentTypes...>::set()
 {
     static_assert(sizeof...(Types), "Adding to a signature with 0 template arguments");
     this->add<Types...>();
@@ -121,24 +92,8 @@ template <
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-> constexpr void ::xrn::ecs::Signature::setComponents()
-{
-    static_assert(sizeof...(ComponentTypes), "Adding to a signature with 0 template arguments");
-    this->add<ComponentTypes...>();
-}
-
-///////////////////////////////////////////////////////////////////////////
-template <
-    ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
-> constexpr void ::xrn::ecs::Signature::setAbilities()
-{
-    static_assert(sizeof...(AbilityTypes), "Adding to a signature with 0 template arguments");
-    this->add<AbilityTypes...>();
-}
-
-///////////////////////////////////////////////////////////////////////////
-constexpr void ::xrn::ecs::Signature::set(
+    typename... ComponentTypes
+> constexpr void ::xrn::ecs::Signature<ComponentTypes...>::set(
     ::xrn::ecs::detail::constraint::isId auto... componentIds
 )
 {
@@ -156,54 +111,26 @@ constexpr void ::xrn::ecs::Signature::set(
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
-> constexpr void ::xrn::ecs::Signature::remove()
+    typename... ComponentTypes
+> template <
+    ::xrn::meta::constraint::contains<ComponentTypes...>... Types
+> constexpr void ::xrn::ecs::Signature<ComponentTypes...>::remove()
 {
     static_assert(sizeof...(Types), "Adding to a signature with 0 template arguments");
     ::xrn::meta::ForEach<Types...>::template run<
-        []<::xrn::ecs::detail::constraint::isEcsRegistered RawType>(
-            ::cbitset::Cbitset<::xrn::ecs::component::maxId>& signature
+        []<::xrn::meta::constraint::contains<ComponentTypes...> RawType>(
+            ::cbitset::Cbitset<sizeof...(ComponentTypes)>& signature
         ){
             using Type = ::std::remove_cvref_t<::std::remove_pointer_t<RawType>>;
-            signature.reset(Type::getId());
+            signature.reset(::xrn::meta::ForEach<ComponentTypes...>::template getPosition<Type>());
         }
     >(m_bitset);
 }
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-> constexpr void ::xrn::ecs::Signature::removeComponents()
-{
-    static_assert(sizeof...(ComponentTypes), "Adding to a signature with 0 template arguments");
-    ::xrn::meta::ForEach<ComponentTypes...>::template run<
-        []<::xrn::ecs::detail::constraint::isComponent RawComponentType>(
-            ::cbitset::Cbitset<::xrn::ecs::component::maxId>& signature
-        ){
-            using ComponentType = ::std::remove_cvref_t<::std::remove_pointer_t<RawComponentType>>;
-            signature.reset(ComponentType::getId());
-        }
-    >(m_bitset);
-}
-
-///////////////////////////////////////////////////////////////////////////
-template <
-    ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
-> constexpr void ::xrn::ecs::Signature::removeAbilities()
-{
-    static_assert(sizeof...(AbilityTypes), "Adding to a signature with 0 template arguments");
-    ::xrn::meta::ForEach<AbilityTypes...>::template run<
-        []<::xrn::ecs::detail::constraint::isAbility RawComponentType>(
-            ::cbitset::Cbitset<::xrn::ecs::component::maxId>& signature
-        ){
-            using ComponentType = ::std::remove_cvref_t<::std::remove_pointer_t<RawComponentType>>;
-            signature.reset(ComponentType::getId());
-        }
-    >(m_bitset);
-}
-
-///////////////////////////////////////////////////////////////////////////
-constexpr void ::xrn::ecs::Signature::remove(
+    typename... ComponentTypes
+> constexpr void ::xrn::ecs::Signature<ComponentTypes...>::remove(
     ::xrn::ecs::detail::constraint::isId auto... componentIds
 )
 {
@@ -213,15 +140,19 @@ constexpr void ::xrn::ecs::Signature::remove(
 }
 
 ///////////////////////////////////////////////////////////////////////////
-void ::xrn::ecs::Signature::reset()
+template <
+    typename... ComponentTypes
+> void ::xrn::ecs::Signature<ComponentTypes...>::reset()
 {
     m_bitset.reset();
 }
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
-> constexpr void ::xrn::ecs::Signature::reset()
+    typename... ComponentTypes
+> template <
+    ::xrn::meta::constraint::contains<ComponentTypes...>... Types
+> constexpr void ::xrn::ecs::Signature<ComponentTypes...>::reset()
 {
     static_assert(sizeof...(Types), "Reseting to a signature with 0 template arguments");
     this->remove<Types...>();
@@ -229,23 +160,8 @@ template <
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-> constexpr void ::xrn::ecs::Signature::resetComponents()
-{
-    this->remove<ComponentTypes...>();
-}
-
-
-///////////////////////////////////////////////////////////////////////////
-template <
-    ::xrn::ecs::detail::constraint::isAbility... ComponentTypes
-> constexpr void ::xrn::ecs::Signature::resetAbilities()
-{
-    this->remove<ComponentTypes...>();
-}
-
-///////////////////////////////////////////////////////////////////////////
-constexpr void ::xrn::ecs::Signature::reset(
+    typename... ComponentTypes
+> constexpr void ::xrn::ecs::Signature<ComponentTypes...>::reset(
     ::xrn::ecs::detail::constraint::isId auto... componentIds
 )
 {
@@ -263,42 +179,19 @@ constexpr void ::xrn::ecs::Signature::reset(
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isEcsRegistered Type
-> constexpr auto ::xrn::ecs::Signature::get() const
+    typename... ComponentTypes
+> template <
+    ::xrn::meta::constraint::contains<ComponentTypes...> Type
+> constexpr auto ::xrn::ecs::Signature<ComponentTypes...>::get() const
     -> bool
 {
-    return m_bitset[Type::getId()];
+    return m_bitset[::xrn::meta::ForEach<ComponentTypes...>::template getPosition<Type>()];
 }
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isComponent ComponentType
-> constexpr auto ::xrn::ecs::Signature::getComponent() const
-    -> bool
-{
-    return m_bitset[ComponentType::getId()];
-}
-
-///////////////////////////////////////////////////////////////////////////
-template <
-    ::xrn::ecs::detail::constraint::isAbility AbilityType
-> constexpr auto ::xrn::ecs::Signature::getAbility() const
-    -> bool
-{
-    return m_bitset[AbilityType::getId()];
-}
-
-///////////////////////////////////////////////////////////////////////////
-constexpr auto ::xrn::ecs::Signature::get(
-    ::xrn::ecs::detail::constraint::isComponent auto& component
-) const
-    -> bool
-{
-    return m_bitset[component.getId()];
-}
-
-///////////////////////////////////////////////////////////////////////////
-constexpr auto ::xrn::ecs::Signature::get(
+    typename... ComponentTypes
+> constexpr auto ::xrn::ecs::Signature<ComponentTypes...>::get(
     ::xrn::Id componentId
 ) const
     -> bool
@@ -307,16 +200,9 @@ constexpr auto ::xrn::ecs::Signature::get(
 }
 
 ///////////////////////////////////////////////////////////////////////////
-constexpr auto ::xrn::ecs::Signature::operator[](
-    ::xrn::ecs::detail::constraint::isComponent auto& component
-) const
-    -> bool
-{
-    return m_bitset[component.getId()];
-}
-
-///////////////////////////////////////////////////////////////////////////
-constexpr auto ::xrn::ecs::Signature::operator[](
+template <
+    typename... ComponentTypes
+> constexpr auto ::xrn::ecs::Signature<ComponentTypes...>::operator[](
     ::xrn::Id componentId
 ) const
     -> bool
@@ -334,8 +220,10 @@ constexpr auto ::xrn::ecs::Signature::operator[](
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
-constexpr auto ::xrn::ecs::Signature::contains(
-    const ::xrn::ecs::Signature& signature
+template <
+    typename... ComponentTypes
+> constexpr auto ::xrn::ecs::Signature<ComponentTypes...>::contains(
+    const ::xrn::ecs::Signature<ComponentTypes...>& signature
 ) const
     -> bool
 {
@@ -344,8 +232,10 @@ constexpr auto ::xrn::ecs::Signature::contains(
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
-> constexpr auto ::xrn::ecs::Signature::contains() const
+    typename... ComponentTypes
+> template <
+    ::xrn::meta::constraint::contains<ComponentTypes...>... Types
+> constexpr auto ::xrn::ecs::Signature<ComponentTypes...>::contains() const
     -> bool
 {
     return this->containsAll<Types...>();
@@ -353,33 +243,8 @@ template <
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-> constexpr auto ::xrn::ecs::Signature::containsComponents() const
-    -> bool
-{
-    return this->containsAll<ComponentTypes...>();
-}
-
-///////////////////////////////////////////////////////////////////////////
-template <
-    ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
-> constexpr auto ::xrn::ecs::Signature::containsAbilities() const
-    -> bool
-{
-    return this->containsAll<AbilityTypes...>();
-}
-
-///////////////////////////////////////////////////////////////////////////
-constexpr auto ::xrn::ecs::Signature::contains(
-    const ::xrn::ecs::detail::constraint::isComponent auto&... components
-) const
-    -> bool
-{
-    return this->containsAll(components...);
-}
-
-///////////////////////////////////////////////////////////////////////////
-constexpr auto ::xrn::ecs::Signature::contains(
+    typename... ComponentTypes
+> constexpr auto ::xrn::ecs::Signature<ComponentTypes...>::contains(
     ::xrn::ecs::detail::constraint::isId auto... componentIds
 ) const
     -> bool
@@ -388,8 +253,10 @@ constexpr auto ::xrn::ecs::Signature::contains(
 }
 
 ///////////////////////////////////////////////////////////////////////////
-constexpr auto ::xrn::ecs::Signature::containsAll(
-    const ::xrn::ecs::Signature& signature
+template <
+    typename... ComponentTypes
+> constexpr auto ::xrn::ecs::Signature<ComponentTypes...>::containsAll(
+    const ::xrn::ecs::Signature<ComponentTypes...>& signature
 ) const
     -> bool
 {
@@ -398,42 +265,19 @@ constexpr auto ::xrn::ecs::Signature::containsAll(
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
-> constexpr auto ::xrn::ecs::Signature::containsAll() const
+    typename... ComponentTypes
+> template <
+    ::xrn::meta::constraint::contains<ComponentTypes...>... Types
+> constexpr auto ::xrn::ecs::Signature<ComponentTypes...>::containsAll() const
     -> bool
 {
-    return (m_bitset[Types::getId()] && ...);
+    return (m_bitset[::xrn::meta::ForEach<ComponentTypes...>::template getPosition<Types>()] && ...);
 }
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-> constexpr auto ::xrn::ecs::Signature::containsAllComponents() const
-    -> bool
-{
-    return (m_bitset[ComponentTypes::getId()] && ...);
-}
-
-///////////////////////////////////////////////////////////////////////////
-template <
-    ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
-> constexpr auto ::xrn::ecs::Signature::containsAllAbilities() const
-    -> bool
-{
-    return (m_bitset[AbilityTypes::getId()] && ...);
-}
-
-///////////////////////////////////////////////////////////////////////////
-constexpr auto ::xrn::ecs::Signature::containsAll(
-    const ::xrn::ecs::detail::constraint::isComponent auto&... components
-) const
-    -> bool
-{
-    return (m_bitset[components.getId()] && ...);
-}
-
-///////////////////////////////////////////////////////////////////////////
-constexpr auto ::xrn::ecs::Signature::containsAll(
+    typename... ComponentTypes
+> constexpr auto ::xrn::ecs::Signature<ComponentTypes...>::containsAll(
     ::xrn::ecs::detail::constraint::isId auto... componentIds
 ) const
     -> bool
@@ -442,8 +286,10 @@ constexpr auto ::xrn::ecs::Signature::containsAll(
 }
 
 ///////////////////////////////////////////////////////////////////////////
-constexpr auto ::xrn::ecs::Signature::containsAny(
-    const ::xrn::ecs::Signature& signature
+template <
+    typename... ComponentTypes
+> constexpr auto ::xrn::ecs::Signature<ComponentTypes...>::containsAny(
+    const ::xrn::ecs::Signature<ComponentTypes...>& signature
 ) const
     -> bool
 {
@@ -457,42 +303,19 @@ constexpr auto ::xrn::ecs::Signature::containsAny(
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isEcsRegistered... ComponentTypes
-> constexpr auto ::xrn::ecs::Signature::containsAny() const
+    typename... ComponentTypes
+> template <
+    ::xrn::meta::constraint::contains<ComponentTypes...>... Types
+> constexpr auto ::xrn::ecs::Signature<ComponentTypes...>::containsAny() const
     -> bool
 {
-    return (m_bitset[ComponentTypes::getId()] || ...);
+    return (m_bitset[::xrn::meta::ForEach<ComponentTypes...>::template getPosition<Types>()] || ...);
 }
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-> constexpr auto ::xrn::ecs::Signature::containsAnyComponent() const
-    -> bool
-{
-    return (m_bitset[ComponentTypes::getId()] || ...);
-}
-
-///////////////////////////////////////////////////////////////////////////
-template <
-    ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
-> constexpr auto ::xrn::ecs::Signature::containsAnyAbility() const
-    -> bool
-{
-    return (m_bitset[AbilityTypes::getId()] || ...);
-}
-
-///////////////////////////////////////////////////////////////////////////
-constexpr auto ::xrn::ecs::Signature::containsAny(
-    const ::xrn::ecs::detail::constraint::isComponent auto&... components
-) const
-    -> bool
-{
-    return (m_bitset[components.getId()] || ...);
-}
-
-///////////////////////////////////////////////////////////////////////////
-constexpr auto ::xrn::ecs::Signature::containsAny(
+    typename... ComponentTypes
+> constexpr auto ::xrn::ecs::Signature<ComponentTypes...>::containsAny(
     ::xrn::ecs::detail::constraint::isId auto... componentIds
 ) const
     -> bool
@@ -501,8 +324,10 @@ constexpr auto ::xrn::ecs::Signature::containsAny(
 }
 
 ///////////////////////////////////////////////////////////////////////////
-constexpr auto ::xrn::ecs::Signature::containsNone(
-    const ::xrn::ecs::Signature& signature
+template <
+    typename... ComponentTypes
+> constexpr auto ::xrn::ecs::Signature<ComponentTypes...>::containsNone(
+    const ::xrn::ecs::Signature<ComponentTypes...>& signature
 ) const
     -> bool
 {
@@ -511,8 +336,10 @@ constexpr auto ::xrn::ecs::Signature::containsNone(
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
-> constexpr auto ::xrn::ecs::Signature::containsNone() const
+    typename... ComponentTypes
+> template <
+    ::xrn::meta::constraint::contains<ComponentTypes...>... Types
+> constexpr auto ::xrn::ecs::Signature<ComponentTypes...>::containsNone() const
     -> bool
 {
     return !this->containsAny<Types...>();
@@ -520,33 +347,8 @@ template <
 
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isComponent... ComponentTypes
-> constexpr auto ::xrn::ecs::Signature::containsNoneComponent() const
-    -> bool
-{
-    return !this->containsAny<ComponentTypes...>();
-}
-
-///////////////////////////////////////////////////////////////////////////
-template <
-    ::xrn::ecs::detail::constraint::isAbility... AbilityTypes
-> constexpr auto ::xrn::ecs::Signature::containsNoneAbility() const
-    -> bool
-{
-    return !this->containsAny<AbilityTypes...>();
-}
-
-///////////////////////////////////////////////////////////////////////////
-constexpr auto ::xrn::ecs::Signature::containsNone(
-    const ::xrn::ecs::detail::constraint::isComponent auto&... components
-) const
-    -> bool
-{
-    return !this->containsAny(components...);
-}
-
-///////////////////////////////////////////////////////////////////////////
-constexpr auto ::xrn::ecs::Signature::containsNone(
+    typename... ComponentTypes
+> constexpr auto ::xrn::ecs::Signature<ComponentTypes...>::containsNone(
     ::xrn::ecs::detail::constraint::isId auto... componentIds
 ) const
     -> bool
@@ -555,8 +357,10 @@ constexpr auto ::xrn::ecs::Signature::containsNone(
 }
 
 ///////////////////////////////////////////////////////////////////////////
-constexpr auto ::xrn::ecs::Signature::operator==(
-    const ::xrn::ecs::Signature& signature
+template <
+    typename... ComponentTypes
+> constexpr auto ::xrn::ecs::Signature<ComponentTypes...>::operator==(
+    const ::xrn::ecs::Signature<ComponentTypes...>& signature
 ) const
     -> bool
 {
@@ -564,8 +368,10 @@ constexpr auto ::xrn::ecs::Signature::operator==(
 }
 
 ///////////////////////////////////////////////////////////////////////////
-constexpr auto ::xrn::ecs::Signature::operator!=(
-    const ::xrn::ecs::Signature& signature
+template <
+    typename... ComponentTypes
+> constexpr auto ::xrn::ecs::Signature<ComponentTypes...>::operator!=(
+    const ::xrn::ecs::Signature<ComponentTypes...>& signature
 ) const
     -> bool
 {
@@ -582,12 +388,14 @@ constexpr auto ::xrn::ecs::Signature::operator!=(
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
-auto operator<<(
+template <
+    typename... ComponentTypes
+> auto operator<<(
     ::std::ostream& os,
-    const ::xrn::ecs::Signature& signature
+    const ::xrn::ecs::Signature<ComponentTypes...>& signature
 ) -> ::std::ostream&
 {
-    for (auto i{ 0uz }; i < ::xrn::ecs::component::maxId; ++i) {
+    for (auto i{ 0uz }; i < sizeof...(ComponentTypes); ++i) {
         os << signature[i];
     }
     return os;

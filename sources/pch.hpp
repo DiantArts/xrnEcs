@@ -107,22 +107,6 @@
 #include <stop_token>
 #include <thread>
 
-#define GLM_FORCE_RADIANS
-#define GLM_FORCE_DEPTH_ZERO_TO_ONE
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/glm.hpp>
-#include <glm/mat4x4.hpp>
-#include <glm/vec4.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/constants.hpp>
-#include <glm/gtx/hash.hpp>
-
-#include <entt/entt.hpp>
-
-#define GLFW_INCLUDE_VULKAN
-#include <GLFW/glfw3.h>
-#define XRN_USE_VALIDATION_LAYERS
-
 using ::std::string_literals::operator""s;
 using ::std::literals::string_view_literals::operator""sv;
 using ::std::chrono_literals::operator""ms;
@@ -130,25 +114,6 @@ using ::std::chrono_literals::operator""ms;
 #define PRINT_DEBUG
 // #define FORCE_PRINT // print even silent asserts
 #include <xrn/Log/Logger.hpp>
-
-
-inline auto operator<<(
-    ::std::ostream& os,
-    const ::glm::vec2& vec
-) -> ::std::ostream&
-{
-    os << '[' << vec.x << ", " << vec.y << ']';
-    return os;
-}
-
-inline auto operator<<(
-    ::std::ostream& os,
-    const ::glm::vec3& vec
-) -> ::std::ostream&
-{
-    os << '[' << vec.x << ", " << vec.y << ", " << vec.z << ']';
-    return os;
-}
 
 
 

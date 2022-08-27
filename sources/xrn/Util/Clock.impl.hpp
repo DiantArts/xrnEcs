@@ -37,7 +37,7 @@ template <
 > auto ::xrn::util::BasicClock<T>::getElapsed()
     -> BasicClock<T>::Type
 {
-    return BasicClock<T>::Type{ static_cast<BasicClock<T>::Type::Type>(
+    return BasicClock<T>::Type{ static_cast<typename BasicClock<T>::Type::Type>(
         ::std::chrono::duration<typename BasicClock<T>::Type::Type>(
             ::std::chrono::high_resolution_clock::now() - m_timePoint
         ).count() * 1000.0

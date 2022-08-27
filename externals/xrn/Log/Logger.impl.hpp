@@ -303,6 +303,8 @@ template <
     case Logger::Level::error: // error that cannot be recovered but does not throw
         ::fmt::print("[{}] [{}] [{}] {}\n", Logger::getDate(), logSpecifier, callPosition, userMessage);
         break;
+    default:
+        throw ::std::runtime_error{ "This throw should never been used" };
     };
 }
 

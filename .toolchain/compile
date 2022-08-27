@@ -77,6 +77,7 @@ setupCmake() {
     clean
     cmakeCommands=""
     if [ ${testsNeeded} = true ]; then
+        buildType=Debug
         cmakeCommands+="-DENABLE_COVERAGE=true -DENABLE_UNIT_TESTING=true -DRUN_UNIT_TESTS=false -DENABLE_TESTING=true "
     else
         cmakeCommands="-DENABLE_UNIT_TESTING=false -DRUN_UNIT_TESTS=false -DENABLE_TESTING=false "
@@ -134,11 +135,13 @@ clean() {
 }
 
 runTests() {
+    #cmake -S. -B${buildDir} --target tests_run || exit $?
     ctest --test-dir ${buildDir} -C ${buildType}
 }
 
 runCoverage() {
     gcovr -j ${parallel} --root ./ ./ -e ./.build/ -e ./tests/ --gcov-executable 'gcov'
+    #ctest --test-dir ${buildDir} -C ${buildType}
 }
 
 abortError() {

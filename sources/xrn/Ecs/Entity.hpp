@@ -1,18 +1,16 @@
 #pragma once
 
-///////////////////////////////////////////////////////////////////////////
-// Headers
-///////////////////////////////////////////////////////////////////////////
-#include <xrn/Ecs/Component/Container.hpp>
-#include <xrn/Ecs/Entity/Entity.hpp>
-#include <xrn/Ecs/Entity/Container.hpp>
-#include <xrn/Ecs/Entity/Reference.hpp>
-#include <xrn/Ecs/Entity/ConstReference.hpp>
-
-
+namespace xrn::ecs {
 
 ///////////////////////////////////////////////////////////////////////////
-/// \defgroup ecs-entity Entity module
-/// \ingroup ecs
+/// \brief Entity of the entity component system
+/// \ingroup ecs-entity
+///
+/// \include Entity.hpp <xrn/Ecs/Entity.hpp>
+///
+/// \see ::xrn::ecs::Registry
 ///
 ///////////////////////////////////////////////////////////////////////////
+using Entity = ::std::uint_fast32_t;
+
+} // namespace xrn::ecs

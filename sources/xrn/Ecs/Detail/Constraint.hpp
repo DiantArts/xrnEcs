@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////
 #include <xrn/Meta/Constraint.hpp>
 #include <xrn/Util/Time.hpp>
-#include <xrn/Ecs/Component/Detail/Declaration.hpp>
+#include <xrn/Util/Id.hpp>
 
 ///////////////////////////////////////////////////////////////////////////
 // Forward declarations
@@ -78,62 +78,5 @@ template <
 > concept isId =
     ::xrn::meta::constraint::sameAs<::xrn::Id, Type> ||
     ::xrn::meta::constraint::sameAs<::xrn::Id::Type, Type>;
-
-///////////////////////////////////////////////////////////////////////////
-/// \brief Checks whether the Type given as template parameter is a
-///        component.
-///
-/// The comparison ignores cv-qualifiers and references (compares the type
-/// referenced).
-///
-/// \tparam Type to check
-///
-/// \return True if the Type given as template parameter is declared by
-///         COMPONENT or COMPONENT_IN_NAMESPACE macros. False otherwise
-///
-///////////////////////////////////////////////////////////////////////////
-template <
-    typename Type
-> concept isComponent =
-    ::xrn::ecs::isComponent<::std::remove_cvref_t<::std::remove_pointer_t<Type>>>;
-
-///////////////////////////////////////////////////////////////////////////
-/// \brief Checks whether the Type given as template parameter is an
-///        ability.
-///
-/// Abilities are empty uninstantiable componens only providing a functionality to
-/// the linked entity.
-/// The comparison ignores cv-qualifiers and references (compares the type
-/// referenced).
-///
-/// \tparam Type to check
-///
-/// \return True if the Type given as template parameter is declared by
-///         ABILITY or ABILITY_IN_NAMESPACE macros. False otherwise
-///
-///////////////////////////////////////////////////////////////////////////
-template <
-    typename Type
-> concept isAbility =
-    ::xrn::ecs::isAbility<::std::remove_cvref_t<::std::remove_pointer_t<Type>>>;
-
-///////////////////////////////////////////////////////////////////////////
-/// \brief Checks whether the Type given as template parameter is an
-///        ability or a component.
-///
-/// The comparison ignores cv-qualifiers and references (compares the type
-/// referenced).
-///
-/// \tparam Type to check
-///
-/// \return True if the Type given as template parameter is declared by
-///         COMPONENT, COMPONENT_IN_NAMESPACE, ABILITY or
-///         ABILITY_IN_NAMESPACE macros. False otherwise
-///
-///////////////////////////////////////////////////////////////////////////
-template <
-    typename Type
-> concept isEcsRegistered =
-    ::xrn::ecs::detail::constraint::isComponent<Type> || ::xrn::ecs::detail::constraint::isAbility<Type>;
 
 } // namespace xrn::ecs::detail::constraint
