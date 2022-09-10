@@ -135,12 +135,15 @@ clean() {
 }
 
 runTests() {
-    #cmake -S. -B${buildDir} --target tests_run || exit $?
     ctest --test-dir ${buildDir} -C ${buildType}
 }
 
 runCoverage() {
-    gcovr -j ${parallel} --root ./ ./ -e ./.build/ -e ./tests/ --gcov-executable 'gcov'
+    if [ "${CXX}" = "g++" ]; then
+        gcovr -j ${parallel} --root ./ ./ -e .build/ -e tests/ -e externals/ --gcov-executable 'gcov'
+    else
+        gcovr -j ${parallel} --root ./ ./ -e .build/ -e tests/ -e externals/ --gcov-executable 'llvm-cov gcov'
+    fi
     #ctest --test-dir ${buildDir} -C ${buildType}
 }
 

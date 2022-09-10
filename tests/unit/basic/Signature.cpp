@@ -1,9 +1,12 @@
 #include <pch.hpp>
 #include <catch2/catch.hpp>
 #include <xrn/Ecs/Signature.hpp>
+#include <xrn/Ecs/Registry.hpp>
 
 TEST_CASE("Signature.Generate01", "Signature")
 {
+    ::xrn::ecs::Registry<int> r;
+    r.add<int>(r.createEntity());
     constexpr auto s1{ ::xrn::ecs::Signature<int, float>::generate<int, float>() };
     auto s2{ ::xrn::ecs::Signature<int, float>::generate<int>() };
 }

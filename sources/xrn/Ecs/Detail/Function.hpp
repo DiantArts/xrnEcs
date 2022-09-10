@@ -7,21 +7,6 @@
 namespace xrn::ecs::detail::meta {
 
 
-// template <
-    // typename... ArgTypes
-// > [[ nodiscard ]] static inline consteval auto generateSignature()
-// {
-    // ::xrn::ecs::Signature signature;
-    // ::xrn::meta::ForEach<ArgTypes...>::template run<
-        // []<typename Type>(::xrn::ecs::Signature& signature){
-            // if constexpr (::xrn::ecs::detail::constraint::isEcsRegistered<Type>) {
-                // signature.add<Type>();
-            // }
-        // }
-    // >(signature);
-    // return signature;
-// }
-
 
 
 template <
@@ -53,10 +38,19 @@ template <
             ::std::is_const<::std::remove_reference_t<ArgTypes>>::value ||
             !::std::is_reference<ArgTypes>::value
         ) && ...) };
-        static inline constexpr auto signature{
-            ::xrn::ecs::Signature<ComponentTypes...>::template generate<ArgTypes...>()
-            // ::xrn::ecs::detail::meta::generateSignature<ArgTypes...>()
-        };
+
+        [[ nodiscard ]] static inline consteval auto generateSignature()
+        {
+            ::xrn::ecs::Signature<ComponentTypes...> signature;
+            ::xrn::meta::ForEach<ArgTypes...>::template run<
+                []<typename CurrentType>(::xrn::ecs::Signature<ComponentTypes...>& signature){
+                    if constexpr (::xrn::meta::constraint::contains<CurrentType, ComponentTypes...>) {
+                        signature.template add<CurrentType>();
+                    }
+                }
+            >(signature);
+            return signature;
+        }
     };
 
 };

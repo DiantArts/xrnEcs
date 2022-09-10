@@ -351,3 +351,49 @@ template <
     static_assert(sizeof...(Types), "Contains many called with 0 template arguments");
     return (this->containsOne<Types>(entity) && ...);
 }
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Systems
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <xrn/Ecs/Detail/SystemFiller.hpp>
+
+///////////////////////////////////////////////////////////////////////////
+/// \brief Runs for each types passed as template parameters
+///
+///////////////////////////////////////////////////////////////////////////
+template <
+    typename... ComponentTypes
+> template <
+    typename FunctionType
+> void ::xrn::ecs::Registry<ComponentTypes...>::run(
+    FunctionType function
+)
+{
+    ::xrn::Time deltaTime;
+    ::xrn::ecs::Signature<ComponentTypes...> functionSignature{
+        ::xrn::ecs::detail::meta::ComponentHelper<ComponentTypes...>::
+            template FunctionInfo<FunctionType>::Arguments::generateSignature()
+    };
+
+    for (auto& [ entity, entitySignature ] : m_signatures) {
+        if (!entitySignature.contains(functionSignature)) {
+            continue;
+        }
+
+        // get every args into a tupple
+        using TupleArgumentTypes = typename ::xrn::ecs::detail::meta::ComponentHelper<ComponentTypes...>::
+            template FunctionInfo<FunctionType>::Arguments::Type;
+        auto args{ ::xrn::ecs::system::detail::SystemFiller<TupleArgumentTypes>::fill(
+            deltaTime, *this, entity
+        ) };
+
+        // exec the function
+        ::std::apply(function, args);
+    }
+}

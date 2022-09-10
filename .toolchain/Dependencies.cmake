@@ -31,15 +31,15 @@ macro(download_dependencies library_versions)
     list(APPEND CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR})
 
     # download conan.cmake if does not exist
-    if (ENABLE_UPDATE_CONAN OR NOT EXISTS "${XRN_TOOLCHAIN_DETAILS_DIR}/conan.cmake")
+    if (ENABLE_UPDATE_CONAN OR NOT EXISTS "${XRN_${XRN_BIN_NAME}_TOOLCHAIN_DETAILS_DIR}/conan.cmake")
         message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
         file(
             DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/0.18.1/conan.cmake"
-            "${XRN_TOOLCHAIN_DETAILS_DIR}/conan.cmake"
+            "${XRN_${XRN_BIN_NAME}_TOOLCHAIN_DETAILS_DIR}/conan.cmake"
             TLS_VERIFY ON
         )
     endif()
-    include(${XRN_TOOLCHAIN_DETAILS_DIR}/conan.cmake)
+    include(${XRN_${XRN_BIN_NAME}_TOOLCHAIN_DETAILS_DIR}/conan.cmake)
 
     # add download remotes
     conan_config_set(NAME general.revisions_enabled VALUE 1)

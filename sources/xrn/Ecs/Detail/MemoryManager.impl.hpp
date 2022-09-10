@@ -79,7 +79,7 @@ template <
 > template <
     ::xrn::meta::constraint::contains<ComponentTypes...> ComponentType
 > auto ::xrn::ecs::detail::MemoryManager<ComponentTypes...>::alloc(
-    const MemoryManager::EntityId entityId
+    const MemoryManager::EntityId entity
 ) -> void*
 {
     // search to recycle
@@ -94,7 +94,7 @@ template <
             m_indexTable,
             [it](const auto& componentInfos){ return componentInfos.index == it->index; }
         ) };
-        it2->ownerId = entityId;
+        it2->ownerId = entity;
         return &m_data[it->index];
     }
 
@@ -103,7 +103,7 @@ template <
     // else alloc new space
     const auto oldSize{ m_data.size() };
     m_data.resize(oldSize + sizeof(ComponentType));
-    m_indexTable.emplace(::xrn::meta::ForEach<ComponentTypes...>::template getPosition<ComponentType>(), oldSize, entityId);
+    m_indexTable.emplace(::xrn::meta::ForEach<ComponentTypes...>::template getPosition<ComponentType>(), oldSize, entity);
     return m_data.data() + oldSize;
 }
 
@@ -113,15 +113,15 @@ template <
 > template <
     ::xrn::meta::constraint::contains<ComponentTypes...> ComponentType
 > void ::xrn::ecs::detail::MemoryManager<ComponentTypes...>::free(
-    const MemoryManager::EntityId entityId
+    const MemoryManager::EntityId entity
 )
 {
     // search in non-deleted components and delete it if present
     auto nonDeletedComponents{ [](const auto& componentInfos){ return componentInfos.ownerId; } };
     ::std::ranges::find_if(
         m_indexTable | ::std::views::filter(nonDeletedComponents),
-        [this, entityId](const auto& componentInfos){
-            if (::xrn::meta::ForEach<ComponentTypes...>::template getPosition<ComponentType>() == componentInfos.id && entityId == componentInfos.ownerId) {
+        [this, entity](const auto& componentInfos){
+            if (::xrn::meta::ForEach<ComponentTypes...>::template getPosition<ComponentType>() == componentInfos.id && entity == componentInfos.ownerId) {
                 componentInfos.ownerId = 0;
                 m_deletedTable.emplace_back(componentInfos);
                 ::std::bit_cast<ComponentType*>(&m_data[componentInfos.index])->~ComponentType();
@@ -173,16 +173,16 @@ template <
 > template <
     ::xrn::meta::constraint::contains<ComponentTypes...> ComponentType
 > auto ::xrn::ecs::detail::MemoryManager<ComponentTypes...>::contains(
-    const MemoryManager::EntityId entityId
+    const MemoryManager::EntityId entity
 ) const
     -> bool
 {
     auto it{ ::std::ranges::find_if(
         m_indexTable,
-        [entityId](const auto& componentInfos){
+        [entity](const auto& componentInfos){
             return componentInfos.ownerId &&
                 ::xrn::meta::ForEach<ComponentTypes...>::template getPosition<ComponentType>() == componentInfos.id &&
-                entityId == componentInfos.ownerId;
+                entity == componentInfos.ownerId;
         }
     ) };
     return it != m_indexTable.end();
@@ -194,15 +194,15 @@ template <
 > template <
     ::xrn::meta::constraint::contains<ComponentTypes...> ComponentType
 > auto ::xrn::ecs::detail::MemoryManager<ComponentTypes...>::getAddr(
-    const MemoryManager::EntityId entityId
+    const MemoryManager::EntityId entity
 ) -> void*
 {
     auto it{ ::std::ranges::find_if(
         m_indexTable,
-        [entityId](const auto& componentInfos){
+        [entity](const auto& componentInfos){
             return componentInfos.ownerId &&
                 ::xrn::meta::ForEach<ComponentTypes...>::template getPosition<ComponentType>() == componentInfos.id &&
-                entityId == componentInfos.ownerId;
+                entity == componentInfos.ownerId;
         }
     ) };
     return it != m_indexTable.end() ? &m_data[it->index] : nullptr;
@@ -214,16 +214,16 @@ template <
 > template <
     ::xrn::meta::constraint::contains<ComponentTypes...> ComponentType
 > auto ::xrn::ecs::detail::MemoryManager<ComponentTypes...>::getAddr(
-    const MemoryManager::EntityId entityId
+    const MemoryManager::EntityId entity
 ) const
     -> const void*
 {
     auto it{ ::std::ranges::find_if(
         m_indexTable,
-        [entityId](const auto& componentInfos){
+        [entity](const auto& componentInfos){
             return componentInfos.ownerId &&
                 ::xrn::meta::ForEach<ComponentTypes...>::template getPosition<ComponentType>() == componentInfos.id &&
-                entityId == componentInfos.ownerId;
+                entity == componentInfos.ownerId;
         }
     ) };
     return it != m_indexTable.end() ? &m_data[it->index] : nullptr;

@@ -5,10 +5,10 @@ function(prevent_in_source_builds)
     # =========================================================================
 
     # disallow in-source builds
-    if("${XRN_ROOT_DIR}" STREQUAL "${XRN_BUILD_DIR}")
+    if("${XRN_${XRN_BIN_NAME}_ROOT_DIR}" STREQUAL "${XRN_${XRN_BIN_NAME}_BUILD_DIR}")
         message(
             WARNING
-            "in-source builds are disabled, yet rootdir:${XRN_ROOT_DIR} and builddir:${XRN_BUILD_DIR} are identical"
+            "in-source builds are disabled, yet rootdir:${XRN_${XRN_BIN_NAME}_ROOT_DIR} and builddir:${XRN_${XRN_BIN_NAME}_BUILD_DIR} are identical"
         )
         message("Please create a separate build directory and run cmake from there")
         message(FATAL_ERROR "Quitting configuration")
@@ -21,10 +21,10 @@ function(prevent_in_source_builds)
     # =========================================================================
 
     # disallow in-source builds
-    if("${toolchaindir}" STREQUAL "${XRN_BUILD_DIR}")
+    if("${toolchaindir}" STREQUAL "${XRN_${XRN_BIN_NAME}_BUILD_DIR}")
         message(
             WARNING
-            "in-toolchain builds are disabled, yet toolchaindir:${toolchaindir} and builddir:${XRN_BUILD_DIR} are identical"
+            "in-toolchain builds are disabled, yet toolchaindir:${toolchaindir} and builddir:${XRN_${XRN_BIN_NAME}_BUILD_DIR} are identical"
         )
         message("Please create a separate build directory and run cmake from there")
         message(FATAL_ERROR "Quitting configuration")

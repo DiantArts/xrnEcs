@@ -22,28 +22,32 @@ namespace xrn::ecs::system::detail {
 ///
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
+    typename... Types
 > requires
     ::xrn::meta::UniqueTypes<Types...>::value
 struct SystemFiller<
     ::std::tuple<Types...>
 > {
-    static inline constexpr auto fill(
+    template <
+        typename... ComponentTypes
+    > static inline constexpr auto fill(
         ::xrn::Time,
-        ::xrn::ecs::component::Container& components,
-        ::xrn::ecs::entity::Entity& entity
+        ::xrn::ecs::Registry<ComponentTypes...>& registry,
+        ::xrn::ecs::Entity entity
     ) -> ::std::tuple<Types...>
     {
-        return { *components.get<Types>(entity.getId()) ... };
+        return { registry.template get<Types>(entity).unsafeGet() ... };
     }
 
-    static inline constexpr auto fill(
+    template <
+        typename... ComponentTypes
+    > static inline constexpr auto fill(
         ::xrn::Time,
-        const ::xrn::ecs::component::Container& components,
-        const ::xrn::ecs::entity::Entity& entity
+        const ::xrn::ecs::Registry<ComponentTypes...>& registry,
+        ::xrn::ecs::Entity entity
     ) -> ::std::tuple<Types...>
     {
-        return { *components.get<Types>(entity.getId()) ... };
+        return { registry.template get<Types>(entity).unsafeGet() ... };
     }
 };
 
@@ -57,33 +61,36 @@ struct SystemFiller<
 ///     - Entity
 ///     - Components
 ///
-/// \see ::xrn::ecs::entity::Entity
+/// \see ::xrn::ecs::Entity
 ///
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isEntity Entity,
-    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
+    typename... Types
 > requires
     ::xrn::meta::UniqueTypes<Types...>::value
 struct SystemFiller<
-    ::std::tuple<Entity, Types...>
+    ::std::tuple<::xrn::ecs::Entity, Types...>
 > {
-    static inline constexpr auto fill(
+    template <
+        typename... ComponentTypes
+    > static inline constexpr auto fill(
         ::xrn::Time,
-        ::xrn::ecs::component::Container& components,
-        Entity& entity
+        ::xrn::ecs::Registry<ComponentTypes...>& registry,
+        ::xrn::ecs::Entity entity
     ) -> ::std::tuple<Entity, Types...>
     {
-        return { entity, *components.get<Types>(entity.getId()) ... };
+        return { entity, registry.template get<Types>(entity).unsafeGet() ... };
     }
 
-    static inline constexpr auto fill(
+    template <
+        typename... ComponentTypes
+    > static inline constexpr auto fill(
         ::xrn::Time,
-        const ::xrn::ecs::component::Container& components,
-        Entity& entity
+        const ::xrn::ecs::Registry<ComponentTypes...>& registry,
+        ::xrn::ecs::Entity entity
     ) -> ::std::tuple<Entity, Types...>
     {
-        return { entity, *components.get<Types>(entity.getId()) ... };
+        return { entity, registry.template get<Types>(entity).unsafeGet() ... };
     }
 };
 
@@ -97,33 +104,36 @@ struct SystemFiller<
 ///     - Time
 ///     - Components
 ///
-/// \see ::xrn::util::BasicTime, ::xrn::ecs::entity::Entity
+/// \see ::xrn::util::BasicTime, ::xrn::ecs::Entity
 ///
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isTime Time,
-    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
+    typename... Types
 > requires
     ::xrn::meta::UniqueTypes<Types...>::value
 struct SystemFiller<
-    ::std::tuple<Time, Types...>
+    ::std::tuple<::xrn::Time, Types...>
 > {
-    static inline constexpr auto fill(
+    template <
+        typename... ComponentTypes
+    > static inline constexpr auto fill(
         ::xrn::Time t,
-        ::xrn::ecs::component::Container& components,
-        const ::xrn::ecs::entity::Entity& entity
+        ::xrn::ecs::Registry<ComponentTypes...>& registry,
+        ::xrn::ecs::Entity entity
     ) -> ::std::tuple<Time, Types...>
     {
-        return { t, *components.get<Types>(entity.getId()) ... };
+        return { t, registry.template get<Types>(entity).unsafeGet() ... };
     }
 
-    static inline constexpr auto fill(
+    template <
+        typename... ComponentTypes
+    > static inline constexpr auto fill(
         ::xrn::Time t,
-        const ::xrn::ecs::component::Container& components,
-        const ::xrn::ecs::entity::Entity& entity
+        const ::xrn::ecs::Registry<ComponentTypes...>& registry,
+        ::xrn::ecs::Entity entity
     ) -> ::std::tuple<Time, Types...>
     {
-        return { t, *components.get<Types>(entity.getId()) ... };
+        return { t, registry.template get<Types>(entity).unsafeGet() ... };
     }
 };
 
@@ -138,34 +148,36 @@ struct SystemFiller<
 ///     - Entity
 ///     - Components
 ///
-/// \see ::xrn::util::BasicTime, ::xrn::ecs::entity::Entity
+/// \see ::xrn::util::BasicTime, ::xrn::ecs::Entity
 ///
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isTime Time,
-    ::xrn::ecs::detail::constraint::isEntity Entity,
-    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
+    typename... Types
 > requires
     ::xrn::meta::UniqueTypes<Types...>::value
 struct SystemFiller<
-    ::std::tuple<Time, Entity, Types...>
+    ::std::tuple<::xrn::Time, ::xrn::ecs::Entity, Types...>
 > {
-    static inline constexpr auto fill(
+    template <
+        typename... ComponentTypes
+    > static inline constexpr auto fill(
         ::xrn::Time t,
-        ::xrn::ecs::component::Container& components,
-        Entity& entity
+        ::xrn::ecs::Registry<ComponentTypes...>& registry,
+        ::xrn::ecs::Entity entity
     ) -> ::std::tuple<Time, Entity, Types...>
     {
-        return { t, entity, *components.get<Types>(entity.getId()) ... };
+        return { t, entity, registry.template get<Types>(entity).unsafeGet() ... };
     }
 
-    static inline constexpr auto fill(
+    template <
+        typename... ComponentTypes
+    > static inline constexpr auto fill(
         ::xrn::Time t,
-        const ::xrn::ecs::component::Container& components,
-        Entity& entity
+        const ::xrn::ecs::Registry<ComponentTypes...>& registry,
+        ::xrn::ecs::Entity entity
     ) -> ::std::tuple<Time, Entity, Types...>
     {
-        return { t, entity, *components.get<Types>(entity.getId()) ... };
+        return { t, entity, registry.template get<Types>(entity).unsafeGet() ... };
     }
 };
 
@@ -180,34 +192,36 @@ struct SystemFiller<
 ///     - Time
 ///     - Components
 ///
-/// \see ::xrn::util::BasicTime, ::xrn::ecs::entity::Entity
+/// \see ::xrn::util::BasicTime, ::xrn::ecs::Entity
 ///
 ///////////////////////////////////////////////////////////////////////////
 template <
-    ::xrn::ecs::detail::constraint::isTime Time,
-    ::xrn::ecs::detail::constraint::isEntity Entity,
-    ::xrn::ecs::detail::constraint::isEcsRegistered... Types
+    typename... Types
 > requires
     ::xrn::meta::UniqueTypes<Types...>::value
 struct SystemFiller<
-    ::std::tuple<Entity, Time, Types...>
+    ::std::tuple<::xrn::ecs::Entity, ::xrn::Time, Types...>
 > {
-    static inline constexpr auto fill(
+    template <
+        typename... ComponentTypes
+    > static inline constexpr auto fill(
         ::xrn::Time t,
-        ::xrn::ecs::component::Container& components,
-        Entity& entity
+        ::xrn::ecs::Registry<ComponentTypes...>& registry,
+        ::xrn::ecs::Entity entity
     ) -> ::std::tuple<Entity, Time, Types...>
     {
-        return { entity, t, *components.get<Types>(entity.getId()) ... };
+        return { entity, t, registry.template get<Types>(entity).unsafeGet() ... };
     }
 
-    static inline constexpr auto fill(
+    template <
+        typename... ComponentTypes
+    > static inline constexpr auto fill(
         ::xrn::Time t,
-        const ::xrn::ecs::component::Container& components,
-        Entity& entity
+        const ::xrn::ecs::Registry<ComponentTypes...>& registry,
+        ::xrn::ecs::Entity entity
     ) -> ::std::tuple<Entity, Time, Types...>
     {
-        return { entity, t, *components.get<Types>(entity.getId()) ... };
+        return { entity, t, registry.template get<Types>(entity).unsafeGet() ... };
     }
 };
 
