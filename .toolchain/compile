@@ -395,7 +395,7 @@ if [ ${buildNeeded} = true ]; then
     build
 fi
 
-if [ ${runNeeded} = true ] && [ ${binaryNeeded} = true ]; then
+if [ ${runNeeded} = true ] && [ ${binaryNeeded} = true ] && [ ${testsNeeded} = false ]; then
     run
 fi
 

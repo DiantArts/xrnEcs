@@ -1,6 +1,6 @@
 #include <pch.hpp>
 #include <catch2/catch.hpp>
-#include <xrn/Ecs/System/Detail/Meta/Function.hpp>
+#include <xrn/Ecs/Detail/Function.hpp>
 
 struct ComponentA {};
 struct ComponentB {
@@ -65,17 +65,17 @@ TEST_CASE("FunctionInfo.ArgumentsType", "FunctionInfo")
 TEST_CASE("FunctionInfo.ArgumentsSignature", "FunctionInfo")
 {
     auto value{ ::xrn::ecs::detail::meta::ComponentHelper<int, float, ComponentA, ComponentB>::
-        template FunctionInfo<decltype(func3)>::Arguments::signature == ::xrn::ecs::Signature<int, float, ComponentA, ComponentB>::generate<ComponentA>() };
+        template FunctionInfo<decltype(func3)>::Arguments::generateSignature() == ::xrn::ecs::Signature<int, float, ComponentA, ComponentB>::generate<ComponentA>() };
     REQUIRE(value);
     value = ::xrn::ecs::detail::meta::ComponentHelper<int, float, ComponentA, ComponentB>::
-        template FunctionInfo<decltype(lambda3)>::Arguments::signature == ::xrn::ecs::Signature<int, float, ComponentA, ComponentB>::generate<ComponentA>();
+        template FunctionInfo<decltype(lambda3)>::Arguments::generateSignature() == ::xrn::ecs::Signature<int, float, ComponentA, ComponentB>::generate<ComponentA>();
     REQUIRE(value);
 
     value = ::xrn::ecs::detail::meta::ComponentHelper<int, float, ComponentA, ComponentB>::
-        template FunctionInfo<decltype(func4)>::Arguments::signature == ::xrn::ecs::Signature<int, float, ComponentA, ComponentB>::generate<ComponentA, ComponentB>();
+        template FunctionInfo<decltype(func4)>::Arguments::generateSignature() == ::xrn::ecs::Signature<int, float, ComponentA, ComponentB>::generate<ComponentA, ComponentB>();
     REQUIRE(value);
     value = ::xrn::ecs::detail::meta::ComponentHelper<int, float, ComponentA, ComponentB>::
-        template FunctionInfo<decltype(lambda4)>::Arguments::signature == ::xrn::ecs::Signature<int, float, ComponentA, ComponentB>::generate<ComponentA, ComponentB>();
+        template FunctionInfo<decltype(lambda4)>::Arguments::generateSignature() == ::xrn::ecs::Signature<int, float, ComponentA, ComponentB>::generate<ComponentA, ComponentB>();
     REQUIRE(value);
 }
 

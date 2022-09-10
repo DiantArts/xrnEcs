@@ -88,10 +88,10 @@ target_link_libraries(${XRN_${XRN_BIN_NAME}_BTESTS_BIN} PRIVATE test_configs)
 # automatically discover tests that are defined in catch based test files you can modify the tests.
 catch_discover_tests(
     ${XRN_${XRN_BIN_NAME}_BTESTS_BIN}
-    TEST_PREFIX "tests."
+    TEST_PREFIX "tests :: "
     REPORTER xml
     OUTPUT_DIR .
-    OUTPUT_PREFIX "tests."
+    OUTPUT_PREFIX "tests :: "
     OUTPUT_SUFFIX .xml
 )
 
@@ -108,10 +108,10 @@ add_executable(${XRN_${XRN_BIN_NAME}_CTESTS_BIN} ${XRN_${XRN_BIN_NAME}_CTESTS_SR
 target_link_libraries(${XRN_${XRN_BIN_NAME}_CTESTS_BIN} PRIVATE test_configs)
 catch_discover_tests(
     ${XRN_${XRN_BIN_NAME}_CTESTS_BIN}
-    TEST_PREFIX "ctests."
+    TEST_PREFIX "constrexprTests :: "
     REPORTER xml
     OUTPUT_DIR .
-    OUTPUT_PREFIX "ctests."
+    OUTPUT_PREFIX "constrexprTests :: "
     OUTPUT_SUFFIX .xml
 )
 
@@ -122,10 +122,10 @@ target_link_libraries(${XRN_${XRN_BIN_NAME}_RCTESTS_BIN} PRIVATE test_configs)
 target_compile_definitions(${XRN_${XRN_BIN_NAME}_RCTESTS_BIN} PRIVATE -DCATCH_CONFIG_RUNTIME_STATIC_REQUIRE)
 catch_discover_tests(
     ${XRN_${XRN_BIN_NAME}_RCTESTS_BIN}
-    TEST_PREFIX "rctests."
+    TEST_PREFIX "relaxedConstrexprTests :: "
     REPORTER xml
     OUTPUT_DIR .
-    OUTPUT_PREFIX "rctests."
+    OUTPUT_PREFIX "relaxedConstrexprTests :: "
     OUTPUT_SUFFIX .xml
 )
 
