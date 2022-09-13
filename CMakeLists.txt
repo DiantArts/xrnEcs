@@ -6,14 +6,15 @@ cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
 
 # project
 project(CMakeSandbox LANGUAGES CXX)
-set(XRN_${XRN_BIN_NAME}_BIN_NAME xrn)
-set(XRN_${XRN_BIN_NAME}_CXX_VERSION 23)
+set(XRN_BIN_NAME xrnEcs)
+set(XRN_CXX_VERSION 23)
 
 # dependencies
-set(XRN_${XRN_BIN_NAME}_LIBS_REQUIRED fmt/8.1.1)
-set(XRN_${XRN_BIN_NAME}_LIBRARIES_REQUIREMENTS fmt Threads) # find_package
-set(XRN_${XRN_BIN_NAME}_LIBRARIES_DEPENDENCY fmt::fmt Threads::Threads) # target_link_libraries
-set(XRN_${XRN_BIN_NAME}_LIBRARIES_HEADERS fmt) # include_directories(${library}_INCLUDE_DIRS)
+set(XRN_LIBRARIES_PERSONAL xrnUtil xrnMeta) # include other xrn projects
+set(XRN_LIBRARIES_REQUIRED fmt/8.1.1)
+set(XRN_LIBRARIES_REQUIREMENTS fmt Threads) # find_package
+set(XRN_LIBRARIES_DEPENDENCY fmt::fmt Threads::Threads) # target_link_libraries
+set(XRN_LIBRARIES_HEADERS fmt) # include_directories(${library}_INCLUDE_DIRS)
 
 set(SPDLOG_BUILD_SHARED OFF)
 set(SPDLOG_FMT_EXTERNAL ON)
@@ -21,16 +22,16 @@ set(SPDLOG_BUILD_EXAMPLE OFF)
 set(SPDLOG_BUILD_TESTS OFF)
 
 # paths
-set(XRN_${XRN_BIN_NAME}_TOOLCHAIN_DIR "${CMAKE_SOURCE_DIR}/.toolchain")
-set(XRN_${XRN_BIN_NAME}_TOOLCHAIN_DETAILS_DIR "${XRN_${XRN_BIN_NAME}_TOOLCHAIN_DIR}/.details")
-set(XRN_${XRN_BIN_NAME}_SOURCES_DIR "sources")
-set(XRN_${XRN_BIN_NAME}_TESTS_DIR "tests")
-set(XRN_${XRN_BIN_NAME}_EXTERNAL_DIR "externals")
-set(XRN_${XRN_BIN_NAME}_OUTPUT_DIR "binaries")
+set(XRN_TOOLCHAIN_DIR "${CMAKE_SOURCE_DIR}/.toolchain")
+set(XRN_TOOLCHAIN_DETAILS_DIR "${XRN_TOOLCHAIN_DIR}/.details")
+set(XRN_SOURCES_DIR "sources")
+set(XRN_TESTS_DIR "tests")
+set(XRN_EXTERNAL_DIR "externals")
+set(XRN_OUTPUT_DIR "binaries")
 
-set(XRN_${XRN_BIN_NAME}_SHADERS_DIR "shaders")
-set(XRN_${XRN_BIN_NAME}_FRAGMENTS_DIR "Fragment")
-set(XRN_${XRN_BIN_NAME}_VERTEXES_DIR "Vertex")
+set(XRN_SHADERS_DIR "shaders")
+set(XRN_FRAGMENTS_DIR "Fragment")
+set(XRN_VERTEXES_DIR "Vertex")
 
 # testing
 option(ENABLE_TESTING "Enable testing" OFF)
@@ -72,10 +73,14 @@ option(ENABLE_DOCUMENTATION "Enable doxygen doc builds of source" OFF)
 option(ENABLE_CMAKE_DEBUG "Enable debug outputs of cmake's makefiles" ON)
 
 # Binary form
-option(ENABLE_OUTPUT_DIR "Puts every ouput binaries in the '${XRN_${XRN_BIN_NAME}_OUTPUT_DIR}' directory" OFF)
+option(ENABLE_OUTPUT_DIR "Puts every ouput binaries in the '${XRN_OUTPUT_DIR}' directory" OFF)
 option(ENABLE_BINARY "Compile the main program as a binarry" ON)
 option(ENABLE_STATIC_LIBRARY "Compile the main program as a static library" OFF)
 option(ENABLE_SHARED_LIBRARY "Compile the main program as a shared library" OFF)
+
+
+
+
 
 
 
@@ -83,30 +88,32 @@ option(ENABLE_SHARED_LIBRARY "Compile the main program as a shared library" OFF)
 # Abolute paths
 # =========================================================================
 
-set(XRN_${XRN_BIN_NAME}_ROOT_DIR_RELATIVE ${CMAKE_SOURCE_DIR})
-set(XRN_${XRN_BIN_NAME}_BUILD_DIR_RELATIVE ${CMAKE_BINARY_DIR})
-set(XRN_${XRN_BIN_NAME}_TOOLCHAIN_DIR_RELATIVE ${XRN_${XRN_BIN_NAME}_TOOLCHAIN_DIR})
-set(XRN_${XRN_BIN_NAME}_TOOLCHAIN_DETAILS_DIR_RELATIVE ${XRN_${XRN_BIN_NAME}_TOOLCHAIN_DETAILS_DIR})
-set(XRN_${XRN_BIN_NAME}_SOURCES_DIR_RELATIVE ${XRN_${XRN_BIN_NAME}_SOURCES_DIR})
-set(XRN_${XRN_BIN_NAME}_TESTS_DIR_RELATIVE ${XRN_${XRN_BIN_NAME}_TESTS_DIR})
-set(XRN_${XRN_BIN_NAME}_INCLUDE_DIRS_RELATIVE ${XRN_${XRN_BIN_NAME}_EXTERNAL_DIR})
+set(ALLOW_DUPLICATE_CUSTOM_TARGETS TRUE)
 
-set(XRN_${XRN_BIN_NAME}_SHADERS_DIR_RELATIVE ${XRN_${XRN_BIN_NAME}_SHADERS_DIR})
-set(XRN_${XRN_BIN_NAME}_FRAGMENTS_DIR_RELATIVE ${XRN_${XRN_BIN_NAME}_SHADERS_DIR}/${XRN_${XRN_BIN_NAME}_FRAGMENTS_DIR})
-set(XRN_${XRN_BIN_NAME}_VERTEXES_DIR_RELATIVE ${XRN_${XRN_BIN_NAME}_SHADERS_DIR}/${XRN_${XRN_BIN_NAME}_VERTEXES_DIR})
+set(XRN_ROOT_DIR_RELATIVE ${CMAKE_SOURCE_DIR})
+set(XRN_BUILD_DIR_RELATIVE ${CMAKE_BINARY_DIR})
+set(XRN_TOOLCHAIN_DIR_RELATIVE ${XRN_TOOLCHAIN_DIR})
+set(XRN_TOOLCHAIN_DETAILS_DIR_RELATIVE ${XRN_TOOLCHAIN_DETAILS_DIR})
+set(XRN_SOURCES_DIR_RELATIVE ${XRN_SOURCES_DIR})
+set(XRN_TESTS_DIR_RELATIVE ${XRN_TESTS_DIR})
+set(XRN_INCLUDE_DIRS_RELATIVE ${XRN_EXTERNAL_DIR})
 
-get_filename_component(XRN_${XRN_BIN_NAME}_ROOT_DIR ${CMAKE_SOURCE_DIR} REALPATH)
-get_filename_component(XRN_${XRN_BIN_NAME}_BUILD_DIR ${CMAKE_BINARY_DIR} REALPATH)
-get_filename_component(XRN_${XRN_BIN_NAME}_TOOLCHAIN_DIR ${XRN_${XRN_BIN_NAME}_TOOLCHAIN_DIR} REALPATH)
-get_filename_component(XRN_${XRN_BIN_NAME}_TOOLCHAIN_DETAILS_DIR ${XRN_${XRN_BIN_NAME}_TOOLCHAIN_DETAILS_DIR} REALPATH)
-get_filename_component(XRN_${XRN_BIN_NAME}_SOURCES_DIR ${XRN_${XRN_BIN_NAME}_SOURCES_DIR} REALPATH)
-get_filename_component(XRN_${XRN_BIN_NAME}_TESTS_DIR ${XRN_${XRN_BIN_NAME}_TESTS_DIR} REALPATH)
-get_filename_component(XRN_${XRN_BIN_NAME}_EXTERNAL_DIR ${XRN_${XRN_BIN_NAME}_EXTERNAL_DIR} REALPATH)
-get_filename_component(XRN_${XRN_BIN_NAME}_OUTPUT_DIR ${XRN_${XRN_BIN_NAME}_BUILD_DIR}/${XRN_${XRN_BIN_NAME}_OUTPUT_DIR} REALPATH)
+set(XRN_SHADERS_DIR_RELATIVE ${XRN_SHADERS_DIR})
+set(XRN_FRAGMENTS_DIR_RELATIVE ${XRN_SHADERS_DIR}/${XRN_FRAGMENTS_DIR})
+set(XRN_VERTEXES_DIR_RELATIVE ${XRN_SHADERS_DIR}/${XRN_VERTEXES_DIR})
 
-get_filename_component(XRN_${XRN_BIN_NAME}_SHADERS_DIR ${XRN_${XRN_BIN_NAME}_SHADERS_DIR} REALPATH)
-get_filename_component(XRN_${XRN_BIN_NAME}_VERTEXES_DIR ${XRN_${XRN_BIN_NAME}_VERTEXES_DIR_RELATIVE} REALPATH)
-get_filename_component(XRN_${XRN_BIN_NAME}_FRAGMENTS_DIR ${XRN_${XRN_BIN_NAME}_FRAGMENTS_DIR_RELATIVE} REALPATH)
+get_filename_component(XRN_ROOT_DIR ${CMAKE_SOURCE_DIR} REALPATH)
+get_filename_component(XRN_BUILD_DIR ${CMAKE_BINARY_DIR} REALPATH)
+get_filename_component(XRN_TOOLCHAIN_DIR ${XRN_TOOLCHAIN_DIR} REALPATH)
+get_filename_component(XRN_TOOLCHAIN_DETAILS_DIR ${XRN_TOOLCHAIN_DETAILS_DIR} REALPATH)
+get_filename_component(XRN_SOURCES_DIR ${XRN_SOURCES_DIR} REALPATH)
+get_filename_component(XRN_TESTS_DIR ${XRN_TESTS_DIR} REALPATH)
+get_filename_component(XRN_EXTERNAL_DIR ${XRN_EXTERNAL_DIR} REALPATH)
+get_filename_component(XRN_OUTPUT_DIR ${XRN_BUILD_DIR}/${XRN_OUTPUT_DIR} REALPATH)
+
+get_filename_component(XRN_SHADERS_DIR ${XRN_SHADERS_DIR} REALPATH)
+get_filename_component(XRN_VERTEXES_DIR ${XRN_VERTEXES_DIR_RELATIVE} REALPATH)
+get_filename_component(XRN_FRAGMENTS_DIR ${XRN_FRAGMENTS_DIR_RELATIVE} REALPATH)
 
 
 
@@ -114,42 +121,42 @@ get_filename_component(XRN_${XRN_BIN_NAME}_FRAGMENTS_DIR ${XRN_${XRN_BIN_NAME}_F
 # Sources
 # =========================================================================
 
-get_filename_component(XRN_${XRN_BIN_NAME}_MAIN ${XRN_${XRN_BIN_NAME}_SOURCES_DIR}/main.cpp REALPATH)
+get_filename_component(XRN_MAIN ${XRN_SOURCES_DIR}/main.cpp REALPATH)
 file(
     GLOB_RECURSE
-    XRN_${XRN_BIN_NAME}_SOURCES
-    ${XRN_${XRN_BIN_NAME}_SOURCES_DIR}/*.cpp
-    ${XRN_${XRN_BIN_NAME}_SOURCES_DIR}/*.cxx
-    ${XRN_${XRN_BIN_NAME}_SOURCES_DIR}/*.c
-    ${XRN_${XRN_BIN_NAME}_SOURCES_DIR}/*.CC
+    XRN_SOURCES
+    ${XRN_SOURCES_DIR}/*.cpp
+    ${XRN_SOURCES_DIR}/*.cxx
+    ${XRN_SOURCES_DIR}/*.c
+    ${XRN_SOURCES_DIR}/*.CC
     PARENT_SCOPE
 )
 file(
     GLOB_RECURSE
-    XRN_${XRN_BIN_NAME}_HEADERS
-    ${XRN_${XRN_BIN_NAME}_SOURCES_DIR}/*.hpp
-    ${XRN_${XRN_BIN_NAME}_SOURCES_DIR}/*.hxx
-    ${XRN_${XRN_BIN_NAME}_SOURCES_DIR}/*.h
+    XRN_HEADERS
+    ${XRN_SOURCES_DIR}/*.hpp
+    ${XRN_SOURCES_DIR}/*.hxx
+    ${XRN_SOURCES_DIR}/*.h
     PARENT_SCOPE
 )
 file(
     GLOB_RECURSE
-    XRN_${XRN_BIN_NAME}_FRAGMENTS
-    ${XRN_${XRN_BIN_NAME}_FRAGMENTS_DIR}/*.glsl
-    ${XRN_${XRN_BIN_NAME}_FRAGMENTS_DIR}/*.shader
-    ${XRN_${XRN_BIN_NAME}_SHADERS_DIR}/*.vert
-    ${XRN_${XRN_BIN_NAME}_SHADERS_DIR}/*.vertex
-    ${XRN_${XRN_BIN_NAME}_SHADERS_DIR}/*.vs
+    XRN_FRAGMENTS
+    ${XRN_FRAGMENTS_DIR}/*.glsl
+    ${XRN_FRAGMENTS_DIR}/*.shader
+    ${XRN_SHADERS_DIR}/*.vert
+    ${XRN_SHADERS_DIR}/*.vertex
+    ${XRN_SHADERS_DIR}/*.vs
     PARENT_SCOPE
 )
 file(
     GLOB_RECURSE
-    XRN_${XRN_BIN_NAME}_VERTEXES
-    ${XRN_${XRN_BIN_NAME}_VERTEXES_DIR}/*.glsl
-    ${XRN_${XRN_BIN_NAME}_VERTEXES_DIR}/*.shader
-    ${XRN_${XRN_BIN_NAME}_SHADERS_DIR}/*.vert
-    ${XRN_${XRN_BIN_NAME}_SHADERS_DIR}/*.vertex
-    ${XRN_${XRN_BIN_NAME}_SHADERS_DIR}/*.fs
+    XRN_VERTEXES
+    ${XRN_VERTEXES_DIR}/*.glsl
+    ${XRN_VERTEXES_DIR}/*.shader
+    ${XRN_SHADERS_DIR}/*.vert
+    ${XRN_SHADERS_DIR}/*.vertex
+    ${XRN_SHADERS_DIR}/*.fs
     PARENT_SCOPE
 )
 
@@ -165,11 +172,7 @@ if (ENABLE_CMAKE_DEBUG)
 endif ()
 
 # generate sources list without the main
-list(REMOVE_ITEM XRN_${XRN_BIN_NAME}_SOURCES "${XRN_${XRN_BIN_NAME}_MAIN}")
-
-# includes
-include_directories(${XRN_${XRN_BIN_NAME}_SOURCES_DIR})
-include_directories(${XRN_${XRN_BIN_NAME}_EXTERNAL_DIR})
+list(REMOVE_ITEM XRN_SOURCES "${XRN_MAIN}")
 
 
 
@@ -177,15 +180,15 @@ include_directories(${XRN_${XRN_BIN_NAME}_EXTERNAL_DIR})
 # Options
 # =========================================================================
 
-add_library(project_options INTERFACE)
+add_library(${XRN_BIN_NAME}_project_options INTERFACE)
 
 # basic useful actions controlled by the options/
-include(${XRN_${XRN_BIN_NAME}_TOOLCHAIN_DIR}/StandardProjectSettings.cmake)
-set_standard_project_settings(project_options ${XRN_${XRN_BIN_NAME}_CXX_VERSION})
+include(${XRN_TOOLCHAIN_DIR}/StandardProjectSettings.cmake)
+set_standard_project_settings(${XRN_BIN_NAME}_project_options ${XRN_CXX_VERSION})
 
 # sanitizer options if supported by compiler
-include(${XRN_${XRN_BIN_NAME}_TOOLCHAIN_DIR}/Sanitizers.cmake)
-enable_sanitizers(project_options)
+include(${XRN_TOOLCHAIN_DIR}/Sanitizers.cmake)
+enable_sanitizers(${XRN_BIN_NAME}_project_options)
 
 
 
@@ -193,15 +196,15 @@ enable_sanitizers(project_options)
 # Warnings and flags
 # =========================================================================
 
-add_library(project_warnings INTERFACE)
+add_library(${XRN_BIN_NAME}_project_warnings INTERFACE)
 
 # compiler warnings
-include(${XRN_${XRN_BIN_NAME}_TOOLCHAIN_DIR}/CompilerWarnings.cmake)
-set_compiler_warnings(project_warnings)
+include(${XRN_TOOLCHAIN_DIR}/CompilerWarnings.cmake)
+set_compiler_warnings(${XRN_BIN_NAME}_project_warnings)
 
 # compiler flags
-include(${XRN_${XRN_BIN_NAME}_TOOLCHAIN_DIR}/CompilerFlags.cmake)
-set_compiler_flags(project_warnings)
+include(${XRN_TOOLCHAIN_DIR}/CompilerFlags.cmake)
+set_compiler_flags(${XRN_BIN_NAME}_project_warnings)
 
 
 
@@ -209,11 +212,11 @@ set_compiler_flags(project_warnings)
 # Dependencies
 # =========================================================================
 
-add_library(project_dependencies INTERFACE)
+add_library(${XRN_BIN_NAME}_project_dependencies INTERFACE)
 
 # compile shaders
-include(${XRN_${XRN_BIN_NAME}_TOOLCHAIN_DIR}/Shaders.cmake)
-compile_shaders(project_dependencies)
+include(${XRN_TOOLCHAIN_DIR}/Shaders.cmake)
+compile_shaders(${XRN_BIN_NAME}_project_dependencies)
 
 
 
@@ -221,25 +224,21 @@ compile_shaders(project_dependencies)
 # Others
 # =========================================================================
 
-# checks the build directory if it points to the sources, aborts if it does
-include(${XRN_${XRN_BIN_NAME}_TOOLCHAIN_DIR}/PreventInSourceBuilds.cmake)
-prevent_in_source_builds()
-
 # cache if supported by compiler
-include(${XRN_${XRN_BIN_NAME}_TOOLCHAIN_DIR}/Cache.cmake)
+include(${XRN_TOOLCHAIN_DIR}/Cache.cmake)
 enable_cache()
 
 # enable documentation
-include(${XRN_${XRN_BIN_NAME}_TOOLCHAIN_DIR}/Documentation.cmake) # documentation configuration in the file
+include(${XRN_TOOLCHAIN_DIR}/Documentation.cmake) # documentation configuration in the file
 extract_documentation()
 
 # allow for static analysis options
-include(${XRN_${XRN_BIN_NAME}_TOOLCHAIN_DIR}/StaticAnalyzers.cmake) # possible to add more static analyzers in the file
+include(${XRN_TOOLCHAIN_DIR}/StaticAnalyzers.cmake) # possible to add more static analyzers in the file
 run_static_analysis()
 
 # download dependencies
-include(${XRN_${XRN_BIN_NAME}_TOOLCHAIN_DIR}/Dependencies.cmake)
-download_dependencies("${XRN_${XRN_BIN_NAME}_LIBS_REQUIRED}") # isn't check whether the dowloaded failed or not
+include(${XRN_TOOLCHAIN_DIR}/Dependencies.cmake)
+download_dependencies("${XRN_LIBRARIES_REQUIRED}") # isn't check whether the dowloaded failed or not
 
 
 
@@ -248,7 +247,7 @@ download_dependencies("${XRN_${XRN_BIN_NAME}_LIBS_REQUIRED}") # isn't check whet
 # =========================================================================
 
 # sub projects
-add_subdirectory(${XRN_${XRN_BIN_NAME}_SOURCES_DIR})
+add_subdirectory(${XRN_SOURCES_DIR})
 
 
 
@@ -257,5 +256,5 @@ add_subdirectory(${XRN_${XRN_BIN_NAME}_SOURCES_DIR})
 # =========================================================================
 
 # tests
-include(${XRN_${XRN_BIN_NAME}_TOOLCHAIN_DIR}/Tests.cmake)
+include(${XRN_TOOLCHAIN_DIR}/Tests.cmake)
 enable_tests()

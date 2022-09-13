@@ -9,7 +9,7 @@ macro(enable_tests)
 
         if (ENABLE_UNIT_TESTING)
             message(STATUS "Building tests")
-            add_subdirectory(${XRN_${XRN_BIN_NAME}_TESTS_DIR}/unit)
+            add_subdirectory(${XRN_TESTS_DIR}/unit)
         endif ()
 
 

@@ -16,7 +16,7 @@ compiler=clang++
 buildDir=.build
 cxxVersion=23
 buildType=Release
-binary=${buildDir}/sources/xrn
+binary=${buildDir}/sources/xrnEcs
 parallel=$(nproc)
 
 # -------------------------------------------------------------------------------------------------
@@ -135,16 +135,19 @@ clean() {
 }
 
 runTests() {
-    ctest --test-dir ${buildDir} -C ${buildType}
+    ctest --test-dir ${buildDir} -C ${buildType} --output-on-failure
 }
 
 runCoverage() {
-    if [ "${CXX}" = "g++" ]; then
-        gcovr -j ${parallel} --root ./ ./ -e .build/ -e tests/ -e externals/ --gcov-executable 'gcov'
-    else
+    if [[ ${CXX} == *"clang++"* ]]; then
+        gcovr -j ${parallel} -b --root ./ ./ -e .build/ -e tests/ -e externals/ --gcov-executable 'llvm-cov gcov'
         gcovr -j ${parallel} --root ./ ./ -e .build/ -e tests/ -e externals/ --gcov-executable 'llvm-cov gcov'
+        gcovr --delete -j ${parallel} --root ./ ./ -e .build/ -e tests/ -e externals/ --xml-pretty --xml ./.build/coverage.xml --gcov-executable 'llvm-cov gcov'
+    else
+        gcovr -j ${parallel} -b --root ./ ./ -e .build/ -e tests/ -e externals/ --gcov-executable 'gcov'
+        gcovr -j ${parallel} --root ./ ./ -e .build/ -e tests/ -e externals/ --gcov-executable 'gcov'
+        gcovr --delete -j ${parallel} --root ./ ./ -e .build/ -e tests/ -e externals/ --xml-pretty --xml ./.build/coverage.xml --gcov-executable 'gcov'
     fi
-    #ctest --test-dir ${buildDir} -C ${buildType}
 }
 
 abortError() {
@@ -172,6 +175,7 @@ debugCmakeNeeded=false
 pchNeeded=true
 
 compilerModified=false
+cc_compilerModified=false
 typeModified=false
 
 error=false
@@ -244,17 +248,17 @@ while [ $# -gt 0 ]; do
         fi
         export CXX=clang++ ;;
     --gcc)
-        if [ $compilerModified = true ]; then
+        if [ $cc_compilerModified = true ]; then
             compilerSpecifiedMultipleTime=true; error=true
         else
-            compilerModified=true
+            cc_compilerModified=true
         fi
         export CC=gcc ;;
     --clang)
-        if [ $compilerModified = true ]; then
+        if [ $cc_compilerModified = true ]; then
             compilerSpecifiedMultipleTime=true; error=true
         else
-            compilerModified=true
+            cc_compilerModified=true
         fi
         export CC=clang ;;
     --compiler) shift;
@@ -265,10 +269,10 @@ while [ $# -gt 0 ]; do
         fi
         export CXX=$1  ;;
     --cc-compiler) shift;
-        if [ $compilerModified = true ]; then
+        if [ $cc_compilerModified = true ]; then
             compilerSpecifiedMultipleTime=true; error=true
         else
-            compilerModified=true
+            cc_compilerModified=true
         fi
         export CC=$1  ;;
     --cxx-compiler) shift;
