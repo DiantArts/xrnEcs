@@ -4,9 +4,9 @@
 
 runProgram() (
     if [ ${buildType} = Debug ]; then
-        valgrind ./${binary} || exit $?
+        valgrind ./${binaryPath} || exit $?
     else
-        ./${binary} || exit $?
+        ./${binaryPath} || exit $?
     fi
 )
 
@@ -16,14 +16,15 @@ compiler=clang++
 buildDir=.build
 cxxVersion=23
 buildType=Release
-binary=${buildDir}/sources/xrnEcs
+binaryName=$(basename `git rev-parse --show-toplevel`)
+binaryPath=${buildDir}/sources/bin/${binaryName}
 parallel=$(nproc)
 
 # -------------------------------------------------------------------------------------------------
 
 declare -a listOfDisablable=("clear" "run" "cov" "coverage" "binary" "build" "color" "pch")
 getoptArgShort="hglstmdc"
-getoptArgLong="help,gcc,g\+\+,clang,clang\+\+,setup,test,tests,tests_run,debug,makefile,clean,debug-cmake,type:,version:,compiler:,cc-compiler:,cxx-compiler:,directory:,parallel:"
+getoptArgLong="help,gcc,g\+\+,clang,clang++,setup,test,tests,tests_run,debug,makefile,clean,debug-cmake,type:,version:,compiler:,cc-compiler:,cxx-compiler:,directory:,parallel:"
 
 
 
@@ -70,6 +71,7 @@ Actions:
     remake rebuild re             Clean and build everything again
     tests run_tests unit_tests  * Rebuild to generate and run tests informations
     cov coverage                  Only run the coverage and nothing else
+    clear-logs logs log           Clear the log files archived
 EOF
 }
 
@@ -117,8 +119,8 @@ build() {
 }
 
 run() {
-    if [ ! -f "./${binary}" ]; then
-        echo -e "${bold}${red}[ERROR]${normal}: the binary file './${binary}' does not exist. Try to:" 1>&2
+    if [ ! -f "./${binaryPath}" ]; then
+        echo -e "${bold}${red}[ERROR]${normal}: the binary file './${binaryPath}' does not exist. Try to:" 1>&2
         echo -e "    - ${bold}${red}Resolve${normal} the invalid script arguments" 1>&2
         echo -e "    - ${bold}${red}Fix${normal} compilation errors" 1>&2
         echo -e "    - Run the script again with the '-s' argument" 1>&2
@@ -322,6 +324,7 @@ while [ $# -gt 0 ]; do
     "'re'"|"'remake'"|"'rebuild'") cleanNeeded=true; setupNeeded=true ;;
     "'test'"|"'tests'"|"'run_tests'"|"'unit_test'"|"'unit_tests'") testsNeeded=true ;;
     "'cov'"|"'coverage'") runCoverage; exit 0 ;;
+    "'clear-logs'"|"'logs'"|"'log'"|"'clear-log'") rm -rf ./.logs/.old/*; exit 0 ;;
     esac
     shift
 done
@@ -378,6 +381,14 @@ fi
 
 
 # -------------------------------------------------------------------------------------------------
+
+if [ -d "./.logs" ]; then
+    str=$(date +"%F-%H-%M-%S")
+    mkdir -p ./.logs/.old/
+    cd ./.logs
+    tar -zcf ./.old/log-${str}.tar.gz *.txt
+    cd - &>/dev/null
+fi
 
 if [ ${cleanNeeded} = true ]; then
     clean
