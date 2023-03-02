@@ -71,7 +71,7 @@ template <
 template <
     typename... ComponentTypes
 > constexpr void ::xrn::ecs::Signature<ComponentTypes...>::add(
-    ::xrn::ecs::detail::constraint::isId auto... componentIds
+    ::xrn::util::constraint::isId auto... componentIds
 )
 {
     for (auto componentId : { componentIds... }) {
@@ -94,7 +94,7 @@ template <
 template <
     typename... ComponentTypes
 > constexpr void ::xrn::ecs::Signature<ComponentTypes...>::set(
-    ::xrn::ecs::detail::constraint::isId auto... componentIds
+    ::xrn::util::constraint::isId auto... componentIds
 )
 {
     this->add(componentIds...);
@@ -131,7 +131,7 @@ template <
 template <
     typename... ComponentTypes
 > constexpr void ::xrn::ecs::Signature<ComponentTypes...>::remove(
-    ::xrn::ecs::detail::constraint::isId auto... componentIds
+    ::xrn::util::constraint::isId auto... componentIds
 )
 {
     for (auto componentId : { componentIds... }) {
@@ -162,7 +162,7 @@ template <
 template <
     typename... ComponentTypes
 > constexpr void ::xrn::ecs::Signature<ComponentTypes...>::reset(
-    ::xrn::ecs::detail::constraint::isId auto... componentIds
+    ::xrn::util::constraint::isId auto... componentIds
 )
 {
     this->remove(componentIds...);
@@ -245,7 +245,7 @@ template <
 template <
     typename... ComponentTypes
 > constexpr auto ::xrn::ecs::Signature<ComponentTypes...>::contains(
-    ::xrn::ecs::detail::constraint::isId auto... componentIds
+    ::xrn::util::constraint::isId auto... componentIds
 ) const
     -> bool
 {
@@ -278,7 +278,7 @@ template <
 template <
     typename... ComponentTypes
 > constexpr auto ::xrn::ecs::Signature<ComponentTypes...>::containsAll(
-    ::xrn::ecs::detail::constraint::isId auto... componentIds
+    ::xrn::util::constraint::isId auto... componentIds
 ) const
     -> bool
 {
@@ -316,7 +316,7 @@ template <
 template <
     typename... ComponentTypes
 > constexpr auto ::xrn::ecs::Signature<ComponentTypes...>::containsAny(
-    ::xrn::ecs::detail::constraint::isId auto... componentIds
+    ::xrn::util::constraint::isId auto... componentIds
 ) const
     -> bool
 {
@@ -349,7 +349,7 @@ template <
 template <
     typename... ComponentTypes
 > constexpr auto ::xrn::ecs::Signature<ComponentTypes...>::containsNone(
-    ::xrn::ecs::detail::constraint::isId auto... componentIds
+    ::xrn::util::constraint::isId auto... componentIds
 ) const
     -> bool
 {

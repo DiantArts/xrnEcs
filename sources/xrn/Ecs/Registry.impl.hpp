@@ -370,25 +370,33 @@ template <
 template <
     typename... ComponentTypes
 > template <
-    typename FunctionType
+    ::xrn::meta::constraint::contains<ComponentTypes...>... BannedTypes
 > void ::xrn::ecs::Registry<ComponentTypes...>::run(
-    FunctionType function
+    auto function
 )
 {
     ::xrn::Time deltaTime;
-    ::xrn::ecs::Signature<ComponentTypes...> functionSignature{
-        ::xrn::ecs::detail::meta::ComponentHelper<ComponentTypes...>::
-            template FunctionInfo<FunctionType>::Arguments::generateSignature()
+    auto functionSignature{ ::xrn::ecs::detail::Function<ComponentTypes...>::
+        template Information<function>::Arguments::generateSignature()
     };
 
     for (auto& [ entity, entitySignature ] : m_signatures) {
+        if constexpr (sizeof...(BannedTypes)) {
+            if (entitySignature.containsAny(
+                ::xrn::ecs::Signature<ComponentTypes...>::template generate<BannedTypes...>()
+            )) {
+                continue;
+            }
+        }
+
         if (!entitySignature.contains(functionSignature)) {
             continue;
         }
 
         // get every args into a tupple
-        using TupleArgumentTypes = typename ::xrn::ecs::detail::meta::ComponentHelper<ComponentTypes...>::
-            template FunctionInfo<FunctionType>::Arguments::Type;
+        using TupleArgumentTypes = typename
+            ::xrn::ecs::detail::Function<ComponentTypes...>::template
+            Information<function>::Arguments::Type;
         auto args{ ::xrn::ecs::system::detail::SystemFiller<TupleArgumentTypes>::fill(
             deltaTime, *this, entity
         ) };

@@ -3,9 +3,7 @@
 ///////////////////////////////////////////////////////////////////////////
 // Headers
 ///////////////////////////////////////////////////////////////////////////
-#include <xrn/Util.hpp>
 #include <xrn/Ecs/Detail/MemoryManager.hpp>
-#include <xrn/Ecs/Detail/Constraint.hpp>
 #include <xrn/Ecs/Entity.hpp>
 #include <xrn/Ecs/Signature.hpp>
 // #include <xrn/Ecs/System/Detail/Meta/Function.hpp>
@@ -483,9 +481,9 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     template <
-        typename FunctionType
+        ::xrn::meta::constraint::contains<ComponentTypes...>... BannedTypes
     > void run(
-        FunctionType function
+        auto function
     );
 
 

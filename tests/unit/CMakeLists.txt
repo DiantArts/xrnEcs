@@ -20,27 +20,35 @@ endforeach()
 
 # basic tests
 set(XRN_BTESTS_BIN ${XRN_BIN_NAME}_tests)
-set(XRN_BTESTS_DIR basic)
 
-# constexpr tests
-set(XRN_CTESTS_BIN ${XRN_BIN_NAME}_constexprTests)
-set(XRN_RCTESTS_BIN ${XRN_BIN_NAME}_relaxedConstexprTests)
-set(XRN_CTESTS_DIR constexpr)
+# find_package(Catch2 REQUIRED)
+# include(Catch)
 
-find_package(Catch2 REQUIRED)
 include(CTest)
-include(Catch)
 
-include(ProcessorCount)
-ProcessorCount(XRN_NPROC)
-if (NOT XRN_NPROC EQUAL 0)
-    set(CTEST_BUILD_FLAGS -j${XRN_NPROC})
-    set(ctest_test_args ${ctest_test_args} PARALLEL_LEVEL ${XRN_NPROC})
-endif ()
+include(FetchContent)
+FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/refs/tags/release-1.12.1.zip
+    DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+include(GoogleTest)
+
+if (UNIX)
+    include(ProcessorCount)
+    ProcessorCount(XRN_NPROC)
+    if (NOT XRN_NPROC EQUAL 0)
+        set(CTEST_BUILD_FLAGS -j${XRN_NPROC})
+        set(ctest_test_args ${ctest_test_args} PARALLEL_LEVEL ${XRN_NPROC})
+    endif ()
+endif (UNIX)
 
 # auto-runners
 if (RUN_UNIT_TESTS)
-    add_custom_target(tests_run ALL DEPENDS ${XRN_BTESTS_BIN} ${XRN_CTESTS_BIN} ${XRN_RCTESTS_BIN})
+    add_custom_target(tests_run ALL DEPENDS ${XRN_BTESTS_BIN})
     add_custom_command(
         TARGET tests_run
         COMMENT "Run tests..."
@@ -57,7 +65,7 @@ endif ()
 # =========================================================================
 
 # Define binary
-add_library(XRN_${XRN_BIN_NAME}_test_configs OBJECT main.cpp ${XRN_SOURCES} ${XRN_FRAGMENT} ${XRN_VERTEX} ${XRN_HEADERS})
+add_library(XRN_${XRN_BIN_NAME}_test_configs OBJECT ${XRN_SOURCES} ${XRN_FRAGMENT} ${XRN_VERTEX} ${XRN_HEADERS})
 
 if (ENABLE_COVERAGE)
     if (CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
@@ -74,7 +82,7 @@ target_link_libraries(
         ${XRN_BIN_NAME}_project_options
         ${XRN_BIN_NAME}_project_warnings
         ${XRN_BIN_NAME}_project_dependencies
-        Catch2::Catch2
+        GTest::gtest_main
         ${XRN_LIBRARIES_DEPENDENCIES}
 )
 
@@ -90,12 +98,9 @@ endforeach()
 # basic tests
 # =========================================================================
 
-file(GLOB_RECURSE XRN_TESTS_SRC ${XRN_BTESTS_DIR}/*.cpp ${XRN_BTESTS_DIR}/*.cxx)
+file(GLOB_RECURSE XRN_TESTS_SRC *.cpp *.cxx)
 
 if (XRN_TESTS_SRC AND NOT CMAKE_CURRENT_LIST_DIR MATCHES "-src/tests/unit$")
-
-    message(WARNING ${XRN_TESTS_SRC})
-    message(WARNING ${CMAKE_CURRENT_LIST_DIR})
 
     add_executable(${XRN_BTESTS_BIN} ${XRN_TESTS_SRC})
     target_link_libraries(${XRN_BTESTS_BIN}
@@ -104,75 +109,11 @@ if (XRN_TESTS_SRC AND NOT CMAKE_CURRENT_LIST_DIR MATCHES "-src/tests/unit$")
             ${XRN_BIN_NAME}_project_options
             ${XRN_BIN_NAME}_project_warnings
             ${XRN_BIN_NAME}_project_dependencies
-            Catch2::Catch2
             ${XRN_LIBRARIES_DEPENDENCIES}
     )
 
-    # automatically discover tests that are defined in catch based test files you can modify the tests.
-    catch_discover_tests(
-        ${XRN_BTESTS_BIN}
-        TEST_PREFIX "tests :: "
-        REPORTER xml
-        OUTPUT_DIR .
-        OUTPUT_PREFIX "tests :: "
-        OUTPUT_SUFFIX .xml
-    )
-
-endif ()
-
-
-
-# =========================================================================
-# constexpr tests
-# =========================================================================
-
-file(GLOB_RECURSE XRN_CTESTS_SRC ${XRN_CTESTS_DIR}/*.cpp ${XRN_CTESTS_DIR}/*.cxx)
-
-if (XRN_CTESTS_SRC AND NOT CMAKE_CURRENT_LIST_DIR MATCHES "-src/sources$")
-
-    # normal constexpr
-    add_executable(${XRN_CTESTS_BIN} ${XRN_CTESTS_SRC})
-    target_link_libraries(${XRN_CTESTS_BIN}
-        PRIVATE
-            XRN_${XRN_BIN_NAME}_test_configs
-            ${XRN_BIN_NAME}_project_options
-            ${XRN_BIN_NAME}_project_warnings
-            ${XRN_BIN_NAME}_project_dependencies
-            Catch2::Catch2
-            ${XRN_LIBRARIES_DEPENDENCIES}
-    )
-
-    catch_discover_tests(
-        ${XRN_CTESTS_BIN}
-        TEST_PREFIX "constrexprTests :: "
-        REPORTER xml
-        OUTPUT_DIR .
-        OUTPUT_PREFIX "constrexprTests :: "
-        OUTPUT_SUFFIX .xml
-    )
-
-    # relaxed constexpr: Disable the constexpr portion of the test, and build again this allows us to have an
-    # executable that we can debug when things go wrong with the constexpr testing
-    add_executable(${XRN_RCTESTS_BIN} ${XRN_CTESTS_SRC})
-    target_link_libraries(${XRN_RCTESTS_BIN}
-        PRIVATE
-            XRN_${XRN_BIN_NAME}_test_configs
-            ${XRN_BIN_NAME}_project_options
-            ${XRN_BIN_NAME}_project_warnings
-            ${XRN_BIN_NAME}_project_dependencies
-            Catch2::Catch2
-            ${XRN_LIBRARIES_DEPENDENCIES}
-    )
-
-    target_compile_definitions(${XRN_RCTESTS_BIN} PRIVATE -DCATCH_CONFIG_RUNTIME_STATIC_REQUIRE)
-    catch_discover_tests(
-        ${XRN_RCTESTS_BIN}
-        TEST_PREFIX "relaxedConstrexprTests :: "
-        REPORTER xml
-        OUTPUT_DIR .
-        OUTPUT_PREFIX "relaxedConstrexprTests :: "
-        OUTPUT_SUFFIX .xml
-    )
+    # automatically discover tests that are defined in gtest based test files you can modify the tests.
+    gtest_discover_tests(${XRN_BTESTS_BIN})
 
 endif ()
 

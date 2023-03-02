@@ -14,7 +14,7 @@ namespace xrn::ecs::system::detail {
 ///
 /// Usage example:
 /// \code
-/// using TupleType = ::xrn::ecs::detail::meta::Function<decltype(function)>::Arguments::Type;
+/// using TupleType = ::xrn::ecs::detail::Function<decltype(function)>::Arguments::Type;
 /// auto args{ ::xrn::ecs::system::detail::SystemFiller<TupleType>::fill(
 ///     deltaTime, entities.getComponentContainer(), entity
 /// ) };

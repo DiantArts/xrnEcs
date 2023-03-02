@@ -4,9 +4,6 @@
 // Headers
 ///////////////////////////////////////////////////////////////////////////
 #include <Cbitset/Cbitset.hpp>
-#include <xrn/Meta/Constraint.hpp>
-#include <xrn/Meta/ForEach.hpp>
-#include <xrn/Ecs/Detail/Constraint.hpp>
 
 
 
@@ -138,7 +135,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     constexpr void add(
-        ::xrn::ecs::detail::constraint::isId auto... componentIds
+        ::xrn::util::constraint::isId auto... componentIds
     );
 
     ///////////////////////////////////////////////////////////////////////////
@@ -164,7 +161,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     constexpr void set(
-        ::xrn::ecs::detail::constraint::isId auto... componentIds
+        ::xrn::util::constraint::isId auto... componentIds
     );
 
 
@@ -201,7 +198,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     constexpr void remove(
-        ::xrn::ecs::detail::constraint::isId auto... componentIds
+        ::xrn::util::constraint::isId auto... componentIds
     );
 
     ///////////////////////////////////////////////////////////////////////////
@@ -235,7 +232,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     constexpr void reset(
-        ::xrn::ecs::detail::constraint::isId auto... componentIds
+        ::xrn::util::constraint::isId auto... componentIds
     );
 
 
@@ -353,7 +350,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto contains(
-        ::xrn::ecs::detail::constraint::isId auto... componentIds
+        ::xrn::util::constraint::isId auto... componentIds
     ) const
         -> bool;
 
@@ -405,7 +402,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto containsAll(
-        ::xrn::ecs::detail::constraint::isId auto... componentIds
+        ::xrn::util::constraint::isId auto... componentIds
     ) const
         -> bool;
 
@@ -451,7 +448,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto containsAny(
-        ::xrn::ecs::detail::constraint::isId auto... componentIds
+        ::xrn::util::constraint::isId auto... componentIds
     ) const
         -> bool;
 
@@ -491,7 +488,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////
     [[ nodiscard ]] constexpr auto containsNone(
-        ::xrn::ecs::detail::constraint::isId auto... componentIds
+        ::xrn::util::constraint::isId auto... componentIds
     ) const
         -> bool;
 

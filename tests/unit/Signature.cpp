@@ -1,9 +1,9 @@
 #include <pch.hpp>
-#include <catch2/catch.hpp>
+#include <gtest/gtest.h>
 #include <xrn/Ecs/Signature.hpp>
 #include <xrn/Ecs/Registry.hpp>
 
-TEST_CASE("Signature.Generate01", "Signature")
+TEST(Signature, Generate01)
 {
     ::xrn::ecs::Registry<int> r;
     r.add<int>(r.createEntity());
@@ -11,54 +11,54 @@ TEST_CASE("Signature.Generate01", "Signature")
     auto s2{ ::xrn::ecs::Signature<int, float>::generate<int>() };
 }
 
-TEST_CASE("Signature.Generate02", "Signature")
+TEST(Signature, Generate02)
 {
     constexpr auto s1{ ::xrn::ecs::Signature<::std::string, int, float>::generate<>() };
     auto s2{ ::xrn::ecs::Signature<int, float, ::std::string>::generate<int>() };
 }
 
-TEST_CASE("Signature.Generate03", "Signature")
+TEST(Signature, Generate03)
 {
     constexpr auto s1{ ::xrn::ecs::Signature<>::generate<>() };
     auto s2{ ::xrn::ecs::Signature<>::generate<>() };
 }
 
-TEST_CASE("Signature.Comparison01", "Signature")
+TEST(Signature, Comparison01)
 {
     constexpr auto constexprSignature{ ::xrn::ecs::Signature<int, float>::generate<int, float>() };
     auto runtimeSignature{ ::xrn::ecs::Signature<int, float>::generate<int>() };
 
-    REQUIRE(constexprSignature != runtimeSignature);
+    EXPECT_TRUE(constexprSignature != runtimeSignature);
 }
 
-TEST_CASE("Signature.Comparison02", "Signature")
+TEST(Signature, Comparison02)
 {
     constexpr auto constexprSignature{ ::xrn::ecs::Signature<int, float>::generate<int, float>() };
     auto runtimeSignature{ ::xrn::ecs::Signature<int, float>::generate<int>() };
 
-    REQUIRE(!(constexprSignature == runtimeSignature));
+    EXPECT_TRUE(!(constexprSignature == runtimeSignature));
 }
 
-TEST_CASE("Signature.Comparison03", "Signature")
+TEST(Signature, Comparison03)
 {
     constexpr auto constexprSignature{ ::xrn::ecs::Signature<int, float>::generate<int, float>() };
     auto runtimeSignature{ ::xrn::ecs::Signature<int, float>::generate<int>() };
 
-    REQUIRE(!constexprSignature.containsNone(runtimeSignature));
+    EXPECT_TRUE(!constexprSignature.containsNone(runtimeSignature));
 }
 
-TEST_CASE("Signature.Comparison04", "Signature")
+TEST(Signature, Comparison04)
 {
     constexpr auto constexprSignature{ ::xrn::ecs::Signature<int, float>::generate<int, float>() };
     auto runtimeSignature{ ::xrn::ecs::Signature<int, float>::generate<int>() };
 
-    REQUIRE(constexprSignature.containsAll(runtimeSignature));
+    EXPECT_TRUE(constexprSignature.containsAll(runtimeSignature));
 }
 
-TEST_CASE("Signature.Comparison05", "Signature")
+TEST(Signature, Comparison05)
 {
     constexpr auto constexprSignature{ ::xrn::ecs::Signature<int, float>::generate<int, float>() };
     auto runtimeSignature{ ::xrn::ecs::Signature<int, float>::generate<int>() };
 
-    REQUIRE(!runtimeSignature.containsAll(constexprSignature));
+    EXPECT_TRUE(!runtimeSignature.containsAll(constexprSignature));
 }

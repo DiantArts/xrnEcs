@@ -115,6 +115,9 @@ using ::std::chrono_literals::operator""ms;
 // #define FORCE_PRINT // print even silent asserts
 #include <xrn/Log/Logger.hpp>
 
+#include <xrn/Meta.hpp>
+#include <xrn/Util.hpp>
+
 
 
 #endif // ___INCLUDE_GUARD_INCLUDES_PCH_HPP___
