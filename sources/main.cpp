@@ -14,6 +14,10 @@ int function(int);
 auto main()
     -> int
 {
+    auto* a{ new int{ 1 } };
+    a[2] = 5;
+    return 0;
+
     // auto functionSignature{ ::xrn::ecs::detail::Function<int, float>::
         // template Information<[&](int){}>::Arguments::generateSignature()
     // };
